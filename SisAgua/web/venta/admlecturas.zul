@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?init class="com.ec.seguridad.Autentificador"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
+<?link rel="icon" type="image/x-icon" href="/iconos/deckxel.ico"?>
+<div apply="org.zkoss.bind.BindComposer" 
+     self="@define(content)"
+     viewModel="@id('vm') @init('com.ec.controlador.AdmLecturas')"  width="100%"  >
+    
+    <style>
+        .z-listbox-autopaging .z-listcell-cnt {
+        height: 15px;
+        overflow: hidden;
+        }
+        div.z-listbox-body .z-listcell {
+        padding: 0px;
+        }
+        
+    </style>    
+    <listbox  width="100%" model="@load(vm.listaDatos)" 
+              mold="paging" pageSize="25"
+              checkmark="false"  
+              multiple="false"              
+              nonselectableTags="">
+        <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+        <auxhead>
+            <auxheader colspan="9" >  
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-1 col-lg-1  ">
+                        Mes:<combobox  model="@load(vm.meses)"  
+                                       selectedItem="@bind(vm.buscarMes)" 
+                                       style="width:90%"  
+                                       readonly="true" >
+                            <template name="model">
+                                <comboitem  label="@bind(each.nombre)" />
+                            </template>                                      
+                        </combobox>
+                    </div>  
+                   
+                    
+                    <div class="input-group mb-12 col-12 col-sm-12 col-md-2 col-lg-2">
+                                    
+                        <textbox value="@bind(vm.buscar)" 
+                                 class="form-control form-control-sm"
+                                 tooltiptext="Buscar "                         
+                                 placeholder="Buscar"
+                                 onOK="@command('buscarLecturas')"
+                                 onChange="self.setValue(self.getValue().toUpperCase());" />
+                        
+                        <div class="input-group-append" >
+                            <button   image="/imagenes/buscar1.png" 
+                                      onClick="@command('buscarLecturas')"  
+                                      tooltiptext="Buscar cliente"
+                                      class="btn  btn-primary btn-sm "/>
+                               
+                               
+                        </div>
+                     
+                    </div>
+                    <div class="input-group mb-12 col-12 col-sm-12 col-md-2 col-lg-2">
+                            <button   image="/iconmenu/cog.png" 
+                            label="Generar tabla de lecturas"
+                                      onClick="@command('iniciarMesSiguiente')"  
+                                      tooltiptext="Generar tabla de lecturas"
+                                      class="btn  btn-primary btn-sm "/>                              
+                    </div>
+                       <div class="input-group-append" >
+                            <button   image="/iconos/excel1.png" 
+                                      onClick="@command('exportListboxToExcel')"  
+                                      tooltiptext="Ecportar"
+                                      class="btn  btn-primary btn-sm "/>
+                               
+                               
+                        </div>
+                </div>
+            </auxheader>
+        </auxhead>  
+        <listhead>   
+                    
+            
+            <listheader width="5%"  label="# Medidor" />
+            <listheader width="25%"  label="Nombres" >              
+            </listheader> 
+            <listheader width="25%"  label="Apellidos" >              
+            </listheader> 
+            <listheader width="10%"  label="Lectura anterior" />
+                       
+            <listheader width="10%"  label="Lectura actual" />              
+            <listheader width="10%"  label="Metros cubicos" />  
+            <listheader width="10%"  label="Fecha lectura" />               
+            <listheader width="5%"  label="" align="center"/>              
+          
+        </listhead>  
+        <template name="model">                                                            
+            <listitem>  
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idMedidor.medNumero)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idMedidor.idPredio.idPropietario.propNombre)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idMedidor.idPredio.idPropietario.propApellido)"  />
+                </listcell>              
+                <listcell zclass = "mycss-listcell">
+                    <textbox style="font-size:12px;background:white"
+                             class="form-control form-control-sm"  
+                              onChange="@command('calcularmetroCubico',valor=each)"
+                             value="@bind(each.lecAnterior)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox  style="font-size:12px;background:white"
+                             class="form-control form-control-sm"  
+                              onChange="@command('calcularmetroCubico',valor=each)"
+                             value="@bind(each.lecActual)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox  style="font-size:12px;background:white"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.lecMetrosCubicos)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    
+                    <datebox compact="true" 
+                             value="@bind(each.lecFecha)" 
+                             buttonVisible="false" lenient="true" 
+                             tooltiptext="Fecha"
+                             readonly="true"
+                             format="medium" width="98%"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
+                    <image src="/iconos/editar.png"
+                           class="grow"
+                           onClick="@command('actualizar',valor=each)" 
+                           tooltiptext="Modificar producto"/> 
+                </listcell>
+            </listitem>
+        </template>
+    </listbox>       
+</div>

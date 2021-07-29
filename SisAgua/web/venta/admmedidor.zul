@@ -1,0 +1,126 @@
+<?init class="com.ec.seguridad.Autentificador"?>
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<div apply="org.zkoss.bind.BindComposer" 
+
+     viewModel="@id('vm') @init('com.ec.controlador.AdmMedidor')"  width="100%"  >
+    
+    <style>
+        .z-listbox-autopaging .z-listcell-cnt {
+        height: 15px;
+        overflow: hidden;
+        }
+        div.z-listbox-body .z-listcell {
+        padding: 0px;
+        }
+        
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 col-sm-2 col-md-1 col-lg-1 form-group " align="start"  >
+                <image  src="/iconos/nuevo_pro-24.png"
+                        class="btn btn btn-secondary btn-sm "
+                        onClick="@command('nuevo')"
+                        tooltiptext="Nueva tarifa"/>
+                    
+            </div>
+                        
+        </div>
+    </div> 
+    <listbox  width="100%" model="@load(vm.listaDatos)" 
+              mold="paging" pageSize="15"
+              checkmark="false"  
+              multiple="false"              
+              nonselectableTags="*">
+        <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+        <listhead>     
+             <listheader width="10%"  sort="auto(medNumero)" >             
+                 <textbox value="@bind(vm.buscarNumero)" 
+                         class="form-control form-control-sm"
+                         tooltiptext="# "                         
+                         placeholder="#"
+                         onOK="@command('buscarMedidorNumero')" /> 
+            </listheader>
+             <listheader width="10%"  label="Cedula" />         
+            <listheader width="20%"   sort="auto(propNombre)" >
+                <textbox value="@bind(vm.buscarNombre)" 
+                         class="form-control form-control-sm"
+                         tooltiptext="Buscar "                         
+                         placeholder="Buscar"
+                         onOK="@command('buscarMedidorNombreApellidoNumero')"
+                         onChange="self.setValue(self.getValue().toUpperCase());" />
+            </listheader>     
+            <listheader width="20%" label="Apellido"  sort="auto(idPredio.idPropietario.propApellido)" >
+                
+            </listheader>     
+            <listheader width="25%" label="Ubicacion"  >                
+            </listheader>     
+            <listheader width="10%" label="Tarifa"   >                
+            </listheader>     
+            
+            <listheader width="5%"  label="" align="center"/>
+        </listhead>  
+        <template name="model">                                                            
+            <listitem>       
+                 <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm" 
+                             value="@bind(each.medNumero)" />
+                </listcell>         
+                  <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idPredio.idPropietario.porpCedula)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idPredio.idPropietario.propNombre)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idPredio.idPropietario.propApellido)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idUbicacionMedidor.ubimNombre)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idTarifa.tariDescripcion)"  />
+                </listcell>
+               
+<!--                <listcell zclass = "mycss-listcell">
+                
+                    
+                    <datebox compact="true" 
+                             value="@bind(each.medFechaRegistro)" 
+                             buttonVisible="false" lenient="true" 
+                             tooltiptext="Fecha"
+                             readonly="true"
+                             format="medium" width="98%"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                
+                    
+                    <datebox compact="true" 
+                             value="@bind(each.medFechaInstala)" 
+                             buttonVisible="false" lenient="true" 
+                             tooltiptext="Fecha"
+                             readonly="true"
+                             format="medium" width="98%"  />
+                </listcell>-->
+                
+                <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
+                    <image src="/iconos/editar.png"
+                           class="grow"
+                           onClick="@command('actualizar',valor=each)" 
+                           tooltiptext="Modificar"/> 
+                </listcell>
+            </listitem>
+        </template>
+    </listbox>       
+</div>

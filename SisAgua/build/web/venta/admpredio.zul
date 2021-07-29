@@ -1,0 +1,98 @@
+<?init class="com.ec.seguridad.Autentificador"?>
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<div apply="org.zkoss.bind.BindComposer" 
+
+     viewModel="@id('vm') @init('com.ec.controlador.AdmPredio')"  width="100%"  >
+    
+    <style>
+        .z-listbox-autopaging .z-listcell-cnt {
+        height: 15px;
+        overflow: hidden;
+        }
+        div.z-listbox-body .z-listcell {
+        padding: 0px;
+        }
+        
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 col-sm-2 col-md-1 col-lg-1 form-group " align="start"  >
+                <button  src="/iconos/nuevo_pro-24.png"
+                         label="Nuevo predio"
+                         class="btn btn btn-secondary btn-sm "
+                         onClick="@command('nuevo')"
+                         tooltiptext="Nueva tarifa"/>
+                    
+            </div>
+                        
+        </div>
+    </div> 
+    <listbox  width="100%" model="@load(vm.listaPredios)" 
+              mold="paging" pageSize="15"
+              checkmark="false"  
+              multiple="false"              
+              nonselectableTags="*">
+        <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+        <listhead>             
+            <listheader width="10%"   >
+                <textbox value="@bind(vm.buscar)" 
+                         class="form-control form-control-sm"
+                         tooltiptext="Buscar "                         
+                         placeholder="Buscar"
+                         onOK="@command('buscarPropietario')"
+                         onChange="self.setValue(self.getValue().toUpperCase());" />
+            </listheader>     
+            <listheader width="15%"  label="Nombre" >              
+            </listheader> 
+            <listheader width="10%"  label="Area (metros)" />                       
+            <listheader width="10%"  label="Fecha" />                           
+            <listheader width="50%"  label="Direccion" />               
+            <listheader width="5%"  label="" align="center"/>              
+          
+        </listhead>  
+        <template name="model">                                                            
+            <listitem>                
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idPropietario.porpCedula)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idPropietario.propNombre)"  />
+                </listcell>
+               
+                <listcell zclass = "mycss-listcell">
+                    <decimalbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                class="form-control form-control-sm"  
+                                value="@bind(each.preArea)"  />
+                </listcell>
+               
+                <listcell zclass = "mycss-listcell">
+                
+                    
+                    <datebox compact="true" 
+                             value="@bind(each.preFechaRegistro)" 
+                             buttonVisible="false" lenient="true" 
+                             tooltiptext="Fecha"
+                             readonly="true"
+                             format="medium" width="98%"  />
+                </listcell>
+                
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.predDireccion)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
+                    <image src="/iconos/editar.png"
+                           class="grow"
+                           onClick="@command('actualizar',valor=each)" 
+                           tooltiptext="Modificar producto"/> 
+                </listcell>
+            </listitem>
+        </template>
+    </listbox>       
+</div>

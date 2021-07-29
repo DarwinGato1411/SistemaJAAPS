@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window  id="windowCliente"  position="center" class="col-12 col-sm-12 col-md-8 col-lg-6  form-control" closable="true"  
+         apply="org.zkoss.bind.BindComposer" contentStyle="overflow:auto"
+         viewModel="@id('vm') @init('com.ec.controlador.NuevoProducto')">
+    
+    <caption label="Producto" style="font-weight:bold"
+    /> 
+    
+    
+    <div  class="container" >
+        <div  class="row" >
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4  form-group "  >
+                <label   style="color:red;font-weight:bold" value="(*) "  />Codigo:
+                <textbox  maxlength="20"   
+                          onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                          value="@bind(vm.producto.prodCodigo)"  
+                          class="form-control" />
+            </div>          
+             
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Nombre del producto 
+                
+                <textbox  maxlength="100" 
+                          value="@bind(vm.producto.prodNombre)"
+                          
+                          onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                          constraint="no empty: Campo requerido"
+                          class="form-control" />
+            </div>
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Costo de compra:
+                
+                <decimalbox format="###.#####" 
+                onChange="self.setValue(self.getValue().replace('.',','));"  
+                ctrlKeys="^a#f8"                               
+                            onOK="@command('calcularValores')"
+                            value="@bind(vm.producto.pordCostoCompra)"   
+                            class="form-control">
+                
+                <attribute name="onCtrlKey"><![CDATA[
+                        int keyCode = ((KeyEvent) event).getKeyCode();
+                        String s = "";
+                        switch(keyCode){
+                            case 46: s = "Ctrl+A";break;
+                            case 119: s = "F8";break;
+                        }
+                        Messagebox.show(s+" is pressed", "CtrlKey", 
+                                Messagebox.OK, Messagebox.EXCLAMATION);
+                        inp.focus();
+                    ]]></attribute>
+                </decimalbox>
+            </div>
+                
+            <!--            <div class="col-6 col-sm-6 col-md-3 col-lg-3  form-group "  >
+                <label value="(*) "  style="color:red;font-weight:bold"/>% Mano obra:
+                <decimalbox format="###.#####" 
+                            onOK="@command('calcularValores')"
+                            value="@bind(vm.producto.prodManoObra)"  
+                            class="form-control"   /> 
+            </div>    
+            <div class="col-6 col-sm-6 col-md-3 col-lg-3  form-group "  >
+                <label value="(*) "  style="color:red;font-weight:bold"/>% Transporte:
+                <decimalbox format="###.#####" 
+                            onOK="@command('calcularValores')"
+                            value="@bind(vm.producto.prodTrasnporte)"  
+                            class="form-control"   /> 
+            </div>    -->
+          
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4  form-group "  >
+                <label value="(*) "  style="color:red;font-weight:bold"/>% Iva recuperar:
+                <decimalbox format="###.#####" 
+                            onOK="@command('calcularValores')"
+                            value="@bind(vm.producto.prodIva)"  
+                            class="form-control" /> 
+            </div>  
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4  form-group " align="center" >
+                <label value="(*)" style="color:red;font-weight:bold"/>Compra con iva:
+                <decimalbox format="###.#####"  
+                            readonly="true"
+                            style="color:red;font-weight:bold;font-size:1em;text-align:center"
+                            value="@bind(vm.producto.pordCostoVentaRef)"  
+                            class="form-control"  />
+                
+            </div>
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4  form-group "  >
+           
+                <label value="(*)" style="color:red;font-weight:bold"/>Precio Venta Publico:
+                <decimalbox format="###.#####"  
+                            value="@bind(vm.producto.pordCostoVentaFinal)"  
+                            class="form-control"  />
+            </div>
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4  form-group "  >
+                <label value="(*) " style="color:transparent;font-weight:bold"/>Precio Por Mayor:
+                <decimalbox format="###.#####"  
+                            value="@bind(vm.producto.prodCostoPreferencial)" 
+                            class="form-control" />
+            </div>
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4  form-group "  >
+                <label value="(*) " style="color:transparent;font-weight:bold"/>Precio Por Caja:
+                <decimalbox format="###.#####"  
+                            value="@bind(vm.producto.prodCostoPreferencialDos)" 
+                            class="form-control" />
+                
+            </div>
+            <div class="col-6 col-sm-6 col-md-3 col-lg-3  form-group " align="center" >
+                <label value="(*)" style="color:red;font-weight:bold"/>Cantidad inicial:
+                <decimalbox format="####"                             
+                            value="@bind(vm.producto.prodCantidadInicial)"  
+                            class="form-control"  />
+                
+            </div>
+            <div class="col-6 col-sm-6 col-md-3 col-lg-3  form-group " align="center" >
+                <label value="(*)" style="color:red;font-weight:bold"/>Cantidad minima:
+                <decimalbox format="####"                             
+                            value="@bind(vm.producto.prodCantMinima)"  
+                            class="form-control"  />
+            
+           
+           
+                       
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group" align="center" >
+                    
+                    <image src="/iconos/guardar.png"  
+                           onClick="@command('guardar')"
+                           tooltiptext="Guardar Registro"/>
+ 
+
+                </div> 
+            </div>
+   
+        </div>
+    </div>
+   
+                    
+                  
+</window>

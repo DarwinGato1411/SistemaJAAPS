@@ -1,0 +1,164 @@
+<?init class="com.ec.seguridad.Autentificador"?>
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<div apply="org.zkoss.bind.BindComposer" 
+
+     viewModel="@id('vm') @init('com.ec.controlador.AdmTarifa')"  width="100%"  >
+    
+    <style>
+        .z-listbox-autopaging .z-listcell-cnt {
+        height: 15px;
+        overflow: hidden;
+        }
+        div.z-listbox-body .z-listcell {
+        padding: 0px;
+        }
+        
+    </style>
+  
+ 
+    <div class="container-fluid">
+        <div class="row">
+           
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4 form-group " align="start"  >
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 form-group " align="start"  >
+                    <button  src="/iconos/nuevo_pro-24.png"
+                            label="Nueva tarifa"
+                            class="btn btn btn-secondary btn-sm "
+                            onClick="@command('nuevo')"
+                            tooltiptext="Nueva tarifa"/>
+                </div>
+                <listbox   model="@load(vm.listaDetalleFacturaModel)" 
+                           onSelect="@command('seleccionarRegistros')" 
+                           mold="paging" pageSize="15"
+                           checkmark="true"  
+                           multiple="false"               
+                           nonselectableTags="*">
+                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                    <listhead>             
+                        <listheader width="30px"    ></listheader>
+                        <listheader width="50%"   sort="auto(tariDescripcion)" >
+                            <textbox value="@bind(vm.buscarNombre)" 
+                                     class="form-control form-control-sm"
+                                     tooltiptext="Tarifa "                         
+                                     placeholder="Tarifa"
+                                     onOK="@command('buscarTarifa')"
+                                     onChange="self.setValue(self.getValue().toUpperCase());" />
+                        </listheader>     
+                        <listheader width="15%"  sort="auto(tariSigla)" >              
+                        </listheader> 
+                        <listheader width="25%"  label="Fecha" />              
+                        <listheader width="10%"  label="" align="center">
+                          
+                        </listheader>
+                    </listhead>  
+                    <template name="model">                                                            
+                        <listitem>                
+                            <listcell ></listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                         class="form-control form-control-sm"  
+                                         value="@bind(each.tariDescripcion)"  />
+                            </listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                         class="form-control form-control-sm" 
+                                         value="@bind(each.tariSigla)" />
+                            </listcell>
+                            <listcell zclass = "mycss-listcell">
+                
+                    
+                                <datebox compact="true" 
+                                         value="@bind(each.tariFecha)" 
+                                         buttonVisible="false" lenient="true" 
+                                         tooltiptext="Fecha"
+                                         readonly="true"
+                                         format="medium" width="98%"  />
+                            </listcell>
+                
+                            <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
+                                <image src="/iconos/editar.png"
+                                       class="grow"
+                                       onClick="@command('actualizar',valor=each)" 
+                                       tooltiptext="Modificar producto"/> 
+                            </listcell>
+                        </listitem>
+                    </template>
+                </listbox>
+            </div>
+            <div class="col-12 col-sm-12 col-md-7 col-lg-7 form-group " align="start"  >
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 form-group " align="start"  >
+                      <label  style="color:red;font-weight:bold" value="TARIFA SELECCIONADA: "/>
+                      <label  style="color:blue;font-weight:bold" value="@bind(vm.tarifaSeleted.tariDescripcion)"/>
+                    
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 form-group " align="start"  >
+                    <button  src="/iconos/nuevo_pro-24.png"
+                            label="Nuevo detalle de tarifa"
+                            class="btn btn btn-secondary btn-sm "
+                            onClick="@command('nuevoDetalle')"
+                            tooltiptext="Nuevo detalle de tarifa"/>
+                </div>
+                <listbox   model="@load(vm.listaDetalleTarifa)" 
+                           mold="paging" pageSize="15"
+                           checkmark="false"  
+                           multiple="false"              
+                           nonselectableTags="*">
+                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                    <listhead>             
+                        <listheader width="15%" label="Inicio(m3)"   >                            
+                        </listheader>     
+                        <listheader width="15%"  label="Fin(m3)" >              
+                        </listheader> 
+                        <listheader width="15%"  label="Base" />              
+                        <listheader width="15%"  label="Excedente ($)" />              
+                        <listheader width="15%"  label="% Alcantarillado" />              
+                        <listheader width="15%"  label="% Desechos" />              
+                        <listheader width="15%"  label="Ambiente" />              
+                        <listheader width="10%"  label="" align="center"/>
+                    </listhead>  
+                    <template name="model">                                                            
+                        <listitem>                
+                            <listcell zclass = "mycss-listcell">
+                                <decimalbox format="###.##" readonly="true" 
+                                            value="@bind(each.dettMetroInicial)" width="96%"/>
+                            </listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <decimalbox format="###.##" readonly="true" 
+                                            value="@bind(each.dettMetroFinal)" width="96%"/>
+                            </listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <decimalbox format="###.##" readonly="true" 
+                                            value="@bind(each.dettPrecioBase)" width="96%"/>
+                            </listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <decimalbox format="###.##" readonly="true" 
+                                            value="@bind(each.dettPorcentajeExcedente)" width="96%"/>
+                            </listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <decimalbox format="###.##" readonly="true" 
+                                            value="@bind(each.dettPorcentajeAlcantarillado)" width="96%"/>
+                            </listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <decimalbox format="###.##" readonly="true" 
+                                            value="@bind(each.dettPorcentajeDesechos)" width="96%"/>
+                            </listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <decimalbox format="###.##" readonly="true" 
+                                            value="@bind(each.dettAmbiente)" width="96%"/>
+                            </listcell>                                          
+                            <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
+                                <image src="/iconos/editar.png"
+                                       class="grow"
+                                       onClick="@command('actualizarDetalle',valor=each)" 
+                                       tooltiptext="Modificar producto"/> 
+                            </listcell>
+                        </listitem>
+                    </template>
+                </listbox>
+            </div>
+        </div>
+                
+    </div>
+           
+</div>

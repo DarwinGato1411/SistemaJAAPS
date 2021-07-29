@@ -1,0 +1,112 @@
+<?init class="com.ec.seguridad.Autentificador"?>
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<div apply="org.zkoss.bind.BindComposer" 
+
+     viewModel="@id('vm') @init('com.ec.controlador.AdmPropietario')"  width="100%"  >
+    
+    <style>
+        .z-listbox-autopaging .z-listcell-cnt {
+        height: 15px;
+        overflow: hidden;
+        }
+        div.z-listbox-body .z-listcell {
+        padding: 0px;
+        }
+        
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 col-sm-2 col-md-1 col-lg-1 form-group " align="start"  >
+                <image  src="/iconos/nuevo_pro-24.png"
+                        class="btn btn btn-secondary btn-sm "
+                        onClick="@command('nuevo')"
+                        tooltiptext="Nueva tarifa"/>
+                    
+            </div>
+                        
+        </div>
+    </div> 
+    <listbox  width="98%" model="@load(vm.listaPropietarios)" 
+              mold="paging" pageSize="50"
+              checkmark="false"  
+              multiple="false"              
+              nonselectableTags="*">
+        <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+        <listhead>             
+            <listheader width="10%"   >
+                <textbox value="@bind(vm.buscar)" 
+                         class="form-control form-control-sm"
+                         tooltiptext="Buscar "                         
+                         placeholder="Buscar"
+                         onOK="@command('buscarPropietario')"
+                         onChange="self.setValue(self.getValue().toUpperCase());" />
+            </listheader>     
+            <listheader width="15%"  label="Nombres" >              
+            </listheader> 
+            <listheader width="15%"  label="Apellidos" sort="auto(propApellido)" >              
+            </listheader> 
+            <listheader width="10%"  label="Sector" />
+                       
+            <listheader width="10%"  label="Fecha" />              
+            <listheader width="5%"  label="Edad" />  
+            <listheader width="45%"  label="Direccion" />               
+            <listheader width="5%"  label="" align="center"/>              
+          
+        </listhead>  
+        <template name="model">                                                            
+            <listitem>                
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.porpCedula)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.propNombre)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.propApellido)"  />
+                </listcell>
+               
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.propSector)"  />
+                </listcell>
+               
+                <listcell zclass = "mycss-listcell">
+                
+                    
+                    <datebox compact="true" 
+                             value="@bind(each.porpFechaNac)" 
+                             buttonVisible="false" lenient="true" 
+                             tooltiptext="Fecha"
+                             readonly="true"
+                             format="medium" width="98%"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                
+                    
+                    <intbox value="@bind(each.propEdad)"                              
+                            tooltiptext="Fecha"
+                            readonly="true" width="98%"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.propDireccion)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
+                    <image src="/iconos/editar.png"
+                           class="grow"
+                           onClick="@command('actualizar',valor=each)" 
+                           tooltiptext="Modificar producto"/> 
+                </listcell>
+            </listitem>
+        </template>
+    </listbox>       
+</div>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window  id="wPropietario"  position="center" class="col-12 col-sm-12 col-md-6 col-lg-4" closable="true"  
+         apply="org.zkoss.bind.BindComposer" 
+         viewModel="@id('vm') @init('com.ec.controlador.NuevoPropietario')">
+    
+    <caption label="Propietario" style="font-weight:bold"
+    /> 
+    <div  class="container" >
+        <div  class="row" >         
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Cedula:
+                
+                <textbox  maxlength="13" 
+                          onChange="self.setValue(self.getValue().toUpperCase())"
+                          value="@bind(vm.entidad.porpCedula)" 
+                            onOK="@command('buscarAduana')"
+                          class="form-control" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Nombres:
+                
+                <textbox  maxlength="150" 
+                          onChange="self.setValue(self.getValue().toUpperCase())"
+                          value="@bind(vm.entidad.propNombre)" 
+                          class="form-control" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Apellidos:
+                
+                <textbox  maxlength="150" 
+                          onChange="self.setValue(self.getValue().toUpperCase())"
+                          value="@bind(vm.entidad.propApellido)" 
+                          class="form-control" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Sector:
+                
+                <textbox  maxlength="50" 
+                          onChange="self.setValue(self.getValue().toUpperCase())"
+                          value="@bind(vm.entidad.propSector)" 
+                          class="form-control" />
+            </div>
+           
+           
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Fecha de nacimiento
+                
+                <datebox compact="true" 
+                         onChange="@command('obtenerEdad')" 
+                         value="@bind(vm.entidad.porpFechaNac)"
+                         buttonVisible="true" lenient="true" 
+                         tooltiptext="Fecha"
+                         readonly="true"
+                         format="medium"   />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group " >
+                <label value="(*) " style="color:red;font-weight:bold"/>Edad:
+                
+                <decimalbox  format="###"   
+                             width="98%"
+                             value="@bind(vm.entidad.propEdad)" 
+                             readonly="true" style="text-align:center;font-size:2em"                             
+                             class="form-control-sm" />
+            </div>
+         
+            
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Direccion:
+                
+                <textbox  maxlength="200" 
+                          onChange="self.setValue(self.getValue().toUpperCase())"
+                          value="@bind(vm.entidad.propDireccion)" 
+                          class="form-control" />
+            </div>
+            
+            
+                     
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group" align="center" >
+                    
+                <image src="/iconos/guardar.png"  
+                       onClick="@command('guardar')"
+                       tooltiptext="Guardar Registro"/>
+ 
+
+            </div> 
+        </div>
+   
+    </div>
+    
+                    
+                  
+</window>

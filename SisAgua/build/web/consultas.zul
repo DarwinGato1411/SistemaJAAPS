@@ -1,0 +1,357 @@
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>   
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="icon" type="image/x-icon" href="/iconos/deckxel.ico"?>  
+<?page title="Consultas" contentType="text/html;charset=UTF-8"?>
+
+<zk contentStyle="overflow:auto" >
+
+    <style>
+        body{
+        background-image: url('./fondo/fondocrm.jpg');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+  
+        }
+        
+    </style>
+    <div class="container col-12 col-sm-12 col-md-12 col-lg-12 form-control"  style="margin:1% auto;"         
+         apply="org.zkoss.bind.BindComposer" 
+         viewModel="@id('vm') @init('com.ec.controlador.ConsultasController')"    >
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 row"  >
+            <div class="col-12 col-sm-12 col-md-1 col-lg-1 "  >
+                <button src="/iconos/ingreso-24.png" href="/inicio.zul" style="border: none; background: #00A3E8; color:white; padding: 9px; font-size: 14px"
+                    hflex="1"  label="Regresar">
+            </button> 
+            </div>
+        <div class="col-12 col-sm-12 col-md-2 col-lg-2 " align="end" >
+           
+            <image  src="/imagenes/consultonline.png"  width="150px" ></image>
+        </div>
+        <div class="col-12 col-sm-12 col-md-9 col-lg-9 " align="end" >
+         <image  src="/imagenes/logintrans.jpg"  width="120px" align="right" ></image>
+        </div>
+         
+           
+        </div>
+        <tabbox  orient="vertical" height="500px" >
+            <tabs width="150px"   >
+                <tab label="Catastro" sclass="menutabs" />
+                <tab label="Obtener compras SRI" sclass="menutabs" />
+            </tabs>
+            <tabpanels >
+                
+                <tabpanel style="margin-left: 15px" >
+                    
+                <div class="container">
+                    <div class="row " align="left">
+            
+                        <listbox model="@load(vm.listaSriCatastro)" 
+                                 nonselectableTags="*" mold="paging" pageSize="4"  >
+                            <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                                        
+                            <listhead> 
+                                <listheader width="20%" >
+                                    <textbox value="@bind(vm.buscar)" 
+                                             class="form-control form-control-sm"
+                                             tooltiptext="Cedula"
+                                             placeholder="Identificacion"
+                                             onOK="@command('buscarForCedula')"
+                                             onChange="self.setValue(self.getValue().toUpperCase());" />
+                                </listheader>     
+                                <listheader width="40%" label = "Razon Social"  style= "font-size:14px;background:#F0F2F2" >
+                    
+                                </listheader>
+                                <listheader width="40%" label = "Descripcion"  style= "font-size:14px;background:#F0F2F2" >
+                                </listheader> 
+                            
+                            
+                            </listhead>  
+                    
+                            <template name="model">                                                            
+                                <listitem class="container-fluid ">
+                                    <listcell zclass = "mycss-listcell">
+                                        <textbox readonly="true"  style="font-size:12px;background:#EBF5FB"
+                                                 class="form-control form-control-sm"  value="@bind(each.micRuc)"  />
+                                    </listcell>
+                                    <listcell zclass = "mycss-listcell">
+                                        <textbox readonly="true"  style="font-size:12px;background:#EBF5FB"
+                                                 class="form-control form-control-sm"  value="@bind(each.razonSocial)"  />
+                                    </listcell>
+                                    <listcell zclass = "mycss-listcell">
+                                        <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                                 class="form-control form-control-sm"  value="@bind(each.nombre)"  />
+                                    </listcell>
+                    
+                                
+                                </listitem>
+                            </template>
+                        </listbox> 
+                    </div>
+                    </div>
+                </tabpanel>
+                <tabpanel style="margin-left: 15px" >
+                    <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
+          viewModel="@id('vm') @init('com.ec.controlador.ListaComprasSri')" >
+        <div class="container">
+            <div class="row">
+                                  
+                <div  class="col-12 col-sm-12 col-md-12 col-lg-12 ">
+                    <label value="Inicio: "   />
+                    <datebox   value="@bind(vm.inicio)" 
+                               readonly="true" style="font-weight:bold;"                                                   
+                               buttonVisible="true" 
+                               lenient="true"  format="dd/MM/yyyy" 
+                               constraint="no empty: Ingrese de inicio de la busqueda"/> 
+               
+                    <label value="Fin: "  />
+                    <datebox   value="@bind(vm.fin)" 
+                               readonly="true" style="font-weight:bold;" 
+                               onCreate="self.value = new Date()"                                                   
+                               buttonVisible="true" 
+                               lenient="true"  format="dd/MM/yyyy" 
+                               constraint="no empty: IBuscar por fecha fin de la busqueda"/> 
+                    <button   image="/imagenes/buscar1.png"  
+                              onClick="@command('buscarComprasSri')"  
+                              class="btn btn-primary btn-sm "
+                              tooltiptext="Buscar"/>
+                       
+                
+                
+                    <button   image="/imagenes/folder.png"  
+                              onClick="@command('subirArchivo')"  
+                              class="btn btn-primary btn-sm "
+                              tooltiptext="Cargar archivo de compras SRI"/>                                               
+
+             
+                    <button   image="/iconos/sri.png"  
+                                       onClick="@command('cargarComprasSRI')"  
+                                       class="btn btn-primary btn-sm "
+                                       tooltiptext="Descargar"/>               
+                                    
+
+                </div>
+            </div>
+   
+            <div class="row">
+                <tabbox id="tboxPrincipal"  width="100%">
+                    <tabs >
+                        <tab label="Documentos para descargar SRI" sclass="menutabs" /> 
+                        <tab label="Documentos obtenidos desde el SRI" sclass="menutabs" /> 
+                    </tabs>
+                    <tabpanels >
+                
+                      
+                        <tabpanel  >                    
+                            
+                                    <listbox model="@load(vm.listaComprasSris)" 
+                                             nonselectableTags=""  mold="paging" pageSize="20"  >
+                                        <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+<!--                                        <auxhead>
+                                            <auxheader colspan="12" >  
+                                       
+                                
+                                                    </auxheader>
+                                                </auxhead>-->
+                       
+                                                <listhead> 
+                                      
+                                                    <listheader width="20%"  label="Tipo Doc" />        
+                                                    <listheader width="10%"  label="RUC" />        
+                                                    <listheader width="35%"  label="Emisor" />        
+                                                    <listheader width="25%"  label="Nº Comprobante" />        
+                                                    <listheader width="10%"  label="Fecha emision" />        
+                                          
+                                                </listhead>  
+                        
+                    
+                                                <template name="model">                                                            
+                                                    <listitem zclass = "mycss-listcell">
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <textbox  class="form-control form-control-sm" 
+                                                                      style="font-size:12px;background:#EBF5FB"
+                                                                      readonly="true" value="@bind(each.csriComprobante)" width="100%" />
+                                                        </listcell>
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <textbox  class="form-control form-control-sm" 
+                                                                      style="font-size:12px;background:#EBF5FB"
+                                                                      readonly="true" value="@bind(each.csriRucEmisor)" width="100%" />
+                                                        </listcell>
+                                               
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <textbox class="form-control form-control-sm"                                                               
+                                                                     style="font-size:12px;background:#EBF5FB"
+                                                                     readonly="true" value="@bind(each.csriRazonSocial)" width="100%" />
+                                                        </listcell>
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <textbox class="form-control form-control-sm"                                                     
+                                                                     readonly="true" value="@bind(each.csriSerieComprobante)" width="100%" />
+                                                        </listcell>                                                                                   
+                                                        <listcell>
+                                                            <datebox value="@bind(each.csriFechaEmision)" 
+                                                                     buttonVisible="false" 
+                                                                     readonly="true"
+                                                                     lenient="true" 
+                                                                     format="medium" width="100%"  />
+                                                        </listcell>     
+                                                    </listitem>
+                                                </template>
+                                            </listbox>
+                               
+                    
+                
+                                        </tabpanel>
+                
+                                        <tabpanel  height="98%" width="99%"  >                    
+                          
+                                            <listbox model="@load(vm.listaCabeceraCompraSris)" 
+                                                     nonselectableTags=""  mold="paging" pageSize="12"  >
+                                                <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                       
+                                                <listhead> 
+                                                    <listheader width="10%"  label="" >
+                                                        <textbox value="@bind(vm.buscarNumFac)"  
+                                                                 tooltiptext="Nº Factura"
+                                                                 class="form-control form-control-sm"                                         
+                                                                 placeholder="Nº Factura"
+                                                                 onOK="@command('buscarForNumFactura')"
+                                                                 onChange="self.setValue(self.getValue().toUpperCase());" />
+                                                    </listheader> 
+                                                    <listheader width="10%"  label="Fecha" />    
+                                                    <listheader width="10%"  label="Base 12" />        
+                                                    <listheader width="10%"  label="Base 0" />        
+                                                    <listheader width="10%"  label="IVA" />        
+                                                    <listheader width="10%"  label="Total" />        
+                                                    <listheader width="10%"  label="Estado" />        
+                                                    <listheader width="30%"  label="" >
+                                                        <textbox placeholder="Proveedor"
+                                                                 value="@bind(vm.buscar)" 
+                                                                 class="form-control form-control-sm"
+                                                                 onOK="@command('buscarForProveedor')"
+                                                                 onChange="self.setValue(self.getValue().toUpperCase());"/>
+                                                    </listheader>        
+                                                    <listheader width="15%"  label="categoria" />                                                                                 
+                                                    <listheader width="15%"  label="Casillero" />                                                                                 
+                                                    <listheader width="5%"  label="" />                                                                                 
+                                                </listhead>  
+                        
+                    
+                                                <template name="model">                                                            
+                                                    <listitem>
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <textbox class="form-control form-control-sm"                                                               
+                                                                     style="font-size:12px;background:#EBF5FB"
+                                                                     readonly="true"
+                                                                     value="@bind(each.cabNumFactura)" width="96%" />
+                                                        </listcell>
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <datebox value="@bind(each.cabFechaEmision)" 
+                                                                     buttonVisible="false" 
+                                                                     lenient="true" 
+                                                                     format="medium" width="98%"  />
+                                                        </listcell>
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <decimalbox format="###.##" 
+                                                                        class="form-control form-control-sm"                                                               
+                                                                        style="font-size:12px;background:#EBF5FB"
+                                                                        readonly="true"  
+                                                                        value="@bind(each.cabSubTotal)" width="96%" />
+                                                        </listcell>
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <decimalbox format="###.##" 
+                                                                        class="form-control form-control-sm"                                                               
+                                                                        style="font-size:12px;background:#EBF5FB"
+                                                                        readonly="true"  
+                                                                        value="@bind(each.cabSubTotalCero)" width="96%" />
+                                                        </listcell>
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <decimalbox format="###.##" 
+                                                                        class="form-control form-control-sm"                                                               
+                                                                        style="font-size:12px;background:#EBF5FB"
+                                                                        readonly="true"  
+                                                                        value="@bind(each.cabIva)" width="96%" />
+                                                        </listcell>
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <decimalbox format="###.##" 
+                                                                        class="form-control form-control-sm"                                                               
+                                                                        style="font-size:12px;background:#EBF5FB"
+                                                                        readonly="true"  
+                                                                        value="@bind(each.cabTotal)" width="96%" />
+                                                        </listcell>
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <textbox class="form-control form-control-sm"                                                               
+                                                                     style="font-size:12px;background:#EBF5FB"
+                                                                     readonly="true"
+                                                                     value="@bind(each.cabEstado)" width="96%" />
+                                                        </listcell>
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <textbox class="form-control form-control-sm"                                                               
+                                                                     style="font-size:12px;background:#EBF5FB"
+                                                                     readonly="true"
+                                                                     value="@bind(each.cabProveedor)" width="96%" />
+                                                        </listcell>
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <combobox readonly="true"    
+                                                                      style="font-size:12px;width:100px"                                   
+                                                                      selectedItem="@bind(each.categoriaFactura)" >
+                                                                <comboitem label="Inventario" value="Inventario" />                    
+                                                                <comboitem label="Alimentacion" value="Alimentacion" />
+                                                                <comboitem label="Educacion" value="Educacion" />
+                                                                <comboitem label="Vestimenta" value="Vestimenta" />
+                                                                <comboitem label="Vivienda" value="Vivienda" />
+                                                                <comboitem label="Salud" value="Salud" />
+                                                            </combobox>
+                                    
+                                                        </listcell>                             
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <combobox readonly="true"    
+                                                                      style="font-size:12px;width:100px"                                  
+                                                                      selectedItem="@bind(each.cabCasillero)" >
+                                                                <comboitem label="500" value="500" 
+                                                                           description="@bind(each ne null ? ''.concat('Adquisiciones y pagos (excluye activos fijos) gravados tarifa diferente de cero (con derecho a crédito tributario)') : ''))"/>                    
+                                                                <comboitem label="501" value="501" />
+                                                                <comboitem label="502" value="502" />
+                                                                <comboitem label="503" value="503" />
+                                                                <comboitem label="504" value="504" />
+                                                                <comboitem label="505" value="505" />
+                                                                <comboitem label="506" value="506" />
+                                                                <comboitem label="507" value="507" />
+                                                                <comboitem label="508" value="508" />
+                                                                <comboitem label="526" value="526" />
+                                                                <comboitem label="527" value="527" />
+                                             
+                                                            </combobox>
+                                    
+                                                        </listcell>                             
+                                                        <listcell zclass = "mycss-listcell">
+                                                            <button src="/iconos/guardar.png"  
+                                                                    style="height:30px "            
+                                                                    autodisable="self"                                                    
+                                                                    class="btn btn btn-success btn-sm "
+                                                                    onClick="@command('actualizar',valor=each)"
+                                                                    tooltiptext="Guardar factura"/>    
+                                                        </listcell>      
+
+                                                    </listitem>
+                                                </template>
+                                            </listbox>
+                           
+                                        </tabpanel>
+                                    </tabpanels>
+            
+                                </tabbox>
+                            </div>
+                        </div>
+                    </hbox>
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+        
+ 
+        
+    
+    </div>
+  
+    
+</zk>

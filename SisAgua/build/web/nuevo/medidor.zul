@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window  id="wMedidor"  position="center" class="col-12 col-sm-12 col-md-8 col-lg-8" closable="true"  
+         apply="org.zkoss.bind.BindComposer" 
+         viewModel="@id('vm') @init('com.ec.controlador.NuevoMedidor')">
+    
+    <caption label="Medidor" style="font-weight:bold"/> 
+    <div  class="container" >
+        <div  class="row" >         
+            <div class="col-12 col-sm-12 col-md-7 col-lg-7  form-group "  >
+                <listbox  width="100%" model="@load(vm.listaPredioModel)" 
+                          onSelect="@command('seleccionarRegistros')" 
+                          mold="paging" pageSize="15"
+                          checkmark="true"  
+                          multiple="false"              
+                          nonselectableTags="*">
+                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                    <listhead>             
+                        <listheader width="30px"   ></listheader>
+                        <listheader width="30%"   >
+                            <textbox value="@bind(vm.buscarPredio)" 
+                                     class="form-control form-control-sm"
+                                     tooltiptext="Buscar "                         
+                                     placeholder="Buscar"
+                                     onOK="@command('buscarPropietario')"
+                                     onChange="self.setValue(self.getValue().toUpperCase());" />
+                        </listheader>  
+                        <listheader width="35%"   >
+                            
+                        </listheader>  
+                        <listheader width="35%"  label="" ></listheader>                                                                        
+          
+                    </listhead>  
+                    <template name="model">                                                            
+                        <listitem>                
+                            <listcell  onClick="@command('seleccionarRegistros')" ></listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                         class="form-control form-control-sm"  
+                                         value="@bind(each.idPropietario.porpCedula)"  />
+                            </listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                         class="form-control form-control-sm"  
+                                         value="@bind(each.idPropietario.propNombre)"  />
+                            </listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                         class="form-control form-control-sm"  
+                                         value="@bind(each.idPropietario.propApellido)"  />
+                            </listcell>
+                                           
+                        </listitem>
+                    </template>
+                </listbox> 
+            </div>
+            <div class="col-12 col-sm-12 col-md-5 col-lg-5  form-group "  >
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    
+                    <label  style="color:red;font-weight:bold" value="PROPIETARIO SELECCIONADO: "/>
+                    <label  style="color:blue;font-weight:bold" value="@bind(vm.entidad.idPredio.idPropietario.propNombre)"/>
+                    <label  style="color:blue;font-weight:bold" value=" "/>                   
+                    <label  style="color:blue;font-weight:bold" value="@bind(vm.entidad.idPredio.idPropietario.propApellido)"/>
+                    
+                    
+                
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/>Tarifa:
+                
+                    <combobox  model="@load(vm.listatarifas)"                            
+                               selectedItem="@bind(vm.tarifaSelected)" width="70%"
+                               readonly="true" >                                          
+                        <template name="model">
+                            <comboitem  label="@bind(each.tariDescripcion)"/>
+                        </template>                                      
+                    </combobox>             
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/># Medidor:
+                
+                    <textbox  maxlength="25"                               
+                              value="@bind(vm.entidad.medNumero)" 
+                              class="form-control" />                   
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/>Fecha registro:
+                
+                    <datebox compact="true" 
+                             value="@bind(vm.entidad.medFechaRegistro)"
+                             buttonVisible="true" lenient="true" 
+                             tooltiptext="Fecha"
+                             readonly="true"
+                             format="medium"   />
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/>Fecha instalacion:
+                
+                    <datebox compact="true" 
+                             value="@bind(vm.entidad.medFechaInstala)"
+                             buttonVisible="true" lenient="true" 
+                             tooltiptext="Fecha"
+                             readonly="true"
+                             format="medium"   />
+                </div>
+                
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/>Ubicación:                    
+                                        
+                    <combobox  model="@load(vm.listaUbicacion)"  
+                               selectedItem="@bind(vm.ubicacionSelected)" 
+                               style="width:200px"  
+                               readonly="true" >
+                        <template name="model">
+                            <comboitem  label="@bind(each.ubimNombre)"/>
+                        </template>                                      
+                    </combobox>
+      
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/>Dirección: 
+                
+                    <textbox  maxlength="100" 
+                             value="@bind(vm.entidad.medDireccion)"
+                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                             constraint="no empty: Campo requerido"
+                             class="form-control" />
+                </div>
+                     
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group" align="center" >
+                    
+                    <image src="/iconos/guardar.png"  
+                           onClick="@command('guardar')"
+                           tooltiptext="Guardar Registro"/>
+ 
+
+                </div> 
+            </div>
+            
+        </div>
+   
+    </div>
+    
+                    
+                  
+</window>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window  id="wTarifa"  position="center" class="col-12 col-sm-12 col-md-6 col-lg-4" closable="true"  
+         apply="org.zkoss.bind.BindComposer" 
+         viewModel="@id('vm') @init('com.ec.controlador.NuevaTarifa')">
+    
+    <caption label="Tarifa" style="font-weight:bold"
+    /> 
+    <div  class="container" >
+        <div  class="row" >         
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Tarifa:
+                
+                <textbox  maxlength="100" 
+                          onChange="self.setValue(self.getValue().toUpperCase())"
+                          value="@bind(vm.entidad.tariDescripcion)" 
+                          class="form-control" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Sigla:
+                
+                <textbox  maxlength="100" 
+                          onChange="self.setValue(self.getValue().toUpperCase())"
+                          value="@bind(vm.entidad.tariSigla)" 
+                          class="form-control" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Metros base:
+                
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                            value="@bind(vm.entidad.tariMetrosBase)"   
+                            class="form-control" />
+            </div>
+           
+           
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Fecha:
+                
+                <datebox compact="true" 
+                          value="@bind(vm.entidad.tariFecha)"
+                         buttonVisible="true" lenient="true" 
+                         tooltiptext="Fecha"
+                         readonly="true"
+                         format="medium"   />
+            </div>
+            
+          
+            
+            
+                     
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group" align="center" >
+                    
+                <image src="/iconos/guardar.png"  
+                       onClick="@command('guardar')"
+                       tooltiptext="Guardar Registro"/>
+ 
+
+            </div> 
+        </div>
+   
+    </div>
+    
+                    
+                  
+</window>

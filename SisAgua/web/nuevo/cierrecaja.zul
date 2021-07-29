@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window  id="windowCierre"  position="center" class="col-8 col-sm-8 col-md-4 col-lg-4 " closable="true"  
+         apply="org.zkoss.bind.BindComposer" 
+         viewModel="@id('vm') @init('com.ec.controlador.CierreCajaVm')">
+    
+
+    <caption label="Cierre de caja" style="font-weight:bold" /> 
+    
+    
+    
+    <div  class="container" >
+        <div  class="row" >
+            
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Fecha:
+                
+                <datebox compact="true" value="@bind(vm.cierreCaja.cieFecha)" 
+                         readonly="true"   
+                         style="font-weight:bold" buttonVisible="false" 
+                         lenient="true" 
+                         format="dd/MM/yyyy" />           
+            </div>        
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Valor de apertura de caja:
+                
+                <textbox value="@bind(vm.cierreCaja.cieValorInicio)"
+                         readonly="true"    
+                         constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"  
+                         class="form-control" />              
+            </div>        
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold;"/>Total con Factura:
+                
+                <textbox value="@bind(vm.totFactura)"
+                         constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"
+                         readonly="true"    
+                         class="form-control" />               
+            </div>        
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Total con Nota Venta:
+                
+                <textbox value="@bind(vm.totNotaVenta)"
+                         constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"
+                         readonly="true"    
+                         class="form-control" />     
+            </div>        
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Valor del total de cierre:
+                
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                   
+                            value="@bind(vm.cierreCaja.cieValor)"     
+                            readonly="true"                                                       
+                            class="form-control" />              
+            </div>        
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Total recaudado en caja:
+                
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                   
+                            value="@bind(vm.cierreCaja.cieCuadre)"   
+                            onOK="@command('calcularDiferencia')"
+                            onChange="@command('calcularDiferencia')"
+                            class="form-control" />              
+            </div>        
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Diferencia ( * Si el valor es negativo tiene un saldo a favor):
+                
+                <textbox    value="@bind(vm.cierreCaja.cieDiferencia)"   
+                            readonly="true"
+                            class="form-control" />              
+            </div>        
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Observacion:
+                
+                <textbox   value="@bind(vm.cierreCaja.cieDescripcion)"   
+                           onChange="self.setValue(self.getValue().toUpperCase())"
+                           class="form-control" 
+                           rows="3"
+                           maxlength="150" />              
+            </div>        
+            <div class="col-12 col-sm-6 col-md-12 col-lg-12  form-group" align="center" >
+                    
+                <image src="/iconos/guardar.png"  
+                       onClick="@command('guardar')"
+                       tooltiptext="Guardar Registro"/>
+ 
+
+            </div> 
+   
+        </div>
+    </div>
+                    
+                  
+</window>

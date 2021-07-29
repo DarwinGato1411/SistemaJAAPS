@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window  id="wDettarifa"  position="center" class="col-12 col-sm-12 col-md-6 col-lg-4" closable="true"  
+         apply="org.zkoss.bind.BindComposer" 
+         viewModel="@id('vm') @init('com.ec.controlador.NuevoDetalletarifa')">
+    
+    <caption label="Detalle de tarifa" style="font-weight:bold"
+    /> 
+    <div  class="container" >
+        <div  class="row" >         
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                <label value="@bind(vm.tarifaSelected.tariDescripcion)" style="color:red;font-weight:bold"/>
+            </div>
+                
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>M3 Inicial:
+                
+                <textbox  maxlength="100" 
+                          onChange="self.setValue(self.getValue().toUpperCase())"
+                          value="@bind(vm.entidad.dettMetroInicial)" 
+                          class="form-control" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>M3 final:
+                
+                <textbox  maxlength="100" 
+                          onChange="self.setValue(self.getValue().toUpperCase())"
+                          value="@bind(vm.entidad.dettMetroFinal)" 
+                          class="form-control" />
+            </div>
+             <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Precio Base :
+                
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                            value="@bind(vm.entidad.dettPrecioBase)"   
+                            class="form-control" />
+            </div>
+             <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Excedente ($):
+                
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                            value="@bind(vm.entidad.dettPorcentajeExcedente)"   
+                            class="form-control" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>% Alcantarillado :
+                
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                            value="@bind(vm.entidad.dettPorcentajeAlcantarillado)"   
+                            class="form-control" />
+            </div>
+            
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Precio Ambiente :
+                
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                            value="@bind(vm.entidad.dettAmbiente)"   
+                            class="form-control" />
+            </div>
+            
+              <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
+                <radiogroup 
+                    onCheck="@command('verificarPrecioPorcentaje')" 
+                    selectedItem="@bind(vm.precioPorcentaje)"  >                   
+                    <radio label="Porcentaje" value="TRUE"/>
+                    <space bar="false"  />   
+                    <radio label="Precio" value="FALSE"/>                          
+                </radiogroup>
+            </div>
+            
+             <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group " visible="@bind(vm.entidad.dettValidadesecho)"  >
+                <label value="% Desechos :" style="color:black;"/>
+                
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                            value="@bind(vm.entidad.dettPorcentajeDesechos)"   
+                            class="form-control" />
+            </div>
+             <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  visible="@bind(!vm.entidad.dettValidadesecho)">
+                <label value="Desechos ($) :" style="color:black"/>
+                
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                            value="@bind(vm.entidad.dettDesechos)"   
+                            class="form-control" />
+            </div>
+            
+               
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group" align="center" >
+                    
+                <image src="/iconos/guardar.png"  
+                       onClick="@command('guardar')"
+                       tooltiptext="Guardar Registro"/>
+ 
+
+            </div> 
+        </div>
+   
+    </div>
+    
+                    
+                  
+</window>

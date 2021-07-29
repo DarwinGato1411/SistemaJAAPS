@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window  id="wPredio"  position="center" class="col-12 col-sm-12 col-md-6 col-lg-6" closable="true"  
+         apply="org.zkoss.bind.BindComposer" 
+         viewModel="@id('vm') @init('com.ec.controlador.NuevoPredio')">
+    
+    <caption label="Predio" style="font-weight:bold"/> 
+    <div  class="container" >
+        <div  class="row" >         
+            <div class="col-12 col-sm-12 col-md-7 col-lg-7  form-group "  >
+                <listbox  width="100%" model="@load(vm.listaPropietariosModel)" 
+                          onSelect="@command('seleccionarRegistros')" 
+                          mold="paging" pageSize="15"
+                          checkmark="true"  
+                          multiple="false"              
+                          nonselectableTags="*">
+                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                    <listhead>             
+                        <listheader width="30px"   ></listheader>
+                        <listheader width="30%"   >
+                            <textbox value="@bind(vm.buscarPropietario)" 
+                                     class="form-control form-control-sm"
+                                     tooltiptext="Buscar "                         
+                                     placeholder="Buscar"
+                                     onOK="@command('buscarPropietario')"
+                                     onChange="self.setValue(self.getValue().toUpperCase());" />
+                        </listheader>  
+                        <listheader width="70%"  label="" ></listheader>                                                                        
+          
+                    </listhead>  
+                    <template name="model">                                                            
+                        <listitem>                
+                            <listcell  onClick="@command('seleccionarRegistros')" ></listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                         class="form-control form-control-sm"  
+                                         value="@bind(each.porpCedula)"  />
+                            </listcell>
+                            <listcell zclass = "mycss-listcell">
+                                <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                         class="form-control form-control-sm"  
+                                         value="@bind(each.propNombre)"  />
+                            </listcell>
+                                           
+                        </listitem>
+                    </template>
+                </listbox> 
+            </div>
+            <div class="col-12 col-sm-12 col-md-5 col-lg-5  form-group "  >
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/>Cedula:
+                
+                    <textbox  maxlength="13" 
+                              readonly="true"
+                              onChange="self.setValue(self.getValue().toUpperCase())"
+                              value="@bind(vm.entidad.idPropietario.porpCedula)" 
+                              class="form-control" />                   
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/>Nombre:
+                
+                    <textbox  maxlength="150" 
+                              readonly="true"
+                              onChange="self.setValue(self.getValue().toUpperCase())"
+                              value="@bind(vm.entidad.idPropietario.propNombre)" 
+                              class="form-control" />
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/>Area:
+                
+                    <decimalbox class="form-control "  
+                                value="@bind(vm.entidad.preArea)"  />
+                </div>                                 
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/>Direccion:
+                
+                    <textbox  maxlength="200" 
+                              onChange="self.setValue(self.getValue().toUpperCase())"
+                              value="@bind(vm.entidad.predDireccion)" 
+                              class="form-control" />
+                </div>
+            
+            
+                     
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group" align="center" >
+                    
+                    <image src="/iconos/guardar.png"  
+                           onClick="@command('guardar')"
+                           tooltiptext="Guardar Registro"/>
+ 
+
+                </div> 
+            </div>
+            
+        </div>
+   
+    </div>
+    
+                    
+                  
+</window>
