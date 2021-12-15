@@ -124,6 +124,22 @@ public class DetalleFactura implements Serializable {
     @JoinColumn(name = "id_lectura", referencedColumnName = "id_lectura")
     @ManyToOne
     private Lectura idLectura;
+    
+    
+       @Column(name = "det_lec_actual")
+    private BigDecimal detLecActual;
+    @Column(name = "det_lec_anterior")
+    private BigDecimal detLecAnterior;
+    @Column(name = "det_lec_metros_cubicos")
+    private BigDecimal detMetrosCubicos;
+    @Column(name = "det_medidor")
+    private String detMedidor;
+    @Column(name = "det_lec_mes")
+    private Integer detLecMes;
+    @Column(name = "det_dir_medidor")
+    private String detDirMedidor;
+    
+    
 
     public DetalleFactura() {
     }
@@ -433,6 +449,55 @@ public class DetalleFactura implements Serializable {
         this.idLectura = idLectura;
     }
 
+    public BigDecimal getDetLecActual() {
+        return detLecActual;
+    }
+
+    public void setDetLecActual(BigDecimal detLecActual) {
+        this.detLecActual = detLecActual;
+    }
+
+    public BigDecimal getDetLecAnterior() {
+        return detLecAnterior;
+    }
+
+    public void setDetLecAnterior(BigDecimal detLecAnterior) {
+        this.detLecAnterior = detLecAnterior;
+    }
+
+    public BigDecimal getDetMetrosCubicos() {
+        return detMetrosCubicos;
+    }
+
+    public void setDetMetrosCubicos(BigDecimal detMetrosCubicos) {
+        this.detMetrosCubicos = detMetrosCubicos;
+    }
+
+    public String getDetMedidor() {
+        return detMedidor;
+    }
+
+    public void setDetMedidor(String detMedidor) {
+        this.detMedidor = detMedidor;
+    }
+
+    public Integer getDetLecMes() {
+        return detLecMes;
+    }
+
+    public void setDetLecMes(Integer detLecMes) {
+        this.detLecMes = detLecMes;
+    }
+
+    public String getDetDirMedidor() {
+        return detDirMedidor;
+    }
+
+    public void setDetDirMedidor(String detDirMedidor) {
+        this.detDirMedidor = detDirMedidor;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

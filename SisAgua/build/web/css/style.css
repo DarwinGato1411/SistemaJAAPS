@@ -30,7 +30,7 @@ element.style {
     overflow: hidden;
 }
 .banner {
-    background-color:#1ebea5;
+    background-color:#2b3770;
     color: white;
     padding: 10px 5px 5px 10px;
 }
@@ -696,12 +696,12 @@ div.z-listfooter-cnt, div.z-listcell-cnt, div.z-listheader-cnt {
     outline-width: 0;
     padding: 2px 21px 2px 3px;
     white-space: nowrap;
-    background: #1ebea5;
+    background: #2b3770;
     background-image: none;
 }
 
 .z-menupopup .z-menupopup-cnt{
-    background:#1ebea5 none repeat 0 0;
+    background:#2b3770 none repeat 0 0;
     background-image:none;
     border:0 none;
     padding:0;

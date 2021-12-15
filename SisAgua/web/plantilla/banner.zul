@@ -13,7 +13,7 @@
             <div class="col-12 col-sm-12 col-md-5 col-lg-5  " align="start" style="float: right; " >
                 <div apply="org.zkoss.bind.BindComposer" 
                      viewModel="@id('vm') @init('com.ec.controlador.MenuToolbar')">
-                    <toolbar id="tb" height="30px"  style="background-color:#1ebea5;" >
+                    <toolbar id="tb" height="30px"  style="background-color:#2b3770;" >
                         <!--<toolbarbutton image="/iconos/fact.png" label="Facturar" onClick="@command('facturar')" />-->
                         <toolbarbutton image="/iconos/page.png" label="Producto" if="${sessionScope.usuario.usuarioSistema.usuNivel == 1}" onClick="@command('nuevoProducto')" />
                         <toolbarbutton image="/iconos/user.png" label="Cliente" onClick="@command('nuevoCliente')" />
@@ -90,6 +90,15 @@
                                 <menuitem label="ATS Ventas" id="btnContabilidad"  /> 
                                 <menuitem label="ATS Compras y Ventas" id="btnContabilidadATS"  /> 
                                 <menuitem label="Retenciones por casillero" id="btnRetencionesCasillero"  />
+                            </menupopup>
+                        </menu>
+                        
+                        <menu label="Contabilidad" id="menuContabilidad">
+                            <menupopup>                                                                         
+                                <menuitem label="Clase" id="btnCuClase"  />                              
+                                <menuitem label="Cuenta" id="btnCuCuenta"  />
+                                <menuitem label="Grupo" id="btnCuGrupo" />
+                                <menuitem label="Sub Cuenta" id="btnCuSubClase" />
                             </menupopup>
                         </menu>
                         

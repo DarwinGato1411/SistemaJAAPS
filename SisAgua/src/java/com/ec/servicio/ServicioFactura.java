@@ -238,8 +238,8 @@ public class ServicioFactura {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createNamedQuery("Factura.findUltimaFactura", Factura.class);
-            query.setMaxResults(2);
+            Query query = em.createQuery("SELECT f FROM Factura f WHERE f.facTipo='FACT' AND f.facNumero IS NOT NULL ORDER BY f.facNumero DESC");
+            query.setMaxResults(1);
 //           query.setParameter("codigoUsuario", factura);
             listaFacturas = (List<Factura>) query.getResultList();
             if (listaFacturas.size() > 0) {
@@ -266,7 +266,7 @@ public class ServicioFactura {
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
             Query query = em.createQuery("SELECT f FROM Factura f WHERE f.facTipo='PROF' AND f.facNumProforma IS NOT NULL ORDER BY f.idFactura DESC");
-            query.setMaxResults(2);
+            query.setMaxResults(1);
 //           query.setParameter("codigoUsuario", factura);
             listaFacturas = (List<Factura>) query.getResultList();
             if (listaFacturas.size() > 0) {

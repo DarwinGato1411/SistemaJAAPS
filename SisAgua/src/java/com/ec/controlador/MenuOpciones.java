@@ -52,6 +52,8 @@ public class MenuOpciones extends SelectorComposer<Component> {
     Menu menuKardex;
     @Wire("#menuReportes")
     Menu menuReportes;
+    @Wire("#menuContabilidad")
+    Menu menuContabilidad;
     @Wire("#btnAdministarVenta")
     Menuitem btnAdministarVenta;
     UserCredential credential = new UserCredential();
@@ -66,24 +68,26 @@ public class MenuOpciones extends SelectorComposer<Component> {
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
-        if (credential.getUsuarioSistema() != null) {
-
-            if (credential.getUsuarioSistema().getUsuNivel() == 1) {
-                btnFacturar.setVisible(Boolean.TRUE);
-                menuVentas.setVisible(Boolean.TRUE);
-                menuCompras.setVisible(Boolean.TRUE);
-                menuKardex.setVisible(Boolean.TRUE);
-                menuReportes.setVisible(Boolean.TRUE);
-                btnAdministarVenta.setVisible(Boolean.TRUE);
-            } else {
-                btnFacturar.setVisible(Boolean.TRUE);
-                menuVentas.setVisible(Boolean.FALSE);
-                menuCompras.setVisible(Boolean.FALSE);
-                menuKardex.setVisible(Boolean.FALSE);
-                menuReportes.setVisible(Boolean.FALSE);
-                btnAdministarVenta.setVisible(Boolean.FALSE);
-            }
-        }
+//        if (credential.getUsuarioSistema() != null) {
+//
+//            if (credential.getUsuarioSistema().getUsuNivel() == 1) {
+//                btnFacturar.setVisible(Boolean.TRUE);
+//                menuVentas.setVisible(Boolean.TRUE);
+//                menuCompras.setVisible(Boolean.TRUE);
+//                menuKardex.setVisible(Boolean.TRUE);
+//                menuReportes.setVisible(Boolean.TRUE);
+//                menuContabilidad.setVisible(Boolean.TRUE);
+//                btnAdministarVenta.setVisible(Boolean.TRUE);
+//            } else {
+//                btnFacturar.setVisible(Boolean.TRUE);
+//                menuVentas.setVisible(Boolean.FALSE);
+//                menuCompras.setVisible(Boolean.FALSE);
+//                menuKardex.setVisible(Boolean.FALSE);
+//                menuReportes.setVisible(Boolean.FALSE);
+//                menuContabilidad.setVisible(Boolean.FALSE);
+//                btnAdministarVenta.setVisible(Boolean.FALSE);
+//            }
+//        }
     }
 
     @Listen("onClick = #buttonConsultar")
@@ -203,7 +207,24 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnRetencionesCasillero() {
         Executions.sendRedirect("/compra/listaretencioncasillero.zul");
     }
+    
+    @Listen("onClick = #btnCuClase")
+    public void btnCuClase() {
+        Executions.sendRedirect("/contabilidad/clase.zul");
+    }
 
+    @Listen("onClick = #btnCuCuenta")
+    public void btnCuCuenta() {
+        Executions.sendRedirect("/contabilidad/cuenta.zul");
+    }
+    @Listen("onClick = #btnCuGrupo")
+    public void btnCuGrupo() {
+        Executions.sendRedirect("/contabilidad/grupo.zul");
+    }
+    @Listen("onClick = #btnCuSubClase")
+    public void btnCuSubClase() {
+        Executions.sendRedirect("/contabilidad/subclase.zul");
+    }
     @Listen("onClick = #btnFactAutori")
     public void btnFactAutori() {
         Executions.sendRedirect("/venta/facturasautorizadas.zul");
