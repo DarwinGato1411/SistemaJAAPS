@@ -99,6 +99,7 @@
                                 <menuitem label="Cuenta" id="btnCuCuenta"  />
                                 <menuitem label="Grupo" id="btnCuGrupo" />
                                 <menuitem label="Sub Cuenta" id="btnCuSubClase" />
+                                <menuitem label="Comprobante diario" id="btnCuComprobanteDiario" />
                             </menupopup>
                         </menu>
                         

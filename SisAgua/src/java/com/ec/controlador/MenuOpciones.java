@@ -225,6 +225,10 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnCuSubClase() {
         Executions.sendRedirect("/contabilidad/subclase.zul");
     }
+    @Listen("onClick = #btnCuComprobanteDiario")
+    public void btnCuComprobanteDiario() {
+        Executions.sendRedirect("/contabilidad/comprobanteDiario.zul");
+    }
     @Listen("onClick = #btnFactAutori")
     public void btnFactAutori() {
         Executions.sendRedirect("/venta/facturasautorizadas.zul");
