@@ -11,14 +11,24 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.ComprobantesDesktop.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
+<<<<<<< HEAD
+=======
                     <file>${libs.Jasper.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+>>>>>>> 3bf8769ea4fa33f741d9779f909d4c56a2fefcc9
+                    <file>${file.reference.ComprobantesDesktop.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+<<<<<<< HEAD
+                    <file>${libs.Jasper.classpath}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+=======
+>>>>>>> 3bf8769ea4fa33f741d9779f909d4c56a2fefcc9
                     <file>${file.reference.MITyCLibAPI-1.1.7.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
