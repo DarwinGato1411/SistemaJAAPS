@@ -19,7 +19,11 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+<<<<<<< HEAD
                     <file>${libs.Jasper.classpath}</file>
+=======
+                    <file>${libs.jasper.classpath}</file>
+>>>>>>> 6dc36fb43db777de24cf4211338492127b5b8302
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">

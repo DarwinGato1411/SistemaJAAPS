@@ -48,7 +48,7 @@ public class NuevoDetalletarifa {
             this.entidad = valor.getDetalleTarifa();
             accion = "update";
             tarifaSelected = valor.getTarifa();
-            precioPorcentaje = entidad.getDettValidadesecho()?"TRUE":"FALSE";
+            precioPorcentaje = entidad.getDettValidadesecho() ? "TRUE" : "FALSE";
 
         } else {
             this.entidad = new DetalleTarifa();
@@ -56,9 +56,9 @@ public class NuevoDetalletarifa {
             entidad.setDettPorcentajeExcedente(BigDecimal.ZERO);
             tarifaSelected = valor.getTarifa();
             accion = "create";
+            entidad.setDettPorcentajeAlcantarillado(BigDecimal.valueOf(30));
+            entidad.setDettPorcentajeDesechos(BigDecimal.valueOf(30));
         }
-        entidad.setDettPorcentajeAlcantarillado(BigDecimal.valueOf(30));
-        entidad.setDettPorcentajeDesechos(BigDecimal.valueOf(30));
     }
 
     @Command
@@ -78,6 +78,7 @@ public class NuevoDetalletarifa {
                 && entidad.getDettPorcentajeExcedente() != null
                 && entidad.getDettPorcentajeAlcantarillado() != null
                 && entidad.getDettPorcentajeDesechos() != null
+                && entidad.getDettDesechos() != null
                 && entidad.getDettAmbiente() != null) {
             entidad.setIdTarifa(tarifaSelected);
             if (accion.equals("create")) {
