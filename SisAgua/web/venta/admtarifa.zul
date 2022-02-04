@@ -23,10 +23,10 @@
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 form-group " align="start"  >
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 form-group " align="start"  >
                     <button  src="/iconos/nuevo_pro-24.png"
-                            label="Nueva tarifa"
-                            class="btn btn btn-secondary btn-sm "
-                            onClick="@command('nuevo')"
-                            tooltiptext="Nueva tarifa"/>
+                             label="Nueva tarifa"
+                             class="btn btn btn-secondary btn-sm "
+                             onClick="@command('nuevo')"
+                             tooltiptext="Nueva tarifa"/>
                 </div>
                 <listbox   model="@load(vm.listaDetalleFacturaModel)" 
                            onSelect="@command('seleccionarRegistros')" 
@@ -88,16 +88,16 @@
             </div>
             <div class="col-12 col-sm-12 col-md-7 col-lg-7 form-group " align="start"  >
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 form-group " align="start"  >
-                      <label  style="color:red;font-weight:bold" value="TARIFA SELECCIONADA: "/>
-                      <label  style="color:blue;font-weight:bold" value="@bind(vm.tarifaSeleted.tariDescripcion)"/>
+                    <label  style="color:red;font-weight:bold" value="TARIFA SELECCIONADA: "/>
+                    <label  style="color:blue;font-weight:bold" value="@bind(vm.tarifaSeleted.tariDescripcion)"/>
                     
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 form-group " align="start"  >
                     <button  src="/iconos/nuevo_pro-24.png"
-                            label="Nuevo detalle de tarifa"
-                            class="btn btn btn-secondary btn-sm "
-                            onClick="@command('nuevoDetalle')"
-                            tooltiptext="Nuevo detalle de tarifa"/>
+                             label="Nuevo detalle de tarifa"
+                             class="btn btn btn-secondary btn-sm "
+                             onClick="@command('nuevoDetalle')"
+                             tooltiptext="Nuevo detalle de tarifa"/>
                 </div>
                 <listbox   model="@load(vm.listaDetalleTarifa)" 
                            mold="paging" pageSize="15"
@@ -140,8 +140,15 @@
                                             value="@bind(each.dettPorcentajeAlcantarillado)" width="96%"/>
                             </listcell>
                             <listcell zclass = "mycss-listcell">
-                                <decimalbox format="###.##" readonly="true" 
-                                            value="@bind(each.dettPorcentajeDesechos)" width="96%"/>
+                                <div  if="${each.dettValidadesecho}">
+                                    %<decimalbox format="###.##" readonly="true" 
+                                                value="@bind(each.dettPorcentajeDesechos)" width="80%"/>
+                                </div>  
+                                <div  if="${!each.dettValidadesecho}">
+                                    $<decimalbox format="###.##" readonly="true" 
+                                                             value="@bind(each.dettDesechos)" width="80%"/>
+                                </div>
+                               
                             </listcell>
                             <listcell zclass = "mycss-listcell">
                                 <decimalbox format="###.##" readonly="true" 
