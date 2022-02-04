@@ -47,6 +47,6 @@ nbdist/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
-/GestionBomberos/nbproject/**
-/GestionBomberos/nbproject/private/**
-/GestionBomberos/nbproject/private/private.properties
+/SisAgua/nbproject/**
+/SisAgua/nbproject/private/**
+/SisAgua/nbproject/private/private.properties
