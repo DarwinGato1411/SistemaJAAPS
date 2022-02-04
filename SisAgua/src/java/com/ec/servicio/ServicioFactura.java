@@ -99,6 +99,11 @@ public class ServicioFactura {
                 detalleFactura.setProvincia(item.getProvincia());
                 detalleFactura.setNumerotel(item.getNumerotel());
                 detalleFactura.setCodigoCantonMatriculacion(item.getCodigoCantonMatriculacion());
+                
+                if (item.getLectura() != null) {
+//                    item.getLectura().getLecMes();
+                    detalleFactura.setIdLectura(item.getLectura());
+                }
                 // servicioDetalleFactura.crear(detalleFactura);
                 em.persist(detalleFactura);
                 em.flush();

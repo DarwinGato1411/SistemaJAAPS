@@ -8,7 +8,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2021-07-29T07:21:47")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2022-02-03T11:51:03")
 @StaticMetamodel(DetalleFactura.class)
 public class DetalleFactura_ { 
 
@@ -18,6 +18,7 @@ public class DetalleFactura_ {
     public static volatile SingularAttribute<DetalleFactura, String> codigoCantonMatriculacion;
     public static volatile SingularAttribute<DetalleFactura, String> provincia;
     public static volatile SingularAttribute<DetalleFactura, BigDecimal> detTotaldescuento;
+    public static volatile SingularAttribute<DetalleFactura, BigDecimal> detLecActual;
     public static volatile SingularAttribute<DetalleFactura, BigDecimal> detCantidad;
     public static volatile SingularAttribute<DetalleFactura, String> detCamvcpn;
     public static volatile SingularAttribute<DetalleFactura, String> numerotel;
@@ -38,11 +39,16 @@ public class DetalleFactura_ {
     public static volatile SingularAttribute<DetalleFactura, BigDecimal> detPordescuento;
     public static volatile SingularAttribute<DetalleFactura, BigDecimal> detValdescuento;
     public static volatile SingularAttribute<DetalleFactura, String> detDescripcion;
+    public static volatile SingularAttribute<DetalleFactura, BigDecimal> detMetrosCubicos;
+    public static volatile SingularAttribute<DetalleFactura, String> detMedidor;
+    public static volatile SingularAttribute<DetalleFactura, BigDecimal> detLecAnterior;
+    public static volatile SingularAttribute<DetalleFactura, Integer> detLecMes;
     public static volatile SingularAttribute<DetalleFactura, Factura> idFactura;
     public static volatile SingularAttribute<DetalleFactura, String> detCodPorcentaje;
     public static volatile SingularAttribute<DetalleFactura, BigDecimal> detCantpordescuento;
     public static volatile SingularAttribute<DetalleFactura, String> tipotel;
     public static volatile SingularAttribute<DetalleFactura, Producto> idProducto;
+    public static volatile SingularAttribute<DetalleFactura, String> detDirMedidor;
     public static volatile SingularAttribute<DetalleFactura, BigDecimal> detTotaldescuentoiva;
     public static volatile SingularAttribute<DetalleFactura, Lectura> idLectura;
     public static volatile SingularAttribute<DetalleFactura, String> detSerialvin;

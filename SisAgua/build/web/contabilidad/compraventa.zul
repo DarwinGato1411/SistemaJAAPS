@@ -35,7 +35,7 @@
                                            lenient="true"  format="dd/MM/yyyy" 
                                            constraint="no empty: IBuscar por fecha fin de la busqueda"/> 
                                 <button   image="/imagenes/buscar1.png"  
-                                          onClick="@command('buscarForFechas')"  
+                                          onClick="@command('buscarListadoDetallado')"  
                                           class="btn btn-primary btn-sm "
                                           tooltiptext="Buscar"/>
                        

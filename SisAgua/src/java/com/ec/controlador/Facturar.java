@@ -744,7 +744,7 @@ public class Facturar extends SelectorComposer<Component> {
             valor.setDetPordescuento(DESCUENTOGENERAL);
             valor.setCodigo(productoBuscado.getProdCodigo());
             valor.setEsProducto(producto.getProdEsproducto());
-            valor.setLectura(lectura);
+            
             //obtiene la tarif del medidor            
             // Tarifa tarifa = lectura.getIdMedidor().getIdTarifa();
             DetalleTarifa detalleTarifa = servicioDetalleTarifas.findIdTarifaAndMetros(lectura.getIdMedidor().getIdTarifa(), lectura.getLecMetrosCubicos());
@@ -859,7 +859,7 @@ public class Facturar extends SelectorComposer<Component> {
             valorExcedente.setEsProducto(producto.getProdEsproducto());
             valorExcedente.setTotalInicial(alcantarillado);
             valorExcedente.setTotal(valorCobroExce);
-            valorExcedente.setLectura(lectura);
+           // valorExcedente.setLectura(lectura);
             //para llenar lectura como producto
             if (valorExcedente.getCantidad() == null) {
                 return;
@@ -936,7 +936,7 @@ public class Facturar extends SelectorComposer<Component> {
             valorAlcantarillado.setEsProducto(producto.getProdEsproducto());
             valorAlcantarillado.setTotalInicial(alcantarillado);
             valorAlcantarillado.setTotal(alcantarillado);
-            valorAlcantarillado.setLectura(lectura);
+           // valorAlcantarillado.setLectura(lectura);
             //para llenar lectura como producto
             if (valorAlcantarillado.getCantidad() == null) {
                 return;
@@ -1013,7 +1013,7 @@ public class Facturar extends SelectorComposer<Component> {
             valorDesechos.setDetPordescuento(DESCUENTOGENERAL);
             valorDesechos.setCodigo(productoBuscado.getProdCodigo());
             valorDesechos.setEsProducto(producto.getProdEsproducto());
-            valorDesechos.setLectura(lectura);
+           // valorDesechos.setLectura(lectura);
             desechos = ArchivoUtils.redondearDecimales(desechos, 2);
             valorDesechos.setTotalInicial(desechos);
             valorDesechos.setTotal(desechos);
@@ -1095,7 +1095,7 @@ public class Facturar extends SelectorComposer<Component> {
             valorAmbiente.setEsProducto(producto.getProdEsproducto());
             valorAmbiente.setTotalInicial(ambiente);
             valorAmbiente.setTotal(ambiente);
-            valorAmbiente.setLectura(lectura);
+            //valorAmbiente.setLectura(lectura);
             //para llenar lectura como producto
             if (valorAmbiente.getCantidad() == null) {
                 return;
