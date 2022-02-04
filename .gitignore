@@ -51,3 +51,4 @@ build/
 /SisAgua/nbproject/private/**
 /SisAgua/nbproject/private/private.properties
 /SisAgua/lib/**
+SisAgua/build/web/WEB-INF/lib/**
