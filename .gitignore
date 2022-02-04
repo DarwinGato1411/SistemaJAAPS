@@ -50,3 +50,4 @@ build/
 /SisAgua/nbproject/**
 /SisAgua/nbproject/private/**
 /SisAgua/nbproject/private/private.properties
+/SisAgua/lib/**
