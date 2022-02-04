@@ -8,11 +8,17 @@ import com.ec.entidad.Medidor;
 import com.ec.entidad.Predio;
 import com.ec.entidad.Tarifa;
 import com.ec.entidad.UbicacionMedidor;
+import com.ec.servicio.ServicioGeneral;
 import com.ec.servicio.ServicioMedidor;
 import com.ec.servicio.ServicioPredio;
 import com.ec.servicio.ServicioTarifa;
 import com.ec.servicio.ServicioUbicacionMedidor;
+import com.ec.untilitario.ListadoMeses;
+import com.ec.untilitario.ModeloMeses;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -55,6 +61,13 @@ public class NuevoMedidor {
     private List<UbicacionMedidor> listaUbicacion = new ArrayList<UbicacionMedidor>();
     private UbicacionMedidor ubicacionSelected=null;
     
+     private ModeloMeses buscarMes = new ModeloMeses();
+     private Date fechaCreacion = new Date();
+     ServicioGeneral servicioGeneral = new ServicioGeneral();
+                      Calendar fecha = Calendar.getInstance();
+                  int mes = fecha.get(Calendar.MONTH) + 1;
+
+     
     @AfterCompose
     public void afterCompose(@ExecutionArgParam("valor") Medidor valor, @ContextParam(ContextType.VIEW) Component view) {
         Selectors.wireComponents(view, this, false);
@@ -128,12 +141,19 @@ public class NuevoMedidor {
                 &&ubicacionSelected!=null) {
             entidad.setIdUbicacionMedidor(ubicacionSelected);
             entidad.setMedBarrio(ubicacionSelected.getUbimNombre());
-            if (accion.equals("ceate")) {
+            if (accion.equals("create")) {
                 
                 servicioMedidor.crear(entidad);
+              servicioGeneral.iniciarLecturaMedidor(mes, fechaCreacion);
+//                System.out.println("fechaCreacion " + fechaCreacion);
             } else {
                 servicioMedidor.modificar(entidad);
             }
+                // fechaCreacion.setMonth(buscarMes.getNumero() - 1);
+
+                 
+               // servicioGeneral.iniciarLecturaMedidor(mes, fechaCreacion);
+                System.out.println("fechaCreacion " + fechaCreacion + " el mes es: " + mes);
             wMedidor.detach();
         } else {
             
@@ -142,6 +162,7 @@ public class NuevoMedidor {
         }
     }
     
+  
     public ListModelList<Predio> getListaPredioModel() {
         return listaPredioModel;
     }
