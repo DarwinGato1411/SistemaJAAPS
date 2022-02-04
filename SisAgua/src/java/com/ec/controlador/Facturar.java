@@ -744,7 +744,7 @@ public class Facturar extends SelectorComposer<Component> {
             valor.setDetPordescuento(DESCUENTOGENERAL);
             valor.setCodigo(productoBuscado.getProdCodigo());
             valor.setEsProducto(producto.getProdEsproducto());
-            
+
             //obtiene la tarif del medidor            
             // Tarifa tarifa = lectura.getIdMedidor().getIdTarifa();
             DetalleTarifa detalleTarifa = servicioDetalleTarifas.findIdTarifaAndMetros(lectura.getIdMedidor().getIdTarifa(), lectura.getLecMetrosCubicos());
@@ -807,7 +807,7 @@ public class Facturar extends SelectorComposer<Component> {
                 BigDecimal valorDescuentoIva = BigDecimal.ZERO;
                 if (valor.getEsProducto()) {
                     porcentajeDesc = valor.getTotal().multiply(BigDecimal.valueOf(100.0));
-                    valorPorcentaje = porcentajeDesc.divide(valor.getTotalInicial(), 7, RoundingMode.FLOOR);
+                    valorPorcentaje = valor.getTotalInicial().intValue() > 0 ? porcentajeDesc.divide(valor.getTotalInicial(), 7, RoundingMode.FLOOR) : BigDecimal.ZERO;
                     valorDescuentoIva = valor.getTotalInicial().subtract(valor.getTotal());
                 }
 
@@ -859,7 +859,7 @@ public class Facturar extends SelectorComposer<Component> {
             valorExcedente.setEsProducto(producto.getProdEsproducto());
             valorExcedente.setTotalInicial(alcantarillado);
             valorExcedente.setTotal(valorCobroExce);
-           // valorExcedente.setLectura(lectura);
+            // valorExcedente.setLectura(lectura);
             //para llenar lectura como producto
             if (valorExcedente.getCantidad() == null) {
                 return;
@@ -885,7 +885,7 @@ public class Facturar extends SelectorComposer<Component> {
                 BigDecimal valorDescuentoIva = BigDecimal.ZERO;
                 if (valorExcedente.getEsProducto()) {
                     porcentajeDesc = valorExcedente.getTotal().multiply(BigDecimal.valueOf(100.0));
-                    valorPorcentaje = porcentajeDesc.divide(valorExcedente.getTotalInicial(), 7, RoundingMode.FLOOR);
+                    valorPorcentaje = valorExcedente.getTotalInicial().intValue() > 0 ? porcentajeDesc.divide(valorExcedente.getTotalInicial(), 7, RoundingMode.FLOOR) : BigDecimal.ZERO;
                     valorDescuentoIva = valorExcedente.getTotalInicial().subtract(valorExcedente.getTotal());
                 }
 
@@ -922,7 +922,7 @@ public class Facturar extends SelectorComposer<Component> {
                 valorExcedente.setDetTotalconiva(valorExcedente.getCantidad().multiply(valorExcedente.getTotal()));
 
                 valorExcedente.setDetCantpordescuento(valorDescuento.multiply(valorExcedente.getCantidad()));
-
+                valorExcedente.setLectura(lectura);
             }
 
             /*FIN EXCEDENTE*/
@@ -936,7 +936,7 @@ public class Facturar extends SelectorComposer<Component> {
             valorAlcantarillado.setEsProducto(producto.getProdEsproducto());
             valorAlcantarillado.setTotalInicial(alcantarillado);
             valorAlcantarillado.setTotal(alcantarillado);
-           // valorAlcantarillado.setLectura(lectura);
+            // valorAlcantarillado.setLectura(lectura);
             //para llenar lectura como producto
             if (valorAlcantarillado.getCantidad() == null) {
                 return;
@@ -962,7 +962,7 @@ public class Facturar extends SelectorComposer<Component> {
                 BigDecimal valorDescuentoIva = BigDecimal.ZERO;
                 if (valorAlcantarillado.getEsProducto()) {
                     porcentajeDesc = valorAlcantarillado.getTotal().multiply(BigDecimal.valueOf(100.0));
-                    valorPorcentaje = porcentajeDesc.divide(valorAlcantarillado.getTotalInicial(), 7, RoundingMode.FLOOR);
+                    valorPorcentaje = valorAlcantarillado.getTotalInicial().intValue() > 0 ? porcentajeDesc.divide(valorAlcantarillado.getTotalInicial(), 7, RoundingMode.FLOOR) : BigDecimal.ZERO;
                     valorDescuentoIva = valorAlcantarillado.getTotalInicial().subtract(valorAlcantarillado.getTotal());
                 }
 
@@ -1000,7 +1000,7 @@ public class Facturar extends SelectorComposer<Component> {
 
                 valorAlcantarillado.setDetCantpordescuento(valorDescuento.multiply(valorAlcantarillado.getCantidad()));
                 /*GREGA LECTURA AL REGISTRO*/
-//                valorAlcantarillado.setLectura(lectura);
+                valorAlcantarillado.setLectura(lectura);
 
             }
 
@@ -1013,7 +1013,7 @@ public class Facturar extends SelectorComposer<Component> {
             valorDesechos.setDetPordescuento(DESCUENTOGENERAL);
             valorDesechos.setCodigo(productoBuscado.getProdCodigo());
             valorDesechos.setEsProducto(producto.getProdEsproducto());
-           // valorDesechos.setLectura(lectura);
+            // valorDesechos.setLectura(lectura);
             desechos = ArchivoUtils.redondearDecimales(desechos, 2);
             valorDesechos.setTotalInicial(desechos);
             valorDesechos.setTotal(desechos);
@@ -1042,7 +1042,7 @@ public class Facturar extends SelectorComposer<Component> {
                 BigDecimal valorDescuentoIva = BigDecimal.ZERO;
                 if (valorDesechos.getEsProducto()) {
                     porcentajeDesc = valorDesechos.getTotal().multiply(BigDecimal.valueOf(100.0));
-                    valorPorcentaje = porcentajeDesc.divide(valorDesechos.getTotalInicial(), 7, RoundingMode.FLOOR);
+                    valorPorcentaje = valorDesechos.getTotalInicial().intValue() > 0 ? porcentajeDesc.divide(valorDesechos.getTotalInicial(), 7, RoundingMode.FLOOR) : BigDecimal.ZERO;
                     valorDescuentoIva = valorDesechos.getTotalInicial().subtract(valorDesechos.getTotal());
                 }
 
@@ -1080,7 +1080,7 @@ public class Facturar extends SelectorComposer<Component> {
 
                 valorDesechos.setDetCantpordescuento(valorDescuento.multiply(valorDesechos.getCantidad()));
                 /*GREGA LECTURA AL REGISTRO*/
-//                valorDesechos.setLectura(lectura);
+                valorDesechos.setLectura(lectura);
 
             }
 
@@ -1121,7 +1121,7 @@ public class Facturar extends SelectorComposer<Component> {
                 BigDecimal valorDescuentoIva = BigDecimal.ZERO;
                 if (valorAmbiente.getEsProducto()) {
                     porcentajeDesc = valorAmbiente.getTotal().multiply(BigDecimal.valueOf(100.0));
-                    valorPorcentaje = porcentajeDesc.divide(valorAmbiente.getTotalInicial(), 7, RoundingMode.FLOOR);
+                    valorPorcentaje = valorAmbiente.getTotalInicial().intValue() > 0 ? porcentajeDesc.divide(valorAmbiente.getTotalInicial(), 7, RoundingMode.FLOOR) : BigDecimal.ZERO;
                     valorDescuentoIva = valorAmbiente.getTotalInicial().subtract(valorAmbiente.getTotal());
                 }
 
@@ -1159,7 +1159,7 @@ public class Facturar extends SelectorComposer<Component> {
 
                 valorAmbiente.setDetCantpordescuento(valorDescuento.multiply(valorAmbiente.getCantidad()));
                 /*GREGA LECTURA AL REGISTRO*/
-//                valorAmbiente.setLectura(lectura);
+                valorAmbiente.setLectura(lectura);
 
             }
 
@@ -1196,7 +1196,7 @@ public class Facturar extends SelectorComposer<Component> {
                         BigDecimal valorDescuentoIva = BigDecimal.ZERO;
                         if (valorMulta.getEsProducto()) {
                             porcentajeDesc = valorMulta.getTotal().multiply(BigDecimal.valueOf(100.0));
-                            valorPorcentaje = porcentajeDesc.divide(valorMulta.getTotalInicial(), 7, RoundingMode.FLOOR);
+                            valorPorcentaje = valorMulta.getTotalInicial().intValue() > 0 ? porcentajeDesc.divide(valorMulta.getTotalInicial(), 7, RoundingMode.FLOOR) : BigDecimal.ZERO;
                             valorDescuentoIva = valorMulta.getTotalInicial().subtract(valorMulta.getTotal());
                         }
 
@@ -1248,7 +1248,7 @@ public class Facturar extends SelectorComposer<Component> {
                     BigDecimal valorDescuentoIvaInt = BigDecimal.ZERO;
                     if (valorMultaInt.getEsProducto()) {
                         porcentajeDescInt = valorMultaInt.getTotal().multiply(BigDecimal.valueOf(100.0));
-                        valorPorcentajeInt = porcentajeDescInt.divide(valorMultaInt.getTotalInicial(), 7, RoundingMode.FLOOR);
+                        valorPorcentajeInt = valorMultaInt.getTotalInicial().intValue() > 0 ? porcentajeDescInt.divide(valorMultaInt.getTotalInicial(), 7, RoundingMode.FLOOR) : BigDecimal.ZERO;
                         valorDescuentoIvaInt = valorMultaInt.getTotalInicial().subtract(valorMultaInt.getTotal());
                     }
 
@@ -1297,7 +1297,7 @@ public class Facturar extends SelectorComposer<Component> {
                     BigDecimal valorDescuentoIva = BigDecimal.ZERO;
                     if (valorMulta.getEsProducto()) {
                         porcentajeDesc = valorMulta.getTotal().multiply(BigDecimal.valueOf(100.0));
-                        valorPorcentaje = porcentajeDesc.divide(valorMulta.getTotalInicial(), 7, RoundingMode.FLOOR);
+                        valorPorcentaje = valorMulta.getTotalInicial().intValue() > 0 ? porcentajeDesc.divide(valorMulta.getTotalInicial(), 7, RoundingMode.FLOOR) : BigDecimal.ZERO;
                         valorDescuentoIva = valorMulta.getTotalInicial().subtract(valorMulta.getTotal());
                     }
 
@@ -1335,16 +1335,36 @@ public class Facturar extends SelectorComposer<Component> {
                 Clients.showNotification("Verifique la fecha de la lectura", Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 3000, true);
             }
 
-            ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valor);
-            ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorExcedente);
-            ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorAlcantarillado);
-            ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorAmbiente);
-            ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorDesechos);
+            if (valor.getTotalInicial().doubleValue() > 0) {
+                ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valor);
+            }
+            if (valorExcedente.getTotalInicial().doubleValue() > 0) {
+                ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorExcedente);
+            }
+
+            if (valorAlcantarillado.getTotalInicial().doubleValue() > 0) {
+                ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorAlcantarillado);
+            }
+            if (valorAmbiente.getTotalInicial().doubleValue() > 0) {
+                ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorAmbiente);
+            }
+
+            if (valorDesechos.getTotalInicial().doubleValue() > 0) {
+                ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorDesechos);
+            }
+
             if (dias >= 60) {
-                ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorMulta);
-                ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorMultaInt);
+                if (valorMulta.getTotalInicial().doubleValue() > 0) {
+                    ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorMulta);
+                }
+                if (valorMultaInt.getTotalInicial().doubleValue() > 0) {
+                    ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorMultaInt);
+                }
+
             } else if (dias >= 30) {
-                ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorMulta);
+                if (valorMulta.getTotalInicial().doubleValue() > 0) {
+                    ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorMulta);
+                }
 
             }
 
@@ -1376,7 +1396,7 @@ public class Facturar extends SelectorComposer<Component> {
         codigoBusqueda = "";
 
         buscarNombreProd = "";
-        idBusquedaProd.setFocus(Boolean.TRUE);
+//        idBusquedaProd.setFocus(Boolean.TRUE);
         /*COLOCA EL FOCO EN EL BUSCADOR*/
 //        idBusquedaProd.setFocus(Boolean.TRUE);
     }

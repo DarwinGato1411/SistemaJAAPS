@@ -111,15 +111,16 @@ public class NuevoPropietario {
     public void guardar() {
         if (entidad.getPorpCedula() != null
                 && entidad.getPropNombre() != null) {
-            Cliente cliente = servicioCliente.FindClienteForCedulaPropietario(entidad.getPorpCedula());
 
             Propietario prop = servicioPropietario.findCedula(entidad.getPorpCedula());
-            if (prop != null && accion.equals("create")) {
-                Clients.showNotification("El propietario ya se encuentra registrado..!",
-                        Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 3000, true);
-                return;
-            }
-            if (cliente == null) {
+//            if (prop != null && accion.equals("create")) {
+//                Clients.showNotification("El propietario ya se encuentra registrado..!",
+//                        Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 3000, true);
+//                return;
+//            }
+            Cliente cliente = null;
+            if (accion.equals("create")) {
+                /*Crea el cliente */
                 cliente = new Cliente();
                 cliente.setCliCedula(entidad.getPorpCedula());
                 cliente.setCliNombres(entidad.getPropNombre());
@@ -131,19 +132,8 @@ public class NuevoPropietario {
                 cliente.setCliMovil("0999999999");
                 cliente.setCliTelefono("099999999");
                 cliente.setCliCorreo(parametrizar.getParCorreoDefecto());
-
                 servicioCliente.crear(cliente);
 
-            } else {
-                cliente.setCliCedula(entidad.getPorpCedula());
-                cliente.setCliNombres(entidad.getPropNombre());
-                cliente.setCliApellidos(entidad.getPropApellido());
-                cliente.setCliNombre(entidad.getPropNombre() + " " + entidad.getPropApellido());
-                cliente.setCliRazonSocial(entidad.getPropNombre() + " " + entidad.getPropApellido());
-                cliente.setCliDireccion(entidad.getPropDireccion());
-                servicioCliente.modificar(cliente);
-            }
-            if (accion.equals("create")) {
                 servicioPropietario.crear(entidad);
                 Predio predio = new Predio();
                 predio.setIdPropietario(entidad);
@@ -156,6 +146,32 @@ public class NuevoPropietario {
 
                 wPropietario.detach();
             } else {
+                cliente = servicioCliente.FindClienteForCedulaPropietario(entidad.getPorpCedula());
+
+                if (cliente == null) {
+                    cliente = new Cliente();
+                    cliente.setCliCedula(entidad.getPorpCedula());
+                    cliente.setCliNombres(entidad.getPropNombre());
+                    cliente.setCliApellidos(entidad.getPropApellido());
+                    cliente.setCliNombre(entidad.getPropNombre() + " " + entidad.getPropApellido());
+                    cliente.setCliRazonSocial(entidad.getPropNombre() + " " + entidad.getPropApellido());
+                    cliente.setCliDireccion(entidad.getPropDireccion());
+                    cliente.setCiudad(parametrizar.getParCiudad());
+                    cliente.setCliMovil("0999999999");
+                    cliente.setCliTelefono("099999999");
+                    cliente.setCliCorreo(parametrizar.getParCorreoDefecto());
+                    servicioCliente.crear(cliente);
+
+                } else {
+                    cliente.setCliCedula(entidad.getPorpCedula());
+                    cliente.setCliNombres(entidad.getPropNombre());
+                    cliente.setCliApellidos(entidad.getPropApellido());
+                    cliente.setCliNombre(entidad.getPropNombre() + " " + entidad.getPropApellido());
+                    cliente.setCliRazonSocial(entidad.getPropNombre() + " " + entidad.getPropApellido());
+                    cliente.setCliDireccion(entidad.getPropDireccion());
+                    servicioCliente.modificar(cliente);
+                }
+
                 servicioPropietario.modificar(entidad);
                 // Messagebox.show("Guardado con exito");
 
