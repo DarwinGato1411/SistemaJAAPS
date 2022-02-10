@@ -112,6 +112,7 @@ public class AdmProducto {
     @Command
     public void seleccionarRegistros() {
         registrosSeleccionados = ((ListModelList<Producto>) getListaProductosModel()).getSelection();
+        
     }
 
     private void findLikeNombre() {

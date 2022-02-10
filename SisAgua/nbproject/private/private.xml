@@ -3,7 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/NuevoMedidor.java</file>
+            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/web/plantilla/banner.zul</file>
+            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/web/contabilidad/grupo.zul</file>
+            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/web/venta/listafacturas.zul</file>
+            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/AdmPlanCuentas.java</file>
+            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/src/java/com/ec/entidad/contabilidad/CuGrupo.java</file>
+            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/MenuOpciones.java</file>
+            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/src/java/com/ec/entidad/contabilidad/CuClase.java</file>
+            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/web/contabilidad/plancuentas.zul</file>
         </group>
     </open-files>
 </project-private>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?init class="com.ec.seguridad.Autentificador"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
+<?link rel="icon" type="image/x-icon" href="/iconos/deckxel.ico"?>
+<zk  contentStyle="overflow:auto" with="100%" >
+    <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
+          viewModel="@id('vm') @init('com.ec.controlador.AdmPlanCuentas')" width="99%">
+        
+        <tabbox  width="100%"  tabscroll="true" >
+            <tabs >
+                <tab label="Anexo Transaccional Simplificado" sclass="menutabs"/>
+                
+            </tabs>
+            <tabpanels >
+                <tabpanel  height="100%" width="98%"  >
+                    <div class="container-fluid">
+                        <div class="row " align="center">                            
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 " align="start">
+                                <listbox model="@load(vm.listaClaseModel)" 
+                                         nonselectableTags="" checkmark="true"  
+                                         multiple="false"   
+                                         mold="paging" pageSize="12"  
+                                         onSelect="@command('seleccionarClase')" >
+                                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>                              
+                                    <auxhead>
+                                        <auxheader colspan="12" >  
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">                                                    
+                                                    <label value="CLASE"   />                                                   
+                                                </div>
+                                            </div>
+                                
+                                        </auxheader>
+                                    </auxhead> 
+                                    <listhead> 
+                                         <listheader width="30px"  label="" /> 
+                                        <listheader width="20%"  label="Numero" /> 
+                                        <listheader width="75%"  label="Nombre" /> 
+                                        <listheader width="60px"  label="" />                                                             
+                                    </listhead>  
+                        
+                    
+                                    <template name="model">                                                            
+                                        <listitem>
+                                            <listcell></listcell>
+                                            <listcell>
+                                                <label value="@bind(each.clasNumero)" width="96%" />
+                                            </listcell>
+                                            <listcell>
+                                                <label value="@bind(each.clasNombre)" width="96%" />
+                                            </listcell>
+                                            
+                                            <listcell>
+                                                <image src="/iconos/editar.png"   
+                                                       class="btn btn btn-secondary btn-sm grow"                                         
+                                                       onClick="@command('modificarClase',valor=each)"
+                                                       tooltiptext="Modificar clase"/>
+                                            </listcell>                                            
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                
+                                
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 " align="start">
+                                <listbox model="@load(vm.listaGrupoModel)" 
+                                         nonselectableTags="" 
+                                         checkmark="true"  
+                                         multiple="false"   
+                                         mold="paging" pageSize="12"  
+                                         onSelect="@command('seleccionarGrupo')" >
+                                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>                              
+                                    <auxhead>
+                                        <auxheader colspan="12" >  
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">                                                    
+                                                    <label value="GRUPO"   />                                                   
+                                                </div>
+                                            </div>
+                                
+                                        </auxheader>
+                                    </auxhead>
+                                    <listhead> 
+                                        <listheader width="30px"  label="" /> 
+                                        <listheader width="20%"  label="Numero" /> 
+                                        <listheader width="75%"  label="Nombre" /> 
+                                        <listheader width="60px"  label="" />                                                             
+                                    </listhead>  
+                        
+                    
+                                    <template name="model">                                                            
+                                        <listitem>
+                                            <listcell></listcell>
+                                            <listcell>
+                                                <label value="@bind(each.grupNumero)" width="96%" />
+                                            </listcell>
+                                            <listcell>
+                                                <label value="@bind(each.grupNombre)" width="96%" />
+                                            </listcell>
+                                            
+                                            <listcell>
+                                                <image src="/iconos/editar.png"   
+                                                       class="btn btn btn-secondary btn-sm grow"                                         
+                                                       onClick="@command('modificarClase',valor=each)"
+                                                       tooltiptext="Modificar clase"/>
+                                            </listcell>                                            
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                
+                                
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 " align="start">
+                                <listbox model="@load(vm.listaCuentaModel)" 
+                                         nonselectableTags="" 
+                                         checkmark="true"  
+                                         multiple="false"   
+                                         mold="paging" pageSize="12"  
+                                         onSelect="@command('seleccionarCuenta')" >
+                                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>                              
+                                    <auxhead>
+                                        <auxheader colspan="12" >  
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">                                                    
+                                                    <label value="CUENTA"   />                                                   
+                                                </div>
+                                            </div>
+                                
+                                        </auxheader>
+                                    </auxhead>
+                                    <listhead> 
+                                         <listheader width="30px"  label="" /> 
+                                        <listheader width="30%"  label="Numero" /> 
+                                        <listheader width="75%"  label="Nombre" /> 
+                                        <listheader width="60px"  label="" />                                                             
+                                    </listhead>  
+                        
+                    
+                                    <template name="model">                                                            
+                                        <listitem>
+                                            <listcell></listcell>
+                                            <listcell>
+                                                <label value="@bind(each.grupNumero)" width="96%" />
+                                            </listcell>
+                                            <listcell>
+                                                <label value="@bind(each.grupNombre)" width="96%" />
+                                            </listcell>
+                                            
+                                            <listcell>
+                                                <image src="/iconos/editar.png"   
+                                                       class="btn btn btn-secondary btn-sm grow"                                         
+                                                       onClick="@command('modificarClase',valor=each)"
+                                                       tooltiptext="Modificar clase"/>
+                                            </listcell>                                            
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                
+                                
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 " align="start">
+                                <listbox model="@load(vm.listaSubCuentaModel)" 
+                                         nonselectableTags="" 
+                                         checkmark="true"  
+                                         multiple="false"   
+                                         mold="paging" pageSize="12"  
+                                         onSelect="@command('seleccionarSubCuenta')"  >
+                                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>                              
+                                    <auxhead>
+                                        <auxheader colspan="12" >  
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">                                                    
+                                                    <label value="SUBCUENTA"   />                                                   
+                                                </div>
+                                            </div>
+                                
+                                        </auxheader>
+                                    </auxhead>
+                                    <listhead> 
+                                         <listheader width="30px"  label="" />
+                                        <listheader width="20%"  label="Numero" /> 
+                                        <listheader width="75%"  label="Nombre" /> 
+                                        <listheader width="60px"  label="" />                                                             
+                                    </listhead>  
+                        
+                    
+                                    <template name="model">                                                            
+                                        <listitem>
+                                            <listcell></listcell>
+                                            <listcell>
+                                                <label value="@bind(each.subcNumero)" width="96%" />
+                                            </listcell>
+                                            <listcell>
+                                                <label value="@bind(each.subcNombre)" width="96%" />
+                                            </listcell>
+                                            
+                                            <listcell>
+                                                <image src="/iconos/editar.png"   
+                                                       class="btn btn btn-secondary btn-sm grow"                                         
+                                                       onClick="@command('modificarClase',valor=each)"
+                                                       tooltiptext="Modificar clase"/>
+                                            </listcell>                                            
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+        
+    </hbox>
+
+
+</zk>

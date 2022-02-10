@@ -95,10 +95,7 @@
                         
                         <menu label="Contabilidad" id="menuContabilidad">
                             <menupopup>                                                                         
-                                <menuitem label="Clase" id="btnCuClase"  />                              
-                                <menuitem label="Cuenta" id="btnCuCuenta"  />
-                                <menuitem label="Grupo" id="btnCuGrupo" />
-                                <menuitem label="Sub Cuenta" id="btnCuSubClase" />
+                                <menuitem label="Plan de cuentas" id="btnPlanCuenta"  /> 
                                 <menuitem label="Reportes Contabilidad" id="btnReportesConta" />
                             </menupopup>
                         </menu>

@@ -208,22 +208,22 @@ public class MenuOpciones extends SelectorComposer<Component> {
         Executions.sendRedirect("/compra/listaretencioncasillero.zul");
     }
     
-    @Listen("onClick = #btnCuClase")
-    public void btnCuClase() {
-        Executions.sendRedirect("/contabilidad/clase.zul");
-    }
-
-    @Listen("onClick = #btnCuCuenta")
-    public void btnCuCuenta() {
-        Executions.sendRedirect("/contabilidad/cuenta.zul");
-    }
-    @Listen("onClick = #btnCuGrupo")
-    public void btnCuGrupo() {
-        Executions.sendRedirect("/contabilidad/grupo.zul");
-    }
-    @Listen("onClick = #btnCuSubClase")
+//    @Listen("onClick = #btnCuClase")
+//    public void btnCuClase() {
+//        Executions.sendRedirect("/contabilidad/clase.zul");
+//    }
+//
+//    @Listen("onClick = #btnCuCuenta")
+//    public void btnCuCuenta() {
+//        Executions.sendRedirect("/contabilidad/cuenta.zul");
+//    }
+//    @Listen("onClick = #btnCuGrupo")
+//    public void btnCuGrupo() {
+//        Executions.sendRedirect("/contabilidad/grupo.zul");
+//    }
+    @Listen("onClick = #btnPlanCuenta")
     public void btnCuSubClase() {
-        Executions.sendRedirect("/contabilidad/subclase.zul");
+        Executions.sendRedirect("/contabilidad/plancuentas.zul");
     }
     @Listen("onClick = #btnReportesConta")
     public void btnReportesConta() {
