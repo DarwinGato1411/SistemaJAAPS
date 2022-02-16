@@ -128,15 +128,15 @@
                                             value="@bind(each.dettMetroFinal)" width="96%"/>
                             </listcell>
                             <listcell zclass = "mycss-listcell">
-                                <decimalbox format="###.##" readonly="true" 
+                                <decimalbox format="###.###" readonly="true" 
                                             value="@bind(each.dettPrecioBase)" width="96%"/>
                             </listcell>
                             <listcell zclass = "mycss-listcell">
-                                <decimalbox format="###.##" readonly="true" 
+                                <decimalbox format="###.###" readonly="true" 
                                             value="@bind(each.dettPorcentajeExcedente)" width="96%"/>
                             </listcell>
                             <listcell zclass = "mycss-listcell">
-                                <decimalbox format="###.##" readonly="true" 
+                                <decimalbox format="###.###" readonly="true" 
                                             value="@bind(each.dettPorcentajeAlcantarillado)" width="96%"/>
                             </listcell>
                             <listcell zclass = "mycss-listcell">
@@ -145,13 +145,13 @@
                                                 value="@bind(each.dettPorcentajeDesechos)" width="80%"/>
                                 </div>  
                                 <div  if="${!each.dettValidadesecho}">
-                                    $<decimalbox format="###.##" readonly="true" 
+                                    $<decimalbox format="###.###" readonly="true" 
                                                              value="@bind(each.dettDesechos)" width="80%"/>
                                 </div>
                                
                             </listcell>
                             <listcell zclass = "mycss-listcell">
-                                <decimalbox format="###.##" readonly="true" 
+                                <decimalbox format="###.###" readonly="true" 
                                             value="@bind(each.dettAmbiente)" width="96%"/>
                             </listcell>                                          
                             <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    

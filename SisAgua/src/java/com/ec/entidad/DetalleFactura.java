@@ -138,6 +138,8 @@ public class DetalleFactura implements Serializable {
     private Integer detLecMes;
     @Column(name = "det_dir_medidor")
     private String detDirMedidor;
+    @Column(name = "det_mes_cobro")
+    private String detMesCobro;
     
     
 
@@ -495,6 +497,14 @@ public class DetalleFactura implements Serializable {
 
     public void setDetDirMedidor(String detDirMedidor) {
         this.detDirMedidor = detDirMedidor;
+    }
+
+    public String getDetMesCobro() {
+        return detMesCobro;
+    }
+
+    public void setDetMesCobro(String detMesCobro) {
+        this.detMesCobro = detMesCobro;
     }
     
     

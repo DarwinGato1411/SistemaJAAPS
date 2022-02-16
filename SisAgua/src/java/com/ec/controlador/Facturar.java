@@ -740,7 +740,8 @@ public class Facturar extends SelectorComposer<Component> {
             DetalleFacturaDAO valor = new DetalleFacturaDAO();
             valor.setCantidad(BigDecimal.ONE);
             valor.setProducto(productoBuscado);
-            valor.setDescripcion(productoBuscado.getProdNombre() + " POR EL MES DE " + lectura.getMesActual().getNombre() + " LECTURA ANTERIOR: " + lectura.getLecAnterior() + " LECTURA ACTUAL: " + lectura.getLecActual());
+            valor.setDescripcion(productoBuscado.getProdNombre() );
+            valor.setMesCobro(lectura.getMesActual().getNombre() );
             valor.setDetPordescuento(DESCUENTOGENERAL);
             valor.setCodigo(productoBuscado.getProdCodigo());
             valor.setEsProducto(producto.getProdEsproducto());
@@ -1345,13 +1346,14 @@ public class Facturar extends SelectorComposer<Component> {
             if (valorAlcantarillado.getTotalInicial().doubleValue() > 0) {
                 ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorAlcantarillado);
             }
+             if (valorDesechos.getTotalInicial().doubleValue() > 0) {
+                ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorDesechos);
+            }
             if (valorAmbiente.getTotalInicial().doubleValue() > 0) {
                 ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorAmbiente);
             }
 
-            if (valorDesechos.getTotalInicial().doubleValue() > 0) {
-                ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorDesechos);
-            }
+           
 
             if (dias >= 60) {
                 if (valorMulta.getTotalInicial().doubleValue() > 0) {

@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/web/contabilidad/nuevaclase.zul</file>
             <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/NuevoGrupo.java</file>
@@ -19,5 +20,8 @@
             <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/servicio/contabilidad/ServicioGrupo.java</file>
             <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/entidad/contabilidad/CuCuenta.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> ba70315bb3e7b2e659ece88d61d93c18339fb9b2
     </open-files>
 </project-private>
