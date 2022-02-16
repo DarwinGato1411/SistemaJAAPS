@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window  id="wGrupo"  position="center" class="col-12 col-sm-12 col-md-4 col-lg-4"  closable="true"  
+         apply="org.zkoss.bind.BindComposer"
+         viewModel="@id('vm') @init('com.ec.controlador.NuevoGrupo')">
+    
+    <caption label="Grupo" style="font-weight:bold"/> 
+    
+    <div  class="container-fluid" >
+        <div  class="row" >
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+        
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/>Numero:
+                
+                    <textbox  maxlength="100" 
+                              width="65%"
+                              onChange="self.setValue(self.getValue().toUpperCase())"
+                              value="@bind(vm.entidad.grupNumero)" 
+                              class="form-control" />
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group "  >
+                    <label value="(*) " style="color:red;font-weight:bold"/>Nombre:
+                
+                    <textbox  maxlength="100" 
+                              onChange="self.setValue(self.getValue().toUpperCase())"
+                              value="@bind(vm.entidad.grupNombre)" 
+                              class="form-control" />
+                </div>
+               
+              
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group" align="center" >
+                    
+                    <image src="/iconos/guardar.png"  
+                           onClick="@command('guardar')"
+                           tooltiptext="Guardar Registro"/>
+ 
+
+                </div> 
+            </div>
+   
+        </div>
+    </div>
+   
+                  
+
+                    
+                  
+</window>

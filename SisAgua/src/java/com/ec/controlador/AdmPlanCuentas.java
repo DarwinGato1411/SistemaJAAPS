@@ -5,6 +5,7 @@
 package com.ec.controlador;
 
 import com.ec.dao.DetalleFacturaDAO;
+import com.ec.entidad.Clases;
 import com.ec.entidad.Producto;
 import com.ec.entidad.contabilidad.CuClase;
 import com.ec.entidad.contabilidad.CuCuenta;
@@ -14,22 +15,37 @@ import com.ec.servicio.contabilidad.ServicioClase;
 import com.ec.servicio.contabilidad.ServicioCuenta;
 import com.ec.servicio.contabilidad.ServicioGrupo;
 import com.ec.servicio.contabilidad.ServicioSubCuenta;
+import com.ec.untilitario.ParamCuenta;
+import com.ec.untilitario.ParamGrupo;
+import com.ec.untilitario.ParamSubCuenta;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.select.Selectors;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Window;
 
 /**
  *
  * @author gato
  */
 public class AdmPlanCuentas {
+
+    private String accion = "create";
 
     /*Model de clase*/
     ServicioClase servicioClase = new ServicioClase();
@@ -38,6 +54,8 @@ public class AdmPlanCuentas {
     private Set<CuClase> seleccionadosClase = new HashSet<CuClase>();
     private String buscarClase = "";
     private CuClase cSelected = null;
+    private CuClase cuClases = new CuClase();
+    
     /*Model de grupo*/
     ServicioGrupo servicioGrupo = new ServicioGrupo();
     private List<CuGrupo> listaCuGrupos = new ArrayList<CuGrupo>();
@@ -45,19 +63,22 @@ public class AdmPlanCuentas {
     private Set<CuGrupo> seleccionadosGrupo = new HashSet<CuGrupo>();
     private CuGrupo gSelected = null;
     private String buscarGrupo = "";
+    private Boolean activarGrupo = Boolean.FALSE;
 
     /*Model de Cuenta*/
     ServicioCuenta servicioCuenta = new ServicioCuenta();
     private List<CuCuenta> listaCuCuenta = new ArrayList<CuCuenta>();
-    private ListModelList<CuCuenta> listaCuentaModel= new ListModelList<CuCuenta>();
+    private ListModelList<CuCuenta> listaCuentaModel = new ListModelList<CuCuenta>();
     private Set<CuCuenta> seleccionadosCuenta = new HashSet<CuCuenta>();
     private CuCuenta cuSelected = null;
+    private Boolean activarCuenta = Boolean.FALSE;
 
     /*Model de SubCuenta*/
     ServicioSubCuenta servicioSubCuenta = new ServicioSubCuenta();
     private List<CuSubCuenta> listaCuSubCuenta = new ArrayList<CuSubCuenta>();
-    private ListModelList<CuSubCuenta> listaSubCuentaModel= new ListModelList<CuSubCuenta>();
+    private ListModelList<CuSubCuenta> listaSubCuentaModel = new ListModelList<CuSubCuenta>();
     private Set<CuSubCuenta> seleccionadosSubCuenta = new HashSet<CuSubCuenta>();
+    private Boolean activarSubCuenta = Boolean.FALSE;
 //    private CuSubCuenta cuSelected = null;
 
     public AdmPlanCuentas() {
@@ -71,21 +92,22 @@ public class AdmPlanCuentas {
     }
 
     @Command
-    @NotifyChange("listaGrupoModel")
+    @NotifyChange({"listaGrupoModel","activarGrupo"})
     public void seleccionarClase() {
 
         seleccionadosClase = ((ListModelList<CuClase>) getListaClaseModel()).getSelection();
 
         for (CuClase cuClase : seleccionadosClase) {
             cSelected = cuClase;
+            activarGrupo=Boolean.TRUE;
 
         }
-        gSelected=null;
-        cuSelected=null;
-        
+        gSelected = null;
+        cuSelected = null;
+
         getGrupoModel();
-       listaCuentaModel.clear();
-       listaSubCuentaModel.clear();
+        listaCuentaModel.clear();
+        listaSubCuentaModel.clear();
     }
 
     private void getGrupoModel() {
@@ -95,15 +117,16 @@ public class AdmPlanCuentas {
     }
 
     @Command
-    @NotifyChange("listaCuentaModel")
+    @NotifyChange({"listaCuentaModel","activarCuenta"})
     public void seleccionarGrupo() {
 
         seleccionadosGrupo = ((ListModelList<CuGrupo>) getListaGrupoModel()).getSelection();
 
         for (CuGrupo cuGrupo : seleccionadosGrupo) {
             gSelected = cuGrupo;
+            activarCuenta=Boolean.TRUE;
         }
-          cuSelected=null;
+        cuSelected = null;
         getCuentaModel();
         listaSubCuentaModel.clear();
 
@@ -116,13 +139,14 @@ public class AdmPlanCuentas {
     }
 
     @Command
-    @NotifyChange("listaSubCuentaModel")
+    @NotifyChange({"listaSubCuentaModel","activarSubCuenta"})
     public void seleccionarCuenta() {
 
         seleccionadosCuenta = ((ListModelList<CuCuenta>) getListaCuentaModel()).getSelection();
 
         for (CuCuenta cuCuenta : seleccionadosCuenta) {
             cuSelected = cuCuenta;
+            activarSubCuenta=Boolean.TRUE;
         }
         getSubCuentaModel();
     }
@@ -137,8 +161,6 @@ public class AdmPlanCuentas {
     public void seleccionarSubCuenta() {
 
         seleccionadosCuenta = ((ListModelList<CuCuenta>) getListaCuentaModel()).getSelection();
-
-       
 
     }
 
@@ -230,17 +252,7 @@ public class AdmPlanCuentas {
         this.cuSelected = cuSelected;
     }
 
-    @Command
-    @NotifyChange({"listaCuGrupos", "buscarGrupo"})
-    public void actualizar(@BindingParam("valor") CuGrupo valor) {
-
-        final HashMap<String, CuGrupo> map = new HashMap<String, CuGrupo>();
-        map.put("valor", valor);
-        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                "/nuevo/grupo.zul", null, map);
-        window.doModal();
-        findGrupo();
-    }
+   
 
     public List<CuClase> getListaCuClase() {
         return listaCuClase;
@@ -297,5 +309,142 @@ public class AdmPlanCuentas {
     public void setListaSubCuentaModel(ListModelList<CuSubCuenta> listaSubCuentaModel) {
         this.listaSubCuentaModel = listaSubCuentaModel;
     }
+    
+      public Boolean getActivarGrupo() {
+        return activarGrupo;
+    }
+
+    public void setActivarGrupo(Boolean activarGrupo) {
+        this.activarGrupo = activarGrupo;
+    }
+
+    public Boolean getActivarCuenta() {
+        return activarCuenta;
+    }
+
+    public void setActivarCuenta(Boolean activarCuenta) {
+        this.activarCuenta = activarCuenta;
+    }
+
+    public Boolean getActivarSubCuenta() {
+        return activarSubCuenta;
+    }
+
+    public void setActivarSubCuenta(Boolean activarSubCuenta) {
+        this.activarSubCuenta = activarSubCuenta;
+    }
+    
+    
+    
+    @Command
+    @NotifyChange({"listaClaseModel", "buscarClase"})
+    public void nuevaclase() {
+        buscarClase = "";
+        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+                "/contabilidad/nuevaclase.zul", null, null);
+        window.doModal();
+         getClaseModel();
+    }
+    
+     private void findLikeNombre() {
+        listaCuClase = servicioClase.findByNombre(buscarClase);
+    }
+     
+    @Command
+    @NotifyChange({"listaClaseModel", "buscarClase"})
+    public void modificarClase(@BindingParam("valor") CuClase valor) {
+        
+        buscarClase = "";
+        final HashMap<String, CuClase> map = new HashMap<String, CuClase>();
+        map.put("valor", valor);
+        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+                "/contabilidad/nuevaclase.zul", null, map);
+        window.doModal();
+         getClaseModel();
+    }
+    @Command
+    @NotifyChange({"listaGrupoModel", "buscarClase"})
+    public void nuevoGrupo() {
+        ParamGrupo paramGrupo= new ParamGrupo(cSelected);
+        paramGrupo.setAccion("create");
+         final HashMap<String, ParamGrupo> map = new HashMap<String, ParamGrupo>();
+          map.put("valor", paramGrupo);
+        buscarClase = "";
+        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+                "/contabilidad/nuevogrupo.zul", null, map);
+        window.doModal();
+       seleccionarClase();
+    }
+    
+      @Command
+    @NotifyChange({"listaGrupoModel", "buscarClase"})
+    public void editarGrupo(@BindingParam("valor") CuGrupo valor) {
+        ParamGrupo paramGrupo= new ParamGrupo(cSelected, valor);
+        paramGrupo.setAccion("update");
+         final HashMap<String, ParamGrupo> map = new HashMap<String, ParamGrupo>();
+          map.put("valor", paramGrupo);
+        buscarClase = "";
+        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+                "/contabilidad/nuevogrupo.zul", null, map);
+        window.doModal();
+       seleccionarClase();
+    }
+    
+       @Command
+    @NotifyChange({"listaCuentaModel", "buscarClase"})
+    public void nuevaCuenta() {
+        ParamCuenta paramCuenta= new ParamCuenta(gSelected);
+        paramCuenta.setAccion("create");
+         final HashMap<String, ParamCuenta> map = new HashMap<String, ParamCuenta>();
+          map.put("valor", paramCuenta);
+        buscarClase = "";
+        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+                "/contabilidad/nuevacuenta.zul", null, map);
+        window.doModal();
+       seleccionarGrupo();
+    }
+    
+      @Command
+    @NotifyChange({"listaCuentaModel", "buscarClase"})
+    public void editarCuenta(@BindingParam("valor") CuCuenta valor) {
+        ParamCuenta paramCuenta= new ParamCuenta(gSelected, valor);
+        paramCuenta.setAccion("update");
+         final HashMap<String, ParamCuenta> map = new HashMap<String, ParamCuenta>();
+          map.put("valor", paramCuenta);
+        buscarClase = "";
+        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+                "/contabilidad/nuevacuenta.zul", null, map);
+        window.doModal();
+       seleccionarGrupo();
+    }
+    
+           @Command
+    @NotifyChange({"listaSubCuentaModel", "buscarClase"})
+    public void nuevaSubCuenta() {
+        ParamSubCuenta paramSubCuenta= new ParamSubCuenta(cuSelected);
+        paramSubCuenta.setAccion("create");
+         final HashMap<String, ParamSubCuenta> map = new HashMap<String, ParamSubCuenta>();
+          map.put("valor", paramSubCuenta);
+        buscarClase = "";
+        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+                "/contabilidad/nuevasubcuenta.zul", null, map);
+        window.doModal();
+       seleccionarCuenta();
+    }
+    
+      @Command
+    @NotifyChange({"listaCuentaModel", "buscarClase"})
+    public void editarSubCuenta(@BindingParam("valor") CuSubCuenta valor) {
+        ParamSubCuenta paramSubCuenta= new ParamSubCuenta(cuSelected, valor);
+        paramSubCuenta.setAccion("update");
+         final HashMap<String, ParamSubCuenta> map = new HashMap<String, ParamSubCuenta>();
+          map.put("valor", paramSubCuenta);
+        buscarClase = "";
+        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+                "/contabilidad/nuevasubcuenta.zul", null, map);
+        window.doModal();
+       seleccionarCuenta();
+    }
+
 
 }

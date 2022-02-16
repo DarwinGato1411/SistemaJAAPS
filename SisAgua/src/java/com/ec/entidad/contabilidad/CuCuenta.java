@@ -60,12 +60,18 @@ public class CuCuenta implements Serializable {
     private BigDecimal grupSaldo;
     @Column(name = "grup_otro")
     private BigDecimal grupOtro;
+    
+        @OneToMany(mappedBy = "idCuenta")
+    private Collection<CuSubCuenta> cuSubCuentaCollection;
     @JoinColumn(name = "id_grupo", referencedColumnName = "id_grupo")
     @ManyToOne
     private CuGrupo idGrupo;
-    @OneToMany(mappedBy = "idCuenta")
-    private Collection<CuSubCuenta> cuSubCuentaCollection;
-
+//    @JoinColumn(name = "id_grupo", referencedColumnName = "id_grupo")
+  //  @ManyToOne
+   // private CuGrupo idGrupo;
+ //   @OneToMany(mappedBy = "idCuenta")
+   // private Collection<CuSubCuenta> cuSubCuentaCollection;
+    
     public CuCuenta() {
     }
 
@@ -129,7 +135,7 @@ public class CuCuenta implements Serializable {
         this.idGrupo = idGrupo;
     }
 
-    @XmlTransient
+  /*  @XmlTransient
     public Collection<CuSubCuenta> getCuSubCuentaCollection() {
         return cuSubCuentaCollection;
     }
@@ -137,7 +143,7 @@ public class CuCuenta implements Serializable {
     public void setCuSubCuentaCollection(Collection<CuSubCuenta> cuSubCuentaCollection) {
         this.cuSubCuentaCollection = cuSubCuentaCollection;
     }
-
+*/
     @Override
     public int hashCode() {
         int hash = 0;
