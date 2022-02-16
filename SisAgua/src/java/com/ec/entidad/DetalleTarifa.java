@@ -180,7 +180,7 @@ public class DetalleTarifa implements Serializable {
     }
 
     public BigDecimal getDettDesechos() {
-        return dettDesechos;
+        return dettDesechos== null ? BigDecimal.ZERO : dettDesechos;
     }
 
     public void setDettDesechos(BigDecimal dettDesechos) {
@@ -188,7 +188,7 @@ public class DetalleTarifa implements Serializable {
     }
 
     public BigDecimal getDettPorcentajeExcedente() {
-        return dettPorcentajeExcedente;
+        return dettPorcentajeExcedente == null ? BigDecimal.ZERO : dettPorcentajeExcedente;
     }
 
     public void setDettPorcentajeExcedente(BigDecimal dettPorcentajeExcedente) {
@@ -196,7 +196,7 @@ public class DetalleTarifa implements Serializable {
     }
 
     public BigDecimal getDettPorcentajeAlcantarillado() {
-        return dettPorcentajeAlcantarillado;
+        return dettPorcentajeAlcantarillado == null ? BigDecimal.ZERO : dettPorcentajeAlcantarillado;
     }
 
     public void setDettPorcentajeAlcantarillado(BigDecimal dettPorcentajeAlcantarillado) {
@@ -204,7 +204,7 @@ public class DetalleTarifa implements Serializable {
     }
 
     public BigDecimal getDettPorcentajeDesechos() {
-        return dettPorcentajeDesechos;
+        return dettPorcentajeDesechos == null ? BigDecimal.ZERO : dettPorcentajeDesechos;
     }
 
     public void setDettPorcentajeDesechos(BigDecimal dettPorcentajeDesechos) {

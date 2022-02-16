@@ -45,6 +45,7 @@ public class AdmPlanCuentas {
     private Set<CuGrupo> seleccionadosGrupo = new HashSet<CuGrupo>();
     private CuGrupo gSelected = null;
     private String buscarGrupo = "";
+    private Boolean activarGrupo = Boolean.FALSE;
 
     /*Model de Cuenta*/
     ServicioCuenta servicioCuenta = new ServicioCuenta();
@@ -71,13 +72,14 @@ public class AdmPlanCuentas {
     }
 
     @Command
-    @NotifyChange("listaGrupoModel")
+    @NotifyChange({"listaGrupoModel","activarGrupo"})
     public void seleccionarClase() {
 
         seleccionadosClase = ((ListModelList<CuClase>) getListaClaseModel()).getSelection();
 
         for (CuClase cuClase : seleccionadosClase) {
             cSelected = cuClase;
+            activarGrupo=Boolean.TRUE;
 
         }
         gSelected=null;
@@ -296,6 +298,14 @@ public class AdmPlanCuentas {
 
     public void setListaSubCuentaModel(ListModelList<CuSubCuenta> listaSubCuentaModel) {
         this.listaSubCuentaModel = listaSubCuentaModel;
+    }
+
+    public Boolean getActivarGrupo() {
+        return activarGrupo;
+    }
+
+    public void setActivarGrupo(Boolean activarGrupo) {
+        this.activarGrupo = activarGrupo;
     }
 
 }

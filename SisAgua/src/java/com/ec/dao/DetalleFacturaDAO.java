@@ -57,6 +57,7 @@ public class DetalleFacturaDAO {
     private String numerotel = "";
     private String codigoCantonMatriculacion = "21702";
     private Lectura lectura;
+    private String mesCobro="";
 
     public DetalleFacturaDAO() {
     }
@@ -355,6 +356,14 @@ public class DetalleFacturaDAO {
 
     public void setLectura(Lectura lectura) {
         this.lectura = lectura;
+    }
+
+    public String getMesCobro() {
+        return mesCobro;
+    }
+
+    public void setMesCobro(String mesCobro) {
+        this.mesCobro = mesCobro;
     }
 
 }

@@ -30,14 +30,14 @@
              <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
                 <label value="(*) " style="color:red;font-weight:bold"/>Precio Base :
                 
-                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,3})?$/:Ingrese solo numeros"                                                                                                              
                             value="@bind(vm.entidad.dettPrecioBase)"   
                             class="form-control" />
             </div>
              <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
                 <label value="(*) " style="color:red;font-weight:bold"/>Excedente ($):
                 
-                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,3})?$/:Ingrese solo numeros"                                                                                                              
                             value="@bind(vm.entidad.dettPorcentajeExcedente)"   
                             class="form-control" />
             </div>
@@ -52,7 +52,7 @@
             <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
                 <label value="(*) " style="color:red;font-weight:bold"/>Precio Ambiente :
                 
-                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,3})?$/:Ingrese solo numeros"                                                                                                              
                             value="@bind(vm.entidad.dettAmbiente)"   
                             class="form-control" />
             </div>
@@ -70,14 +70,14 @@
              <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group " visible="@bind(vm.entidad.dettValidadesecho)"  >
                 <label value="% Desechos :" style="color:black;"/>
                 
-                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,3})?$/:Ingrese solo numeros"                                                                                                              
                             value="@bind(vm.entidad.dettPorcentajeDesechos)"   
                             class="form-control" />
             </div>
              <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  visible="@bind(!vm.entidad.dettValidadesecho)">
                 <label value="Desechos ($) :" style="color:black"/>
                 
-                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
+                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,3})?$/:Ingrese solo numeros"                                                                                                              
                             value="@bind(vm.entidad.dettDesechos)"   
                             class="form-control" />
             </div>
