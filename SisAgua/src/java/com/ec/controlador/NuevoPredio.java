@@ -23,6 +23,7 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
@@ -73,9 +74,13 @@ public class NuevoPredio {
                 && entidad.getPredDireccion() != null) {
             if (accion.equals("create")) {
                 servicioPredio.crear(entidad);
+                 Clients.showNotification("Guardado correctamente",
+                            Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 3000, true);
                 wPredio.detach();
             } else {
                 servicioPredio.modificar(entidad);
+                 Clients.showNotification("Modificado correctamente",
+                            Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 3000, true);
                 wPredio.detach();
             }
 

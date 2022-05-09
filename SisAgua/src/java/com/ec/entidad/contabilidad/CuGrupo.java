@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -62,8 +63,8 @@ public class CuGrupo implements Serializable {
     private BigDecimal grupOtro;
     @OneToMany(mappedBy = "idGrupo")
     private Collection<CuCuenta> cuCuentaCollection;
-    @JoinColumn(name = "id_clase", referencedColumnName = "id_clase", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @JoinColumn(name = "id_clase", referencedColumnName = "id_clase")
+    @ManyToOne
     private CuClase cuClase;
 
     public CuGrupo() {
@@ -138,6 +139,8 @@ public class CuGrupo implements Serializable {
     public void setCuClase(CuClase cuClase) {
         this.cuClase = cuClase;
     }
+    
+    
 
     @Override
     public int hashCode() {

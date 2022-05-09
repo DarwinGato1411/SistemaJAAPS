@@ -28,17 +28,24 @@
                                         <auxheader colspan="12" >  
                                             <div class="row">
                                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">                                                    
-                                                    <label value="CLASE"   />                                                   
+                                                    <label value="CLASE   "   />    
+                                                   
+                                                    <image  src="/iconos/nuevo_pro-24.png"
+                                                            class="btn btn btn-secondary btn-sm "
+                                                            onClick="@command('nuevaclase')"
+                                                            tooltiptext="Nueva clase"/>
+                                                                                                  
                                                 </div>
                                             </div>
                                 
                                         </auxheader>
                                     </auxhead> 
                                     <listhead> 
-                                         <listheader width="30px"  label="" /> 
+                                        <listheader width="30px"  label="" /> 
                                         <listheader width="20%"  label="Numero" /> 
                                         <listheader width="75%"  label="Nombre" /> 
-                                        <listheader width="60px"  label="" />                                                             
+                                        <listheader width="60px"  label="" />   
+                                                                                                  
                                     </listhead>  
                         
                     
@@ -52,12 +59,13 @@
                                                 <label value="@bind(each.clasNombre)" width="96%" />
                                             </listcell>
                                             
+   
                                             <listcell>
                                                 <image src="/iconos/editar.png"   
                                                        class="btn btn btn-secondary btn-sm grow"                                         
                                                        onClick="@command('modificarClase',valor=each)"
                                                        tooltiptext="Modificar clase"/>
-                                            </listcell>                                            
+                                            </listcell>                                         
                                         </listitem>
                                     </template>
                                 </listbox>
@@ -75,8 +83,12 @@
                                     <auxhead>
                                         <auxheader colspan="12" >  
                                             <div class="row">
-                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 " visible="@bind(vm.activarGrupo)">                                                    
-                                                    <label value="GRUPO"   />                                                   
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 "  visible="@bind(vm.activarGrupo)">                                                    
+                                                    <label value="GRUPO"   />  
+                                                    <image  src="/iconos/nuevo_pro-24.png"
+                                                     class="btn btn btn-secondary btn-sm "
+                                                     onClick="@command('nuevoGrupo')"
+                                                     tooltiptext="Nueva grupo"/>                                                 
                                                 </div>
                                             </div>
                                 
@@ -103,7 +115,7 @@
                                             <listcell>
                                                 <image src="/iconos/editar.png"   
                                                        class="btn btn btn-secondary btn-sm grow"                                         
-                                                       onClick="@command('modificarClase',valor=each)"
+                                                       onClick="@command('editarGrupo',valor=each)"
                                                        tooltiptext="Modificar clase"/>
                                             </listcell>                                            
                                         </listitem>
@@ -123,15 +135,19 @@
                                     <auxhead>
                                         <auxheader colspan="12" >  
                                             <div class="row">
-                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">                                                    
-                                                    <label value="CUENTA"   />                                                   
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 " visible="@bind(vm.activarCuenta)" >                                                    
+                                                    <label value="CUENTA"   /> 
+                                                    <image  src="/iconos/nuevo_pro-24.png"
+                                                    class="btn btn btn-secondary btn-sm "
+                                                    onClick="@command('nuevaCuenta')"
+                                                    tooltiptext="Nueva clase"/>                                                  
                                                 </div>
                                             </div>
                                 
                                         </auxheader>
                                     </auxhead>
                                     <listhead> 
-                                         <listheader width="30px"  label="" /> 
+                                        <listheader width="30px"  label="" /> 
                                         <listheader width="30%"  label="Numero" /> 
                                         <listheader width="75%"  label="Nombre" /> 
                                         <listheader width="60px"  label="" />                                                             
@@ -151,7 +167,7 @@
                                             <listcell>
                                                 <image src="/iconos/editar.png"   
                                                        class="btn btn btn-secondary btn-sm grow"                                         
-                                                       onClick="@command('modificarClase',valor=each)"
+                                                       onClick="@command('editarCuenta',valor=each)"
                                                        tooltiptext="Modificar clase"/>
                                             </listcell>                                            
                                         </listitem>
@@ -171,15 +187,19 @@
                                     <auxhead>
                                         <auxheader colspan="12" >  
                                             <div class="row">
-                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">                                                    
-                                                    <label value="SUBCUENTA"   />                                                   
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 " visible="@bind(vm.activarSubCuenta)">                                                    
+                                                    <label value="SUBCUENTA"   />
+                                                    <image  src="/iconos/nuevo_pro-24.png"
+                                                    class="btn btn btn-secondary btn-sm "
+                                                    onClick="@command('nuevaSubCuenta')"
+                                                    tooltiptext="Nueva subcuenta"/>                                                   
                                                 </div>
                                             </div>
                                 
                                         </auxheader>
                                     </auxhead>
                                     <listhead> 
-                                         <listheader width="30px"  label="" />
+                                        <listheader width="30px"  label="" />
                                         <listheader width="20%"  label="Numero" /> 
                                         <listheader width="75%"  label="Nombre" /> 
                                         <listheader width="60px"  label="" />                                                             
@@ -199,7 +219,7 @@
                                             <listcell>
                                                 <image src="/iconos/editar.png"   
                                                        class="btn btn btn-secondary btn-sm grow"                                         
-                                                       onClick="@command('modificarClase',valor=each)"
+                                                       onClick="@command('editarSubCuenta',valor=each)"
                                                        tooltiptext="Modificar clase"/>
                                             </listcell>                                            
                                         </listitem>
