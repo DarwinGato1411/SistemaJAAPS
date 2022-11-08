@@ -25,6 +25,9 @@ import com.ec.entidad.Tipocomprobante;
 import com.ec.entidad.Tipokardex;
 import com.ec.entidad.Transportista;
 import com.ec.entidad.Usuario;
+import com.ec.entidad.contabilidad.AcSubCuenta;
+import com.ec.entidad.contabilidad.CuSubCuenta;
+import com.ec.servicio.contabilidad.ServicioAcSubcuenta;
 import com.ec.seguridad.AutentificadorLogeo;
 import com.ec.seguridad.AutentificadorService;
 import com.ec.seguridad.EnumSesion;
@@ -49,6 +52,7 @@ import com.ec.servicio.ServicioTipoAmbiente;
 import com.ec.servicio.ServicioTipoKardex;
 import com.ec.servicio.ServicioTransportista;
 import com.ec.servicio.ServicioUsuario;
+import com.ec.servicio.contabilidad.ServicioSubCuenta;
 import com.ec.untilitario.ArchivoUtils;
 import com.ec.untilitario.ParamFactura;
 import com.ec.untilitario.TotalKardex;
@@ -740,8 +744,8 @@ public class Facturar extends SelectorComposer<Component> {
             DetalleFacturaDAO valor = new DetalleFacturaDAO();
             valor.setCantidad(BigDecimal.ONE);
             valor.setProducto(productoBuscado);
-            valor.setDescripcion(productoBuscado.getProdNombre() );
-            valor.setMesCobro(lectura.getMesActual().getNombre() );
+            valor.setDescripcion(productoBuscado.getProdNombre());
+            valor.setMesCobro(lectura.getMesActual().getNombre());
             valor.setDetPordescuento(DESCUENTOGENERAL);
             valor.setCodigo(productoBuscado.getProdCodigo());
             valor.setEsProducto(producto.getProdEsproducto());
@@ -1346,14 +1350,12 @@ public class Facturar extends SelectorComposer<Component> {
             if (valorAlcantarillado.getTotalInicial().doubleValue() > 0) {
                 ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorAlcantarillado);
             }
-             if (valorDesechos.getTotalInicial().doubleValue() > 0) {
+            if (valorDesechos.getTotalInicial().doubleValue() > 0) {
                 ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorDesechos);
             }
             if (valorAmbiente.getTotalInicial().doubleValue() > 0) {
                 ((ListModelList<DetalleFacturaDAO>) listaDetalleFacturaDAOMOdel).add(valorAmbiente);
             }
-
-           
 
             if (dias >= 60) {
                 if (valorMulta.getTotalInicial().doubleValue() > 0) {
@@ -2702,10 +2704,102 @@ public class Facturar extends SelectorComposer<Component> {
             //armar el detalle de la factura
             List<DetalleFacturaDAO> detalleFactura = new ArrayList<DetalleFacturaDAO>();
             List<DetalleFacturaDAO> listaPedido = listaDetalleFacturaDAOMOdel.getInnerList();
+            ServicioSubCuenta servicioSubcuenta = new ServicioSubCuenta();
+            
+            ServicioAcSubcuenta servicioAcSubcuenta = new ServicioAcSubcuenta();
+
+            CuSubCuenta consumoAguaPotable = servicioSubcuenta.findByNombre("TARIFA BASICA DE AGUA POTABLE").get(0);
+            CuSubCuenta excedente = servicioSubcuenta.findByNombre("EXCEDENTE").get(0);
+            CuSubCuenta alcantarillado = servicioSubcuenta.findByNombre("ALCANTARILLADO").get(0);
+            CuSubCuenta derechoAcometida = servicioSubcuenta.findByNombre("DERECHO DE ACOMETIDA").get(0);
+            CuSubCuenta multas = servicioSubcuenta.findByNombre("MULTAS").get(0);
+            CuSubCuenta material = servicioSubcuenta.findByNombre("VENTA DE MATERIALES").get(0);
+            CuSubCuenta desechosSolidos = servicioSubcuenta.findByNombre("DESECHOS SOLIDOS").get(0);
+            CuSubCuenta medioAmbiente = servicioSubcuenta.findByNombre("MEDIO AMBIENTE").get(0);
+            CuSubCuenta valoresImpagos = servicioSubcuenta.findByNombre("VALORES IMPAGOS INTERES").get(0);
+            BigDecimal valorConsumo = consumoAguaPotable.getSubcTotal();
+            BigDecimal valorExcedente = excedente.getSubcTotal();
+            BigDecimal valorAlcantarillado = alcantarillado.getSubcTotal();
+            BigDecimal valorDerechoAcometida = derechoAcometida.getSubcTotal();
+            BigDecimal valorMultas = multas.getSubcTotal();
+            BigDecimal valorMaterial = material.getSubcTotal();
+            BigDecimal valorDesechosSolidos = desechosSolidos.getSubcTotal();
+            BigDecimal valorMedioAmbiente = medioAmbiente.getSubcTotal();
+            BigDecimal valorValoresImpagos = valoresImpagos.getSubcTotal();
+            AcSubCuenta acConsumoAguaPotable = new AcSubCuenta();
+            AcSubCuenta acExcedente = new AcSubCuenta();
+            AcSubCuenta acAlcantarillado = new AcSubCuenta();
+            AcSubCuenta acDerechoAcometida = new AcSubCuenta();
+            AcSubCuenta acMultas = new AcSubCuenta();
+            AcSubCuenta acMaterial = new AcSubCuenta();
+            AcSubCuenta acDesechosSolidos = new AcSubCuenta();
+            AcSubCuenta acMedioAmbiente = new AcSubCuenta();
+            AcSubCuenta acValoresImpagos = new AcSubCuenta();
+            
+            java.util.Date fecha = new Date();
             if (listaPedido.size() > 0) {
                 for (DetalleFacturaDAO item : listaPedido) {
                     if (item.getProducto() != null) {
                         detalleFactura.add(item);
+                        BigDecimal totalItem = item.getTotal();
+
+                        if (item.getDescripcion().equals("TARIFA BASICA DE AGUA POTABLE")) {
+                            consumoAguaPotable.setSubcTotal(valorConsumo.add(totalItem));
+                            servicioSubcuenta.modificar(consumoAguaPotable);
+                            acConsumoAguaPotable.setIdSubCuenta(consumoAguaPotable);
+                            acConsumoAguaPotable.setDebe(totalItem);
+                            acConsumoAguaPotable.setFechaAcSubcuenta(fecha);
+                            servicioAcSubcuenta.crear(acConsumoAguaPotable);
+                        } else if (item.getDescripcion().equals("EXCEDENTE")) {
+                            excedente.setSubcTotal(valorExcedente.add(totalItem));
+                            servicioSubcuenta.modificar(excedente);
+                            acExcedente.setIdSubCuenta(excedente);
+                            acExcedente.setDebe(totalItem);
+                            acExcedente.setFechaAcSubcuenta(fecha);
+                            servicioAcSubcuenta.crear(acExcedente);
+                        } else if (item.getDescripcion().equals("ALCANTARILLADO")) {
+                            alcantarillado.setSubcTotal(valorAlcantarillado.add(totalItem));
+                            servicioSubcuenta.modificar(alcantarillado);
+                            acAlcantarillado.setIdSubCuenta(alcantarillado);
+                            acAlcantarillado.setDebe(totalItem);
+                            acAlcantarillado.setFechaAcSubcuenta(fecha);
+                            servicioAcSubcuenta.crear(acAlcantarillado);
+                        } else if (item.getDescripcion().equals("MULTAS")) {
+                            multas.setSubcTotal(valorMultas.add(totalItem));
+                            servicioSubcuenta.modificar(multas);
+                            acMultas.setIdSubCuenta(multas);
+                            acMultas.setDebe(totalItem);
+                            acMultas.setFechaAcSubcuenta(fecha);
+                            servicioAcSubcuenta.crear(acMultas);
+                        } else if (item.getDescripcion().equals("DESECHOS SOLIDOS")) {
+                            desechosSolidos.setSubcTotal(valorDesechosSolidos.add(totalItem));
+                            servicioSubcuenta.modificar(desechosSolidos);
+                            acDesechosSolidos.setIdSubCuenta(desechosSolidos);
+                            acDesechosSolidos.setDebe(totalItem);
+                            acDesechosSolidos.setFechaAcSubcuenta(fecha);
+                            servicioAcSubcuenta.crear(acDesechosSolidos);
+                        } else if (item.getDescripcion().equals("MEDIO AMBIENTE")) {
+                            medioAmbiente.setSubcTotal(valorMedioAmbiente.add(totalItem));
+                            servicioSubcuenta.modificar(medioAmbiente);
+                            acMedioAmbiente.setIdSubCuenta(medioAmbiente);
+                            acMedioAmbiente.setDebe(totalItem);
+                            acMedioAmbiente.setFechaAcSubcuenta(fecha);
+                            servicioAcSubcuenta.crear(acMedioAmbiente);
+                        } else if (item.getDescripcion().equals("INTERES VALORES IMPAGOS")) {
+                            valoresImpagos.setSubcTotal(valorValoresImpagos.add(totalItem));
+                            servicioSubcuenta.modificar(valoresImpagos);
+                            acValoresImpagos.setIdSubCuenta(valoresImpagos);
+                            acValoresImpagos.setDebe(totalItem);
+                            acValoresImpagos.setFechaAcSubcuenta(fecha);
+                            servicioAcSubcuenta.crear(acValoresImpagos);
+                        }  else {
+                           material.setSubcTotal(valorMaterial.add(item.getTotal()));
+                            servicioSubcuenta.modificar(material);
+                            acMaterial.setIdSubCuenta(material);
+                            acMaterial.setDebe(totalItem);
+                            acMaterial.setFechaAcSubcuenta(fecha);
+                            servicioAcSubcuenta.crear(acMaterial);
+                        }
                     }
 
                 }
@@ -3000,6 +3094,7 @@ public class Facturar extends SelectorComposer<Component> {
             }
 
             reporteGeneral();
+            
             if (accion.equals("create")) {
                 Executions.sendRedirect("/venta/facturar.zul");
             } else {

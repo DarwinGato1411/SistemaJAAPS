@@ -6,7 +6,8 @@
         <property name="portNumber" value="5432"/>
         <property name="databaseName" value="deckxel_agua"/>
         <property name="User" value="postgres"/>
-        <property name="Password" value="postgres"/>
+     <property name="Password" value="postgres"/>   
+      <!--  <property name="Password" value="dDzioy@E$cLYc6"/>-->
         <property name="URL" value="jdbc:postgresql://localhost:5432/deckxel_agua"/>
         <property name="driverClass" value="org.postgresql.Driver"/>
     </jdbc-connection-pool>

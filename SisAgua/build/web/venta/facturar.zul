@@ -107,7 +107,7 @@
                                                  <listcell zclass = "mycss-listcell">   
                                                     <image  src="/iconos/Forward.png" 
                                                             onClick="@command('buscarLecturasPendientes',valor=each)" 
-                                                            tooltiptext="Asigar producto"/> 
+                                                            tooltiptext="Asignar producto"/> 
                                                   
                                                 </listcell>
                                             </listitem>
@@ -180,7 +180,7 @@
                                                 <listcell zclass = "mycss-listcell">   
                                                     <image  src="/iconos/Forward.png" 
                                                             onClick="@command('agregarLectura',valor=each)" 
-                                                            tooltiptext="Asigar producto"/> 
+                                                            tooltiptext="Asignar producto"/> 
                                                   
                                                 </listcell>
                                             </listitem>

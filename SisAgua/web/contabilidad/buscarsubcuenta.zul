@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window  id="windowSubcuentaBuscar"  position="center" class="col-12 col-sm-12 col-md-11 col-lg-11" closable="true"  
+         apply="org.zkoss.bind.BindComposer" contentStyle="overflow:auto"
+         viewModel="@id('vm') @init('com.ec.controlador.NuevoIngresoCuenta')">
+    
+    <caption label="Seleccionar sub cuenta" style="font-weight:bold"/> 
+   
+    <listbox model="@load(vm.listaCuSubCuentaAll)" 
+             nonselectableTags="*"  mold="paging" pageSize="14"  >
+        <custom-attributes org.zkoss.zul.listbox.rod="true"/>            
+        <listhead> 
+            <listheader width="30%"  label="NUMERO "  /> 
+            <listheader width="70%"   >
+                <textbox value="@bind(vm.buscarNombre)"  
+                         class="form-control form-control-sm"
+                         tooltiptext="Nombtre"
+                         placeholder="Nombre"
+                         onOK="@command('buscaBucarSubcuentaNombre')"
+                         onChange="self.setValue(self.getValue().toUpperCase());" />
+            </listheader>     
+                 
+        </listhead>  
+                    
+        <template name="model">                       
+           
+                                                    
+            <listitem onOK="@command('seleccionarSubCuenta',valor=each)">
+                <listcell  style="font-size:10px;background-color:#d6eefd" zclass = "mycss-listcell" 
+                           onClick="@command('seleccionarSubCuenta',valor=each)">
+                    <textbox readonly="true" style="font-size:12px ;background:#EBF5FB" 
+                             class="form-control form-control-sm"
+                             value="@bind(each.subcNumero)" 
+                             onClick="@command('seleccionarSubCuenta',valor=each)" />
+                </listcell>
+                <listcell  style="font-size:10px;background-color:#d6eefd" zclass = "mycss-listcell" 
+                           onClick="@command('seleccionarSubCuenta',valor=each)" >
+                    <textbox readonly="true" style="font-size:12px ;background:#EBF5FB" 
+                             class="form-control form-control-sm"
+                             value="@bind(each.subcNombre)" 
+                             onClick="@command('seleccionarSubCuenta',valor=each)" />
+                </listcell>
+                <listcell zclass = "mycss-listcell">   
+                <image  src="/iconos/Forward.png" 
+                            onClick="@command('agregarItemLista',valor=each.idCuSubCuenta)" 
+                            tooltiptext="Asignar SubCuenta"/> 
+                                                 
+                </listcell>
+              
+            </listitem>
+        </template>
+    </listbox>
+                           
+                  
+</window>

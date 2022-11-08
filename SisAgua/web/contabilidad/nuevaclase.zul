@@ -25,6 +25,7 @@
                               onChange="self.setValue(self.getValue().toUpperCase())"
                               value="@bind(vm.entidad.clasNombre)" 
                               class="form-control" />
+                    
                 </div>
                
               

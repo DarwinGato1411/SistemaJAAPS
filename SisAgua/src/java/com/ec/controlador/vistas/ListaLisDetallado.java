@@ -5,6 +5,8 @@
  */
 package com.ec.controlador.vistas;
 
+import com.ec.entidad.contabilidad.CuSubCuenta;
+import com.ec.servicio.contabilidad.ServicioSubCuenta;
 import com.ec.untilitario.ArchivoUtils;
 import com.ec.vista.servicios.ServicioListadoDetallado;
 import com.ec.vista.servicios.ServicioListadoItems;
@@ -37,6 +39,9 @@ public class ListaLisDetallado {
 
     ServicioListadoItems servicioListadoItems = new ServicioListadoItems();
     private List<ListadoItems> listaListItems = new ArrayList<ListadoItems>();
+    
+    ServicioSubCuenta servicioSubCuenta2 = new ServicioSubCuenta();
+    private List<CuSubCuenta> listaCuSubCuenta2 = new ArrayList<CuSubCuenta>();
 
     public ListaLisDetallado() {
 
@@ -45,6 +50,7 @@ public class ListaLisDetallado {
         inicio = calendar.getTime();
 
         //fechainicioDiaria.setDate(-7);
+         consultaCuSubCuentas();
         consultaDetalle();
         consultaItems();
     }
@@ -73,6 +79,37 @@ public class ListaLisDetallado {
             //item.setPorcentaje(ArchivoUtils.redondearDecimales(porcentaje, 2));
         }
     }
+     @Command
+    @NotifyChange({"listaCuSubCuenta2"})
+    public void buscarlistaCuSubCuenta2() {
+    
+        consultaCuSubCuentas();
+
+    }
+   private void consultaCuSubCuentas() {
+      
+        listaCuSubCuenta2  = servicioSubCuenta2.listadoTotal();
+
+    }
+    
+
+    public ServicioSubCuenta getServicioSubCuenta2() {
+        return servicioSubCuenta2;
+    }
+
+    public void setServicioSubCuenta2(ServicioSubCuenta servicioSubCuenta2) {
+        this.servicioSubCuenta2 = servicioSubCuenta2;
+    }
+
+    public List<CuSubCuenta> getListaCuSubCuenta2() {
+        return listaCuSubCuenta2;
+    }
+
+    public void setListaCuSubCuenta2(List<CuSubCuenta> listaCuSubCuenta2) {
+        this.listaCuSubCuenta2 = listaCuSubCuenta2;
+    }
+
+
 
     public Date getInicio() {
         return inicio;

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="58"/>
+	<property name="ireport.y" value="202"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -483,7 +483,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_nombres}+" "+$F{cli_apellidos}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_apellidos}+" "+$F{cli_nombres}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="400" y="303" width="75" height="20"/>
@@ -576,7 +576,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{fac_medidor}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement positionType="Float" x="155" y="364" width="116" height="20"/>
 				<box>
 					<pen lineWidth="0.25"/>

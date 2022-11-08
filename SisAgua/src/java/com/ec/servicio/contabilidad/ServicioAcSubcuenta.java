@@ -1,12 +1,13 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.ec.servicio.contabilidad;
 
 import com.ec.entidad.contabilidad.CuCuenta;
-import com.ec.servicio.*;
-import com.ec.entidad.contabilidad.CuSubCuenta;
+import com.ec.entidad.contabilidad.AcSubCuenta;
+import com.ec.servicio.HelperPersistencia;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -14,10 +15,10 @@ import javax.persistence.Query;
 
 /**
  *
- * @author gato
+ * @author HC
  */
-public class ServicioSubCuenta {
-
+public class ServicioAcSubcuenta {
+    
     private EntityManager em;
 
     public EntityManager getEm() {
@@ -28,83 +29,83 @@ public class ServicioSubCuenta {
         this.em = em;
     }
 
-    public void crear(CuSubCuenta cuSubCuenta) {
+    public void crear(AcSubCuenta acSubCuenta) {
 
         try {
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            em.persist(cuSubCuenta);
+            em.persist(acSubCuenta);
             em.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error en insertar cuSubCuenta " + e.getMessage());
+            System.out.println("Error en insertar acSubCuenta " + e.getMessage());
         } finally {
             em.close();
         }
 
     }
 
-    public void eliminar(CuSubCuenta cuSubCuenta) {
+    public void eliminar(AcSubCuenta acSubCuenta) {
 
         try {
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            em.remove(em.merge(cuSubCuenta));
+            em.remove(em.merge(acSubCuenta));
             em.getTransaction().commit();
 
         } catch (Exception e) {
-            System.out.println("Error en eliminar  cuSubCuenta " + e.getMessage());
+            System.out.println("Error en eliminar  acSubCuenta " + e.getMessage());
         } finally {
             em.close();
         }
 
     }
 
-    public void modificar(CuSubCuenta cuSubCuenta) {
+    public void modificar(AcSubCuenta acSubCuenta) {
 
         try {
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            em.merge(cuSubCuenta);
+            em.merge(acSubCuenta);
             em.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error en insertar cuSubCuenta " + e.getMessage());
+            System.out.println("Error en insertar acSubCuenta " + e.getMessage());
         } finally {
             em.close();
         }
 
     }
 
-    public List<CuSubCuenta> findByNombre(String valor) {
+    public List<AcSubCuenta> findByNombre(String valor) {
 
-        List<CuSubCuenta> listaCuSubCuentas = new ArrayList<CuSubCuenta>();
+        List<AcSubCuenta> listaAcSubCuenta = new ArrayList<AcSubCuenta>();
         try {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM CuSubCuenta a WHERE a.subcNombre  LIKE :subcNombre ORDER BY a.subcNumero ASC");
+            Query query = em.createQuery("SELECT  a FROM AcSubCuenta a WHERE a.subcNombre  LIKE :subcNombre ORDER BY a.subcNumero ASC");
             query.setParameter("subcNombre", "%" + valor + "%");
 
-            listaCuSubCuentas = (List<CuSubCuenta>) query.getResultList();
+            listaAcSubCuenta = (List<AcSubCuenta>) query.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error en lsa consulta cuSubCuenta findByNombre " + e.getMessage());
+            System.out.println("Error en lsa consulta acSubCuenta findByNombre " + e.getMessage());
         } finally {
             em.close();
         }
 
-        return listaCuSubCuentas;
+        return listaAcSubCuenta;
     }
 
-    public List<CuSubCuenta> findByIdCuenta(CuCuenta valor) {
+    public List<AcSubCuenta> findByIdCuenta(CuCuenta valor) {
 
-        List<CuSubCuenta> listaCuSubCuentas = new ArrayList<CuSubCuenta>();
+        List<AcSubCuenta> listaAcSubCuenta = new ArrayList<AcSubCuenta>();
         try {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM CuSubCuenta a WHERE a.idCuenta =:idCuenta");
+            Query query = em.createQuery("SELECT  a FROM AcSubCuenta a WHERE a.idCuenta =:idCuenta");
             query.setParameter("idCuenta", valor);
-            listaCuSubCuentas = (List<CuSubCuenta>) query.getResultList();
+            listaAcSubCuenta = (List<AcSubCuenta>) query.getResultList();
             em.getTransaction().commit();
 
         } catch (Exception e) {
@@ -113,22 +114,22 @@ public class ServicioSubCuenta {
         } finally {
             em.close();
         }
-        return listaCuSubCuentas;
+        return listaAcSubCuenta;
     }
 
-    public List<CuSubCuenta> listadoTotal() {
+    public List<AcSubCuenta> listadoTotal() {
 
-        List<CuSubCuenta> listaLisItems = new ArrayList<CuSubCuenta>();
+        List<AcSubCuenta> listaLisItems = new ArrayList<AcSubCuenta>();
         try {
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
             //  Query query = em.createQuery("SELECT new com.ec.vistas.RotacionProducto(max(a.prodNombre),SUM(a.cantidadVenta),SUM(a.valorVentaProducto)) FROM RotacionProducto a WHERE a.facFecha BETWEEN :inicio and :fin  GROUP BY a.idProducto" );
-            Query query = em.createQuery("SELECT a FROM CuSubCuenta a ");
+            Query query = em.createQuery("SELECT a FROM AcSubCuenta a ");
 
-            listaLisItems = (List<CuSubCuenta>) query.getResultList();
+            listaLisItems = (List<AcSubCuenta>) query.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error en lsa consulta CuSubCuenta " + e.getMessage());
+            System.out.println("Error en lsa consulta AcSubCuenta " + e.getMessage());
         } finally {
             em.close();
         }
@@ -136,19 +137,19 @@ public class ServicioSubCuenta {
         return listaLisItems;
     }
     
-        public List<CuSubCuenta> listadoComprobante() {
+        public List<AcSubCuenta> listadoComprobante() {
 
-        List<CuSubCuenta> listaLisItems = new ArrayList<CuSubCuenta>();
+        List<AcSubCuenta> listaLisItems = new ArrayList<AcSubCuenta>();
         try {
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
             //  Query query = em.createQuery("SELECT new com.ec.vistas.RotacionProducto(max(a.prodNombre),SUM(a.cantidadVenta),SUM(a.valorVentaProducto)) FROM RotacionProducto a WHERE a.facFecha BETWEEN :inicio and :fin  GROUP BY a.idProducto" );
-            Query query = em.createQuery("SELECT a.subcNombre, a.subcTotal FROM CuSubCuenta a ");
+            Query query = em.createQuery("SELECT a.subcNombre, a.subcTotal FROM AcSubCuenta a ");
 
-            listaLisItems = (List<CuSubCuenta>) query.getResultList();
+            listaLisItems = (List<AcSubCuenta>) query.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error en lsa consulta CuSubCuenta " + e.getMessage());
+            System.out.println("Error en lsa consulta AcSubCuenta " + e.getMessage());
         } finally {
             em.close();
         }
@@ -156,26 +157,25 @@ public class ServicioSubCuenta {
         return listaLisItems;
     }
 
-    public CuSubCuenta findById(Integer idSubcuenta) {
+    public AcSubCuenta findById(Integer idSubcuenta) {
 
-        List<CuSubCuenta> listaLisItems = new ArrayList<CuSubCuenta>();
+        List<AcSubCuenta> listaLisItems = new ArrayList<AcSubCuenta>();
         try {
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
             //  Query query = em.createQuery("SELECT new com.ec.vistas.RotacionProducto(max(a.prodNombre),SUM(a.cantidadVenta),SUM(a.valorVentaProducto)) FROM RotacionProducto a WHERE a.facFecha BETWEEN :inicio and :fin  GROUP BY a.idProducto" );
-            Query query = em.createQuery("SELECT  a FROM CuSubCuenta a WHERE a.idSubCuenta=:idSubCuenta ");
+            Query query = em.createQuery("SELECT  a FROM AcSubCuenta a WHERE a.idSubCuenta=:idSubCuenta ");
             query.setParameter("idSubCuenta", idSubcuenta);
-            listaLisItems = (List<CuSubCuenta>) query.getResultList();
+            listaLisItems = (List<AcSubCuenta>) query.getResultList();
 
             em.getTransaction().commit();
             return listaLisItems.isEmpty() ? null : listaLisItems.get(0);
         } catch (Exception e) {
-            System.out.println("Error en lsa consulta CuSubCuenta " + e.getMessage());
+            System.out.println("Error en lsa consulta AcSubCuenta " + e.getMessage());
         } finally {
             em.close();
         }
 
         return null;
     }
-
 }

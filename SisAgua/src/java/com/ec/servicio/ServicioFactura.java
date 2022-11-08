@@ -55,12 +55,14 @@ public class ServicioFactura {
             em.getTransaction().begin();
 
             DetalleFacturaDAO recuAO = detalleFacturaDAOs.get(0);
-            factura.setFacLecAnterior(recuAO.getLectura().getLecAnterior());
-            factura.setFacLecActual(recuAO.getLectura().getLecActual());
-            factura.setFacMetrosCubicos(recuAO.getLectura().getLecMetrosCubicos());
-            factura.setFacLecMes(recuAO.getLectura().getLecMes());
-            factura.setFacMedidor(recuAO.getLectura().getIdMedidor().getMedNumero());
-            factura.setFacDirMedidor(recuAO.getLectura().getIdMedidor().getMedDireccion() != null ? recuAO.getLectura().getIdMedidor().getMedDireccion() : "S/N");
+            if(recuAO.getLectura() != null){
+            factura.setFacLecAnterior(recuAO.getLectura() != null? recuAO.getLectura().getLecAnterior():BigDecimal.ZERO);
+            factura.setFacLecActual(recuAO.getLectura() != null? recuAO.getLectura().getLecActual():BigDecimal.ZERO );
+            factura.setFacMetrosCubicos(recuAO.getLectura() != null? recuAO.getLectura().getLecMetrosCubicos():BigDecimal.ZERO);
+            factura.setFacLecMes(recuAO.getLectura() != null? recuAO.getLectura().getLecMes():0 );
+            factura.setFacMedidor(recuAO.getLectura() != null? recuAO.getLectura().getIdMedidor().getMedNumero():"S/N");
+            factura.setFacDirMedidor(recuAO.getLectura() != null ? recuAO.getLectura().getIdMedidor().getMedDireccion() : "S/N");
+            }
             em.persist(factura);
             em.flush();
             DetalleFactura detalleFactura = null;

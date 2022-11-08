@@ -132,7 +132,7 @@
                                             value="@bind(each.dettPrecioBase)" width="96%"/>
                             </listcell>
                             <listcell zclass = "mycss-listcell">
-                                <decimalbox format="###.###" readonly="true" 
+                                <decimalbox format="###.####" readonly="true" 
                                             value="@bind(each.dettPorcentajeExcedente)" width="96%"/>
                             </listcell>
                             <listcell zclass = "mycss-listcell">
