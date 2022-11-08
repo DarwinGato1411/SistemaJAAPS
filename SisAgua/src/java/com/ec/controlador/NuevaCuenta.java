@@ -13,6 +13,7 @@ import com.ec.servicio.contabilidad.ServicioCuenta;
 import com.ec.servicio.contabilidad.ServicioGrupo;
 import com.ec.untilitario.ParamCuenta;
 import com.ec.untilitario.ParamGrupo;
+import java.math.BigDecimal;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -48,6 +49,9 @@ public class NuevaCuenta {
             accion = "update";
         } else {
             this.entidad = new CuCuenta();
+            this.entidad.setGrupOtro(BigDecimal.ZERO);
+            this.entidad.setGrupTotal(BigDecimal.ZERO);
+            this.entidad.setGrupSaldo(BigDecimal.ZERO);
             cuGrupo = valor.getCuGrupo();
             System.out.println(" CREATE Cuenta " + valor.getCuGrupo().getGrupNombre());
             accion = "create";

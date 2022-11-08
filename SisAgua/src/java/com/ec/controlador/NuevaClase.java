@@ -7,6 +7,7 @@ package com.ec.controlador;
 
 import com.ec.entidad.contabilidad.CuClase;
 import com.ec.servicio.contabilidad.ServicioClase;
+import java.math.BigDecimal;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -41,7 +42,9 @@ public class NuevaClase {
             accion = "update";
         } else {
             this.entidad = new CuClase();
-
+            this.entidad.setClasOtro(BigDecimal.ZERO);
+            this.entidad.setClasSaldo(BigDecimal.ZERO);
+            this.entidad.setClasTotal(BigDecimal.ZERO);
             accion = "create";
         }
 
@@ -50,22 +53,22 @@ public class NuevaClase {
     @Command
     public void guardar() {
         if (entidad.getClasNumero() != null
-                && entidad.getClasNombre() != null) {
+                    && entidad.getClasNombre() != null) {
             if (accion.equals("create")) {
                 servicioClase.crear(entidad);
                 Clients.showNotification("Guardado correctamente",
-                        Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 3000, true);
+                            Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 3000, true);
                 wClase.detach();
             } else {
                 servicioClase.modificar(entidad);
                 Clients.showNotification("Modificado correctamente",
-                        Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 3000, true);
+                            Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 3000, true);
                 wClase.detach();
             }
 
         } else {
             Clients.showNotification("Verifique la informacion",
-                    Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
+                        Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
         }
     }
 

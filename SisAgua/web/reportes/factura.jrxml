@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="202"/>
+	<property name="ireport.y" value="43"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -226,6 +226,8 @@ where factura.fac_numero=$P{numfactura};]]>
 	<field name="am_age_ret" class="java.lang.Boolean"/>
 	<field name="am_contr_esp" class="java.lang.Boolean"/>
 	<field name="am_exp" class="java.lang.Boolean"/>
+	<field name="am_ripme" class="java.lang.Boolean"/>
+	<field name="am_general" class="java.lang.Boolean"/>
 	<field name="id_factura" class="java.lang.Integer"/>
 	<field name="id_estado" class="java.lang.Integer"/>
 	<field name="id_usuario" class="java.lang.Integer"/>
@@ -315,15 +317,15 @@ where factura.fac_numero=$P{numfactura};]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="384" splitType="Stretch">
+		<band height="371" splitType="Stretch">
 			<rectangle radius="0">
-				<reportElement x="0" y="265" width="555" height="82"/>
+				<reportElement x="0" y="252" width="555" height="82"/>
 			</rectangle>
 			<rectangle radius="10">
-				<reportElement x="295" y="0" width="260" height="260"/>
+				<reportElement x="295" y="0" width="260" height="247"/>
 			</rectangle>
 			<componentElement>
-				<reportElement x="307" y="206" width="243" height="21"/>
+				<reportElement x="308" y="191" width="243" height="21"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$F{fac_clave_acceso}]]></jr:codeExpression>
 				</jr:barbecue>
@@ -360,33 +362,33 @@ where factura.fac_numero=$P{numfactura};]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_ruc}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="307" y="132" width="100" height="30"/>
+				<reportElement x="308" y="121" width="100" height="30"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[FECHA Y HORA DE AUTORIZACIÓN]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="407" y="132" width="143" height="30"/>
+				<reportElement x="408" y="121" width="143" height="30"/>
 				<textElement/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{fac_fecha_autorizacion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="307" y="162" width="100" height="20"/>
+				<reportElement x="308" y="151" width="100" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[AMBIENTE:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="307" y="182" width="100" height="20"/>
+				<reportElement x="308" y="171" width="100" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[EMISIÓN:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="407" y="162" width="143" height="20"/>
+				<reportElement x="408" y="151" width="143" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_descripcion}]]></textFieldExpression>
 			</textField>
@@ -396,7 +398,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_estab}+"-"+$F{am_ptoemi}+"-"+$F{fac_numero_text}]]></textFieldExpression>
 			</textField>
 			<rectangle radius="10">
-				<reportElement x="0" y="75" width="284" height="185"/>
+				<reportElement x="0" y="75" width="284" height="172"/>
 			</rectangle>
 			<textField isBlankWhenNull="true">
 				<reportElement x="11" y="81" width="273" height="20"/>
@@ -427,7 +429,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<text><![CDATA[Direcciòn Sucursal:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="11" y="279" width="178" height="20"/>
+				<reportElement x="11" y="266" width="178" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -460,14 +462,14 @@ where factura.fac_numero=$P{numfactura};]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_direccion_matriz}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="307" y="227" width="243" height="20"/>
+				<reportElement x="307" y="215" width="243" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{fac_clave_acceso}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="307" y="92" width="243" height="40"/>
+				<reportElement x="307" y="92" width="243" height="28"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{fac_clave_acceso}]]></textFieldExpression>
 			</textField>
@@ -479,51 +481,51 @@ where factura.fac_numero=$P{numfactura};]]>
 				<text><![CDATA[Contribuyente Especial Nro]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="189" y="279" width="361" height="20"/>
+				<reportElement x="189" y="266" width="361" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_apellidos}+" "+$F{cli_nombres}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="400" y="303" width="75" height="20"/>
+				<reportElement x="400" y="290" width="75" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Identificación:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="474" y="303" width="80" height="20"/>
+				<reportElement x="474" y="290" width="80" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_cedula}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="11" y="303" width="95" height="20"/>
+				<reportElement x="11" y="290" width="95" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de emisión: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="11" y="327" width="95" height="20"/>
+				<reportElement x="11" y="314" width="95" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Dirección Cliente:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="106" y="327" width="444" height="20"/>
+				<reportElement x="106" y="314" width="444" height="20"/>
 				<box leftPadding="2" rightPadding="2"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_direccion}+"   /    Direccion Med: "+$F{fac_dir_medidor}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="106" y="303" width="189" height="20"/>
+				<reportElement x="106" y="290" width="189" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{fac_fecha}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="407" y="182" width="143" height="20"/>
+				<reportElement x="408" y="171" width="143" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_tipo_emision}.equals( "1" ) ? "NORMAL":""]]></textFieldExpression>
 			</textField>
@@ -532,28 +534,19 @@ where factura.fac_numero=$P{numfactura};]]>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_nro_contribuyente}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="11" y="227" width="273" height="14">
-					<printWhenExpression><![CDATA[$F{am_micro_emp}]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CONTRIBUYENTE RÉGIMEN MICROEMPRESA]]></text>
-			</staticText>
 			<image onErrorType="Blank">
 				<reportElement x="31" y="4" width="219" height="70"/>
 				<imageExpression class="java.lang.String"><![CDATA[$F{am_dir_img_punto_venta}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement positionType="Float" x="10" y="241" width="274" height="14">
+				<reportElement positionType="Float" x="10" y="221" width="274" height="14">
 					<printWhenExpression><![CDATA[$F{am_age_ret}]]></printWhenExpression>
 				</reportElement>
 				<textElement/>
 				<text><![CDATA[AGENTE DE RETENCION: NAC-DNCRASC20-00000001]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="393" y="364" width="161" height="20"/>
+				<reportElement positionType="Float" x="393" y="351" width="161" height="20"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -565,7 +558,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fac_metros_cubicos}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="0" y="364" width="88" height="20"/>
+				<reportElement positionType="Float" x="0" y="351" width="88" height="20"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -577,7 +570,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{fac_medidor}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="155" y="364" width="116" height="20"/>
+				<reportElement positionType="Float" x="155" y="351" width="116" height="20"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -589,7 +582,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fac_lec_anterior}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="0" y="352" width="88" height="12"/>
+				<reportElement positionType="Float" x="0" y="339" width="88" height="12"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -603,7 +596,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<text><![CDATA[Conexión]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="88" y="352" width="67" height="12"/>
+				<reportElement positionType="Float" x="88" y="339" width="67" height="12"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -617,7 +610,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<text><![CDATA[Mes]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="271" y="352" width="122" height="12"/>
+				<reportElement positionType="Float" x="271" y="339" width="122" height="12"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -631,7 +624,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<text><![CDATA[Lectura actual]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="155" y="352" width="116" height="12"/>
+				<reportElement positionType="Float" x="155" y="339" width="116" height="12"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -645,7 +638,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<text><![CDATA[Lectura anterior]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="393" y="352" width="161" height="12"/>
+				<reportElement positionType="Float" x="393" y="339" width="161" height="12"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -659,7 +652,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<text><![CDATA[Metros cúbicos]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="271" y="364" width="122" height="20"/>
+				<reportElement positionType="Float" x="271" y="351" width="122" height="20"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -671,7 +664,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fac_lec_actual}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="88" y="364" width="67" height="20"/>
+				<reportElement x="88" y="351" width="67" height="20"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -985,7 +978,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<text><![CDATA[ICE]]></text>
 			</staticText>
 			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
-				<reportElement style="table_TD" positionType="Float" x="217" y="133" width="54" height="15"/>
+				<reportElement style="table_TD" positionType="Float" x="339" y="133" width="54" height="15"/>
 				<box leftPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Right">
 					<font size="6"/>
@@ -1000,7 +993,7 @@ where factura.fac_numero=$P{numfactura};]]>
 				<text><![CDATA[VALOR TOTAL SIN SUBSIDIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="table_TD" positionType="Float" x="217" y="118" width="54" height="15"/>
+				<reportElement style="table_TD" positionType="Float" x="339" y="118" width="54" height="15"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -1107,14 +1100,14 @@ where factura.fac_numero=$P{numfactura};]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_direccion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="table_TD" positionType="Float" mode="Transparent" x="0" y="118" width="217" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement style="table_TD" positionType="Float" mode="Transparent" x="0" y="118" width="339" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Forma de Pago]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement style="table_TD" positionType="Float" mode="Transparent" x="0" y="133" width="217" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement style="table_TD" positionType="Float" mode="Transparent" x="0" y="133" width="339" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
@@ -1208,6 +1201,16 @@ where factura.fac_numero=$P{numfactura};]]>
 Se recuerda que el envio de los comprobantes de retenciones debe realizarse dentro de los 5 dias habiles a la emisión de la factura de acuerdo del Art. 50
 (Obligación de los agentes de retención ) reformado en el Art. 103 numeral 1,2,3 y 6 de la ley s/n RO 242-35, 29-1-2007]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="10" y="74" width="368" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_ripme}?"CONTRIBUYENTE RÉGIMEN RIMPE":""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="74" width="368" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_general}?"RÉGIMEN GENERA":""]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

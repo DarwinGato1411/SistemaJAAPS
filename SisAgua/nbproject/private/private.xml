@@ -3,17 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/web/contabilidad/nuevaclase.zul</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/servicio/contabilidad/ServicioClase.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/entidad/contabilidad/AcSubCuenta.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/AdmPlanCuentas.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/Facturar.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/conf/persistence.xml</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/NuevaSubCuenta.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/NuevaClase.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/web/contabilidad/plancuentas.zul</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/setup/glassfish-resources.xml</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/web/META-INF/context.xml</file>
+            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/src/java/com/ec/untilitario/AutorizarDocumentos.java</file>
         </group>
     </open-files>
 </project-private>
