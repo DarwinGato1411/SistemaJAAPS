@@ -225,6 +225,17 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnCuSubClase() {
         Executions.sendRedirect("/contabilidad/plancuentas.zul");
     }
+    @Listen("onClick = #btnListaSubContable")
+    public void btnListaSubContable() {
+        Executions.sendRedirect("/contabilidad/visualizarsubcuenta.zul");
+    }
+    @Listen("onClick = #btnAsientoConta")
+    public void btnAsientoConta() {
+        Executions.sendRedirect("/contabilidad/ingresoasientomanual.zul");
+    }
+    
+    
+    
     @Listen("onClick = #btnReportesConta")
     public void btnReportesConta() {
         Executions.sendRedirect("/contabilidad/reportesConta.zul");

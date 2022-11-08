@@ -96,6 +96,9 @@
                         <menu label="Contabilidad" id="menuContabilidad">
                             <menupopup>                                                                         
                                 <menuitem label="Plan de cuentas" id="btnPlanCuenta"  /> 
+                                 <menuitem label="Listado de sub cuentas contables" id="btnListaSubContable"  /> 
+                                <menuitem label="Ingreso manual asiento contable" id="btnAsientoConta"  /> 
+                               
                                 <menuitem label="Reportes Contabilidad" id="btnReportesConta" />
                             </menupopup>
                         </menu>

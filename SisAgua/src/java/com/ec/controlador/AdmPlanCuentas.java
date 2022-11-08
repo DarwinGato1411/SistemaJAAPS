@@ -3,13 +3,8 @@
  * and open the template in the editor.
  */
 package com.ec.controlador;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import com.ec.dao.DetalleFacturaDAO;
-import com.ec.entidad.Clases;
-import com.ec.entidad.Producto;
 import com.ec.entidad.contabilidad.AsientoContable;
 import com.ec.entidad.contabilidad.CuClase;
 import com.ec.entidad.contabilidad.CuCuenta;
@@ -23,27 +18,16 @@ import com.ec.servicio.contabilidad.ServicioSubCuenta;
 import com.ec.untilitario.ParamCuenta;
 import com.ec.untilitario.ParamGrupo;
 import com.ec.untilitario.ParamSubCuenta;
-import com.ec.vistas.ListadoDetallado;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.select.Selectors;
-import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.ListModelList;
-import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Window;
 
 /**
  *
@@ -488,18 +472,18 @@ public class AdmPlanCuentas {
        seleccionarCuenta();
     }
     
-          @Command
-    @NotifyChange({"listaAsientoContable", "buscarAsientoContable"})
-    public void nuevoAsientoContable(@BindingParam("valor") AsientoContable valor) {
-
-         final HashMap<String, AsientoContable> map = new HashMap<String, AsientoContable>();
-          map.put("valor", valor);
-       
-       /* org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                "/contabilidad/nuevasubcuenta.zul", null, map);
-        window.doModal();*/
-   
-    }
+//          @Command
+//    @NotifyChange({"listaAsientoContable", "buscarAsientoContable"})
+//    public void nuevoAsientoContable(@BindingParam("valor") AsientoContable valor) {
+//
+//         final HashMap<String, AsientoContable> map = new HashMap<String, AsientoContable>();
+//          map.put("valor", valor);
+//       
+//       /* org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+//                "/contabilidad/nuevasubcuenta.zul", null, map);
+//        window.doModal();*/
+//   
+//    }
     
     /*    ServicioSubCuenta servicioSubCuenta = new ServicioSubCuenta();
     private List<CuSubCuenta> listaCuSubCuenta = new ArrayList<CuSubCuenta>();
@@ -553,7 +537,7 @@ public class AdmPlanCuentas {
     public void nuevoasientocontable() {
         buscarClase = "";
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                "/contabilidad/nuevoplancuenta.zul", null, null);
+                "/contabilidad/nuevoasientomanual.zul", null, null);
         window.doModal();
          getClaseModel();
     }

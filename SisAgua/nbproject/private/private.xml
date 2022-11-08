@@ -3,7 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/src/java/com/ec/untilitario/AutorizarDocumentos.java</file>
+            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/web/contabilidad/nuevoasientomanual.zul</file>
+            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/AdmPlanCuentas.java</file>
+            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/NuevoIngresoCuenta.java</file>
+            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/web/contabilidad/ingresoasientomanual.zul</file>
+            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/src/java/com/ec/untilitario/ParamPopupSubCuenta.java</file>
+            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/src/java/com/ec/dao/NuevoAsientoManual.java</file>
+            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/AdmLecturas.java</file>
+            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/web/venta/facturar.zul</file>
+            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/src/java/com/ec/dao/CuSubCuentaDAO.java</file>
+            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/Facturar.java</file>
         </group>
     </open-files>
 </project-private>
