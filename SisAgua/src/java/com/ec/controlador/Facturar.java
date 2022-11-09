@@ -700,6 +700,8 @@ public class Facturar extends SelectorComposer<Component> {
     @NotifyChange({"listaDetalleFacturaDAOMOdel", "subTotalCotizacion", "ivaCotizacion", "valorTotalCotizacion", "totalDescuento", "buscarNombreProd", "valorTotalInicialVent", "descuentoValorFinal", "subTotalBaseCero", "listaProducto", "totalItems"})
     public void agregarLectura(@BindingParam("valor") Lectura lectura) {
 
+        BigDecimal baseImponibleMulta=BigDecimal.ZERO;
+        
         if (parametrizar.getParNumRegistrosFactura().intValue() <= listaDetalleFacturaDAOMOdel.size()) {
             Clients.showNotification("Numero de registros permitidos imprima y genere otra factura",
                     Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 5000, true);
@@ -787,6 +789,11 @@ public class Facturar extends SelectorComposer<Component> {
 //            cobroTotal = valorCobroBase.add(valorCobroExce).add(alcantarillado).add(desechos).add(ambiente);
             valor.setTotalInicial(cobroTotal);
             valor.setTotal(cobroTotal);
+            
+            /*valor para la multa*/
+            
+            
+            baseImponibleMulta=cobroTotal.add(alcantarillado).add(ambiente).add(desechos).add(valorCobroExce);
             //para llenar lectura como producto
             if (valor.getCantidad() == null) {
                 return;
@@ -1176,6 +1183,8 @@ public class Facturar extends SelectorComposer<Component> {
             DetalleFacturaDAO valorMultaInt = new DetalleFacturaDAO();
             if (lectura.getLecFecha() != null) {
 
+//                 BigDecimal baseImponibleMulta=valor.getTotal().add(valorAmbiente.getTotal());
+                
                 /*PARA LOS 60*/
                 if (dias >= 60) {
 
@@ -1285,7 +1294,8 @@ public class Facturar extends SelectorComposer<Component> {
                     valorMultaInt.setDetCantpordescuento(valorDescuentoInt.multiply(valorMultaInt.getCantidad()));
                 } else if (dias >= 30) {
                     BigDecimal porcentMulta = parametrizar.getParMultaCorte() != null ? parametrizar.getParMultaPorcentaje() : BigDecimal.ZERO;
-                    BigDecimal cobroTotalMulta = (valor.getTotal().divide(BigDecimal.valueOf(100.0))).multiply(porcentMulta);
+                   
+                    BigDecimal cobroTotalMulta = (baseImponibleMulta.divide(BigDecimal.valueOf(100.0))).multiply(porcentMulta);
                     cobroTotalMulta = ArchivoUtils.redondearDecimales(cobroTotalMulta, 2);
                     valorMulta.setCantidad(BigDecimal.ONE);
                     valorMulta.setProducto(prodMulta);
