@@ -2,34 +2,10 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
         <group>
-            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/web/venta/facturar.zul</file>
-            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/Facturar.java</file>
-            <file>file:/D:/PROYECTOS/Sistema%20Ayora/SistemaJAAPS/SisAgua/src/java/com/ec/servicio/ServicioFactura.java</file>
+            <file>file:/C:/Users/jowel/OneDrive/Escritorio/SistemaJAAPS/SisAgua/web/css/style.css</file>
+            <file>file:/C:/Users/jowel/OneDrive/Escritorio/SistemaJAAPS/SisAgua/web/inicio.zul</file>
+            <file>file:/C:/Users/jowel/OneDrive/Escritorio/SistemaJAAPS/SisAgua/web/venta/facturar.zul</file>
         </group>
-=======
-<<<<<<< HEAD
-        <group>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/web/contabilidad/nuevaclase.zul</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/NuevoGrupo.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/entidad/contabilidad/CuGrupo.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/NuevaClase.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/web/contabilidad/nuevacuenta.zul</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/web/contabilidad/grupo.zul</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/NuevoPredio.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/NuevaCuenta.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/AdmPlanCuentas.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/entidad/contabilidad/CuClase.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/NuevaSubCuenta.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/web/contabilidad/nuevogrupo.zul</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/web/contabilidad/nuevasubcuenta.zul</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/servicio/contabilidad/ServicioGrupo.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/SistemaJAAPS/SisAgua/src/java/com/ec/entidad/contabilidad/CuCuenta.java</file>
-        </group>
-=======
-        <group/>
->>>>>>> ba70315bb3e7b2e659ece88d61d93c18339fb9b2
->>>>>>> 9bf3d45ec01534bec9da47933112e22c748615d3
     </open-files>
 </project-private>
