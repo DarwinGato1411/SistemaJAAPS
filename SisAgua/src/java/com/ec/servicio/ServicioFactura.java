@@ -8,6 +8,7 @@ import com.ec.dao.DetalleFacturaDAO;
 import com.ec.entidad.Cliente;
 import com.ec.entidad.DetalleFactura;
 import com.ec.entidad.Factura;
+import com.ec.entidad.Lectura;
 import com.ec.untilitario.Totales;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -101,12 +102,20 @@ public class ServicioFactura {
                 detalleFactura.setProvincia(item.getProvincia());
                 detalleFactura.setNumerotel(item.getNumerotel());
                 detalleFactura.setCodigoCantonMatriculacion(item.getCodigoCantonMatriculacion());
+                 detalleFactura.setDetLecActual(item.getLectura() != null ? item.getLectura().getLecActual() : BigDecimal.ZERO);
+                detalleFactura.setDetLecAnterior(item.getLectura() != null ? item.getLectura().getLecAnterior() : BigDecimal.ZERO);
+                detalleFactura.setDetMetrosCubicos(item.getLectura() != null ? item.getLectura().getLecMetrosCubicos() : BigDecimal.ZERO);
+                detalleFactura.setDetLecMes(item.getLectura() != null ? item.getLectura().getLecMes() : 0);
+                detalleFactura.setDetMedidor(item.getLectura() != null ? item.getLectura().getIdMedidor().getMedNumero() : "");
+                detalleFactura.setDetDirMedidor(item.getLectura() != null ? item.getLectura().getIdMedidor().getMedBarrio() : "");
+                detalleFactura.setIdLectura(item.getLectura());
                 
                 if (item.getLectura() != null) {
-//                    item.getLectura().getLecMes();
-                    detalleFactura.setIdLectura(item.getLectura());
+                    Lectura actual = item.getLectura();
+                    actual.setLecPagada("S");
+                    em.merge(actual);
+                    detalleFactura.setIdLectura(actual);
                 }
-                // servicioDetalleFactura.crear(detalleFactura);
                 em.persist(detalleFactura);
                 em.flush();
             }
