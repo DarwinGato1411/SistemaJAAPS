@@ -5,8 +5,9 @@
 }
 
 :root {
-    --secondary-color: 3,175,241;
     --primary-color: 11,13,62;
+    --secondary-color: 3,175,241;
+    --terciary-color: 62, 110, 85;
     --background-color: #aaa9a9;
     --alpha: 0.5;
     --base-color: #fff;
@@ -49,7 +50,7 @@ element.style {
 }
 .banner-head{
     font-size: 1.2em;
-     color: black;
+    color: black;
 }
 .banner .logout{
     text-decoration: underline;
@@ -76,6 +77,7 @@ element.style {
 .sidebar-fn{
     cursor: pointer;
 }
+
 
 
 .head1{
@@ -257,7 +259,7 @@ element.style {
 .z-toolbar
 {
     background: none;
-  
+
     height: 18px;
 }
 
@@ -409,7 +411,7 @@ element.style {
 }
 .labelNuevo{
     font-size: 1em;
-    
+
     text-align: center;
     height: auto;
     font-weight: bold;
@@ -659,7 +661,7 @@ div.z-auxheader-cnt {
     padding-bottom: 2px;
     padding-right: 1px;
     text-decoration: none;
-   
+
 }
 div.z-listfooter-cnt, div.z-listcell-cnt, div.z-listheader-cnt {
     border: 0;
@@ -2944,7 +2946,7 @@ input, button, select, textarea {
 }
 
 .contendorPrincipal{
-    background: linear-gradient(0deg, rgba(11,13,62,1) 0%, rgba(3,175,241,1) 100%);
+    background: linear-gradient(352deg, rgba(11,13,62,0.7570378493194152) 0%, rgba(3,175,241,1) 100%);
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
@@ -2954,26 +2956,84 @@ input, button, select, textarea {
 
 .contendorPrincipal .contenedorLogin{
     width: 70%;
-
+    height: 80%;
     background-color: #fff;
     display: grid;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 65% 35%;
     margin: auto;
     border-radius: 20px;
 }
 .contendorPrincipal .contenedorLogin .left{
     width: 100%;
     border-radius: 20px;
+    background-color: black;
 }
 
-.contendorPrincipal .contenedorLogin .left img{
-
-    height:  100%;
+.contendorPrincipal .contenedorLogin .left .fondo{
     width: 100%;
+    height: 100%;
+    position: relative;
+    
+}
+
+.contendorPrincipal .contenedorLogin .left .fondo .imgFondo{
+    width: 100%;
+    height: 100%;
     border-radius: 20px 0 0 20px;
+    display: block;
+    position: absolute;
+   
+}
+
+.contendorPrincipal .contenedorLogin .left .fondo{
+   
+}
+
+.contendorPrincipal .contenedorLogin .left .fondo .colorFondo{
+    width: 100%;
+    height: 100%;
+    background: black;
+    position: absolute;
+    background: linear-gradient( 45deg, rgba(62,110,85,0.5), rgba(62,110,85,1) );
+     border-radius: 20px 0 0 20px;
 
 }
 
+.contendorPrincipal .contenedorLogin .left .fondo .colorFondo .contenedorImg{
+
+    display: grid;
+    align-items: center;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+.contendorPrincipal .contenedorLogin .left .fondo .colorFondo .logo{
+
+    height: 70px;
+    margin: auto;
+}
+
+.contendorPrincipal .contenedorLogin .left .texto{
+    width: 70%;
+    margin: auto;
+
+}
+
+.contendorPrincipal .contenedorLogin .left .texto .titulo span{
+    text-align: center;
+    font-size: 24px !important;
+    color:#fff;
+    display: block;
+    margin-top: 25px;
+
+}
+
+.contendorPrincipal .contenedorLogin .left .texto .subtitulo span{
+    text-align: center;
+    display: block;
+    margin-bottom: 25px;
+    color:#fff;
+    text-align: justify
+}
 .contendorPrincipal .contenedorLogin .rigth{
     padding: 20px;
 }
@@ -2992,12 +3052,18 @@ input, button, select, textarea {
     border: solid rgb(var(--secondary-color)) 1px;
 }
 
-.contendorPrincipal .contenedorLogin .rigth .titulo span{
+.contendorPrincipal .contenedorLogin .rigth .texto .titulo span{
     text-align: center;
     font-size: 24px !important;
     color:rgb(var(--secondary-color));
     display: block;
     margin-top: 25px;
+
+}
+
+.contendorPrincipal .contenedorLogin .rigth .texto .subtitulo span{
+    text-align: center;
+    display: block;
     margin-bottom: 25px;
 }
 
@@ -3017,7 +3083,7 @@ input, button, select, textarea {
     gap:10px;
 }
 
-.contenedorCalculo{
+.contenedorCuadro{
     background-color: #eeeeee;
     border-radius: 15px;
     padding: 15px;
@@ -3054,6 +3120,22 @@ input, button, select, textarea {
     color:white;
     height: 50px;
     border-radius: 15px;
+}
+
+.boton{
+
+    border: none;
+    color:white;
+    padding: 12px;
+    border-radius: 15px;
+}
+
+.btnInfo{
+    background-color: rgb(var(--primary-color));
+}
+
+.btnGuardar{
+    background-color: rgb(var(--secondary-color));
 }
 
 .contenedorCalculo .calculo .z-toolbar-body .contenedorBoton .btnInfo{
@@ -3108,5 +3190,10 @@ input, button, select, textarea {
 
 .contenedorInputs .contenedorDatos .fecha i{
     width: 8%;
-        height: 100%;
+    height: 100%;
+}
+
+.contenedorLecturas{
+    display: grid;
+    grid-template-columns: 50% 50%;
 }

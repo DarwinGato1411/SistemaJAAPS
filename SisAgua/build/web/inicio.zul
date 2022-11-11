@@ -10,13 +10,32 @@
                  apply="com.ec.controlador.LoginController" >
  
             <div class="contenedorLogin" >
-                <div class="left"  >
-                    <image  src="/imagenes/inicioagua.png" class=""></image>
+                <div class="left"  >               
+                    <div class="fondo">
+                      
+                        <image class="imgFondo"  src="/imagenes/agua.jpg" ></image>
+                        <div class="colorFondo">
+                            <div class="contenedorImg">
+                                <image  src="/imagenes/logodeckxel.png" class="logo"></image>
+                            </div>
+                            <div class="texto">
+                                <span class="titulo">Sistema de Facturación Electrónica</span>
+                                <span class="subtitulo">Sistema de Facturación Electrónica
+                                  Desarrollo de software sobre medida
+                                  Estimado usuario sea usted bienvenido, para ingresar al sistema por favor digite su usuario y contraseña.</span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    
                 </div>
 
                 <div class="rigth">   
-                    <image  src="/imagenes/logodeckxel.png" class=""></image>
-                    <span class="titulo">Ingresar al Sistema</span>
+                    
+                    <div class="texto">
+                        <span class="titulo">Ingresar al Sistema</span>
+                        <span class="subtitulo">Bienvenido a su sistema de facturación</span>
+                    </div>
                     <textbox id="account" type="text" class="" 
                              onCreate="self.focus()"
                              placeholder="Ingrese el usuario"   />

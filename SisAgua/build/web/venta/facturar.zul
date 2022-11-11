@@ -254,7 +254,7 @@
                                
                                 <div class="rigth" >
                                     
-                                    <div class="contenedorCalculo">
+                                    <div class="contenedorCalculo contenedorCuadro">
                                        
                                         <toolbar class="calculo" id="tb">
                                            
