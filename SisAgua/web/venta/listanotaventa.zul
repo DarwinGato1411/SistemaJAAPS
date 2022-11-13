@@ -26,8 +26,8 @@
             <tabpanels >
                 
                 <tabpanel  width="99%"  >                    
-                    <div class="row">
-                        <div class=" input-group col-12 col-sm-12 col-md-3 col-lg-3 ">
+                    <div class="contendorListaVenta">
+                        <div class="contenedorCuadro input-group ">
 
                             <label value="Estado factura:" style="font-weight: bold;padding: 5px;"   />
                             <combobox  selectedItem="@bind(vm.estadoBusqueda)"                                      
@@ -43,31 +43,40 @@
                                           tooltiptext="Buscar facturas por estado"/>                                     
                             </div>         
                         </div>
-                        <div class=" input-group col-12 col-sm-12 col-md-4 col-lg-4 ">
-
-                            <label value="Inicio: " style="font-weight: bold;padding: 5px;"   />
-                            <datebox compact="true" value="@bind(vm.fechainicio)" 
-                                     style="font-weight:bold;" 
-                                     buttonVisible="true" 
-                                     lenient="true" format="dd/MM/yyyy" 
-                                     constraint="no empty: Ingrese la fecha "/>
-                            <label value="Fin: "  style="font-weight: bold;padding: 5px;"   />
-                            <datebox compact="true" value="@bind(vm.fechafin)" 
-                                     style="font-weight:bold;"                                               
-                                     buttonVisible="true" 
-                                     lenient="true" format="dd/MM/yyyy" 
-                                     constraint="no empty: Ingrese la fecha "/>
+                        <div class="contenedorCuadro contenedorFecha ">
+                            <div class="input">
+                                <label value="Inicio: " style="font-weight: bold;padding: 5px;"   />
+                                <datebox compact="true" value="@bind(vm.fechainicio)" 
+                                         style="font-weight:bold;" 
+                                         buttonVisible="true" 
+                                         lenient="true" format="dd/MM/yyyy" 
+                                         class="fecha"
+                                         constraint="no empty: Ingrese la fecha "
+                                />
+                            </div>
+                            <div class="input">
+                                <label value="Fin: "  style="font-weight: bold;padding: 5px;"   />
+                                <datebox compact="true" value="@bind(vm.fechafin)" 
+                                         style="font-weight:bold;"                                               
+                                         buttonVisible="true" 
+                                     
+                                         class="fecha"
+                                         lenient="true" format="dd/MM/yyyy" 
+                                         constraint="no empty: Ingrese la fecha "/>
+                            </div>
                             <div class="input-group-append">
                                 <button   image="/imagenes/buscar1.png"  
                                           onClick="@command('buscarFechas')"  
-                                          class="btn btn-primary btn-sm  "
+                                           class="boton btnInfo"
+                                          label="Buscar facturas por fecha"
                                           tooltiptext="Buscar facturas por fecha"/>                                     
                             </div>  
                             
-                            <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
+                            <div  class="">
                                 <button   image="/imagenes/excel.png"  
                                           onClick="@command('exportListboxToExcel')"  
-                                          class="btn btn-primary btn-sm "
+                                          class="boton btnInfo "
+                                          label="Descargar notas de venta"
                                           tooltiptext="Descargar notas de venta"/>
 
                             </div>       
@@ -158,7 +167,7 @@
                                 <listcell zclass = "mycss-listcell">    
                                      
                                     <image src="/iconos/tecketera.jpg"   
-                                          class=" grow"                                     
+                                           class=" grow"                                     
                                            onClick="@command('reporteComprobante',valor=each)"
                                            tooltiptext="Imprimir nota venta"/>
                               
@@ -181,7 +190,7 @@
                                 <listcell  zclass = "mycss-listcell" >    
                                      
                                     <image src="/iconos/editar.png"   
-                                          class=" grow"
+                                           class=" grow"
                                          
                                            onClick="@command('modificarCotizacion',valor=each)"
                                            tooltiptext="Modificar factura"/>

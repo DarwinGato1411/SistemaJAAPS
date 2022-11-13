@@ -19,8 +19,8 @@
         
     </style>    
     <div class="contenedorCuadro contenedorLecturas">
-        <div class="">
-            <div class="">
+        <div class="inputs">
+            <div class="contenedorInput contenedorInputFecha">
                 Mes:<combobox  model="@load(vm.meses)"  
                                selectedItem="@bind(vm.buscarMes)" 
                                style="width:90%"  
@@ -32,7 +32,7 @@
             </div>  
                    
                     
-            <div class="">
+            <div class="contenedorInput contenedorInputBuscar">
                                     
                 <textbox value="@bind(vm.buscar)" 
                          class="form-control form-control-sm"
@@ -52,7 +52,7 @@
                      
             </div>
         </div>
-        <div>
+        <div class="botonera">
             <div class="">
                 <button   image="/iconmenu/cog.png" 
                           label="Generar tabla de lecturas"

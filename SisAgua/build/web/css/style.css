@@ -2973,7 +2973,7 @@ input, button, select, textarea {
     width: 100%;
     height: 100%;
     position: relative;
-    
+
 }
 
 .contendorPrincipal .contenedorLogin .left .fondo .imgFondo{
@@ -2982,11 +2982,11 @@ input, button, select, textarea {
     border-radius: 20px 0 0 20px;
     display: block;
     position: absolute;
-   
+
 }
 
 .contendorPrincipal .contenedorLogin .left .fondo{
-   
+
 }
 
 .contendorPrincipal .contenedorLogin .left .fondo .colorFondo{
@@ -2995,7 +2995,7 @@ input, button, select, textarea {
     background: black;
     position: absolute;
     background: linear-gradient( 45deg, rgba(62,110,85,0.5), rgba(62,110,85,1) );
-     border-radius: 20px 0 0 20px;
+    border-radius: 20px 0 0 20px;
 
 }
 
@@ -3087,6 +3087,8 @@ input, button, select, textarea {
     background-color: #eeeeee;
     border-radius: 15px;
     padding: 15px;
+    width: 100%;
+    margin: auto;
 }
 
 .contenedorCalculo .z-toolbar{
@@ -3115,7 +3117,7 @@ input, button, select, textarea {
 }
 
 .contenedorCalculo .calculo .z-toolbar-body .contenedorBoton button{
-    width: 100%;
+    width: 95%;
     border: none;
     color:white;
     height: 50px;
@@ -3163,7 +3165,7 @@ input, button, select, textarea {
 }
 .contenedorInputs .contenedorCedula{
     display: grid;
-    grid-template-columns: 70% 5% 25%;
+    grid-template-columns: 40% 5% 55%;
     margin-bottom: 10px;
 }
 .contenedorInputs .contenedorDatos{
@@ -3196,4 +3198,186 @@ input, button, select, textarea {
 .contenedorLecturas{
     display: grid;
     grid-template-columns: 50% 50%;
+    gap: 10px;
+    margin: 10px 0 10px 0;
+    align-items: center;
+}
+
+.contenedorLecturas .botonera{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+}
+
+.contenedorLecturas .inputs{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 0px;
+}
+
+.contenedorLecturas .inputs .contenedorInput{
+
+    display: grid;
+
+    gap: 10px;
+    height: 25px;
+}
+.contenedorInput{
+
+    display: grid;
+
+    gap: 10px;
+    height: 25px;
+}
+
+.contenedorLecturas .inputs .contenedorInputFecha{
+    grid-template-columns: 5% 95%;
+}
+
+.contenedorLecturas .inputs .contenedorInputBuscar{
+    grid-template-columns:  80% 5%;
+
+}
+
+.contenedorLecturas .botonera button{
+    width: 100%;
+    height: 50px;
+}
+
+.contenedorListaFacturas {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.contenedorListaFacturas .contenedorBotonera{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 10px;
+}
+
+.contendorListaVenta{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap: 10px;
+    padding-bottom: 10px;
+}
+
+.contendorListaVenta .fecha{
+    width: 100%;
+    height: 20px;
+}
+.contendorListaVenta .fecha input{
+    width: 92%;
+    height: 20px;
+
+}
+
+.contendorListaVenta .fecha i{
+    width: 8%;
+    height: 20px;
+}
+
+.fecha{
+    width: 100%;
+    height: 20px;
+}
+.fecha input{
+    width: 92%;
+    height: 20px;
+
+}
+
+.fecha i{
+    width: 8%;
+    height: 20px;
+}
+
+.contendorListaVenta .contenedorFecha{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    align-items: center;
+    gap:10px;
+
+}
+
+.contenedorFecha .input{
+    display: flex;
+    align-items: center;
+
+}
+
+.contenedorGuia .contenedorInputsGuia{
+    display: grid;
+    grid-template-columns: 5% 20% 5% 20% 20%;
+    align-items: center;
+}
+
+.tablaGuia{
+    margin-top: 10px;
+}
+
+
+.contenedorCompras{
+
+}
+.contenedorCompras .contendorFormularios{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap:10px;
+    margin-bottom: 10px;
+}
+
+.contenedorCompras .contenedorTablas{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap:10px;
+}
+
+.contenedorCompras .contenedorInputsCompras{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap:10px;
+}
+
+.contenedorCompras .contendorFormularios .cedula{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap:10px;
+}
+
+.contenedorTablaAjuste{
+    margin-top: 10px;
+}
+
+
+.contenedorAjuste .ajuste .z-radiogroup{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap:10px;
+}
+
+.contenedorAjuste .ajuste{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap:10px;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.contenedorKardex .contenedorInputsKardex {
+    display: grid;
+    grid-template-columns: 40% 25% 25%;
+    gap:10px;
+}
+.contenedorKardex .contenedorInputsKardex .contendedorCheck{
+    display: grid;
+    grid-template-columns: 20% 80%;
+    align-items: center;
+}
+
+.contenedorKardex .contenedorInputsKardex .contendedorCheck .z-radiogroup{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
 }
