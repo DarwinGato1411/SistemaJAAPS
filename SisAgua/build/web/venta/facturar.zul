@@ -31,13 +31,9 @@
                     
                     <div class="container-fluid " >
                         
-                        <div class="row" style="margin-top:5px">
-                            
-                            
-                            <div class="row  col-12 col-sm-12 col-md-12 col-lg-12">
-                            
-                 
-                                <div class="col-12 col-sm-12 col-md-5 col-lg-5 " >
+                        <div class="" style="margin-top:5px"> 
+                            <div class="contenedor">
+                                <div class="left" >
                               
                                     <listbox  width="100%" model="@load(vm.listMedidores)" 
                                               height="180px"
@@ -48,18 +44,22 @@
                                               style="margin-bottom:10px">
                                         <custom-attributes org.zkoss.zul.listbox.rod="true"/>
                                        
+<<<<<<< HEAD
                                         <listhead> 
                                             <listheader width="10%"  label="" align="center">
                                                
                                             </listheader>                       
+=======
+                                        <listhead class="">                       
+>>>>>>> main
                                             <listheader width="45%"   >
                                                 <textbox zclass = "mycss-listcell" 
-                                                               class=" col-12 col-sm-12 col-md-12 col-lg-12 ;font-weight:bold form-control form-control-sm"
-                                                               style="font-size:10px;font-weight:bold"
-                                                               onOK="@command('buscarMedidores')" 
-                                                               value="@bind(vm.buscarMedidor)"
-                                                               placeholder="Propietario" 
-                                                               onChange="self.setValue(self.getValue().toUpperCase());"  />
+                                                         class=" col-12 col-sm-12 col-md-12 col-lg-12 ;font-weight:bold form-control form-control-sm"
+                                                         style="font-size:10px;font-weight:bold"
+                                                         onOK="@command('buscarMedidores')" 
+                                                         value="@bind(vm.buscarMedidor)"
+                                                         placeholder="Propietario" 
+                                                         onChange="self.setValue(self.getValue().toUpperCase());"  />
                                             </listheader>
                                             <listheader width="45%" label="Apellido"  >
                                                 
@@ -68,13 +68,13 @@
                                                 
                                             </listheader>
                                             <listheader width="45%"   >
-                                                 <textbox zclass = "mycss-listcell" 
-                                                               class=" col-12 col-sm-12 col-md-6 col-lg-6 ;font-weight:bold form-control form-control-sm"
-                                                               style="font-size:10px;font-weight:bold"
-                                                               onOK="@command('buscarMedidoresNumero')" 
-                                                               value="@bind(vm.buscarMedidorNumero)"
-                                                               placeholder="# medidor" 
-                                                               onChange="self.setValue(self.getValue().toUpperCase());"  />
+                                                <textbox zclass = "mycss-listcell" 
+                                                         class=" col-12 col-sm-12 col-md-6 col-lg-6 ;font-weight:bold form-control form-control-sm"
+                                                         style="font-size:10px;font-weight:bold"
+                                                         onOK="@command('buscarMedidoresNumero')" 
+                                                         value="@bind(vm.buscarMedidorNumero)"
+                                                         placeholder="# medidor" 
+                                                         onChange="self.setValue(self.getValue().toUpperCase());"  />
                                             </listheader>                                                           
                                             <listheader width="10%"  label="" align="center"/>              
           
@@ -112,7 +112,7 @@
                                                              value="@bind(each.medNumero)"  />
                                                 </listcell>
                                                 
-                                                 <listcell zclass = "mycss-listcell">   
+                                                <listcell zclass = "mycss-listcell">   
                                                     <image  src="/iconos/Forward.png" 
                                                             onClick="@command('buscarLecturasPendientes',valor=each)" 
                                                             tooltiptext="Asignar producto"/> 
@@ -263,15 +263,148 @@
                                         </template>
                                     </listbox>
                                 </div>
-                                <!--hidden-sm-down-->
-                                <div class="col-12 col-sm-12 col-md-7 col-lg-7 " >
+                               
+                                <div class="rigth" >
                                     
-                                 
-                                    <div class=" row col-12 col-sm-12 col-md-12 col-lg-12 hidden-sm-down"   >
-                                        <div class="input-group mb-12 col-12 col-sm-12 col-md-3 col-lg-3">
+                                    <div class="contenedorCalculo contenedorCuadro">
+                                       
+                                        <toolbar class="calculo" id="tb">
+                                           
+                                            <div class="contenedorInput">                            
+                                                <label value="Sin Descuento:" class="form-control-sm"/>
+      
+                                                <decimalbox  format="###.##"   
+                                                            
+                                                             value="@bind(vm.valorTotalInicialVent)"                                             
+                                                             readonly="true" 
+                                                             class="form-control-sm"
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());"  />
+                                            </div>
+                                            <div class="contenedorInput">
+                                                <label value="Descuento:" class="form-control-sm"
+                                                />
+                              
+                              
+                                                <decimalbox  format="###.##"   
+                                                            
+                                                             value="@bind(vm.descuentoValorFinal)"
+                                                             readonly="true" 
+                                                             
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                                                             class="form-control-sm" />
+                                            </div>   
+                                
+                                            <div class="contenedorInput">         
+                                                <label value="Base 12%:" class="form-control-sm" 
+                                                />
+                                                                  
+                                                <decimalbox  format="###.##"   
+                                                            
+                                                             value="@bind(vm.subTotalCotizacion)" 
+                                                             readonly="true" 
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                                                             class="form-control-sm" />
+                                            </div>   
+                                
+                                            <div class="contenedorInput">       
+                                                <label value="Base 0%:" class="form-control-sm" 
+                                                />
+                               
+                                                <decimalbox  format="###.##"   
+                                                           
+                                                             value="@bind(vm.subTotalBaseCero)" 
+                                                             readonly="true"
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                                                             class="form-control-sm" />
+                                            </div>   
+                                
+                                            <div class="contenedorInput">     
+                                                <label value="Total IVA:" class="form-control-sm" 
+                                                />
+                                
+                                                <decimalbox  format="###.##"   
+                                                             
+                                                             value="@bind(vm.ivaCotizacion)"
+                                                             readonly="true" 
+                                                             class="form-control-sm" />
+                                            </div>   
+                                
+                                            <div class="contenedorInput">    
+                                                <label value="Total:" class="form-control-sm" 
+                                                />
+                              
+                                   
+                                                <decimalbox  format="###.##"   
+                                                            
+                                                             value="@bind(vm.valorTotalCotizacion)"                                                 
+                                                             readonly="true"  
+                                                            
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());"                                              
+                                                             class="form-control-sm" />
+                                            </div>   
+                                
+                                            <div class="contenedorInput">    
+                                                <label value="Cobrar:" class="form-control-sm"
+                                                />
+                               
+                                                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros" 
+                                                          
+                                                            onOK="@command('calcularCambio')"
+                                                            class="form-control-sm"
+                                                            value="@bind(vm.cobro)"
+                                                />
+                                            </div>   
+                                
+                                            <div class="contenedorInput">   
+                                                <label value="Cambio:" class="form-control-sm" 
+                                                />
+                                
+                                                <decimalbox  format="###.##"   
+                                                             
+                                                             readonly="true" 
+                                                             class="form-control-sm"
+                                                             value="@bind(vm.cambio)" 
+                                                />
+                               
+                                            </div>   
+                         
+                                            <div class="contenedorBoton">   
+                                                <button src="/iconos/fact.png"   
+                                                        autodisable="self"
+                                                        label="Cargar Notas de venta"                                                   
+                                                        class="btnInfo"
+                                                        onClick="@command('verNotasEntrega')"
+                                                        tooltiptext="Cargar notas de entrega"/>
+                                            </div>   
+                                             
+                                    
+                                
+                                            <div class="contenedorBoton" >   
+                                                <button src="/iconos/guardar.png"  
+                                                                 
+                                                        autodisable="self"
+                                                        label="Guardar"
+                                                        class="btnGuardar"
+                                                        onClick="@command('Guardar',valor='SG')"
+                                                        tooltiptext="Guardar factura"/>                      
+                                            </div>  
+                                            
+                                            <!-- <div class="">   
+                                                <label  class=" " 
+                                                        value="@bind(vm.numeroFacturaText)"  >
+                                                </label>
+                                            </div>   -->
+                                
+                           
+                                           
+                                        </toolbar>
+                                      
+                                    </div>
+                                    <div class="contenedorInputs"   >
+                                        <div class="contenedorCedula">
                                     
                                             <textbox   class="form-control form-control-sm"
-                                                       style="font-size:10px;background-color:trasnsparent;font-weight:bold"
+                                                       
                                                        ctrlKeys="^A" onCtrlKey="@command('buscarClienteEnLista')" 
                                                        placeholder="Cedula"
                                                        value="@bind(vm.clienteBuscado.cliCedula)" 
@@ -288,66 +421,67 @@
                                
                                
                                             </div>
-                                        </div>
-                                        <div class="col-12 col-sm-12 col-md-2 col-lg-2 "   >
-                                  
-
                                             <textbox zclass = "mycss-listcell" 
                                                      class="font-weight:bold form-control form-control-sm"
                                                      style="font-size:10px;background-color:#d6eefd;font-weight:bold"
                                                      readonly="true"
                                                      value="@bind(vm.clienteBuscado.cliNombre)"  />
-                         
-                                 
                                         </div>
-                                
+                                   
+                                        <div class="contenedorDatos">
                                         
-                                        <radiogroup Id="idTipoOrdenSinCotizacion"   
-                                                    selectedItem="@bind(vm.tipoVenta)" 
-                                                    onCheck="@command('verificarNumeracion')" >
-                                            <space bar="true"  />
-                                            <radio label="Factura" value="FACT"/>
-                                            <space bar="true"  /> 
+                                            <radiogroup class="radio" Id="idTipoOrdenSinCotizacion"   
+                                                        selectedItem="@bind(vm.tipoVenta)" 
+                                                        onCheck="@command('verificarNumeracion')" >
+                                            
+                                                <radio label="Factura" value="FACT"/>
+                                            
                                         
-                                            <radio label="Proforma" value="PROF"/>               
+                                                <radio label="Proforma" value="PROF"/>               
                                     
                            
-                                        </radiogroup>          
+                                            </radiogroup>          
                                 
                               
                                         
-                                        <datebox compact="true" value="@bind(vm.fechafacturacion)" 
-                                                 readonly="true" style="font-weight:bold;" 
-                                                 buttonVisible="true" 
-                                                 lenient="true" format="dd/MM/yyyy" 
-                                                 constraint="no empty: Ingrese la fecha "/>
+                                            <datebox class="fecha" compact="true" value="@bind(vm.fechafacturacion)" 
+                                                     readonly="true" style="font-weight:bold;" 
+                                                     buttonVisible="true" 
+                                                     lenient="true" format="dd/MM/yyyy" 
+                                                     constraint="no empty: Ingrese la fecha "/>
 
-                                        <label  style="font-weight:bold" value=""  >F Pag</label>
+                                            <div >
+                                                <label  style="font-weight:bold" value=""  >Forma de Pago:</label>
                                         
-                                        <combobox  model="@load(vm.listaFormaPago)"  
-                                                   selectedItem="@bind(vm.formaPagoSelected)" 
-                                                   style="width:110px"  
-                                                   readonly="true" >
-                                            <template name="model">
-                                                <comboitem  label="@bind(each.forNombre)"/>
-                                            </template>                                      
-                                        </combobox>
-                                        <div visible="false">
-                                            <label value="" style="color:red;font-weight:bold"/>Plazo:
+                                                <combobox  model="@load(vm.listaFormaPago)"  
+                                                           selectedItem="@bind(vm.formaPagoSelected)" 
+                                                           style="width:110px"  
+                                                           readonly="true" >
+                                                    <template name="model">
+                                                        <comboitem  label="@bind(each.forNombre)"/>
+                                                    </template>                                      
+                                                </combobox>
+                                            </div>
+                                            <div visible="false">
+                                                <label value="" style="color:red;font-weight:bold"/>Plazo:
                 
-                                            <combobox onSelect="@command('actualizarCostoVenta')"  
-                                                      readonly="true"    
-                                                      style="width:110px"                                    
-                                                      selectedItem="@bind(vm.facplazo)" >
-                                                <comboitem label="15 DIAS" value="15" />                    
-                                                <comboitem label="30 DIAS" value="30" />
-                                                <comboitem label="45 DIAS" value="45" />
-                                                <comboitem label="60 DIAS" value="60" />
-                                                <comboitem label="90 DIAS" value="90" />
-                                                <comboitem label="120 DIAS" value="120" />
-                                            </combobox>
+                                                <combobox onSelect="@command('actualizarCostoVenta')"  
+                                                          readonly="true"    
+                                                          style="width:110px"                                    
+                                                          selectedItem="@bind(vm.facplazo)" >
+                                                    <comboitem label="15 DIAS" value="15" />                    
+                                                    <comboitem label="30 DIAS" value="30" />
+                                                    <comboitem label="45 DIAS" value="45" />
+                                                    <comboitem label="60 DIAS" value="60" />
+                                                    <comboitem label="90 DIAS" value="90" />
+                                                    <comboitem label="120 DIAS" value="120" />
+                                                </combobox>
+                                            </div>
                                         </div>
                                     </div>
+                                    
+                               
+                            
                                     <listbox 
                                         model="@load(vm.listaDetalleFacturaDAOMOdel)"
                                         mold="paging"
@@ -445,143 +579,10 @@
                                 </div>                         
                             </div>
                          
-                         
-                        </div>
-                        <div class="row  " style="margin-top:5px">
-                            <div class="  col-12 col-sm-12 col-md-12 col-lg-12">
-                                <toolbar  id="tb" height="65px"  align="end" style="background-color:#d6eefd;" >
-                                    <div class="row  col-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">                            
-                                            <label value="SINDESCUEN" 
-                                                   style="font-weight:bold;font-size:0.8em"/>
-      
-                                            <decimalbox  format="###.##"   
-                                                         width="99%"
-                                                         value="@bind(vm.valorTotalInicialVent)"                                             
-                                                         readonly="true" 
-                                                         style="text-align:center;font-size:2em;background-color:#90FFBF;"
-                                                         onChange="self.setValue(self.getValue().toUpperCase().trim());"  />
-                                        </div>
-                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">
-                                            <label value="DESCUENTO" class="form-control-sm"
-                                                   style="font-weight:bold;font-size:0.8em"/>
-                              
-                              
-                                            <decimalbox  format="###.##"   
-                                                         width="98%"
-                                                         value="@bind(vm.descuentoValorFinal)"
-                                                         readonly="true" 
-                                                         style="text-align:center;font-size:2em;background-color:#90DCFF;"
-                                                         onChange="self.setValue(self.getValue().toUpperCase().trim());" 
-                                                         class="form-control-sm" />
-                                        </div>   
-                                
-                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">         
-                                            <label value="BASE12%" class="form-control-sm" 
-                                                   style="font-weight:bold;font-size:0.8em"/>
-                                                                  
-                                            <decimalbox  format="###.##"   
-                                                         width="98%"
-                                                         value="@bind(vm.subTotalCotizacion)" 
-                                                         readonly="true" style="text-align:center;font-size:2em"
-                                                         onChange="self.setValue(self.getValue().toUpperCase().trim());" 
-                                                         class="form-control-sm" />
-                                        </div>   
-                                
-                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">       
-                                            <label value="BASE0%" class="form-control-sm" 
-                                                   style="font-weight:bold;font-size:0.8em"/>
-                               
-                                            <decimalbox  format="###.##"   
-                                                         width="98%"
-                                                         value="@bind(vm.subTotalBaseCero)" 
-                                                         readonly="true" style="text-align:center;font-size:2em"
-                                                         onChange="self.setValue(self.getValue().toUpperCase().trim());" 
-                                                         class="form-control-sm" />
-                                        </div>   
-                                
-                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">     
-                                            <label value="T. IVA" class="form-control-sm" 
-                                                   style="font-weight:bold;font-size:0.8em"/>
-                                
-                                            <decimalbox  format="###.##"   
-                                                         width="98%"
-                                                         value="@bind(vm.ivaCotizacion)"
-                                                         readonly="true" style="text-align:center;font-size:2em"
-                                                         class="form-control-sm" />
-                                        </div>   
-                                
-                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">    
-                                            <label value="TOTAL" class="form-control-sm" 
-                                                   style="font-weight:bold;font-size:0.8em"/>
-                              
-                                   
-                                            <decimalbox  format="###.##"   
-                                                         width="98%"
-                                                         value="@bind(vm.valorTotalCotizacion)"                                                 
-                                                         readonly="true"  
-                                                         style="text-align:center;font-size:2em;font-weight:bold;background-color:red;color:white"
-                                                         onChange="self.setValue(self.getValue().toUpperCase().trim());"                                              
-                                                         class="form-control-sm" />
-                                        </div>   
-                                
-                                        <div class="col-12 col-sm-12 col-md-1 col-lg1">    
-                                            <label value="COBRAR:" class="form-control-sm"
-                                                   style="font-weight:bold;font-size:0.8em"/>
-                               
-                                            <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros" 
-                                                        width="98%"
-                                                        onOK="@command('calcularCambio')"
-                                                        class="form-control-sm"
-                                                        value="@bind(vm.cobro)"
-                                                        style="text-align:center;font-size:2em;color:green" />
-                                        </div>   
-                                
-                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">   
-                                            <label value="CAMBIO:" class="form-control-sm" 
-                                                   style="font-weight:bold;font-size:0.8em"/>
-                                
-                                            <decimalbox  format="###.##"   
-                                                         width="98%"
-                                                         readonly="true" 
-                                                         class="form-control-sm"
-                                                         value="@bind(vm.cambio)" 
-                                                         style="text-align:center;font-size:2em;color:blue"/>
-                               
-                                        </div>   
-                         
-                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">   
-                                            <button src="/iconos/fact.png"   
-                                                    autodisable="self"
-                                                    style="height:50px "                                                   
-                                                    class="btn btn btn-secondary btn-sm "
-                                                    onClick="@command('verNotasEntrega')"
-                                                    tooltiptext="Cargar notas de entrega"/>
-                                        </div>   
-                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">   
-                                            <label  class=" col-12 col-sm-12 col-md-12 col-lg-12 "
-                                                    style="color:transparent;font-weight:bold;font-size:15px" 
-                                                    value="@bind(vm.numeroFacturaText)"  >
-                                            </label>
-                                        </div>   
-                                    
-                                
-                                        <div class=" col-12 col-sm-12 col-md-2 col-lg-2" align="end">   
-                                            <button src="/iconos/guardar.png"  
-                                                    style="height:50px "            
-                                                    autodisable="self"
-                                                    label="Guardar"
-                                                    class="btn btn btn-success btn-sm "
-                                                    onClick="@command('Guardar',valor='SG')"
-                                                    tooltiptext="Guardar factura"/>                      
-                                        </div>   
-                                
-                           
-                                    </div>
-                                </toolbar>
-                            </div>
-                        </div>
+                        </div>  
                     </div>
+                        
+         
                     
                     
                

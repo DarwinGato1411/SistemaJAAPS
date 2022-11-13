@@ -18,78 +18,80 @@
         }
         
     </style>    
+    <div class="contenedorCuadro contenedorLecturas">
+        <div class="inputs">
+            <div class="contenedorInput contenedorInputFecha">
+                Mes:<combobox  model="@load(vm.meses)"  
+                               selectedItem="@bind(vm.buscarMes)" 
+                               style="width:90%"  
+                               readonly="true" >
+                    <template name="model">
+                        <comboitem  label="@bind(each.nombre)" />
+                    </template>                                      
+                </combobox>
+            </div>  
+                   
+                    
+            <div class="contenedorInput contenedorInputBuscar">
+                                    
+                <textbox value="@bind(vm.buscar)" 
+                         class="form-control form-control-sm"
+                         tooltiptext="Buscar "                         
+                         placeholder="Buscar"
+                         onOK="@command('buscarLecturas')"
+                         onChange="self.setValue(self.getValue().toUpperCase());" />
+                        
+                <div class="input-group-append" >
+                    <button   image="/imagenes/buscar1.png" 
+                              onClick="@command('buscarLecturas')"  
+                              tooltiptext="Buscar cliente"
+                              class="btn  btn-primary btn-sm "/>
+                               
+                               
+                </div>
+                     
+            </div>
+        </div>
+        <div class="botonera">
+            <div class="">
+                <button   image="/iconmenu/cog.png" 
+                          label="Generar tabla de lecturas"
+                          onClick="@command('iniciarMesSiguiente')"  
+                          tooltiptext="Generar tabla de lecturas"
+                          class="boton btnInfo"/>                              
+            </div>
+            <div class="input-group-append" >
+                <button   image="/iconos/excel1.png" 
+                          onClick="@command('exportListboxToExcel')"  
+                          tooltiptext="Exportar"
+                          label="Exportar"
+                          class="boton btnInfo"/>                  
+                               
+            </div>
+                        
+                   
+                    
+            <div class="" >
+                <button   image="/iconmenu/page_gear.png" 
+                          label="Crear lecturas de medidores nuevos"
+                          onClick="@command('generarLecturasMedidores')"  
+                          tooltiptext="Crear lecturas de medidores nuevos"
+                          class="boton btnGuardar"/>                            
+            </div>
+        </div>
+
+    </div>
     <listbox  width="100%" model="@load(vm.listaDatos)" 
               mold="paging" pageSize="25"
               checkmark="false"  
               multiple="false"              
               nonselectableTags="">
         <custom-attributes org.zkoss.zul.listbox.rod="true"/>
-        <auxhead>
-            <auxheader colspan="9" >  
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-1 col-lg-1  ">
-                        Mes:<combobox  model="@load(vm.meses)"  
-                                       selectedItem="@bind(vm.buscarMes)" 
-                                       style="width:90%"  
-                                       readonly="true" >
-                            <template name="model">
-                                <comboitem  label="@bind(each.nombre)" />
-                            </template>                                      
-                        </combobox>
-                    </div>  
-                   
-                    
-                    <div class="input-group mb-12 col-12 col-sm-12 col-md-2 col-lg-2">
-                                    
-                        <textbox value="@bind(vm.buscar)" 
-                                 class="form-control form-control-sm"
-                                 tooltiptext="Buscar "                         
-                                 placeholder="Buscar"
-                                 onOK="@command('buscarLecturas')"
-                                 onChange="self.setValue(self.getValue().toUpperCase());" />
-                        
-                        <div class="input-group-append" >
-                            <button   image="/imagenes/buscar1.png" 
-                                      onClick="@command('buscarLecturas')"  
-                                      tooltiptext="Buscar cliente"
-                                      class="btn  btn-primary btn-sm "/>
-                               
-                               
-                        </div>
-                     
-                    </div>
-                    <div class="input-group mb-12 col-12 col-sm-12 col-md-2 col-lg-2">
-                        <button   image="/iconmenu/cog.png" 
-                                  label="Generar tabla de lecturas"
-                                  onClick="@command('iniciarMesSiguiente')"  
-                                  tooltiptext="Generar tabla de lecturas"
-                                  class="btn  btn-primary btn-sm "/>                              
-                    </div>
-                    <div class="input-group-append" >
-                        <button   image="/iconos/excel1.png" 
-                                  onClick="@command('exportListboxToExcel')"  
-                                  tooltiptext="Exportar"
-                                  class="btn  btn-primary btn-sm "/>
-                               
-                               
-                    </div>
-                        
-                   
-                    
-                    <div class="input-group mb-12 col-12 col-sm-12 col-md-6 col-lg-6" align="end">
-                        <button   image="/iconmenu/page_gear.png" 
-                                  label="Crear lecturas de medidores nuevos"
-                                  onClick="@command('generarLecturasMedidores')"  
-                                  tooltiptext="Crear lecturas de medidores nuevos"
-                                  class="btn  btn-primary btn-sm "/>                            
-                    </div>
-
-                </div>
-            </auxheader>
-        </auxhead>  
+            
+     
         <listhead>   
                     
-          <listheader width="5%"  label="# Medidor" />
+            <listheader width="5%"  label="# Medidor" />
             <listheader width="20%"  label="Nombres" >              
             </listheader> 
             <listheader width="20%"  label="Apellidos" >              
@@ -122,7 +124,7 @@
                              class="form-control form-control-sm"  
                              value="@bind(each.idMedidor.idPredio.idPropietario.propApellido)"  />
                 </listcell>              
-                 <zk  choose="@bind(each.lecPagada)" >
+                <zk  choose="@bind(each.lecPagada)" >
                     <zk  when="${each.lecPagada == 'S'}"  >
                         <listcell    zclass = "mycss-listcell"  style="background:#C7FEC1" >
                             <label  value="PAGADA" width="96%"/>

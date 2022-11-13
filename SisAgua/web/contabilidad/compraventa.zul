@@ -16,7 +16,7 @@
             <tabpanels >
                 <tabpanel  height="100%" width="98%"  >
                     <div class="container-fluid">
-                        <div class="row">
+                        <div class="contenedorCuadro row">
                             <div  class="col-12 col-sm-12 col-md-2 col-lg-2 ">
                                 <label value="Inicio: "   />
                                 <datebox   value="@bind(vm.inicio)" 

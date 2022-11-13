@@ -3,53 +3,57 @@
 <?link rel="icon" type="image/x-icon" href="/iconos/deckxel.ico"?>  
 <?page title="Facturacion Agua Potable" contentType="text/html;charset=UTF-8"?>
 
-<zk contentStyle="overflow:auto" >
+<zk>
 
   
-    <div class="container col-12 col-sm-6 col-md-5 col-lg-4 form-control" id="loginWin" style="margin:1% auto;"   
+    <div class="contendorPrincipal" id="loginWin" style=""   
                  apply="com.ec.controlador.LoginController" >
  
-    
-
-            <div class="row " align="lefth">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 form-group"  align="center">
-                    <!--<image  src="/imagenes/logobs65.jpg"  ></image>-->
-                    <!--<image  src="/imagenes/locomegaambro.jpeg" class="imgRedondaLogoLogin" ></image>-->
-                    <image  src="/imagenes/inicioagua.png" class="imgRedondaLogoLogin" width="75%" ></image>
+            <div class="contenedorLogin" >
+                <div class="left"  >               
+                    <div class="fondo">
+                      
+                        <image class="imgFondo"  src="/imagenes/agua.jpg" ></image>
+                        <div class="colorFondo">
+                            <div class="contenedorImg">
+                                <image  src="/imagenes/logodeckxel.png" class="logo"></image>
+                            </div>
+                            <div class="texto">
+                                <span class="titulo">Sistema de Facturación Electrónica</span>
+                                <span class="subtitulo">Sistema de Facturación Electrónica
+                                  Desarrollo de software sobre medida
+                                  Estimado usuario sea usted bienvenido, para ingresar al sistema por favor digite su usuario y contraseña.</span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    
                 </div>
-<!--                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                    <label  class="tituloLogin" >INGRESO AL SISTEMA</label>
-                </div>-->
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12  form-group">
-<!--                    <div class="col-1 col-sm-1 col-md-1 col-lg-1 form-group ">
-                        <label  class="icono-file" ></label>
-                    </div>-->
-                     <!--<div class="col-10 col-sm-10 col-md-10 col-lg-10 form-group ">-->
-                    <textbox id="account" type="text" class="form-control" 
+
+                <div class="rigth">   
+                    
+                    <div class="texto">
+                        <span class="titulo">Ingresar al Sistema</span>
+                        <span class="subtitulo">Bienvenido a su sistema de facturación</span>
+                    </div>
+                    <textbox id="account" type="text" class="" 
                              onCreate="self.focus()"
                              placeholder="Ingrese el usuario"   />
-                <!--</div>-->
-                </div>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                    
                   
-                    <textbox id="password" type="password" 
-                             class="form-control" 
+                        <textbox id="password" type="password" 
+                             class="" 
                              placeholder="Ingrese la constraseña" />      
-                </div>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12" align="center">
-                    <button id="buttonEntrar" 
-                            class="btn btn-lg btn-primary btn-block" label="Ingresar">
-                    </button>   
-<!--                    <button id="buttonConsultar"  
-                            class="btn btn-lg btn-success btn-block" label="Consultas">
-                    </button>   -->
-                </div>
-<!--                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <button  id="administrar"  src="/imagenes/loginp.png" label="Menu " class="btn btn-lg btn-info btn-block" ></button>   
+                
+           
+                    
+                        <button id="buttonEntrar" 
+                            class="" label="Ingresar">
+                        </button>   
 
-            </div>-->
-        </div>
-    
+                    
+                </div>
+        </div> 
     </div>
   
     

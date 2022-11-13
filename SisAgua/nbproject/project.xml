@@ -43,6 +43,17 @@
                 </library>
                 <library dirs="200">
                     <file>${file.reference.barcode.jar}</file>
+<<<<<<< HEAD
+=======
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${libs.zk.classpath}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${libs.jasper.classpath}</file>
+>>>>>>> main
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">

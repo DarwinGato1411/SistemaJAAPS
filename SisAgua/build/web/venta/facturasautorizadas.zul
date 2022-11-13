@@ -23,8 +23,8 @@
                                         <custom-attributes org.zkoss.zul.listbox.rod="true"/>
                                         <auxhead>
                                             <auxheader colspan="12" >  
-                                                <div class="row">
-                                                    <div  class="col-12 col-sm-12 col-md-3 col-lg-3 ">
+                                                <div  class="row contenedorCuadro">
+                                                    <div  class="">
                                                         <label value="Inicio: "   />
                                                         <datebox   value="@bind(vm.inicio)" 
                                                                    readonly="true" style="font-weight:bold;" 
@@ -49,10 +49,11 @@
                                                         
                        
                                                     </div>
-                                                    <div  class="col-12 col-sm-12 col-md-3 col-lg-3 ">
+                                                    <div  class="">
                                                         <button   image="/imagenes/excel.png"  
                                                                   onClick="@command('exportListboxToExcel')"  
-                                                                  class="btn btn-primary btn-sm "
+                                                                  class="boton btnGuardar"
+                                                                  label="Dexcargar"
                                                                   tooltiptext="Descargar"/>
 
                                                     </div>
@@ -127,9 +128,9 @@
                                     </listbox>   
                                 </div>            
                             </div>
-                            <div class="col-12 col-sm-12 col-md-3 col-lg-3" align="center">
+                            <div class=" contenedorCuadro col-12 col-sm-12 col-md-3 col-lg-3" align="center">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 " >
-                                    <label value="NUMERO COMPROBANTES" class="form-control-sm" 
+                                    <label value="Numero de comporbantes" class="form-control-sm" 
                                            style="font-weight:bold;font-size:1em"/>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 " >
@@ -141,7 +142,7 @@
                                                  class="form-control form-control-sm" />
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12  " >
-                                    <label value="SUBTOTAL BASE CERO" class="form-control-sm"
+                                    <label value="Subtotal base cero" class="form-control-sm"
                                            style="font-weight:bold;font-size:1em"/>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12  " >
@@ -153,7 +154,7 @@
                                                  class="form-control form-control-sm" />
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12  " >
-                                    <label value="SUBTOTAL 12%" class="form-control-sm"
+                                    <label value="Subtotal 12%" class="form-control-sm"
                                            style="font-weight:bold;font-size:1em"/>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12  " >
@@ -165,7 +166,7 @@
                                                  class="form-control form-control-sm" />
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12  " >
-                                    <label value="TOTAL BASE IMPONIBLE" class="form-control-sm"
+                                    <label value="Total base imponible" class="form-control-sm"
                                            style="font-weight:bold;font-size:1em"/>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12  " >
