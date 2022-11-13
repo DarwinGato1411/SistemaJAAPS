@@ -44,14 +44,9 @@
                                               style="margin-bottom:10px">
                                         <custom-attributes org.zkoss.zul.listbox.rod="true"/>
                                        
-<<<<<<< HEAD
-                                        <listhead> 
-                                            <listheader width="10%"  label="" align="center">
-                                               
-                                            </listheader>                       
-=======
+
                                         <listhead class="">                       
->>>>>>> main
+
                                             <listheader width="45%"   >
                                                 <textbox zclass = "mycss-listcell" 
                                                          class=" col-12 col-sm-12 col-md-12 col-lg-12 ;font-weight:bold form-control form-control-sm"
@@ -82,10 +77,10 @@
                                         <template name="model">                                                            
                                             <listitem>  
                                                 <listcell zclass = "mycss-listcell">
-                                                     <image src="/iconos/historico.png"   
-                                                       onClick="@command('verHistoricoFac',valor=each)"                                    
-                                                       class="btn-secondary btn-sm"                                               
-                                                       tooltiptext="Historico de pago"/> 
+                                                    <image src="/iconos/historico.png"   
+                                                            onClick="@command('verHistoricoFac',valor=each)"                                    
+                                                            class="btn-secondary btn-sm"                                               
+                                                            tooltiptext="Historico de pago"/> 
                                                 </listcell>   
                                                            
                                                 <listcell zclass = "mycss-listcell">

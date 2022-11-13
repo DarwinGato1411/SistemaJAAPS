@@ -709,7 +709,7 @@ div.z-listfooter-cnt, div.z-listcell-cnt, div.z-listheader-cnt {
 }
 
 .z-menupopup-cnt .z-menu a.z-menu-cnt, .z-menupopup-cnt .z-menuitem a.z-menuitem-cnt {
-    color: white;
+    color: black;
     display: block;
     line-height: 17px;
     outline-color: -moz-use-text-color;
@@ -717,12 +717,12 @@ div.z-listfooter-cnt, div.z-listcell-cnt, div.z-listheader-cnt {
     outline-width: 0;
     padding: 2px 21px 2px 3px;
     white-space: nowrap;
-    background: #2b3770;
+    background: transparent;
     background-image: none;
 }
 
 .z-menupopup .z-menupopup-cnt{
-    background:#2b3770 none repeat 0 0;
+
     background-image:none;
     border:0 none;
     padding:0;
