@@ -47,6 +47,7 @@
 
                                         <listhead class="">                       
 
+                                            <listheader width="25px"   ></listheader>
                                             <listheader width="45%"   >
                                                 <textbox zclass = "mycss-listcell" 
                                                          class=" col-12 col-sm-12 col-md-12 col-lg-12 ;font-weight:bold form-control form-control-sm"
@@ -349,6 +350,7 @@
                                                             value="@bind(vm.cobro)"
                                                 />
                                             </div>   
+                                    
                                 
                                             <div class="contenedorInput">   
                                                 <label value="Cambio:" class="form-control-sm" 
@@ -362,23 +364,12 @@
                                                 />
                                
                                             </div>   
-                         
-                                            <div class="contenedorBoton">   
-                                                <button src="/iconos/fact.png"   
-                                                        autodisable="self"
-                                                        label="Cargar Notas de venta"                                                   
-                                                        class="btnInfo"
-                                                        onClick="@command('verNotasEntrega')"
-                                                        tooltiptext="Cargar notas de entrega"/>
-                                            </div>   
-                                             
-                                    
-                                
-                                            <div class="contenedorBoton" >   
+                                            
+                                            <div class="contenedorBoton" align="end" >   
                                                 <button src="/iconos/guardar.png"  
                                                                  
                                                         autodisable="self"
-                                                        label="Guardar"
+                                                        label="Facturar"
                                                         class="btnGuardar"
                                                         onClick="@command('Guardar',valor='SG')"
                                                         tooltiptext="Guardar factura"/>                      
@@ -480,7 +471,7 @@
                                     <listbox 
                                         model="@load(vm.listaDetalleFacturaDAOMOdel)"
                                         mold="paging"
-                                        height="420px" autopaging="true" 
+                                        height="300px" pageSize="8" 
                                         nonselectableTags="*" checkmark="true"  
                                         multiple="true" 
                                         onSelect="@command('seleccionarRegistros')"  >

@@ -49,7 +49,7 @@
                         <menu label="Gestion de facturas"  id="menuVentas">
                             <menupopup>                               
                                 <menuitem label="Facturas emitidas" id="btnNotaVentas" />
-                                <menuitem label="Nota de venta" id="btnNotaVenta"  />                                
+                                <!--<menuitem label="Nota de venta" id="btnNotaVenta"  />-->                                
                                 <menuitem label="Proformas emitidas" id="btnProformasEmitidas"  />
                                 <menuitem label="Emitir Guias de remision" id="btnEmitirGuiaRemision"  />
                                 <menuitem label="Guias de remision emitidas" id="btnGuiaRemision"  />

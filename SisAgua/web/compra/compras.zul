@@ -166,7 +166,7 @@
                                           
                                         <div class="" >
                                             <button src="/iconos/guardar.png"   
-                                                      
+                                                        width="100%"
                                                         style="height:50px "            
                                                         autodisable="self"
                                                         label="Guardar"

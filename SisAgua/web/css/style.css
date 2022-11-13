@@ -3019,7 +3019,7 @@ input, button, select, textarea {
 }
 
 .contendorPrincipal .contenedorLogin .left .texto .titulo span{
-    text-align: center;
+    text-align: left;
     font-size: 24px !important;
     color:#fff;
     display: block;
@@ -3028,7 +3028,7 @@ input, button, select, textarea {
 }
 
 .contendorPrincipal .contenedorLogin .left .texto .subtitulo span{
-    text-align: center;
+    text-align: left;
     display: block;
     margin-bottom: 25px;
     color:#fff;
@@ -3100,14 +3100,14 @@ input, button, select, textarea {
 .contenedorCalculo .calculo .z-toolbar-body{
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(3,1fr);
     gap:10px;
 }
 
 .contenedorCalculo .calculo .z-toolbar-body .contenedorInput{
 
     display: grid;
-    grid-template-columns: 35% 65%;
+    grid-template-columns: 45% 55%;
 
 }
 
@@ -3117,10 +3117,10 @@ input, button, select, textarea {
 }
 
 .contenedorCalculo .calculo .z-toolbar-body .contenedorBoton button{
-    width: 95%;
+    width: 65%;
     border: none;
     color:white;
-    height: 50px;
+    height: 30px;
     border-radius: 15px;
 }
 
@@ -3128,7 +3128,7 @@ input, button, select, textarea {
 
     border: none;
     color:white;
-    padding: 12px;
+   
     border-radius: 15px;
 }
 
@@ -3138,6 +3138,7 @@ input, button, select, textarea {
 
 .btnGuardar{
     background-color: rgb(var(--secondary-color));
+    height: 30px;
 }
 
 .contenedorCalculo .calculo .z-toolbar-body .contenedorBoton .btnInfo{
@@ -3246,14 +3247,14 @@ input, button, select, textarea {
 
 .contenedorListaFacturas {
     display: grid;
-    grid-template-columns: 40% 60%;
+    /*grid-template-columns: 40% 60%;*/
     gap: 10px;
     margin-bottom: 10px;
 }
 
 .contenedorListaFacturas .contenedorBotonera{
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: repeat(6,1fr);  
     gap: 10px;
 }
 

@@ -48,7 +48,8 @@
                                     <div  class="">
                                         <button   image="/imagenes/excel.png"  
                                                   onClick="@command('exportListboxToExcel')"  
-                                                  class="boton btnGuardar"
+                                                  class="btn btn-primary btn-sm  "
+                                                  width="100%"
                                                   label="Descargar"
                                                   tooltiptext="Descargar"/>
 

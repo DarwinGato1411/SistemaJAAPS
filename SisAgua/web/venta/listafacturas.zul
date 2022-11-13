@@ -66,30 +66,30 @@
                                      tooltiptext="Buscar facturas pendientes para enviar al SRI"/>
                         
                             <button  image="/iconos/sri24x24.png" 
-                                     label="Autorizar fac. lote"
+                                     label="Autorizar en lote"
                                      class="boton btnInfo"
                                      onClick="@command('autorizarEnLote')" 
                                      tooltiptext="Autorizar facturas en lote"/>
                        
                             <button  image="/imagenes/buscar1.png" 
-                                     label="Buscar facturas pendientes"
+                                     label="Buscar facturas reenvio"
                                      
                                     class="boton btnGuardar"
                                      onClick="@command('buscarDevueltaSRIReenvio')" 
                                      tooltiptext="Buscar facturas pendientes para enviar al SRI"/>
                         
                             <button  image="/iconos/sri24x24.png" 
-                                     label="Autorizar facturas en lote (Reenviar)"
+                                     label="Reenviar en lote"
                                      class="boton btnInfo"
                                      onClick="@command('reenviarEnLote')" 
-                                     tooltiptext="Autorizar facturas en lote"/>
+                                     tooltiptext="Reenvia las facturasdevueltas en lote "/>
                         
-                            <button  image="/imagenes/buscar1.png" 
-                                     label="Buscar facturas pendientes para enviar al SRI(Corregir)
+<!--                            <button  image="/imagenes/buscar1.png" 
+                                     label="Facturas por corregir
 "                                   
                                     class="boton btnGuardar"
                                      onClick="@command('buscarDevueltaSRIPorCorregir')" 
-                                     tooltiptext="Buscar facturas pendientes para enviar al SRI"/>
+                                     tooltiptext="Buscar facturas pendientes para enviar al SRI"/>-->
                         
                         
                        
