@@ -767,7 +767,7 @@ public class Facturar extends SelectorComposer<Component> {
             BigDecimal alcantarillado = BigDecimal.ZERO;
             BigDecimal desechos = BigDecimal.ZERO;
             BigDecimal ambiente = BigDecimal.ZERO;
-            BigDecimal adicionales = lectura.getLecMetrosCubicos().doubleValue() < detalleTarifa.getDettMetroFinal().doubleValue() ? lectura.getLecMetrosCubicos().subtract(detalleTarifa.getIdTarifa().getTariMetrosBase()) : BigDecimal.ZERO;
+            BigDecimal adicionales = lectura.getLecMetrosCubicos().doubleValue() <= detalleTarifa.getDettMetroFinal().doubleValue() ? lectura.getLecMetrosCubicos().subtract(detalleTarifa.getIdTarifa().getTariMetrosBase()) : BigDecimal.ZERO;
             valorCobroBase = detalleTarifa.getDettPrecioBase();
             BigDecimal precioExcedente = detalleTarifa.getDettPorcentajeExcedente();
             valorCobroExce = adicionales.multiply(precioExcedente);
@@ -776,6 +776,7 @@ public class Facturar extends SelectorComposer<Component> {
 
             if (detalleTarifa.getDettValidadesecho()) {
                 desechos = (basicaMasExcedente.multiply(detalleTarifa.getDettPorcentajeDesechos())).divide(BigDecimal.valueOf(100));
+                desechos=ArchivoUtils.redondearDecimales(desechos, 2);
             } else {
                 desechos = detalleTarifa.getDettDesechos();
             }
@@ -868,7 +869,7 @@ public class Facturar extends SelectorComposer<Component> {
             valorExcedente.setCodigo(productoBuscado.getProdCodigo());
             valorExcedente.setEsProducto(producto.getProdEsproducto());
             valorExcedente.setTotalInicial(alcantarillado);
-            valorExcedente.setTotal(valorCobroExce);
+            valorExcedente.setTotal(ArchivoUtils.redondearDecimales(valorCobroExce, 2));
             // valorExcedente.setLectura(lectura);
             //para llenar lectura como producto
             if (valorExcedente.getCantidad() == null) {

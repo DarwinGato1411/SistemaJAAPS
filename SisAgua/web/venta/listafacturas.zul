@@ -317,7 +317,7 @@
                                     </listcell>
                                 </zk>
                            
-                                <zk if="${each.estadosri=='AUTORIZADO' }"  >
+                                    <zk if="${each.estadosri=='AUTORIZADO' }"  >
                                     <listcell  zclass = "mycss-listcell" >                                         
                                         <image src="/iconos/listo_uno.png"   
                                                class="  btn-secondary btn-sm "       
