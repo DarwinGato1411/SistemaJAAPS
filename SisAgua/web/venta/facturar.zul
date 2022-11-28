@@ -79,9 +79,9 @@
                                             <listitem>  
                                                 <listcell zclass = "mycss-listcell">
                                                     <image src="/iconos/historico.png"   
-                                                            onClick="@command('verHistoricoFac',valor=each)"                                    
-                                                            class="btn-secondary btn-sm"                                               
-                                                            tooltiptext="Historico de pago"/> 
+                                                           onClick="@command('verHistoricoFac',valor=each)"                                    
+                                                           class="btn-secondary btn-sm"                                               
+                                                           tooltiptext="Historico de pago"/> 
                                                 </listcell>   
                                                            
                                                 <listcell zclass = "mycss-listcell">
@@ -130,6 +130,7 @@
                                         <listhead>   
                     
             
+                                            <listheader width="20px"  label="" />
                                             <listheader width="20%"  label="# Medidor" />
                                             <listheader width="20%"  label="# Mes" />
 
@@ -143,6 +144,12 @@
                                         </listhead>  
                                         <template name="model">                                                            
                                             <listitem>  
+                                                <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
+                                                    <image src="/iconos/pagar.png"
+                                                           class="grow"
+                                                           onClick="@command('cambiarestado',valor=each)" 
+                                                           tooltiptext="Cambiar Estado"/> 
+                                                </listcell>
                                                 <listcell zclass = "mycss-listcell">
                                                     <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
                                                              class="form-control form-control-sm"  

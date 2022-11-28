@@ -3198,7 +3198,7 @@ input, button, select, textarea {
 
 .contenedorLecturas{
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 30% 60% ;
     gap: 10px;
     margin: 10px 0 10px 0;
     align-items: center;
@@ -3232,7 +3232,7 @@ input, button, select, textarea {
 }
 
 .contenedorLecturas .inputs .contenedorInputFecha{
-    grid-template-columns: 5% 95%;
+    grid-template-columns: 10% 90%;
 }
 
 .contenedorLecturas .inputs .contenedorInputBuscar{

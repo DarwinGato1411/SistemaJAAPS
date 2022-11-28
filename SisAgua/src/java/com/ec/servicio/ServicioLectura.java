@@ -118,18 +118,19 @@ public class ServicioLectura {
         return listaLecturas;
     }
 
-    public List<Lectura> findMesAndNumMedidor(String busqueda, Integer mes) {
+    public List<Lectura> findMesAndNumMedidor(String busqueda, Integer mes,Integer lecAnio) {
 
         List<Lectura> listaLecturas = new ArrayList<Lectura>();
         try {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM Lectura a WHERE (a.idMedidor.idPredio.idPropietario.propNombre LIKE :propNombre OR a.idMedidor.idPredio.idPropietario.propApellido LIKE :propApellido OR a.idMedidor.medNumero LIKE :medNumero) AND a.lecMes=:lecMes ORDER BY CAST(a.idMedidor.medNumero AS INTEGER) ASC");
+            Query query = em.createQuery("SELECT  a FROM Lectura a WHERE (a.idMedidor.idPredio.idPropietario.propNombre LIKE :propNombre OR a.idMedidor.idPredio.idPropietario.propApellido LIKE :propApellido OR a.idMedidor.medNumero LIKE :medNumero) AND a.lecMes=:lecMes AND a.lecAnio=:lecAnio ORDER BY a.idMedidor ASC");
             query.setParameter("medNumero", "%" + busqueda + "%");
             query.setParameter("propNombre", "%" + busqueda + "%");
             query.setParameter("propApellido", "%" + busqueda + "%");
             query.setParameter("lecMes", mes);
+             query.setParameter("lecAnio", lecAnio);
 
             listaLecturas = (List<Lectura>) query.getResultList();
             em.getTransaction().commit();

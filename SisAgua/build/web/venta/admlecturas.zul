@@ -21,6 +21,16 @@
     <div class="contenedorCuadro contenedorLecturas">
         <div class="inputs">
             <div class="contenedorInput contenedorInputFecha">
+                Anio:<combobox  model="@load(vm.anios)"  
+                                selectedItem="@bind(vm.buscarAnio)" 
+                                style="width:90%"  
+                                readonly="true" >
+                    <template name="model">
+                        <comboitem  label="@bind(each.nombre)" />
+                    </template>                                      
+                </combobox>
+            </div>  
+            <div class="contenedorInput contenedorInputFecha">
                 Mes:<combobox  model="@load(vm.meses)"  
                                selectedItem="@bind(vm.buscarMes)" 
                                style="width:90%"  
@@ -41,8 +51,16 @@
                          onOK="@command('buscarLecturas')"
                          onChange="self.setValue(self.getValue().toUpperCase());" />
                         
+            
+                     
+            </div>
+            <div class="contenedorInput contenedorInputBuscar">
+                                    
+                
+                        
                 <div class="input-group-append" >
                     <button   image="/imagenes/buscar1.png" 
+                              label="Buscar"
                               onClick="@command('buscarLecturas')"  
                               tooltiptext="Buscar cliente"
                               class="btn  btn-primary btn-sm "/>

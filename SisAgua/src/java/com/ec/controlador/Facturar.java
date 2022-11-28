@@ -4080,4 +4080,32 @@ public class Facturar extends SelectorComposer<Component> {
             Messagebox.show("Error " + e.toString(), "Atención", Messagebox.OK, Messagebox.INFORMATION);
         }
     }
+    
+    
+     @Command
+    @NotifyChange({"listaDatos", "buscar","listaDatosLectura"})
+    public void cambiarestado(@BindingParam("valor") Lectura valor) {
+
+        if (Messagebox.show("Desea cambiar a estado pagado", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
+            if (valor.getLecPagada().equals("S")){
+                valor.setLecPagada("N");
+                servicioLectura.modificar(valor);
+            } else {
+                valor.setLecPagada("S");
+                servicioLectura.modificar(valor);
+            }
+            
+            medidorEncontrado = servicioMedidor.findMedNumero(valor.getIdMedidor().getMedNumero());
+        if (medidorEncontrado != null) {
+            clienteBuscado = servicioCliente.FindClienteForCedula(medidorEncontrado.getIdPredio().getIdPropietario().getPorpCedula());
+            listaDatosLectura = servicioLectura.finbByMedidor(medidorEncontrado);
+        } else {
+            Clients.showNotification("No se encontro el medidor...",
+                        Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 1000, true);
+        }
+        } else {
+            Clients.showNotification("Solicitud cancelada",
+                        Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
+        }
+    }
 }
