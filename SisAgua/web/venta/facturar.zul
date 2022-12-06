@@ -36,7 +36,7 @@
                                 <div class="left" >
                               
                                     <listbox  width="100%" model="@load(vm.listMedidores)" 
-                                              height="180px"
+                                              height="150px"
                                               mold="paging" pageSize="4"
                                               checkmark="false"  
                                               multiple="false"              
@@ -190,6 +190,8 @@
                                                 </listcell>
                                                 <listcell zclass = "mycss-listcell">   
                                                     <image  src="/iconos/Forward.png" 
+                                                    style=" height: auto;
+                                                        background-color: transparent;   border-radius: 15px;"
                                                             onClick="@command('agregarLectura',valor=each)" 
                                                             tooltiptext="Asignar producto"/> 
                                                   
@@ -197,7 +199,67 @@
                                             </listitem>
                                         </template>
                                     </listbox>   
-                                    
+                                    <listbox model="@load(vm.listaNotaEntregaModel)" 
+                                             mold="paging"  
+                                              height="150px"           
+                                             nonselectableTags="" checkmark="true"  
+                                             multiple="true"  pageSize="12" 
+                                             onSelect="@command('seleccionarRegistrosNotaEntrega')"   >
+                                        <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                    
+                                        <listhead> 
+                           
+                                            <listheader width="5%"  label=""></listheader>     
+                                            <listheader width="15%"  label="Cedula">     
+                                            </listheader>    
+                                            <listheader width="35%" label="Cliente" >                                
+                                            </listheader> 
+                                            <listheader width="15%" label="Nota Entrega" >                                
+                                            </listheader> 
+                                            <listheader width="15%"  label="Fecha" /> 
+                                            <listheader width="15%"  label="Total "  />                                 
+                                        </listhead>  
+                        
+                    
+                                        <template name="model">                                                            
+                                            <listitem>
+                                
+                                                <listcell></listcell>
+                                                <listcell>
+                                                    <label value="@bind(each.idCliente.cliCedula)" width="96%" style="color:black" />
+                                                </listcell>
+                                                <listcell>
+                                                    <label value="@bind(each.idCliente.cliNombre)" width="96%" style="color:black" />
+                                                </listcell>
+                                                <listcell>
+                                                    <label value="@bind(each.facNumNotaEntrega)" width="96%" style="color:black" />
+                                                </listcell>
+                            
+                                                <listcell>
+                                                    <datebox compact="true" value="@bind(each.facFecha)" 
+                                                             buttonVisible="false" lenient="true" readonly="true"
+                                                             format="medium" width="98%"  />
+                                                </listcell>
+                                                <listcell>
+                                                    <decimalbox format="###.##" readonly="true" 
+                                                                value="@bind(each.facTotal)" width="96%"/>
+                                                </listcell>                                                         
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                     <div class="contenedorBoton" align="end" >   
+                                                <button src="/iconos/Forward.png"
+                                                         style=" border: none;
+    color: white;
+    height: 30px;
+    border-radius: 15px;"        
+                                                        autodisable="self"
+                                                        label="Agregar nota de entrega"
+                                                        class="btnGuardar"
+                                                        onClick="@command('seleccionarNotaEntrega')"
+                                                        tooltiptext="Agregar nota entrega"/>                      
+                                                <!--                                                                  -->
+                                            </div>  
                                     <listbox model="@load(vm.listaKardexProducto)" 
                                              nonselectableTags=""    mold="paging" pageSize="5"  >
                                         <custom-attributes org.zkoss.zul.listbox.rod="true"/>
@@ -234,7 +296,7 @@
                                             <listitem  onOK="@command('agregarItemLista',valor=each.idProducto)">
                                                 <listcell  style="font-size:11px;background-color:#d6eefd" zclass = "mycss-listcell" 
                                                            onDoubleClick="@command('agregarItemLista',valor=each.idProducto)">
-                                                    <textbox value="@bind(each.idProducto.prodCodigo)"     onCreate="self.focus()"
+                                                    <textbox value="@bind(each.idProducto.prodCodigo)"     
                                                              class="form-control form-control-sm"
                                                              style="font-size:10px;background-color:#d6eefd"
                                                              readonly="true"
@@ -380,13 +442,10 @@
                                                         class="btnGuardar"
                                                         onClick="@command('Guardar',valor='SG')"
                                                         tooltiptext="Guardar factura"/>                      
+                                                <!--                                                                  -->
                                             </div>  
                                             
-                                            <!-- <div class="">   
-                                                <label  class=" " 
-                                                        value="@bind(vm.numeroFacturaText)"  >
-                                                </label>
-                                            </div>   -->
+                                         
                                 
                            
                                            
@@ -429,7 +488,7 @@
                                             
                                                 <radio label="Factura" value="FACT"/>
                                             
-                                        
+                                                <radio label="Nota Entrega " value="NTE"/> 
                                                 <radio label="Proforma" value="PROF"/>               
                                     
                            
@@ -440,6 +499,7 @@
                                             <datebox class="fecha" compact="true" value="@bind(vm.fechafacturacion)" 
                                                      readonly="true" style="font-weight:bold;" 
                                                      buttonVisible="true" 
+                                                     
                                                      lenient="true" format="dd/MM/yyyy" 
                                                      constraint="no empty: Ingrese la fecha "/>
 

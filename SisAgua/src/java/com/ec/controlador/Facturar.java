@@ -103,7 +103,6 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.Path;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.SelectorComposer;
@@ -240,6 +239,7 @@ public class Facturar extends SelectorComposer<Component> {
     //crear un factura nueva        
     private ListModelList<Factura> listaNotaEntregaModel;
     private List<Factura> listalistaNotaEntregaDatos = new ArrayList<Factura>();
+    public static Set<Factura> seleccionNotaEntregaProcesada = new HashSet<Factura>();
     public static Set<Factura> seleccionNotaEntrega = new HashSet<Factura>();
 
     /*RUTAS PARA LOS ARCHIVPOS XML SRI*/
@@ -776,7 +776,7 @@ public class Facturar extends SelectorComposer<Component> {
 
             if (detalleTarifa.getDettValidadesecho()) {
                 desechos = (basicaMasExcedente.multiply(detalleTarifa.getDettPorcentajeDesechos())).divide(BigDecimal.valueOf(100));
-                desechos=ArchivoUtils.redondearDecimales(desechos, 2);
+                desechos = ArchivoUtils.redondearDecimales(desechos, 2);
             } else {
                 desechos = detalleTarifa.getDettDesechos();
             }
@@ -2269,18 +2269,17 @@ public class Facturar extends SelectorComposer<Component> {
 
     }
 
-    @Command
     @NotifyChange({"listaDetalleFacturaDAOMOdel", "subTotalCotizacion", "ivaCotizacion", "valorTotalCotizacion", "totalDescuento", "buscarNombreProd", "valorTotalInicialVent", "descuentoValorFinal", "subTotalBaseCero"})
-    public void verNotasEntrega() {
-        ParamFactura paramFactura = new ParamFactura();
-        paramFactura.setBusqueda("nte");
-        paramFactura.setCedula(buscarCliente);
-        final HashMap<String, ParamFactura> map = new HashMap<String, ParamFactura>();
-        map.put("valor", paramFactura);
-        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                    "/venta/listanotaentrega.zul", null, map);
-        window.doModal();
-        buscarCliente = paramFactura.getCedula();
+    private void verNotasEntrega() {
+//        ParamFactura paramFactura = new ParamFactura();
+//        paramFactura.setBusqueda("nte");
+//        paramFactura.setCedula(buscarCliente);
+//        final HashMap<String, ParamFactura> map = new HashMap<String, ParamFactura>();
+//        map.put("valor", paramFactura);
+//        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+//                    "/venta/listanotaentrega.zul", null, map);
+//        window.doModal();
+//        buscarCliente = paramFactura.getCedula();
         listaDetalleFacturaDAODatos.clear();
         if (seleccionNotaEntrega != null) {
             for (Factura fac : seleccionNotaEntrega) {
@@ -2652,7 +2651,6 @@ public class Facturar extends SelectorComposer<Component> {
             factura.setFaConSinGuia(facConSinGuia);
             factura.setFacSubsidio(subsidioTotal);
             factura.setFacFechaCobroPlazo(fechaPagoPlazo);
-            
 
             if (tipoVenta.equals("SINF")) {
                 factura.setFacNumero(0);
@@ -2943,109 +2941,6 @@ public class Facturar extends SelectorComposer<Component> {
                         }
                         servicioGuia.guardarGuiaremision(detalleGuia, guiaremision);
 
-                        /*PARA CREAR EL ARCHIVO XML FIRMADO*/
-//                        String nombreArchivoXML = File.separator + "GUIA-"
-//                                + guiaremision.getCodestablecimiento()
-//                                + guiaremision.getPuntoemision()
-//                                + guiaremision.getFacNumeroText() + ".xml";
-//
-//
-//                        /*RUTAS FINALES DE,LOS ARCHIVOS XML FIRMADOS Y AUTORIZADOS*/
-//                        String pathArchivoFirmado = folderFirmado + nombreArchivoXML;
-//                        String pathArchivoAutorizado = foldervoAutorizado + nombreArchivoXML;
-//                        String pathArchivoNoAutorizado = folderNoAutorizados + nombreArchivoXML;
-//                        String archivoEnvioCliente = "";
-//
-//                        //tipoambiente tiene los parameteos para los directorios y la firma digital
-//                        AutorizarDocumentos aut = new AutorizarDocumentos();
-//                        /*Generamos el archivo XML de la factura*/
-//                        String archivo = aut.generaXMLGuiaRemision(guiaremision, amb, folderGenerados, nombreArchivoXML);
-//
-//                        byte[] datos = null;
-//                        File f = null;
-//                        File fEnvio = null;
-//                        /*amb.getAmClaveAccesoSri() es el la clave proporcionada por el SRI
-//                        archivo es la ruta del archivo xml generado
-//                        nomre del archivo a firmar*/
-//                        XAdESBESSignature.firmar(archivo, nombreArchivoXML,
-//                                amb.getAmClaveAccesoSri(), amb, folderFirmado);
-//
-//                        f = new File(pathArchivoFirmado);
-//
-//                        datos = ArchivoUtils.ConvertirBytes(pathArchivoFirmado);
-//                        //obtener la clave de acceso desde el archivo xml
-//                        String claveAccesoComprobante = ArchivoUtils.obtenerValorXML(f, "/*/infoTributaria/claveAcceso");
-//                        /*GUARDAMOS LA CLAVE DE ACCESO ANTES DE ENVIAR A AUTORIZAR*/
-//                        guiaremision.setFacClaveAcceso(claveAccesoComprobante);
-//                        AutorizarDocumentos autorizarDocumentos = new AutorizarDocumentos();
-//                        RespuestaSolicitud resSolicitud = autorizarDocumentos.validar(datos);
-//
-//                        if (resSolicitud != null && resSolicitud.getComprobantes() != null) {
-//                            if (resSolicitud.getEstado().equals("RECIBIDA")) {
-//                                try {
-//                                    RespuestaComprobante resComprobante = autorizarDocumentos.autorizarComprobante(claveAccesoComprobante);
-//                                    for (Autorizacion autorizacion : resComprobante.getAutorizaciones().getAutorizacion()) {
-//                                        FileOutputStream nuevo = null;
-//
-//                                        /*CREA EL ARCHIVO XML AUTORIZADO*/
-//                                        System.out.println("pathArchivoNoAutorizado " + pathArchivoNoAutorizado);
-//                                        nuevo = new FileOutputStream(pathArchivoNoAutorizado);
-//                                        nuevo.write(autorizacion.getComprobante().getBytes());
-//                                        if (!autorizacion.getEstado().equals("AUTORIZADO")) {
-//
-//                                            String texto = autorizacion.getMensajes().getMensaje().get(0).getMensaje();
-//                                            String smsInfo = autorizacion.getMensajes().getMensaje().get(0).getInformacionAdicional();
-//                                            nuevo.write(autorizacion.getMensajes().getMensaje().get(0).getMensaje().getBytes());
-//                                            if (autorizacion.getMensajes().getMensaje().get(0).getInformacionAdicional() != null) {
-//                                                nuevo.write(autorizacion.getMensajes().getMensaje().get(0).getInformacionAdicional().getBytes());
-//                                            }
-//
-//                                            guiaremision.setMensajesri(texto);
-//                                            guiaremision.setEstadosri(autorizacion.getEstado());
-//
-//                                            nuevo.flush();
-//                                            servicioGuia.modificar(guiaremision);
-//                                        } else {
-//
-//                                            guiaremision.setFacClaveAutorizacion(claveAccesoComprobante);
-//                                            guiaremision.setEstadosri(autorizacion.getEstado());
-//                                            guiaremision.setFacFechaAutorizacion(autorizacion.getFechaAutorizacion().toGregorianCalendar().getTime());
-//
-//                                            /*se agrega la la autorizacion, fecha de autorizacion y se firma nuevamente*/
-//                                            archivoEnvioCliente = aut.generaXMLGuiaRemision(guiaremision, amb, foldervoAutorizado, nombreArchivoXML);
-////                            XAdESBESSignature.firmar(archivoEnvioCliente,
-////                                    nombreArchivoXML,
-////                                    amb.getAmClaveAccesoSri(),
-////                                    amb, foldervoAutorizado);
-//
-//                                            fEnvio = new File(archivoEnvioCliente);
-//
-//                                            System.out.println("PATH DEL ARCHIVO PARA ENVIAR AL CLIENTE " + archivoEnvioCliente);
-//                                            ArchivoUtils.reporteGeneralPdfMail(archivoEnvioCliente.replace(".xml", ".pdf"), guiaremision.getFacNumero(), "GUIA");
-//                                            ArchivoUtils.zipFile(fEnvio, archivoEnvioCliente);
-//                                            /*GUARDA EL PATH PDF CREADO*/
-////                                            guiaremision.setFacpath(archivoEnvioCliente.replace(".xml", ".pdf"));
-//                                            servicioGuia.modificar(guiaremision);
-//                                            /*envia el mail*/
-//
-//                                            String[] attachFiles = new String[2];
-//                                            attachFiles[0] = archivoEnvioCliente.replace(".xml", ".pdf");
-//                                            attachFiles[1] = archivoEnvioCliente.replace(".xml", ".zip");
-//                                            MailerClass mail = new MailerClass();
-//
-//                                            if (guiaremision.getIdCliente().getCliCorreo() != null) {
-//                                                mail.sendMailSimple(guiaremision.getIdCliente().getCliCorreo(),
-//                                                        "Gracias por preferirnos se ha emitido nuestra guia de remision electrónica",
-//                                                        attachFiles,
-//                                                        "GUIA DE REMISION ELECTRONICA", guiaremision.getFacClaveAcceso());
-//                                            }
-//                                        }
-//
-//                                    }
-//                                } catch (Exception e) {
-//                                }
-//                            }
-//                        }
                     }
                     /*VERIFICA SI EL CLINETE QUIERE AUTORIZAR LA FACTURA*/
                     if (!parametrizar.getParEstado() || tipoVenta.equals("PROF")) {
@@ -3568,11 +3463,11 @@ public class Facturar extends SelectorComposer<Component> {
     /*carga LAS NOTAS DE ENTREGA*/
     private void cargaNotaEntrega() {
         String clienteCedula = buscarCliente;
-        listalistaNotaEntregaDatos = servicioFactura.findAllNotaEnt();
+        listalistaNotaEntregaDatos = servicioFactura.findAllNotaEnt(clienteBuscado);
 //        listalistaNotaEntregaDatos = servicioFactura.findNotaEntPorCliente(buscarCliente);
-        setListaNotaEntregaModel(new ListModelList<Factura>(getListalistaNotaEntregaDatos()));
+        setListaNotaEntregaModel(new ListModelList<Factura>(listalistaNotaEntregaDatos));
         ((ListModelList<Factura>) listaNotaEntregaModel).setMultiple(true);
-        buscarCliente = clienteCedula;
+//        buscarCliente = clienteCedula;
     }
 
     @Command
@@ -3581,11 +3476,74 @@ public class Facturar extends SelectorComposer<Component> {
     }
 
     @Command
-    @NotifyChange("clienteBuscado")
+    @NotifyChange({"listaDetalleFacturaDAOMOdel", "subTotalCotizacion", "ivaCotizacion", "valorTotalCotizacion", "totalDescuento", "buscarNombreProd", "valorTotalInicialVent", "descuentoValorFinal", "subTotalBaseCero", "listaProducto", "totalItems"})
     public void seleccionarNotaEntrega() {
 //        windowNotaEntrega.detach();
-        Window windows = (Window) Path.getComponent("/windowNotaEntrega");
-        windows.detach();
+        boolean registroVacio = true;
+        List<DetalleFacturaDAO> listaPedidoPost = listaDetalleFacturaDAOMOdel.getInnerList();
+
+        for (DetalleFacturaDAO item : listaPedidoPost) {
+            if (item.getProducto() == null) {
+
+                listaDetalleFacturaDAOMOdel.remove(item);
+                break;
+            }
+        }
+        listaDetalleFacturaDAODatos = listaDetalleFacturaDAOMOdel.getInnerList();
+        //ingresa un registro vacio
+         
+        for (DetalleFacturaDAO item : listaPedidoPost) {
+            
+            for (Factura fac : seleccionNotaEntrega) {
+                
+                if (item.getNumeroNtv().compareTo(fac.getFacNumNotaEntrega())==0)  {
+                    Clients.showNotification("La nota de entrega ya fue agregada", Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
+                    return;
+                }
+            }
+        }
+        if (seleccionNotaEntrega != null) {
+            for (Factura fac : seleccionNotaEntrega) {
+                System.out.println("FAct " + fac.getIdFactura());
+
+                List<DetalleFactura> detalleFac = servicioDetalleFactura.findDetalleForIdFac(fac.getIdFactura());
+                DetalleFacturaDAO nuevoRegistro;
+
+                for (DetalleFactura det : detalleFac) {
+                    nuevoRegistro = new DetalleFacturaDAO();
+                    nuevoRegistro.setCodigo(det.getIdProducto().getProdCodigo());
+                    nuevoRegistro.setCantidad(det.getDetCantidad());
+                    nuevoRegistro.setProducto(det.getIdProducto());
+                    nuevoRegistro.setDescripcion(det.getDetDescripcion());
+                    nuevoRegistro.setSubTotal(det.getDetSubtotal());
+                    nuevoRegistro.setTotal(det.getDetTotal());
+                    nuevoRegistro.setDetIva(det.getDetIva());
+                    nuevoRegistro.setDetTotalconiva(det.getDetTotalconiva());
+                    nuevoRegistro.setTipoVenta(det.getDetTipoVenta());
+                    //valores con descuentos
+                    nuevoRegistro.setSubTotalDescuento(det.getDetSubtotaldescuento());
+                    nuevoRegistro.setDetTotaldescuento(det.getDetTotaldescuento());
+                    nuevoRegistro.setDetPordescuento(det.getDetPordescuento());
+                    nuevoRegistro.setDetValdescuento(det.getDetValdescuento());
+                    nuevoRegistro.setDetTotalconivadescuento(det.getDetTotaldescuentoiva());
+                    nuevoRegistro.setDetCantpordescuento(det.getDetCantpordescuento());
+                    nuevoRegistro.setDetIvaDesc(det.getDetIva());
+                    nuevoRegistro.setCodTipoVenta(det.getDetCodTipoVenta());
+                    nuevoRegistro.setDetSubtotaldescuentoporcantidad(det.getDetSubtotaldescuentoporcantidad());
+                    nuevoRegistro.setTotalInicial(det.getDetTotal());
+                    nuevoRegistro.setNumeroNtv(fac.getFacNumNotaEntrega());
+                    clietipo = det.getDetCodTipoVenta();
+//            calcularValores(nuevoRegistro);
+                    listaDetalleFacturaDAODatos.add(nuevoRegistro);
+//                    seleccionNotaEntregaProcesada=seleccionNotaEntrega;
+//                    listaNotaEntregaModel.removeAll(seleccionNotaEntrega);
+                }
+
+            }
+            getDetallefactura();
+            calcularValoresTotales();
+            tipoVentaAnterior = "NTE";
+        }
     }
 
     public ListModelList<Factura> getListaNotaEntregaModel() {
@@ -3998,13 +3956,14 @@ public class Facturar extends SelectorComposer<Component> {
 
 //    medidor 
     @Command
-    @NotifyChange({"clienteBuscado", "numeroMedidor", "clienteBuscado", "listaDatosLectura"})
+    @NotifyChange({"clienteBuscado", "numeroMedidor", "clienteBuscado", "listaDatosLectura", "listaNotaEntregaModel"})
     public void buscarLecturasPendientes(@BindingParam("valor") Medidor valor) {
 
         medidorEncontrado = servicioMedidor.findMedNumero(valor.getMedNumero());
         if (medidorEncontrado != null) {
             clienteBuscado = servicioCliente.FindClienteForCedula(medidorEncontrado.getIdPredio().getIdPropietario().getPorpCedula());
             listaDatosLectura = servicioLectura.finbByMedidor(medidorEncontrado);
+            cargaNotaEntrega();
         } else {
             Clients.showNotification("No se encontro el medidor...",
                         Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 1000, true);
@@ -4080,29 +4039,28 @@ public class Facturar extends SelectorComposer<Component> {
             Messagebox.show("Error " + e.toString(), "Atención", Messagebox.OK, Messagebox.INFORMATION);
         }
     }
-    
-    
-     @Command
-    @NotifyChange({"listaDatos", "buscar","listaDatosLectura"})
+
+    @Command
+    @NotifyChange({"listaDatos", "buscar", "listaDatosLectura"})
     public void cambiarestado(@BindingParam("valor") Lectura valor) {
 
         if (Messagebox.show("Desea cambiar a estado pagado", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
-            if (valor.getLecPagada().equals("S")){
+            if (valor.getLecPagada().equals("S")) {
                 valor.setLecPagada("N");
                 servicioLectura.modificar(valor);
             } else {
                 valor.setLecPagada("S");
                 servicioLectura.modificar(valor);
             }
-            
+
             medidorEncontrado = servicioMedidor.findMedNumero(valor.getIdMedidor().getMedNumero());
-        if (medidorEncontrado != null) {
-            clienteBuscado = servicioCliente.FindClienteForCedula(medidorEncontrado.getIdPredio().getIdPropietario().getPorpCedula());
-            listaDatosLectura = servicioLectura.finbByMedidor(medidorEncontrado);
-        } else {
-            Clients.showNotification("No se encontro el medidor...",
-                        Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 1000, true);
-        }
+            if (medidorEncontrado != null) {
+                clienteBuscado = servicioCliente.FindClienteForCedula(medidorEncontrado.getIdPredio().getIdPropietario().getPorpCedula());
+                listaDatosLectura = servicioLectura.finbByMedidor(medidorEncontrado);
+            } else {
+                Clients.showNotification("No se encontro el medidor...",
+                            Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 1000, true);
+            }
         } else {
             Clients.showNotification("Solicitud cancelada",
                         Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);

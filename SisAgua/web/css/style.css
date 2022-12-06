@@ -3171,13 +3171,13 @@ input, button, select, textarea {
 }
 .contenedorInputs .contenedorDatos{
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 50% 20% 30%;
     gap:20px;
 }
 
 .contenedorInputs .contenedorDatos .radio{
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(3,1fr);
     width: 70%;
 
 }
