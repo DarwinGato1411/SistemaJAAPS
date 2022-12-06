@@ -42,7 +42,7 @@
                          onOK="@command('buscarMedidorNumero')" /> 
             </listheader>
              <listheader width="10%"  label="Cedula" />         
-            <listheader width="20%"   sort="auto(propNombre)" >
+            <listheader width="40%"   sort="auto(propNombre)" >
                 <textbox value="@bind(vm.buscarNombre)" 
                          class="form-control form-control-sm"
                          tooltiptext="Buscar "                         
@@ -50,9 +50,9 @@
                          onOK="@command('buscarMedidorNombreApellidoNumero')"
                          onChange="self.setValue(self.getValue().toUpperCase());" />
             </listheader>     
-            <listheader width="20%" label="Apellido"  sort="auto(idPredio.idPropietario.propApellido)" >
+<!--            <listheader width="20%" label="Apellido"  sort="auto(idPredio.idPropietario.propApellido)" >
                 
-            </listheader>     
+            </listheader>     -->
             <listheader width="25%" label="Ubicacion"  >                
             </listheader>     
             <listheader width="10%" label="Tarifa"   >                
@@ -77,11 +77,11 @@
                              class="form-control form-control-sm"  
                              value="@bind(each.idPredio.idPropietario.propNombre)"  />
                 </listcell>
-                <listcell zclass = "mycss-listcell">
+<!--                <listcell zclass = "mycss-listcell">
                     <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
                              class="form-control form-control-sm"  
                              value="@bind(each.idPredio.idPropietario.propApellido)"  />
-                </listcell>
+                </listcell>-->
                 <listcell zclass = "mycss-listcell">
                     <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
                              class="form-control form-control-sm"  

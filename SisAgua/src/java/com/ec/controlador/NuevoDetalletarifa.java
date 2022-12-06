@@ -56,8 +56,8 @@ public class NuevoDetalletarifa {
             entidad.setDettPorcentajeExcedente(BigDecimal.ZERO);
             tarifaSelected = valor.getTarifa();
             accion = "create";
-            entidad.setDettPorcentajeAlcantarillado(BigDecimal.valueOf(30));
-            entidad.setDettPorcentajeDesechos(BigDecimal.valueOf(30));
+//            entidad.setDettPorcentajeAlcantarillado(BigDecimal.valueOf(30));
+//            entidad.setDettPorcentajeDesechos(BigDecimal.valueOf(30));
         }
     }
 

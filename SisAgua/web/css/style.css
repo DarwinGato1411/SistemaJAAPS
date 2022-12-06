@@ -519,7 +519,7 @@ element.style {
     border:0px;
     font-weight:bold;
     width:99%;
-    text-align: justify;
+    text-align: start;
 
     color: #ffffff;
 
@@ -3013,14 +3013,14 @@ input, button, select, textarea {
 }
 
 .contendorPrincipal .contenedorLogin .left .texto{
-    width: 70%;
+    width: 90%;
     margin: auto;
 
 }
 
 .contendorPrincipal .contenedorLogin .left .texto .titulo span{
-    text-align: center;
-    font-size: 24px !important;
+    text-align: start;
+    font-size: 34px !important;
     color:#fff;
     display: block;
     margin-top: 25px;
@@ -3028,7 +3028,7 @@ input, button, select, textarea {
 }
 
 .contendorPrincipal .contenedorLogin .left .texto .subtitulo span{
-    text-align: center;
+    text-align: start;
     display: block;
     margin-bottom: 25px;
     color:#fff;

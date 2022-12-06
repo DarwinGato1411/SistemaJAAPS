@@ -112,9 +112,9 @@
                         </listheader> 
                         <listheader width="15%"  label="Base" />              
                         <listheader width="15%"  label="Excedente ($)" />              
-                        <listheader width="15%"  label="% Alcantarillado" />              
-                        <listheader width="15%"  label="Desechos" />              
-                        <listheader width="15%"  label="Ambiente" />              
+                        <listheader width="15%"  label="Alcantarillado ($)" />              
+                        <listheader width="15%"  label="Desechos ($)" />              
+                        <listheader width="15%"  label="Ambiente ($)" />              
                         <listheader width="10%"  label="" align="center"/>
                     </listhead>  
                     <template name="model">                                                            

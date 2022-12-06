@@ -44,8 +44,8 @@
             </listheader>     
             <listheader width="15%"  label="Nombres" >              
             </listheader> 
-            <listheader width="15%"  label="Apellidos" sort="auto(propApellido)" >              
-            </listheader> 
+<!--            <listheader width="15%"  label="Apellidos" sort="auto(propApellido)" >              
+            </listheader> -->
             <listheader width="10%"  label="Sector" />
                        
             <listheader width="10%"  label="Fecha" />              
@@ -66,11 +66,11 @@
                              class="form-control form-control-sm"  
                              value="@bind(each.propNombre)"  />
                 </listcell>
-                <listcell zclass = "mycss-listcell">
+<!--                <listcell zclass = "mycss-listcell">
                     <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
                              class="form-control form-control-sm"  
                              value="@bind(each.propApellido)"  />
-                </listcell>
+                </listcell>-->
                
                 <listcell zclass = "mycss-listcell">
                     <textbox readonly="true" style="font-size:12px;background:#EBF5FB"

@@ -13,16 +13,19 @@
                 <div class="left"  >               
                     <div class="fondo">
                       
-                        <image class="imgFondo"  src="/imagenes/agua.jpg" ></image>
+                        <image class="imgFondo"  src="/imagenes/agua.png" ></image>
                         <div class="colorFondo">
                             <div class="contenedorImg">
                                 <image  src="/imagenes/logodeckxel.png" class="logo"></image>
                             </div>
                             <div class="texto">
                                 <span class="titulo">Sistema de Facturación Electrónica</span>
-                                <span class="subtitulo">Sistema de Facturación Electrónica
+                                <span class="subtitulo">
                                   Desarrollo de software sobre medida
+                                 </span>
+                                   <span class="subtitulo">
                                   Estimado usuario sea usted bienvenido, para ingresar al sistema por favor digite su usuario y contraseña.</span>
+                                   
                                 </div>
                             </div>
                         
