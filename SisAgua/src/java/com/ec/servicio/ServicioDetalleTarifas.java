@@ -120,4 +120,28 @@ public class ServicioDetalleTarifas {
 
         return listaDetalleTarifas;
     }
+
+    public DetalleTarifa findIdTarifaTipo(String tipo) {
+
+        List<DetalleTarifa> listaDetalleTarifas = new ArrayList<DetalleTarifa>();
+        //   DetalleTarifa entidad = null;
+        try {
+            //Connection connection = em.unwrap(Connection.class);
+            em = HelperPersistencia.getEMF();
+            em.getTransaction().begin();
+            Query query = em.createQuery("SELECT  a FROM DetalleTarifa a WHERE a.tipo=:tipo");
+            query.setParameter("tipo", tipo);
+            listaDetalleTarifas = (List<DetalleTarifa>) query.getResultList();
+            if (!listaDetalleTarifas.isEmpty()) {
+                return listaDetalleTarifas.get(0);
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error en la consulta findIdTarifa" + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return null;
+    }
 }

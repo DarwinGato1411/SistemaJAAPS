@@ -79,7 +79,7 @@ public class ServicioMedidor {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.idPredio.idPropietario.porpCedula LIKE :porpCedula OR a.idPredio.idPropietario.propNombre LIKE :propNombre OR a.idPredio.idPropietario.propApellido LIKE :propApellido ORDER BY CAST(a.medNumero AS INTEGER) ASC");
+            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.idPredio.idPropietario.porpCedula LIKE :porpCedula OR a.idPredio.idPropietario.propNombre LIKE :propNombre OR a.idPredio.idPropietario.propApellido LIKE :propApellido ORDER BY a.idPredio.idPropietario.propNombre ASC");
             query.setParameter("porpCedula", "%" + valor + "%");
             query.setParameter("propNombre", "%" + valor + "%");
             query.setParameter("propApellido", "%" + valor + "%");
@@ -102,7 +102,7 @@ public class ServicioMedidor {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medNumero=:medNumero ORDER BY CAST(a.medNumero AS INTEGER) ASC");
+            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medNumero=:medNumero ORDER BY a.medNumero  ASC");
             query.setParameter("medNumero", valor);
             //query.setMaxResults(200);
             listaMedidors = (List<Medidor>) query.getResultList();
@@ -169,7 +169,7 @@ public class ServicioMedidor {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medNumero =:medNumero ORDER BY a.medNumero ASC");
+            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medNumero =:medNumero ORDER BY a.idPredio.idPropietario.propNombre ASC");
             query.setParameter("medNumero", valor);
             //query.setMaxResults(200);
             listaMedidors = (List<Medidor>) query.getResultList();
@@ -190,7 +190,7 @@ public class ServicioMedidor {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medNumero LIKE :medNumero ORDER BY a.medNumero ASC");
+            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medNumero LIKE :medNumero ORDER BY a.idPredio.idPropietario.propNombre ASC");
             query.setParameter("medNumero", "%" + valor + "%");
             //query.setMaxResults(200);
             listaMedidors = (List<Medidor>) query.getResultList();
@@ -211,7 +211,7 @@ public class ServicioMedidor {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.idPredio.idPropietario.propNombre LIKE :propNombre OR  a.idPredio.idPropietario.propApellido LIKE :propApellido ORDER BY a.medNumero ASC");
+            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.idPredio.idPropietario.propNombre LIKE :propNombre OR  a.idPredio.idPropietario.propApellido LIKE :propApellido ORDER BY a.idPredio.idPropietario.propNombre ASC");
             query.setParameter("propNombre", "%" + valor + "%");
             query.setParameter("propApellido", "%" + valor + "%");
             //query.setMaxResults(200);

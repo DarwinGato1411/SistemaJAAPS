@@ -3166,6 +3166,16 @@ input, button, select, textarea {
     grid-template-columns: 70% 5% 25%;
     margin-bottom: 10px;
 }
+.contenedorInputs .contenedorBusquedaLectura{
+    display: grid;
+      grid-template-columns: repeat(6,1fr);
+    margin-bottom: 10px;
+}
+.contenedorInputs .contenedorBusquedabotones{
+    display: grid;
+      grid-template-columns: repeat(3,1fr);
+    margin-bottom: 10px;
+}
 .contenedorInputs .contenedorDatos{
     display: grid;
     grid-template-columns: 33% 33% 33%;

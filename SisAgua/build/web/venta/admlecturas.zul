@@ -19,33 +19,31 @@
         
     </style>    
     <div class="contenedorCuadro contenedorLecturas">
-        <div class="inputs">
-            <div class="contenedorInput contenedorInputFecha">
+        <div class="contenedorInputs"   >
+            <div class="contenedorBusquedaLectura">
+
                 Anio:<combobox  model="@load(vm.anios)"  
                                 selectedItem="@bind(vm.buscarAnio)" 
-                                style="width:90%"  
+                               
                                 readonly="true" >
                     <template name="model">
                         <comboitem  label="@bind(each.nombre)" />
                     </template>                                      
                 </combobox>
-            </div>  
-            <div class="contenedorInput contenedorInputFecha">
+
                 Mes:<combobox  model="@load(vm.meses)"  
                                selectedItem="@bind(vm.buscarMes)" 
-                               style="width:90%"  
+                              
                                readonly="true" >
                     <template name="model">
                         <comboitem  label="@bind(each.nombre)" />
                     </template>                                      
                 </combobox>
-            </div>  
-                   
-                    
-            <div class="contenedorInput contenedorInputBuscar">
+
                                     
                 <textbox value="@bind(vm.buscar)" 
                          class="form-control form-control-sm"
+                         width="150px"
                          tooltiptext="Buscar "                         
                          placeholder="Buscar"
                          onOK="@command('buscarLecturas')"
@@ -53,8 +51,7 @@
                         
             
                      
-            </div>
-            <div class="contenedorInput contenedorInputBuscar">
+
                                     
                 
                         
@@ -70,34 +67,39 @@
                      
             </div>
         </div>
-        <div class="botonera">
-            <div class="">
-                <button   image="/iconmenu/cog.png" 
-                          label="Generar tabla de lecturas"
-                          onClick="@command('iniciarMesSiguiente')"  
-                          tooltiptext="Generar tabla de lecturas"
-                          class="boton btnInfo"/>                              
-            </div>
-            <div class="input-group-append" >
-                <button   image="/iconos/excel1.png" 
-                          onClick="@command('exportListboxToExcel')"  
-                          tooltiptext="Exportar"
-                          label="Exportar"
-                          class="boton btnInfo"/>                  
+        <div class="contenedorInputs"   >
+            <div class="contenedorBusquedabotones">
+                <div class="">
+                    <button   image="/iconmenu/cog.png" 
+                            width="100%"
+                            label="Generar tabla de lecturas"
+                            onClick="@command('iniciarMesSiguiente')"  
+                            tooltiptext="Generar tabla de lecturas"
+                            class="boton btnInfo"/>                              
+                </div>
+                <div class="" >
+                    <button   image="/iconos/excel.png" 
+                            onClick="@command('exportListboxToExcel')"  
+                            tooltiptext="Exportar"
+                            width="100%"
+                            label="Exportar"
+                            class="boton btnInfo"/>                  
                                
-            </div>
+                </div>
                         
                    
                     
-            <div class="" >
-                <button   image="/iconmenu/page_gear.png" 
-                          label="Crear lecturas de medidores nuevos"
-                          onClick="@command('generarLecturasMedidores')"  
-                          tooltiptext="Crear lecturas de medidores nuevos"
-                          class="boton btnGuardar"/>                            
+                <div class="" >
+                    <button   image="/iconmenu/page_gear.png" 
+                            width="100%"
+                            label="Crear lecturas de medidores nuevos"
+                            onClick="@command('generarLecturasMedidores')"  
+                            tooltiptext="Crear lecturas de medidores nuevos"
+                            class="boton btnGuardar"/>                            
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
     <listbox  width="100%" model="@load(vm.listaDatos)" 
               mold="paging" pageSize="25"

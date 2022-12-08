@@ -54,18 +54,19 @@
                                                          placeholder="Propietario" 
                                                          onChange="self.setValue(self.getValue().toUpperCase());"  />
                                             </listheader>
-                                            <listheader width="45%" label="Apellido"  >
+<!--                                            <listheader width="45%" label="Apellido"  >
                                                 
-                                            </listheader>
+                                            </listheader>-->
                                             <listheader width="45%" label="Ubicacion"  >
                                                 
                                             </listheader>
                                             <listheader width="45%"   >
                                                 <textbox zclass = "mycss-listcell" 
-                                                         class=" col-12 col-sm-12 col-md-6 col-lg-6 ;font-weight:bold form-control form-control-sm"
+                                                         class=" font-weight:bold form-control form-control-sm"
                                                          style="font-size:10px;font-weight:bold"
                                                          onOK="@command('buscarMedidoresNumero')" 
                                                          value="@bind(vm.buscarMedidorNumero)"
+                                                         width="100%"
                                                          placeholder="# medidor" 
                                                          onChange="self.setValue(self.getValue().toUpperCase());"  />
                                             </listheader>                                                           
@@ -82,17 +83,17 @@
                                                              readonly="true"
                                                              value="@bind(each.idPredio.idPropietario.propNombre)"  />
                                                 </listcell>
-                                                <listcell zclass = "mycss-listcell">
+<!--                                                <listcell zclass = "mycss-listcell">
                                                     <textbox style="font-size:12px;background:white"
                                                              class="form-control form-control-sm"  
                                                              readonly="true"
                                                              value="@bind(each.idPredio.idPropietario.propApellido)"  />
-                                                </listcell>
+                                                </listcell>-->
                                                 <listcell zclass = "mycss-listcell">
                                                     <textbox style="font-size:12px;background:white"
                                                              class="form-control form-control-sm"  
                                                              readonly="true"
-                                                             value="@bind(each.idPredio.idPropietario.propApellido)"  />
+                                                             value="@bind(each.idUbicacionMedidor.ubimNombre)"  />
                                                 </listcell>
                                                 <listcell zclass = "mycss-listcell">
                                                     <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
@@ -357,12 +358,12 @@
                                             </div>   
                          
                                             <div class="contenedorBoton">   
-                                                <button src="/iconos/fact.png"   
+<!--                                                <button src="/iconos/fact.png"   
                                                         autodisable="self"
                                                         label="Cargar Notas de venta"                                                   
                                                         class="btnInfo"
                                                         onClick="@command('verNotasEntrega')"
-                                                        tooltiptext="Cargar notas de entrega"/>
+                                                        tooltiptext="Cargar notas de entrega"/>-->
                                             </div>   
                                              
                                     
@@ -371,7 +372,7 @@
                                                 <button src="/iconos/guardar.png"  
                                                                  
                                                         autodisable="self"
-                                                        label="Guardar"
+                                                        label="Cobrar y Facturar"
                                                         class="btnGuardar"
                                                         onClick="@command('Guardar',valor='SG')"
                                                         tooltiptext="Guardar factura"/>                      

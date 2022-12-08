@@ -9,7 +9,6 @@ import com.ec.entidad.Cliente;
 import com.ec.entidad.DetalleFactura;
 import com.ec.entidad.Factura;
 import com.ec.untilitario.Totales;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,17 +59,17 @@ public class ServicioFactura {
             factura.setFacMetrosCubicos(recuAO.getLectura().getLecMetrosCubicos());
             factura.setFacLecMes(recuAO.getLectura().getLecMes());
             factura.setFacMedidor(recuAO.getLectura().getIdMedidor().getMedNumero());
-            factura.setFacDirMedidor(recuAO.getLectura().getIdMedidor().getMedDireccion() != null ? recuAO.getLectura().getIdMedidor().getMedDireccion() : "S/N");
+            factura.setFacDirMedidor(recuAO.getLectura().getIdMedidor().getIdUbicacionMedidor()!= null ? recuAO.getLectura().getIdMedidor().getIdUbicacionMedidor().getUbimNombre() : "S/N");
             em.persist(factura);
             em.flush();
             DetalleFactura detalleFactura = null;
             for (DetalleFacturaDAO item : detalleFacturaDAOs) {
                 detalleFactura = new DetalleFactura(item.getCantidad(),
-                        item.getDescripcion(),
-                        item.getSubTotal(),
-                        item.getTotal(),
-                        item.getProducto(),
-                        factura, item.getTipoVenta());
+                            item.getDescripcion(),
+                            item.getSubTotal(),
+                            item.getTotal(),
+                            item.getProducto(),
+                            factura, item.getTipoVenta());
                 detalleFactura.setDetIva(item.getDetIva());
                 detalleFactura.setDetTotalconiva(item.getDetTotalconiva());
 
@@ -99,10 +98,15 @@ public class ServicioFactura {
                 detalleFactura.setProvincia(item.getProvincia());
                 detalleFactura.setNumerotel(item.getNumerotel());
                 detalleFactura.setCodigoCantonMatriculacion(item.getCodigoCantonMatriculacion());
-                
+
                 if (item.getLectura() != null) {
 //                    item.getLectura().getLecMes();
                     detalleFactura.setIdLectura(item.getLectura());
+                    detalleFactura.setDetLecActual(item.getLecActual());
+                    detalleFactura.setDetLecAnterior(item.getLecAnterior());
+                    detalleFactura.setDetMedidor(String.valueOf(item.getNumMedidor()));
+                    detalleFactura.setDetLecMes(item.getMes());
+                    detalleFactura.setDetDirMedidor(item.getDirMedidor());
                 }
                 // servicioDetalleFactura.crear(detalleFactura);
                 em.persist(detalleFactura);
@@ -128,11 +132,11 @@ public class ServicioFactura {
             DetalleFactura detalleFactura = null;
             for (DetalleFacturaDAO item : detalleFacturaDAOs) {
                 detalleFactura = new DetalleFactura(item.getCantidad(),
-                        item.getDescripcion(),
-                        item.getSubTotal(),
-                        item.getTotal(),
-                        item.getProducto(),
-                        factura, item.getTipoVenta());
+                            item.getDescripcion(),
+                            item.getSubTotal(),
+                            item.getTotal(),
+                            item.getProducto(),
+                            factura, item.getTipoVenta());
                 detalleFactura.setDetIva(item.getDetIva());
                 detalleFactura.setDetTotalconiva(item.getDetTotalconiva());
 //                servicioDetalleFactura.modificar(detalleFactura);
@@ -159,11 +163,11 @@ public class ServicioFactura {
             DetalleFactura detalleFactura = null;
             for (DetalleFacturaDAO item : detalleFacturaDAOs) {
                 detalleFactura = new DetalleFactura(item.getCantidad(),
-                        item.getDescripcion(),
-                        item.getSubTotal(),
-                        item.getTotal(),
-                        item.getProducto(),
-                        factura, item.getTipoVenta());
+                            item.getDescripcion(),
+                            item.getSubTotal(),
+                            item.getTotal(),
+                            item.getProducto(),
+                            factura, item.getTipoVenta());
                 detalleFactura.setDetSubtotaldescuento(item.getSubTotalDescuento());
                 detalleFactura.setDetTotaldescuento(item.getDetTotaldescuento());
                 detalleFactura.setDetPordescuento(item.getDetPordescuento());

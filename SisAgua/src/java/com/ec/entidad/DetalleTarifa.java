@@ -75,6 +75,8 @@ public class DetalleTarifa implements Serializable {
     @JoinColumn(name = "id_tarifa", referencedColumnName = "id_tarifa")
     @ManyToOne
     private Tarifa idTarifa;
+     @Column(name = "tipo")
+    private String tipo;
 
     public DetalleTarifa() {
     }
@@ -220,6 +222,14 @@ public class DetalleTarifa implements Serializable {
 
     public void setDettValidadesecho(Boolean dettValidadesecho) {
         this.dettValidadesecho = dettValidadesecho;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     @Override

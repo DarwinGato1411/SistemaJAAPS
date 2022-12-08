@@ -9,6 +9,7 @@ import com.ec.entidad.Lectura;
 import com.ec.servicio.ServicioGeneral;
 import com.ec.servicio.ServicioLectura;
 import com.ec.untilitario.ArchivoUtils;
+import com.ec.untilitario.ListadoAnio;
 import com.ec.untilitario.ListadoMeses;
 import com.ec.untilitario.ModeloMeses;
 import java.io.File;
@@ -43,8 +44,7 @@ import org.zkoss.zul.Messagebox;
  * @author gato
  */
 public class AdmLecturas {
-
-    ServicioLectura servicioLectura = new ServicioLectura();
+ServicioLectura servicioLectura = new ServicioLectura();
 
     private List<Lectura> listaDatos = new ArrayList<Lectura>();
 

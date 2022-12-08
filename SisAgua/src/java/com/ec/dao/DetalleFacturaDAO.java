@@ -57,7 +57,12 @@ public class DetalleFacturaDAO {
     private String numerotel = "";
     private String codigoCantonMatriculacion = "21702";
     private Lectura lectura;
-    private String mesCobro="";
+    private String mesCobro = "";
+    private BigDecimal lecAnterior = BigDecimal.ZERO;
+    private BigDecimal lecActual = BigDecimal.ZERO;
+    private Integer mes;
+    private String numMedidor = "";
+    private String dirMedidor = "";
 
     public DetalleFacturaDAO() {
     }
@@ -364,6 +369,46 @@ public class DetalleFacturaDAO {
 
     public void setMesCobro(String mesCobro) {
         this.mesCobro = mesCobro;
+    }
+
+    public BigDecimal getLecAnterior() {
+        return lecAnterior;
+    }
+
+    public void setLecAnterior(BigDecimal lecAnterior) {
+        this.lecAnterior = lecAnterior;
+    }
+
+    public BigDecimal getLecActual() {
+        return lecActual;
+    }
+
+    public void setLecActual(BigDecimal lecActual) {
+        this.lecActual = lecActual;
+    }
+
+    public Integer getMes() {
+        return mes;
+    }
+
+    public void setMes(Integer mes) {
+        this.mes = mes;
+    }
+
+    public String getNumMedidor() {
+        return numMedidor;
+    }
+
+    public void setNumMedidor(String numMedidor) {
+        this.numMedidor = numMedidor;
+    }
+
+    public String getDirMedidor() {
+        return dirMedidor;
+    }
+
+    public void setDirMedidor(String dirMedidor) {
+        this.dirMedidor = dirMedidor;
     }
 
 }
