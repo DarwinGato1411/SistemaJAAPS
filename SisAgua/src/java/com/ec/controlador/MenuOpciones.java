@@ -202,6 +202,10 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnBalanceUtilidad() {
         Executions.sendRedirect("/contabilidad/compraventa.zul");
     }
+    @Listen("onClick = #btnCrearRet")
+    public void btnCrearRet() {
+        Executions.sendRedirect("/contabilidad/retencion.zul");
+    }
 
     @Listen("onClick = #btnRetencionesCasillero")
     public void btnRetencionesCasillero() {
