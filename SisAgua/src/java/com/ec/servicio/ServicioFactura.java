@@ -9,6 +9,7 @@ import com.ec.entidad.Cliente;
 import com.ec.entidad.DetalleFactura;
 import com.ec.entidad.Factura;
 import com.ec.entidad.Lectura;
+import com.ec.entidad.Tipoambiente;
 import com.ec.untilitario.Totales;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -876,7 +877,7 @@ public class ServicioFactura {
     }
 
     /*TODAS LASNOTA DE ENTREGA */
-    public List<Factura> findAllNotaEnt() {
+    public List<Factura> findAllNotaEnt(Cliente idCliente) {
 
         List<Factura> listaFacturas = new ArrayList<Factura>();
         Factura facturas = new Factura();
@@ -884,8 +885,8 @@ public class ServicioFactura {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT f FROM Factura f WHERE f.facTipo='NTE' AND f.facNumNotaEntrega IS NOT NULL AND f.facNotaEntregaProcess IS NOT NULL AND f.facNotaEntregaProcess ='N' ORDER BY f.facNumNotaEntrega DESC");
-//            query.setParameter("cliCedula", cedula);
+            Query query = em.createQuery("SELECT f FROM Factura f WHERE f.facTipo='NTE' AND f.idCliente=:idCliente AND f.facNumNotaEntrega IS NOT NULL AND f.facNotaEntregaProcess IS NOT NULL AND f.facNotaEntregaProcess ='N' ORDER BY f.facNumNotaEntrega DESC");
+            query.setParameter("idCliente", idCliente);
 //           query.setParameter("codigoUsuario", factura);
             listaFacturas = (List<Factura>) query.getResultList();
             em.getTransaction().commit();

@@ -57,7 +57,8 @@ public class DetalleFacturaDAO {
     private String numerotel = "";
     private String codigoCantonMatriculacion = "21702";
     private Lectura lectura;
-    private String mesCobro="";
+    private String mesCobro = "";
+    private Integer numeroNtv = 0;
 
     public DetalleFacturaDAO() {
     }
@@ -364,6 +365,14 @@ public class DetalleFacturaDAO {
 
     public void setMesCobro(String mesCobro) {
         this.mesCobro = mesCobro;
+    }
+
+    public Integer getNumeroNtv() {
+        return numeroNtv;
+    }
+
+    public void setNumeroNtv(Integer numeroNtv) {
+        this.numeroNtv = numeroNtv;
     }
 
 }

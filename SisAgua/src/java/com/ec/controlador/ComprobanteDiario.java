@@ -3445,7 +3445,7 @@ public class ComprobanteDiario extends SelectorComposer<Component> {
     /*carga LAS NOTAS DE ENTREGA*/
     private void cargaNotaEntrega() {
         String clienteCedula = buscarCliente;
-        listalistaNotaEntregaDatos = servicioFactura.findAllNotaEnt();
+        listalistaNotaEntregaDatos = servicioFactura.findAllNotaEnt(clienteBuscado);
 //        listalistaNotaEntregaDatos = servicioFactura.findNotaEntPorCliente(buscarCliente);
         setListaNotaEntregaModel(new ListModelList<Factura>(getListalistaNotaEntregaDatos()));
         ((ListModelList<Factura>) listaNotaEntregaModel).setMultiple(true);

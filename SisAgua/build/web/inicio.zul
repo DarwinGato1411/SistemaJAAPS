@@ -19,7 +19,8 @@
                             <image  src="/imagenes/logodeckxel.png" class="logo"></image>
                         </div>
                         <div class="texto">
-                            <span class="titulo">Sistema de Facturación Electrónica</span>
+                            <span class="titulo">Sistema de Facturación Electrónica </span>
+                             <span class="titulo">Junta de Agua Potable</span>
                             <span class="subtitulo">
                                 Desarrollo de software sobre medida
                             </span>
@@ -27,7 +28,10 @@
                                 Estimado usuario sea usted bienvenido
                             </span>
                             <span class="subtitulo">
-                                Contacto: 099 742 8125
+                                Tlf: 099 742 8125
+                            </span>
+                            <span class="subtitulo">
+                                Email: laydy14_11@hotmail.com
                             </span>
                             <span class="subtitulo">
                                 Tabacundo - Ecuador
