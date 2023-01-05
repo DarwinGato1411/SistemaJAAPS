@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listadodetallado" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="detallado">
+		<parameter name="inicio" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="fin" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT id_factura, fac_numero, fac_fecha, med_numero, prop_nombre, prop_apellido, fac_metros_cubicos, agua, excedente, alcantarrillado, desechos, medio_ambiente, interes1, interes2, fac_total
+FROM listado_detallado_ordenado
+WHERE fac_fecha BETWEEN $P{inicio} AND $P{fin};]]>
+		</queryString>
+		<field name="id_factura" class="java.lang.Integer"/>
+		<field name="fac_numero" class="java.lang.Integer"/>
+		<field name="fac_fecha" class="java.sql.Date"/>
+		<field name="med_numero" class="java.lang.String"/>
+		<field name="prop_nombre" class="java.lang.String"/>
+		<field name="prop_apellido" class="java.lang.String"/>
+		<field name="fac_metros_cubicos" class="java.math.BigDecimal"/>
+		<field name="agua" class="java.math.BigDecimal"/>
+		<field name="excedente" class="java.math.BigDecimal"/>
+		<field name="alcantarrillado" class="java.math.BigDecimal"/>
+		<field name="desechos" class="java.math.BigDecimal"/>
+		<field name="medio_ambiente" class="java.math.BigDecimal"/>
+		<field name="interes1" class="java.math.BigDecimal"/>
+		<field name="interes2" class="java.math.BigDecimal"/>
+		<field name="fac_total" class="java.math.BigDecimal"/>
+		<variable name="fac_total_sum" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{fac_total}]]></variableExpression>
+		</variable>
+		<variable name="total_m3" class="java.lang.Number"/>
+		<variable name="total_agua" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{agua}]]></variableExpression>
+		</variable>
+		<variable name="total_excedente" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{excedente}]]></variableExpression>
+		</variable>
+		<variable name="total_alcantarrillado" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{alcantarrillado}]]></variableExpression>
+		</variable>
+		<variable name="total_desechos" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{desechos}]]></variableExpression>
+		</variable>
+		<variable name="total_ma" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{medio_ambiente}]]></variableExpression>
+		</variable>
+		<variable name="total_interes1" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{interes1}]]></variableExpression>
+		</variable>
+		<variable name="total_interes2" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{interes2}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="inicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fin" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from tipoambiente limit 1;]]>
+	</queryString>
+	<field name="cod_tipoambiente" class="java.lang.Integer"/>
+	<field name="am_codigo" class="java.lang.String"/>
+	<field name="am_descripcion" class="java.lang.String"/>
+	<field name="am_estado" class="java.lang.Boolean"/>
+	<field name="am_id_empresa" class="java.lang.Integer"/>
+	<field name="am_usuariosri" class="java.lang.String"/>
+	<field name="am_urlsri" class="java.lang.String"/>
+	<field name="am_dir_reportes" class="java.lang.String"/>
+	<field name="am_dir_firma" class="java.lang.String"/>
+	<field name="am_dir_base_archivos" class="java.lang.String"/>
+	<field name="am_dir_xml" class="java.lang.String"/>
+	<field name="am_firmados" class="java.lang.String"/>
+	<field name="am_trasmitidos" class="java.lang.String"/>
+	<field name="am_devueltos" class="java.lang.String"/>
+	<field name="am_autorizados" class="java.lang.String"/>
+	<field name="am_no_autorizados" class="java.lang.String"/>
+	<field name="am_clave_acceso_sri" class="java.lang.String"/>
+	<field name="am_generados" class="java.lang.String"/>
+	<field name="am_razon_social" class="java.lang.String"/>
+	<field name="am_nombre_comercial" class="java.lang.String"/>
+	<field name="am_ruc" class="java.lang.String"/>
+	<field name="am_tipo_emision" class="java.lang.String"/>
+	<field name="am_direccion_matriz" class="java.lang.String"/>
+	<field name="llevar_contabilidad" class="java.lang.String"/>
+	<field name="am_estab" class="java.lang.String"/>
+	<field name="am_ptoemi" class="java.lang.String"/>
+	<field name="am_nro_contribuyente" class="java.lang.String"/>
+	<field name="am_enviocliente" class="java.lang.String"/>
+	<field name="am_unidad_disco" class="java.lang.String"/>
+	<field name="am_folder_firma" class="java.lang.String"/>
+	<field name="am_dir_ats" class="java.lang.String"/>
+	<field name="am_telefono" class="java.lang.String"/>
+	<field name="am_dir_img_punto_venta" class="java.lang.String"/>
+	<field name="am_ciudad" class="java.lang.String"/>
+	<field name="am_host" class="java.lang.String"/>
+	<field name="am_port" class="java.lang.String"/>
+	<field name="am_protocol" class="java.lang.String"/>
+	<field name="am_usuario_smpt" class="java.lang.String"/>
+	<field name="am_password" class="java.lang.String"/>
+	<field name="am_imagenes" class="java.lang.String"/>
+	<field name="am_numero_consult_public" class="java.math.BigDecimal"/>
+	<field name="am_direccion_sucursal" class="java.lang.String"/>
+	<field name="am_micro_emp" class="java.lang.Boolean"/>
+	<field name="am_age_ret" class="java.lang.Boolean"/>
+	<field name="am_contr_esp" class="java.lang.Boolean"/>
+	<field name="am_exp" class="java.lang.Boolean"/>
+	<field name="am_general" class="java.lang.Boolean"/>
+	<field name="am_ripme" class="java.lang.Boolean"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="32" width="802" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[JUNTA DE AGUA POTABlE AYORA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="0" width="479" height="32"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTADO DETALLADO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="309" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_nombre_comercial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="335" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_direccion_matriz}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="59" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="59" isPrintWhenDetailOverflows="true"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="detallado">
+						<datasetParameter name="inicio">
+							<datasetParameterExpression><![CDATA[$P{inicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fin">
+							<datasetParameterExpression><![CDATA[$P{fin}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="44">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="44" height="30"/>
+								<textElement textAlignment="Center">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Nro. Documento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="44" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.lang.Integer"><![CDATA[$F{id_factura}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Nro. Factura]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.lang.Integer"><![CDATA[$F{fac_numero}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Fecha]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="40" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.util.Date"><![CDATA[$F{fac_fecha}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Nro. Medidor]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{med_numero}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="167">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="167" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Nombre y Apellido]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="167" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{prop_nombre} + $F{prop_apellido}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[m3]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fac_metros_cubicos}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_agua}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Agua]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{agua}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_excedente}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Excedente]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{excedente}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_alcantarrillado}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Alcantarrillado]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{alcantarrillado}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_desechos}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Desechos]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{desechos}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_ma}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Medio Ambiente]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{medio_ambiente}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_interes1}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Interes 1]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{interes1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_interes2}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Interes 2]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{interes2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50">
+						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
+							<textField pattern="">
+								<reportElement x="0" y="0" width="50" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{fac_total_sum}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fac_total}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>
