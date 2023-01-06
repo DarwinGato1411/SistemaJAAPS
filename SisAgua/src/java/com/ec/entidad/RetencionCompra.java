@@ -9,9 +9,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -115,14 +120,29 @@ public class RetencionCompra implements Serializable {
     private Date rcoFechaAutorizacion;
     @Column(name = "rco_pathret")
     private String rcoPathRet;
+
+    @Column(name = "rco_tipo_documento")
+    private String rcoTipoDocumento;
+    @Column(name = "rco_identificacion")
+    private String rcoIdentificacion;
+    @Column(name = "rco_razon_social")
+    private String rcoRazonSocial;
+    @Column(name = "rco_cod_sustento")
+    private String rcoCodSustento;
+    @Column(name = "rco_num_factura")
+    private String rcoNumFactura;
+    @Column(name = "rco_correo_proveedor")
+    private String rcoCorreoProveedor;
+
     @OneToMany(mappedBy = "rcoCodigo")
     private Collection<DetalleRetencionCompra> detalleRetencionCompraCollection;
     @JoinColumn(name = "id_cabecera", referencedColumnName = "id_cabecera")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private CabeceraCompra idCabecera;
     @JoinColumn(name = "cod_tipoambiente", referencedColumnName = "cod_tipoambiente")
     @ManyToOne
     private Tipoambiente codTipoambiente;
+   
 
     public RetencionCompra() {
     }
@@ -337,5 +357,69 @@ public class RetencionCompra implements Serializable {
     public String toString() {
         return "com.ec.entidad.RetencionCompra[ rcoCodigo=" + rcoCodigo + " ]";
     }
+
+//    public void persist(Object object) {
+//        EntityManager em = emf.createEntityManager();
+//        try {
+//            em.getTransaction().begin();
+//            em.persist(object);
+//            em.getTransaction().commit();
+//        } catch (Exception e) {
+//            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
+//            em.getTransaction().rollback();
+//        } finally {
+//            em.close();
+//        }
+//    }
+
+    public String getRcoTipoDocumento() {
+        return rcoTipoDocumento;
+    }
+
+    public void setRcoTipoDocumento(String rcoTipoDocumento) {
+        this.rcoTipoDocumento = rcoTipoDocumento;
+    }
+
+    public String getRcoIdentificacion() {
+        return rcoIdentificacion;
+    }
+
+    public void setRcoIdentificacion(String rcoIdentificacion) {
+        this.rcoIdentificacion = rcoIdentificacion;
+    }
+
+    public String getRcoRazonSocial() {
+        return rcoRazonSocial;
+    }
+
+    public void setRcoRazonSocial(String rcoRazonSocial) {
+        this.rcoRazonSocial = rcoRazonSocial;
+    }
+
+    public String getRcoCodSustento() {
+        return rcoCodSustento;
+    }
+
+    public void setRcoCodSustento(String rcoCodSustento) {
+        this.rcoCodSustento = rcoCodSustento;
+    }
+
+    public String getRcoNumFactura() {
+        return rcoNumFactura;
+    }
+
+    public void setRcoNumFactura(String rcoNumFactura) {
+        this.rcoNumFactura = rcoNumFactura;
+    }
+
+    public String getRcoCorreoProveedor() {
+        return rcoCorreoProveedor;
+    }
+
+    public void setRcoCorreoProveedor(String rcoCorreoProveedor) {
+        this.rcoCorreoProveedor = rcoCorreoProveedor;
+    }
+    
+    
 
 }

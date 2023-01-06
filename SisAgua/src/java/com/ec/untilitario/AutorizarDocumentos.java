@@ -251,7 +251,7 @@ public class AutorizarDocumentos {
                         + "        <ptoEmi>" + amb.getAmPtoemi() + "</ptoEmi>\n"
                         + "        <secuencial>" + valor.getFacNumeroText() + "</secuencial>\n"
                         + "        <dirMatriz>" + removeCaracteres(amb.getAmDireccionMatriz()) + "</dirMatriz>\n"
-                        + (amb.getAmMicroEmp() ? "     <regimenMicroempresas>CONTRIBUYENTE R\u00c9GIMEN MICROEMPRESAS</regimenMicroempresas>\n" : "")
+                      + (!amb.getAmGeneral() ? ((amb.getAmRimpe() ? "<contribuyenteRimpe>CONTRIBUYENTE R\u00c9GIMEN RIMPE</contribuyenteRimpe>\n" : "")) : "")
                         + (amb.getAmAgeRet() ? "<agenteRetencion>1</agenteRetencion>\n" : "")
                         //  + "        <agenteRetencion>12345678</agenteRetencion>\n"
                         + "</infoTributaria>\n"
@@ -670,9 +670,9 @@ public class AutorizarDocumentos {
                         + "        <dirEstablecimiento>" + removeCaracteres(amb.getAmDireccionMatriz()) + "</dirEstablecimiento>\n"
                         //        + "        <contribuyenteEspecial>5368</contribuyenteEspecial>\n"
                         + "        <obligadoContabilidad>" + amb.getLlevarContabilidad() + "</obligadoContabilidad>\n"
-                        + "        <tipoIdentificacionSujetoRetenido>" + retencion.getIdCabecera().getIdProveedor().getIdTipoIdentificacionCompra().getTicCodigo() + "</tipoIdentificacionSujetoRetenido>\n"
-                        + "        <razonSocialSujetoRetenido>" + retencion.getIdCabecera().getIdProveedor().getProvNombre() + "</razonSocialSujetoRetenido>\n"
-                        + "        <identificacionSujetoRetenido>" + retencion.getIdCabecera().getIdProveedor().getProvCedula() + "</identificacionSujetoRetenido>\n"
+                        + "        <tipoIdentificacionSujetoRetenido>" + retencion.getRcoTipoDocumento() + "</tipoIdentificacionSujetoRetenido>\n"
+                        + "        <razonSocialSujetoRetenido>" + retencion.getRcoRazonSocial() + "</razonSocialSujetoRetenido>\n"
+                        + "        <identificacionSujetoRetenido>" + retencion.getRcoIdentificacion()+ "</identificacionSujetoRetenido>\n"
                         + "        <periodoFiscal>" + formatoPeriodo.format(retencion.getRcoFecha()) + "</periodoFiscal>\n"
                         + "    </infoCompRetencion>\n"
                         + "<impuestos>\n");
@@ -689,9 +689,9 @@ public class AutorizarDocumentos {
                             + "         <baseImponible>" + ArchivoUtils.redondearDecimales(detalle.getDrcBaseImponible(), 2) + "</baseImponible>\n"
                             + "         <porcentajeRetener>" + detalle.getDrcPorcentaje() + "</porcentajeRetener>\n"
                             + "         <valorRetenido>" + ArchivoUtils.redondearDecimales(detalle.getDrcValorRetenido(), 2) + "</valorRetenido>\n"
-                            + "         <codDocSustento>" + detalle.getRcoCodigo().getIdCabecera().getDrcCodigoSustento() + "</codDocSustento>\n"
-                            + "         <numDocSustento>" + detalle.getRcoCodigo().getIdCabecera().getCabNumFactura() + "</numDocSustento>\n"
-                            + "         <fechaEmisionDocSustento>" + formato.format(detalle.getRcoCodigo().getIdCabecera().getCabFechaEmision()) + "</fechaEmisionDocSustento>\n"
+                            + "         <codDocSustento>" + detalle.getRcoCodigo().getRcoCodSustento() + "</codDocSustento>\n"
+                            + "         <numDocSustento>" + detalle.getRcoCodigo().getRcoNumFactura() + "</numDocSustento>\n"
+                            + "         <fechaEmisionDocSustento>" + formato.format(detalle.getRcoCodigo().getCabFechaEmision()) + "</fechaEmisionDocSustento>\n"
                             + "   </impuesto>\n");
                 build.append(linea);
             }
@@ -699,7 +699,7 @@ public class AutorizarDocumentos {
             linea = ("</impuestos>\n"
                         + " <infoAdicional>\n"
                         + ("<campoAdicional nombre=\"SUMA\">" + suma.toString() + "</campoAdicional>\n")
-                        + (amb.getAmMicroEmp() ? "<campoAdicional nombre=\"Contribuyente Regimen Microempresas\">Contribuyente Regimen Microempresas</campoAdicional>\n" : "")
+//                        + (amb.getAmMicroEmp() ? "<campoAdicional nombre=\"Contribuyente Regimen Microempresas\">Contribuyente Regimen Microempresas</campoAdicional>\n" : "")
                         + (amb.getAmAgeRet() ? "<campoAdicional nombre=\"Agente de Retencion\">Agente de Retencion Resolucion Nro. NAC-DNCRASC20-00000001</campoAdicional>\n" : "")
                         + "    </infoAdicional>\n"
                         + "</comprobanteRetencion>");

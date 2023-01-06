@@ -99,8 +99,8 @@ public class ServicioDetalleRetencionCompra {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT a FROM DetalleRetencionCompra a WHERE a.rcoCodigo.idCabecera=:idCabecera");
-            query.setParameter("idCabecera", retencioncab.getIdCabecera());
+            Query query = em.createQuery("SELECT a FROM DetalleRetencionCompra a WHERE a.rcoCodigo=:rcoCodigo");
+            query.setParameter("rcoCodigo", retencioncab);
             listaDetalleRetencionCompras = (List<DetalleRetencionCompra>) query.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {

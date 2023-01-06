@@ -269,9 +269,9 @@ public class ListaRetenciones {
                             nuevo.flush();
                         } else {
                             /*COLOCAL LA VALIDACION DE RETENCION AUTORIZADA EN LA COMPRA*/
-                            CabeceraCompra compra = valor.getIdCabecera();
-                            compra.setCabRetencionAutori("S");
-                            servicioCompra.modificar(compra);
+//                            CabeceraCompra compra = valor.getIdCabecera();
+//                            compra.setCabRetencionAutori("S");
+//                            servicioCompra.modificar(compra);
                             valor.setRcoAutorizacion(claveAccesoComprobante);
                             valor.setDrcEstadosri(autorizacion.getEstado());
                             valor.setRcoFechaAutorizacion(autorizacion.getFechaAutorizacion().toGregorianCalendar().getTime());
@@ -303,8 +303,8 @@ public class ListaRetenciones {
 //                            mod.setCliClave(ArchivoUtils.generaraClaveTemporal());
 //                            servicioRetencionCompra.modificar(mod);
 //                        }
-                            if (valor.getIdCabecera().getIdProveedor().getProvCorreo() != null) {
-                                mail.sendMailSimple(valor.getIdCabecera().getIdProveedor().getProvCorreo(),
+                            if (valor.getRcoCorreoProveedor() != null) {
+                                mail.sendMailSimple(valor.getRcoCorreoProveedor().isEmpty()?"japaayora@hotmail.ec":valor.getRcoCorreoProveedor(),
                                         "Gracias por preferirnos se ha emitido su retencion electrónica",
                                         attachFiles,
                                         "RETENCION ELECTRONICA", valor.getRcoAutorizacion());
@@ -448,9 +448,9 @@ public class ListaRetenciones {
                     nuevo.flush();
                 } else {
                     /*COLOCAL LA VALIDACION DE RETENCION AUTORIZADA EN LA COMPRA*/
-                    CabeceraCompra compra = valor.getIdCabecera();
-                    compra.setCabRetencionAutori("S");
-                    servicioCompra.modificar(compra);
+//                    CabeceraCompra compra = valor.getIdCabecera();
+//                    compra.setCabRetencionAutori("S");
+//                    servicioCompra.modificar(compra);
                     valor.setRcoAutorizacion(claveAccesoComprobante);
                     valor.setDrcEstadosri(autorizacion.getEstado());
                     valor.setRcoFechaAutorizacion(autorizacion.getFechaAutorizacion().toGregorianCalendar().getTime());
@@ -482,8 +482,8 @@ public class ListaRetenciones {
 //                            mod.setCliClave(ArchivoUtils.generaraClaveTemporal());
 //                            servicioRetencionCompra.modificar(mod);
 //                        }
-                    if (valor.getIdCabecera().getIdProveedor().getProvCorreo() != null) {
-                        mail.sendMailSimple(valor.getIdCabecera().getIdProveedor().getProvCorreo(),
+                    if (valor.getRcoCorreoProveedor() != null) {
+                        mail.sendMailSimple(valor.getRcoCorreoProveedor().isEmpty()?"japaayora@hotmail.ec":valor.getRcoCorreoProveedor(),
                                 "Gracias por preferirnos se ha emitido su retencion electrónica",
                                 attachFiles,
                                 "RETENCION ELECTRONICA", valor.getRcoAutorizacion());

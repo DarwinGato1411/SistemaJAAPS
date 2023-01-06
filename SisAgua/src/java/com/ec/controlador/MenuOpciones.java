@@ -94,6 +94,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void buttonConsultar() {
         Executions.sendRedirect("/consultas.zul");
     }
+
     @Listen("onClick = #btnFacturar")
     public void doFacturar() {
         Executions.sendRedirect("/venta/facturar.zul");
@@ -188,6 +189,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnContabilidad() {
         Executions.sendRedirect("/contabilidad/ventasats.zul");
     }
+
     @Listen("onClick = #btnContabilidadATS")
     public void btnContabilidadATS() {
         Executions.sendRedirect("/contabilidad/ats.zul");
@@ -202,6 +204,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnBalanceUtilidad() {
         Executions.sendRedirect("/contabilidad/compraventa.zul");
     }
+
     @Listen("onClick = #btnCrearRet")
     public void btnCrearRet() {
         Executions.sendRedirect("/contabilidad/retencion.zul");
@@ -211,7 +214,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnRetencionesCasillero() {
         Executions.sendRedirect("/compra/listaretencioncasillero.zul");
     }
-    
+
 //    @Listen("onClick = #btnCuClase")
 //    public void btnCuClase() {
 //        Executions.sendRedirect("/contabilidad/clase.zul");
@@ -229,21 +232,27 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnCuSubClase() {
         Executions.sendRedirect("/contabilidad/plancuentas.zul");
     }
+
     @Listen("onClick = #btnListaSubContable")
     public void btnListaSubContable() {
         Executions.sendRedirect("/contabilidad/visualizarsubcuenta.zul");
     }
+
+    @Listen("onClick = #btnListaTipoRetencion")
+    public void btnListaTipoRetencion() {
+        Executions.sendRedirect("/contabilidad/codigoretenciones.zul");
+    }
+
     @Listen("onClick = #btnAsientoConta")
     public void btnAsientoConta() {
         Executions.sendRedirect("/contabilidad/ingresoasientomanual.zul");
     }
-    
-    
-    
+
     @Listen("onClick = #btnReportesConta")
     public void btnReportesConta() {
         Executions.sendRedirect("/contabilidad/reportesConta.zul");
     }
+
     @Listen("onClick = #btnFactAutori")
     public void btnFactAutori() {
         Executions.sendRedirect("/venta/facturasautorizadas.zul");
@@ -307,9 +316,9 @@ public class MenuOpciones extends SelectorComposer<Component> {
     @Listen("onClick = #btnCierreCajaUsu")
     public void btnCierreCaja() {
 //        if (credential.getUsuarioSistema().getUsuNivel() != 1) {
-            org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+        org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
                     "/nuevo/cierrecaja.zul", null, null);
-            window.doModal();
+        window.doModal();
 //        } else {
 //            Clients.showNotification("El usuario administrador no puede cerrar una caja",
 //                    Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 5000, true);
@@ -321,7 +330,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void nuevoProducto() {
 
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                "/nuevo/producto.zul", null, null);
+                    "/nuevo/producto.zul", null, null);
         window.doModal();
 
     }
@@ -330,7 +339,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void nuevoCliente() {
 
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                "/nuevo/cliente.zul", null, null);
+                    "/nuevo/cliente.zul", null, null);
         window.doModal();
 
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="retencion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.4641000000000006"/>
-	<property name="ireport.x" value="127"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="148"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -28,19 +28,15 @@
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[select cc.cab_num_factura,cc.cab_fecha_emision,rc.rco_fecha,
+			<![CDATA[select rc.rco_num_factura cab_num_factura,rc.cab_fecha_emision cab_fecha_emision,rc.rco_fecha,
 dr.drc_base_imponible,dr.drc_descripcion,dr.drc_porcentaje,
 dr.drc_valor_retenido
 from retencion_compra rc,
-cabecera_compra cc,
 detalle_retencion_compra  dr,
-tipoambiente ta,
-proveedores pr
-where rc.id_cabecera=cc.id_cabecera
-and rc.rco_codigo=dr.rco_codigo
+tipoambiente ta
+where  rc.rco_codigo=dr.rco_codigo
 and ta.cod_tipoambiente=rc.cod_tipoambiente
-and pr.id_proveedor=cc.id_proveedor
-and rc.rco_codigo=$P{id_factura}]]>
+and rc.rco_codigo=$P{id_factura};]]>
 		</queryString>
 		<field name="cab_num_factura" class="java.lang.String"/>
 		<field name="cab_fecha_emision" class="java.sql.Date"/>
@@ -55,14 +51,10 @@ and rc.rco_codigo=$P{id_factura}]]>
 	</parameter>
 	<queryString>
 		<![CDATA[select * from retencion_compra rc,
-cabecera_compra cc,
 detalle_retencion_compra  dr,
-tipoambiente ta,
-proveedores pr
-where rc.id_cabecera=cc.id_cabecera
-and rc.rco_codigo=dr.rco_codigo
+tipoambiente ta
+where rc.rco_codigo=dr.rco_codigo
 and ta.cod_tipoambiente=rc.cod_tipoambiente
-and pr.id_proveedor=cc.id_proveedor
 and rc.rco_codigo=$P{numfactura}
 and ta.am_estado is true
 limit 1;]]>
@@ -78,7 +70,7 @@ limit 1;]]>
 	<field name="rco_serie" class="java.lang.String"/>
 	<field name="rco_valor_retencion_iva" class="java.lang.Double"/>
 	<field name="id_cabecera" class="java.lang.Integer"/>
-	<field name="cab_fecha_emision" class="java.sql.Timestamp"/>
+	<field name="cab_fecha_emision" class="java.sql.Date"/>
 	<field name="drc_estadosri" class="java.lang.String"/>
 	<field name="drc_mensajesri" class="java.lang.String"/>
 	<field name="rco_pathret" class="java.lang.String"/>
@@ -86,24 +78,12 @@ limit 1;]]>
 	<field name="rco_secuencial_text" class="java.lang.String"/>
 	<field name="rco_base_grava_iva" class="java.math.BigDecimal"/>
 	<field name="cod_tipoambiente" class="java.lang.Integer"/>
-	<field name="est_id_estado" class="java.lang.Integer"/>
-	<field name="usu_id_usuario" class="java.lang.Integer"/>
-	<field name="id_usuario" class="java.lang.Integer"/>
-	<field name="id_estado" class="java.lang.Integer"/>
-	<field name="cab_num_factura" class="java.lang.String"/>
-	<field name="cab_fecha" class="java.sql.Date"/>
-	<field name="cab_sub_total" class="java.math.BigDecimal"/>
-	<field name="cab_iva" class="java.math.BigDecimal"/>
-	<field name="cab_total" class="java.math.BigDecimal"/>
-	<field name="cab_descripcion" class="java.lang.String"/>
-	<field name="cab_estado" class="java.lang.String"/>
-	<field name="cab_proveedor" class="java.lang.String"/>
-	<field name="cab_clave_acceso" class="java.lang.String"/>
-	<field name="cab_autorizacion" class="java.lang.String"/>
-	<field name="cab_ruc_proveedor" class="java.lang.String"/>
-	<field name="id_tipo_identificacion_compra" class="java.lang.Integer"/>
-	<field name="id_proveedor" class="java.lang.Integer"/>
-	<field name="drc_codigo_sustento" class="java.lang.String"/>
+	<field name="rco_msm_info_sri" class="java.lang.String"/>
+	<field name="rco_tipo_documento" class="java.lang.String"/>
+	<field name="rco_identificacion" class="java.lang.String"/>
+	<field name="rco_razon_social" class="java.lang.String"/>
+	<field name="rco_cod_sustento" class="java.lang.String"/>
+	<field name="rco_num_factura" class="java.lang.String"/>
 	<field name="drc_codigo" class="java.lang.Integer"/>
 	<field name="drc_base_imponible" class="java.lang.Double"/>
 	<field name="drc_porcentaje" class="java.lang.Double"/>
@@ -146,23 +126,27 @@ limit 1;]]>
 	<field name="am_telefono" class="java.lang.String"/>
 	<field name="am_dir_img_punto_venta" class="java.lang.String"/>
 	<field name="am_ciudad" class="java.lang.String"/>
-	<field name="prov_cedula" class="java.lang.String"/>
-	<field name="prov_nombre" class="java.lang.String"/>
-	<field name="prov_direccion" class="java.lang.String"/>
-	<field name="prov_telefono" class="java.lang.String"/>
-	<field name="prov_movil" class="java.lang.String"/>
-	<field name="prov_correo" class="java.lang.String"/>
-	<field name="prov_pagina" class="java.lang.String"/>
-	<field name="prov_banco" class="java.lang.String"/>
-	<field name="prov_tipo_cuenta" class="java.lang.String"/>
-	<field name="prov_numero_cuenta" class="java.lang.String"/>
+	<field name="am_host" class="java.lang.String"/>
+	<field name="am_port" class="java.lang.String"/>
+	<field name="am_protocol" class="java.lang.String"/>
+	<field name="am_usuario_smpt" class="java.lang.String"/>
+	<field name="am_password" class="java.lang.String"/>
+	<field name="am_imagenes" class="java.lang.String"/>
+	<field name="am_numero_consult_public" class="java.math.BigDecimal"/>
+	<field name="am_direccion_sucursal" class="java.lang.String"/>
+	<field name="am_micro_emp" class="java.lang.Boolean"/>
+	<field name="am_age_ret" class="java.lang.Boolean"/>
+	<field name="am_contr_esp" class="java.lang.Boolean"/>
+	<field name="am_exp" class="java.lang.Boolean"/>
+	<field name="am_ripme" class="java.lang.Boolean"/>
+	<field name="am_general" class="java.lang.Boolean"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="350" splitType="Stretch">
+		<band height="329" splitType="Stretch">
 			<rectangle radius="0">
-				<reportElement x="0" y="258" width="555" height="82"/>
+				<reportElement x="0" y="258" width="555" height="71"/>
 			</rectangle>
 			<rectangle radius="10">
 				<reportElement x="295" y="0" width="260" height="247"/>
@@ -256,21 +240,14 @@ limit 1;]]>
 				<text><![CDATA[Direcciòn Sucursal:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="11" y="272" width="178" height="20"/>
+				<reportElement x="11" y="223" width="219" height="20"/>
 				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Razón Social / Nombres Apellidos: ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="11" y="223" width="195" height="20"/>
-				<textElement>
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[OBLIGADO A LLEVAR CONTABILIDAD]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="206" y="223" width="54" height="20"/>
+				<reportElement x="230" y="223" width="54" height="20"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{llevar_contabilidad}]]></textFieldExpression>
 			</textField>
@@ -296,25 +273,18 @@ limit 1;]]>
 				<text><![CDATA[Contribuyente Especial Nro]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="378" y="272" width="75" height="20"/>
+				<reportElement x="307" y="296" width="96" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Identificación:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="11" y="296" width="95" height="20"/>
+				<reportElement x="11" y="296" width="119" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de emisión: ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="11" y="320" width="65" height="20"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Dirección:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="407" y="182" width="143" height="20"/>
@@ -349,24 +319,19 @@ limit 1;]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_estab}+"-"+$F{am_ptoemi}+"-"+$F{rco_secuencial_text}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="189" y="272" width="177" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{prov_nombre}]]></textFieldExpression>
+				<reportElement x="11" y="258" width="539" height="34"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Razón Social / Nombres Apellidos: "+ $F{rco_razon_social}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="455" y="272" width="100" height="20"/>
+				<reportElement x="403" y="296" width="147" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{prov_cedula}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rco_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="106" y="296" width="154" height="20"/>
+				<reportElement x="130" y="296" width="154" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{rco_fecha}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="76" y="320" width="290" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{prov_direccion}]]></textFieldExpression>
 			</textField>
 			<componentElement>
 				<reportElement x="307" y="202" width="243" height="25"/>
@@ -601,44 +566,7 @@ limit 1;]]>
 					</jr:column>
 				</jr:table>
 			</componentElement>
-			<elementGroup>
-				<elementGroup/>
-			</elementGroup>
 		</band>
-		<band height="198" splitType="Prevent">
-			<rectangle>
-				<reportElement x="0" y="10" width="393" height="132"/>
-				<graphicElement>
-					<pen lineWidth="0.5"/>
-				</graphicElement>
-			</rectangle>
-			<staticText>
-				<reportElement positionType="Float" x="10" y="50" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Dirección:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement positionType="Float" x="10" y="75" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Email:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement positionType="Float" x="10" y="22" width="367" height="20"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Información Adicional]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="110" y="50" width="268" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{prov_direccion}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="110" y="75" width="267" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{prov_correo}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="198" splitType="Prevent"/>
 	</detail>
 </jasperReport>
