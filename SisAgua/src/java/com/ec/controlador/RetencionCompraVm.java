@@ -4,7 +4,6 @@
  */
 package com.ec.controlador;
 
-import com.ec.dao.DetalleFacturaDAO;
 import com.ec.entidad.CabeceraCompra;
 import com.ec.entidad.DetalleRetencionCompra;
 import com.ec.entidad.RetencionCompra;
@@ -34,7 +33,6 @@ import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -89,6 +87,7 @@ public class RetencionCompraVm {
     private List<Tipoadentificacion> listaIdentificion = new ArrayList();
     ServicioTipoIdentificacion servicioTipoIdentificacion = new ServicioTipoIdentificacion();
     Tipoadentificacion tipoadentificacionSelected = null;
+    private String drcDocumento;
 
     @AfterCompose
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
@@ -211,6 +210,11 @@ public class RetencionCompraVm {
 //        } else {
 //            servicioRetencionCompra.modificar(retencionCompra);
 //        }
+        if (drcDocumento == null) {
+
+            Clients.showNotification("Verifique el tipo de documento seleccionado", "error", null, "end_before", 2000, true);
+            return;
+        }
         if (baseImponible == null) {
             Clients.showNotification("Verifique la base imponible", "error", null, "end_before", 2000, true);
             return;
@@ -220,14 +224,14 @@ public class RetencionCompraVm {
             retencionCompra.setRcoDetalle("COMPRA DE MERCADERIA");
             DetalleRetencionCompraDao nuevoRegistro = new DetalleRetencionCompraDao();
             nuevoRegistro.setDrcBaseImponible(ArchivoUtils.redondearDecimales(baseImponible, 2));
-
+            nuevoRegistro.setDrcDocumento(drcDocumento);
             nuevoRegistro.setDrcPorcentaje((codImpuestoAsignado.equals("1") ? (BigDecimal.valueOf(tipoRetencionSelected.getTirePorcentajeRetencion())) : (BigDecimal.valueOf(Long.valueOf(tipoivaretencion.getTipivaretDescripcion())))));
             BigDecimal valorValorRetenido = BigDecimal.ZERO;
             BigDecimal valorValorRetenidoDos = BigDecimal.ZERO;
             if (codImpuestoAsignado.equals("1")) {
-                valorValorRetenido = baseImponible.multiply((BigDecimal.valueOf(tipoRetencionSelected.getTirePorcentajeRetencion()))).divide(BigDecimal.valueOf(100.0), 3, RoundingMode.FLOOR);
+                valorValorRetenido = baseImponible.multiply((BigDecimal.valueOf(tipoRetencionSelected.getTirePorcentajeRetencion()))).divide(BigDecimal.valueOf(100.0), 5, RoundingMode.CEILING);
             } else {
-                valorValorRetenidoDos = (baseImponible.multiply((BigDecimal.valueOf(Long.valueOf(tipoivaretencion.getTipivaretDescripcion()))))).divide(BigDecimal.valueOf(100.0), 3, RoundingMode.FLOOR);
+                valorValorRetenidoDos = (baseImponible.multiply((BigDecimal.valueOf(Long.valueOf(tipoivaretencion.getTipivaretDescripcion()))))).divide(BigDecimal.valueOf(100.0), 5, RoundingMode.CEILING);
             }
 
             nuevoRegistro.setDrcValorRetenido(codImpuestoAsignado.equals("1") ? ArchivoUtils.redondearDecimales(valorValorRetenido, 2) : ArchivoUtils.redondearDecimales(valorValorRetenidoDos, 2));
@@ -337,7 +341,8 @@ public class RetencionCompraVm {
                     String claveAcceso = ad.generaClave(retencionCompra.getCabFechaEmision(), "07", amb.getAmRuc(), amb.getAmCodigo(), amb.getAmEstab().trim() + amb.getAmPtoemi().trim(), retencionCompra.getRcoSecuencialText(), "12345678", "1");
                     retencionCompra.setRcoAutorizacion(claveAcceso);
                     servicioRetencionCompra.crearCabDetalle(retencionCompra, listaDetalleRetencionCompraModel.getInnerList());
-
+                    Clients.showNotification("Guardado correctamente",
+                                Clients.NOTIFICATION_TYPE_INFO, null, "end_center", 1000, true);
                     Executions.sendRedirect("/contabilidad/retencion.zul");
                 } else {
                     Clients.showNotification("Verifique la informacion del documento", "error", null, "start_before", 2000, true);
@@ -507,6 +512,14 @@ public class RetencionCompraVm {
 
     public void setTipoadentificacionSelected(Tipoadentificacion tipoadentificacionSelected) {
         this.tipoadentificacionSelected = tipoadentificacionSelected;
+    }
+
+    public String getDrcDocumento() {
+        return drcDocumento;
+    }
+
+    public void setDrcDocumento(String drcDocumento) {
+        this.drcDocumento = drcDocumento;
     }
 
 }

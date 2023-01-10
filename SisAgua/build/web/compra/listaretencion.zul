@@ -47,7 +47,7 @@
                                     <div  class="col-12 col-sm-12 col-md-3 col-lg-3 ">
                                         <button   image="/imagenes/excel.png"  
                                                   onClick="@command('exportListboxToExcel')"  
-                                                    class="btn btn-primary btn-sm  "
+                                                  class="btn btn-primary btn-sm  "
                                                   label="Descargar"
                                                   tooltiptext="Descargar"/>
 
@@ -84,6 +84,8 @@
                             <listheader width="5%"  label="" />             
                             <listheader width="5%"  label="" />             
                             <listheader width="5%"  label="" />             
+                            <listheader width="5%"  label="" />             
+                            <listheader width="5%"  label="" />             
                         </listhead>  
                         
                     
@@ -93,11 +95,11 @@
                                     <textbox readonly="true" style="font-size:12px ;background:#EBF5FB"                                           class="form-control form-control-sm"
                                              value="@bind(each.rcoNumFactura)"  />
                                 </listcell>
-                                 <listcell zclass = "mycss-listcell">
+                                <listcell zclass = "mycss-listcell">
                                     <textbox readonly="true" style="font-size:12px ;background:#EBF5FB"                                           class="form-control form-control-sm"
                                              value="@bind(each.rcoIdentificacion)"  />
                                 </listcell>
-                                 <listcell zclass = "mycss-listcell">
+                                <listcell zclass = "mycss-listcell">
                                     <textbox readonly="true" style="font-size:12px ;background:#EBF5FB"                                           class="form-control form-control-sm"
                                              value="@bind(each.rcoRazonSocial)"  />
                                 </listcell>
@@ -138,6 +140,13 @@
                                              class="form-control form-control-sm"
                                              value="@bind(each.rcoAutorizacion)"  />
                                 </listcell>
+                                <listcell   zclass = "mycss-listcell" >   
+                                        
+                                    <image src="/iconos/armareval.png"   
+                                           onClick="@command('cambiarEstado',valor=each)"                                    
+                                           class="btn-secondary btn-sm"                                               
+                                           tooltiptext="Cambiar estado de la factura"/> 
+                                </listcell>
                                 <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">
                                     <image if="${each.drcEstadosri!='AUTORIZADO'}"
                                            src="/iconos/sri24x24.png" 
@@ -171,6 +180,19 @@
                                            class="grow"  
                                            onClick="@command('reporteGeneral',valor=each)"                                              
                                            tooltiptext="Imprimir retencion"/> 
+                                </listcell>
+                                <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">
+                                    
+                                    
+                                    <image if="${each.drcEstadosri!='AUTORIZADO'}"
+                                           src="/iconos/eliminar.png"   
+                                           class="grow"  
+                                           onClick="@command('eliminarRetencion',valor=each)"                                              
+                                           tooltiptext="Eliminar retencion"/> 
+                                    <image if="${each.drcEstadosri=='AUTORIZADO'}" 
+                                           src="/iconos/listo_uno.png"   
+                                           class="grow"                                               
+                                           tooltiptext="No se puede eliminar por que se encuentra en estado autorizado"/> 
                                 </listcell>
                            
                                 

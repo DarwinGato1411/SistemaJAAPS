@@ -5,9 +5,6 @@
  */
 package com.ec.controlador.vistas;
 
-import com.ec.controlador.CierreCajaVm;
-import com.ec.entidad.Producto;
-import static com.ec.entidad.VentaRuta_.fecha;
 import com.ec.entidad.contabilidad.AcSubCuenta;
 import com.ec.entidad.contabilidad.CuSubCuenta;
 import com.ec.seguridad.EnumSesion;
@@ -17,7 +14,6 @@ import com.ec.servicio.ServicioAcumuladoVentas;
 import com.ec.servicio.contabilidad.ServicioAcSubcuenta;
 import com.ec.servicio.contabilidad.ServicioSubCuenta;
 import com.ec.untilitario.ArchivoUtils;
-import com.ec.untilitario.DispararReporte;
 import com.ec.untilitario.ModeloAcumuladoDiaUsuario;
 import com.ec.vista.servicios.ServicioAcumuladoDiarioUsuario;
 import com.ec.vista.servicios.ServicioListadoDetallado;
@@ -27,18 +23,15 @@ import com.ec.vistas.Acumuladopordia;
 import com.ec.vistas.ListadoDetallado;
 import com.ec.vistas.ListadoDetalladoOrdenado;
 import com.ec.vistas.ListadoItems;
-import com.ec.vistas.RotacionProducto;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -46,24 +39,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
-import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.AMedia;
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zk.ui.select.Selectors;
 
 /**
  *

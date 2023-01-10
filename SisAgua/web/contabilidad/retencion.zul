@@ -29,15 +29,14 @@
                             <div class="fact_row">
                                 <div class="wrapper_input">
                                  
-                                    <span>Tipo Documento:</span>
-                                    <combobox  model="@load(vm.listaIdentificion)"                                             
-                                               selectedItem="@bind(vm.tipoadentificacionSelected)" width="60%"
-                                               readonly="true" >
-                                          
-                                        <template name="model">
-                                            <comboitem  label="@bind(each.tidNombre)"
-                                                        value="@load(each.tidCodigo)"/>
-                                        </template>                                      
+                                    <span>Tipo documento:</span>
+                                    <combobox  readonly="true"
+                                               width="300px"        
+                                               class="textoFechaDateBox"                              
+                                               selectedItem="@bind(vm.drcDocumento)">
+                                        <comboitem label="FACTURA DE COMPRA" value="FACTURA DE COMPRA"/> 
+                                        <comboitem label="LIQUIDACION DE COMPRA" value="LIQUIDACION DE COMPRA" />                    
+                                        
                                     </combobox>
                                     <!--                                    <textbox readonly="false"
                                     style="font-weight:bold"     
@@ -166,11 +165,13 @@
                                 </div>
                                 <div class="wrapper_input">
                                     <span>Base imponible:</span>
-                                    
-                                    <decimalbox readonly="false" format="###.#####" 
+                                    <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,5})?$/:Ingrese solo numeros"
+                                                value="@bind(vm.baseImponible)"
+                                                class="form-control form-control-sm"   />
+<!--                                    <decimalbox readonly="false" format="###.#####" 
                                                 style="font-weight:bold"                                              
                                                 value="@bind(vm.baseImponible)" 
-                                                class="form-control form-control-sm"   />
+                                                class="form-control form-control-sm"   />-->
 
                                    
                                 </div>
@@ -217,7 +218,7 @@
                                    
                                 </div>
                                 <div class="wrapper_input" align="end">
-                                       <separator width="100px" />
+                                    <separator width="100px" />
                                 </div>
                                 <div class="wrapper_input" align="end">
                                     <button 

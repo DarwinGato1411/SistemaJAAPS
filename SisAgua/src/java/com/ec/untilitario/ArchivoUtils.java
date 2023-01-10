@@ -620,7 +620,7 @@ public class ArchivoUtils {
 //        return BigDecimal.valueOf(resultado);
         
          double parteEntera, resultado;
-        resultado = valorInicial.setScale(2, RoundingMode.CEILING).doubleValue();
+        resultado = valorInicial.setScale(4, RoundingMode.CEILING).doubleValue();
         parteEntera = Math.floor(resultado);
         Double resutl = BigDecimal.valueOf(resultado).subtract(BigDecimal.valueOf(parteEntera)).doubleValue();
         resultado = resutl * Math.pow(10, numeroDecimales);

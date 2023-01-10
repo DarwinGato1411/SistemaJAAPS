@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="retencion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="148"/>
+	<property name="ireport.y" value="132"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -30,7 +30,8 @@
 		<queryString>
 			<![CDATA[select rc.rco_num_factura cab_num_factura,rc.cab_fecha_emision cab_fecha_emision,rc.rco_fecha,
 dr.drc_base_imponible,dr.drc_descripcion,dr.drc_porcentaje,
-dr.drc_valor_retenido
+dr.drc_valor_retenido,
+dr.drc_documento
 from retencion_compra rc,
 detalle_retencion_compra  dr,
 tipoambiente ta
@@ -45,6 +46,7 @@ and rc.rco_codigo=$P{id_factura};]]>
 		<field name="drc_descripcion" class="java.lang.String"/>
 		<field name="drc_porcentaje" class="java.lang.Double"/>
 		<field name="drc_valor_retenido" class="java.lang.Double"/>
+		<field name="drc_documento" class="java.lang.String"/>
 	</subDataset>
 	<parameter name="numfactura" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -355,10 +357,10 @@ limit 1;]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="73">
+					<jr:column width="96">
 						<jr:columnHeader style="table_TD" height="17" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="73" height="17"/>
+								<reportElement mode="Opaque" x="0" y="0" width="96" height="17"/>
 								<box leftPadding="2" bottomPadding="0" rightPadding="2">
 									<pen lineWidth="0.25"/>
 									<topPen lineWidth="0.25"/>
@@ -373,19 +375,20 @@ limit 1;]]>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="15" rowSpan="1">
-							<staticText>
-								<reportElement mode="Transparent" x="0" y="0" width="73" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-									<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+							<textField>
+								<reportElement x="0" y="0" width="96" height="15"/>
+								<box leftPadding="2"/>
+								<textElement verticalAlignment="Middle">
+									<font size="5"/>
 								</textElement>
-								<text><![CDATA[FACTURA COMPRA]]></text>
-							</staticText>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{drc_documento}]]></textFieldExpression>
+							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="94">
+					<jr:column width="70">
 						<jr:columnHeader style="table_TD" height="17" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="94" height="17"/>
+								<reportElement mode="Opaque" x="0" y="0" width="70" height="17"/>
 								<box leftPadding="2" bottomPadding="0" rightPadding="2">
 									<pen lineWidth="0.25"/>
 									<topPen lineWidth="0.25"/>
@@ -401,7 +404,7 @@ limit 1;]]>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="15" rowSpan="1">
 							<textField pattern="dd/MM/yy" isBlankWhenNull="false">
-								<reportElement mode="Transparent" x="0" y="0" width="94" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+								<reportElement mode="Transparent" x="0" y="0" width="70" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 									<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 								</textElement>

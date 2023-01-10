@@ -216,11 +216,9 @@ public class ListaVentaRuta {
                 factura.setFacIva(ivaUnidad.multiply(BigDecimal.valueOf(Double.valueOf(ventaRuta.getCantidad()))));
                 factura.setFacTotal(factura.getFacTotalBaseCero().add(factura.getFacTotalBaseGravaba()).add(factura.getFacIva()));
 
-<<<<<<< HEAD
-                String claveAcceso = ArchivoUtils.generaClave(factura.getFacFecha(), "01", amb.getAmRuc(), amb.getAmCodigo(),  amb.getAmEstab()+amb.getAmPtoemi(), factura.getFacNumeroText(), "12345678", "1");
-=======
+
                 String claveAcceso = ArchivoUtils.generaClave(factura.getFacFecha(), "01", amb.getAmRuc(), amb.getAmCodigo(),amb.getAmEstab()+amb.getAmPtoemi(), factura.getFacNumeroText(), "12345678", "1");
->>>>>>> 84587984858e072cb58b694a68b2b059aeabfced
+
                 factura.setFacClaveAcceso(claveAcceso);
                 factura.setFacClaveAutorizacion(claveAcceso);
                 servicioFactura.crear(factura);
