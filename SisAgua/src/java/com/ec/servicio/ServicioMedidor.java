@@ -79,7 +79,7 @@ public class ServicioMedidor {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.idPredio.idPropietario.porpCedula LIKE :porpCedula OR a.idPredio.idPropietario.propNombre LIKE :propNombre OR a.idPredio.idPropietario.propApellido LIKE :propApellido ORDER BY a.idPredio.idPropietario.propNombre ASC");
+            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.idPredio.idPropietario.porpCedula LIKE :porpCedula OR a.idPredio.idPropietario.propNombre LIKE :propNombre OR a.idPredio.idPropietario.propApellido LIKE :propApellido ORDER BY CAST(a.medNumero as NUMERIC)  Desc");
             query.setParameter("porpCedula", "%" + valor + "%");
             query.setParameter("propNombre", "%" + valor + "%");
             query.setParameter("propApellido", "%" + valor + "%");
@@ -102,7 +102,7 @@ public class ServicioMedidor {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medNumero=:medNumero ORDER BY a.medNumero  ASC");
+            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medNumero=:medNumero ORDER BY a.medNumero Desc");
             query.setParameter("medNumero", valor);
             //query.setMaxResults(200);
             listaMedidors = (List<Medidor>) query.getResultList();
@@ -147,7 +147,7 @@ public class ServicioMedidor {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM Medidor a ORDER BY a.idMedidor desc");
+            Query query = em.createQuery("SELECT  a FROM Medidor a ORDER BY a.medNumero desc");
             query.setMaxResults(1);
             listaMedidors = (List<Medidor>) query.getResultList();
             entidad = listaMedidors.size() > 0 ? listaMedidors.get(0) : null;

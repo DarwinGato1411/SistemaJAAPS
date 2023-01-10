@@ -5,23 +5,65 @@
  */
 package com.ec.controlador.vistas;
 
+import com.ec.controlador.CierreCajaVm;
+import com.ec.entidad.Producto;
+import static com.ec.entidad.VentaRuta_.fecha;
+import com.ec.entidad.contabilidad.AcSubCuenta;
 import com.ec.entidad.contabilidad.CuSubCuenta;
+import com.ec.seguridad.EnumSesion;
+import com.ec.seguridad.UserCredential;
+import com.ec.servicio.HelperPersistencia;
+import com.ec.servicio.ServicioAcumuladoVentas;
+import com.ec.servicio.contabilidad.ServicioAcSubcuenta;
 import com.ec.servicio.contabilidad.ServicioSubCuenta;
 import com.ec.untilitario.ArchivoUtils;
+import com.ec.untilitario.DispararReporte;
+import com.ec.untilitario.ModeloAcumuladoDiaUsuario;
+import com.ec.vista.servicios.ServicioAcumuladoDiarioUsuario;
 import com.ec.vista.servicios.ServicioListadoDetallado;
+import com.ec.vista.servicios.ServicioListadoDetalladoOrdenado;
 import com.ec.vista.servicios.ServicioListadoItems;
+import com.ec.vistas.Acumuladopordia;
 import com.ec.vistas.ListadoDetallado;
+import com.ec.vistas.ListadoDetalladoOrdenado;
 import com.ec.vistas.ListadoItems;
 import com.ec.vistas.RotacionProducto;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
+import javax.persistence.EntityManager;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
+import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.util.media.AMedia;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.select.Selectors;
 
 /**
  *
@@ -30,9 +72,11 @@ import org.zkoss.bind.annotation.NotifyChange;
 public class ListaLisDetallado {
 
     ServicioListadoDetallado servicioListadoDetallado = new ServicioListadoDetallado();
-
+ 
     private Date inicio = new Date();
     private Date fin = new Date();
+    private Date fecha = new Date();
+   // String sDate1="29/12/2022"; 
     private BigDecimal totalVenta = BigDecimal.ZERO;
 
     private List<ListadoDetallado> listaListDetallado = new ArrayList<ListadoDetallado>();
@@ -42,6 +86,17 @@ public class ListaLisDetallado {
     
     ServicioSubCuenta servicioSubCuenta2 = new ServicioSubCuenta();
     private List<CuSubCuenta> listaCuSubCuenta2 = new ArrayList<CuSubCuenta>();
+    
+    ServicioListadoDetalladoOrdenado servicioDetalladoOrdenado = new ServicioListadoDetalladoOrdenado();
+    private List<ListadoDetalladoOrdenado> listaListItemsOrd = new ArrayList<ListadoDetalladoOrdenado>();
+    
+    private List<Acumuladopordia> listaAcumuladopordias = new ArrayList<Acumuladopordia>();
+    ServicioAcumuladoVentas servicioAcumuladoVentas = new ServicioAcumuladoVentas();
+     private Date fechainicioDiaria = new Date();
+     
+    ServicioAcumuladoDiarioUsuario servicioAcumuladoDiarioUsuario = new ServicioAcumuladoDiarioUsuario();
+    UserCredential credential = new UserCredential();
+    private BigDecimal totFactura = BigDecimal.ZERO;
 
     public ListaLisDetallado() {
 
@@ -53,27 +108,38 @@ public class ListaLisDetallado {
          consultaCuSubCuentas();
         consultaDetalle();
         consultaItems();
+        fechainicioDiaria = calendar.getTime();
+        consultaVentasDiarias();
+        
     }
 
     @Command
-    @NotifyChange({"listaListDetallado", "inicio", "fin"})
+    @NotifyChange({"listaListItemsOrd", "inicio", "fin"})
     public void buscarListadoDetallado() {
 
         consultaDetalle();
 
     }
+    
+      @Command
+    @NotifyChange({"listaAcumuladopordias", "fechainicioDiaria",})
+    public void buscarDiaria() {
+
+        consultaVentasDiarias();
+
+    }
 
     private void consultaDetalle() {
         totalVenta = BigDecimal.ZERO;
-        listaListDetallado = servicioListadoDetallado.findByMes(inicio, fin);
+        listaListItemsOrd = servicioDetalladoOrdenado.findByMes(inicio, fin);
 
         /*Calculo el total*/
-        for (ListadoDetallado item : listaListDetallado) {
-            totalVenta = totalVenta.add(item.getDetTotal());
+        for (ListadoDetalladoOrdenado item : listaListItemsOrd) {
+            totalVenta = totalVenta.add(item.getFacTotal());
         }
         /*coloco el porcentaje*/
-        for (ListadoDetallado item : listaListDetallado) {
-            BigDecimal itemporcient = BigDecimal.valueOf(100.0).multiply(item.getDetTotal());
+        for (ListadoDetalladoOrdenado item : listaListItemsOrd) {
+            BigDecimal itemporcient = BigDecimal.valueOf(100.0).multiply(item.getFacTotal());
             // BigDecimal porcentaje = itemporcient.divide(totalVenta, 4, RoundingMode.FLOOR);
 
             //item.setPorcentaje(ArchivoUtils.redondearDecimales(porcentaje, 2));
@@ -86,12 +152,81 @@ public class ListaLisDetallado {
         consultaCuSubCuentas();
 
     }
+    //  @AfterCompose
+/*    public void afterCompose(@ExecutionArgParam("valor") Producto producto, @ContextParam(ContextType.VIEW) Component view) throws ParseException {
+        Selectors.wireComponents(view, this, false);
+       // fecha= new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
+        Session sess = Sessions.getCurrent();
+        UserCredential cre = (UserCredential) sess.getAttribute(EnumSesion.userCredential.getNombre());
+        credential = cre;
+            if (servicioAcumuladoDiarioUsuario.findCierrePorUsuario(fecha, credential.getUsuarioSistema()).size() > 0) {
+            ModeloAcumuladoDiaUsuario acumuladoDiaUsuario = servicioAcumuladoDiarioUsuario.findCierrePorUsuario(fecha, credential.getUsuarioSistema()).get(0);
+              totFactura = ArchivoUtils.redondearDecimales(acumuladoDiaUsuario.getValorFacturas(), 2);
+         } else {
+              totFactura = BigDecimal.ZERO;
+          }
+
+    }*/
+    /*   @Command
+    @NotifyChange({"listaAcumuladopordias","fechainicioDiaria"})
+    public void cambioFecha() {
+
+    }*/
+ 
+    
+    @Command
+    public void guardar() throws ParseException {
+                 
+            ServicioSubCuenta servicioSubcuenta = new ServicioSubCuenta();
+            ServicioAcSubcuenta servicioAcSubcuenta = new ServicioAcSubcuenta();           
+         
+        Session sess = Sessions.getCurrent();
+        UserCredential cre = (UserCredential) sess.getAttribute(EnumSesion.userCredential.getNombre());
+        credential = cre;
+            if (servicioAcumuladoDiarioUsuario.findCierrePorUsuario(fechainicioDiaria, credential.getUsuarioSistema()).size() > 0) {
+            ModeloAcumuladoDiaUsuario acumuladoDiaUsuario = servicioAcumuladoDiarioUsuario.findCierrePorUsuario(fechainicioDiaria, credential.getUsuarioSistema()).get(0);
+              totFactura = ArchivoUtils.redondearDecimales(acumuladoDiaUsuario.getValorFacturas(), 2);
+         } else {
+              totFactura = BigDecimal.ZERO;
+          }
+            
+            CuSubCuenta valorCajaGeneral = servicioSubcuenta.findByNombre("CAJA GENERAL").get(0);
+            BigDecimal valorTotal = totFactura;
+            AcSubCuenta acCajaGeneral = new AcSubCuenta();
+              
+               valorCajaGeneral.setSubcTotal(valorTotal.add(valorTotal));
+                            servicioSubcuenta.modificar(valorCajaGeneral);
+                            acCajaGeneral.setIdSubCuenta(valorCajaGeneral);
+                            acCajaGeneral.setDebe(valorTotal);
+                            acCajaGeneral.setFechaAcSubcuenta(fecha);
+                            servicioAcSubcuenta.crear(acCajaGeneral);
+         /*   try {
+                System.out.println("cierreCaja " + cierreCaja.getIdCierre());
+                DispararReporte.reporteCierrecaja(cierreCaja.getIdCierre());
+            } catch (JRException ex) {
+                Logger.getLogger(CierreCajaVm.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(CierreCajaVm.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NamingException ex) {
+                Logger.getLogger(CierreCajaVm.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(CierreCajaVm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        windowCierre.detach();*/
+
+    }
    private void consultaCuSubCuentas() {
       
         listaCuSubCuenta2  = servicioSubCuenta2.listadoTotal();
 
     }
     
+       private void consultaVentasDiarias() {
+        listaAcumuladopordias = servicioAcumuladoVentas.findAcumuladoventasdiariatotal(fechainicioDiaria);
+    }
+
 
     public ServicioSubCuenta getServicioSubCuenta2() {
         return servicioSubCuenta2;
@@ -151,6 +286,40 @@ public class ListaLisDetallado {
         this.totalVenta = totalVenta;
     }
 
+    public List<Acumuladopordia> getListaAcumuladopordias() {
+        return listaAcumuladopordias;
+    }
+
+    public void setListaAcumuladopordias(List<Acumuladopordia> listaAcumuladopordias) {
+        this.listaAcumuladopordias = listaAcumuladopordias;
+    }
+
+    public ServicioAcumuladoVentas getServicioAcumuladoVentas() {
+        return servicioAcumuladoVentas;
+    }
+
+    public void setServicioAcumuladoVentas(ServicioAcumuladoVentas servicioAcumuladoVentas) {
+        this.servicioAcumuladoVentas = servicioAcumuladoVentas;
+    }
+
+    public Date getFechainicioDiaria() {
+        return fechainicioDiaria;
+    }
+
+    public void setFechainicioDiaria(Date fechainicioDiaria) {
+        this.fechainicioDiaria = fechainicioDiaria;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+    
+    
+
     @Command
     @NotifyChange({"listaListItems"})
     public void buscarListadoItems() {
@@ -180,5 +349,131 @@ public class ListaLisDetallado {
     public void setListaListItems(List<ListadoItems> listaListItems) {
         this.listaListItems = listaListItems;
     }
+
+    public ServicioListadoDetalladoOrdenado getServicioDetalladoOrdenado() {
+        return servicioDetalladoOrdenado;
+    }
+
+    public void setServicioDetalladoOrdenado(ServicioListadoDetalladoOrdenado servicioDetalladoOrdenado) {
+        this.servicioDetalladoOrdenado = servicioDetalladoOrdenado;
+    }
+
+    public List<ListadoDetalladoOrdenado> getListaListItemsOrd() {
+        return listaListItemsOrd;
+    }
+
+    public void setListaListItemsOrd(List<ListadoDetalladoOrdenado> listaListItemsOrd) {
+        this.listaListItemsOrd = listaListItemsOrd;
+    }
+    
+    
+     //reporte listado detallado ordenado
+    AMedia fileContent = null;
+    Connection con = null;
+     @Command
+    public void llamarReporteDetallado() throws JRException, IOException, NamingException, SQLException {
+        reporteGeneral();
+    }
+     public void reporteGeneral() throws JRException, IOException, NamingException, SQLException {
+
+        EntityManager emf = HelperPersistencia.getEMF();
+
+        try {
+            emf.getTransaction().begin();
+            con = emf.unwrap(Connection.class);
+
+            String reportFile = Executions.getCurrent().getDesktop().getWebApp()
+                    .getRealPath("/reportes");
+            String reportPath = "";
+            
+                reportPath = reportFile + File.separator + "listadodetallado.jasper";
+            
+
+            Map<String, Object> parametros = new HashMap<String, Object>();
+
+            //  parametros.put("codUsuario", String.valueOf(credentialLog.getAdUsuario().getCodigoUsuario()));
+            parametros.put("inicio", inicio);
+            parametros.put("fin", fin);
+
+            if (con != null) {
+                System.out.println("Conexión Realizada Correctamenteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+            }
+            FileInputStream is = null;
+            is = new FileInputStream(reportPath);
+
+            byte[] buf = JasperRunManager.runReportToPdf(is, parametros, con);
+            InputStream mediais = new ByteArrayInputStream(buf);
+            AMedia amedia = new AMedia("Reporte", "pdf", "application/pdf", mediais);
+            fileContent = amedia;
+            final HashMap<String, AMedia> map = new HashMap<String, AMedia>();
+//para pasar al visor
+            map.put("pdf", fileContent);
+            org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+                    "/venta/contenedorReporte.zul", null, map);
+            window.doModal();
+        } catch (Exception e) {
+            System.out.println("ERROR EL PRESENTAR EL REPORTE " + e.getMessage());
+        } finally {
+            if (emf != null) {
+                emf.getTransaction().commit();
+            }
+
+        }
+
+    }
+     
+     //reporte diario
+          @Command
+    public void llamarReporteDiario() throws JRException, IOException, NamingException, SQLException {
+        reporteDiario();
+    }
+     public void reporteDiario() throws JRException, IOException, NamingException, SQLException {
+
+        EntityManager emf = HelperPersistencia.getEMF();
+
+        try {
+            emf.getTransaction().begin();
+            con = emf.unwrap(Connection.class);
+
+            String reportFile = Executions.getCurrent().getDesktop().getWebApp()
+                    .getRealPath("/reportes");
+            String reportPath = "";
+            
+                reportPath = reportFile + File.separator + "reportediario.jasper";
+            
+
+            Map<String, Object> parametros = new HashMap<String, Object>();
+
+            //  parametros.put("codUsuario", String.valueOf(credentialLog.getAdUsuario().getCodigoUsuario()));
+            parametros.put("inicio", fechainicioDiaria);
+        
+
+            if (con != null) {
+                System.out.println("Conexión Realizada Correctamenteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+            }
+            FileInputStream is = null;
+            is = new FileInputStream(reportPath);
+
+            byte[] buf = JasperRunManager.runReportToPdf(is, parametros, con);
+            InputStream mediais = new ByteArrayInputStream(buf);
+            AMedia amedia = new AMedia("Reporte", "pdf", "application/pdf", mediais);
+            fileContent = amedia;
+            final HashMap<String, AMedia> map = new HashMap<String, AMedia>();
+//para pasar al visor
+            map.put("pdf", fileContent);
+            org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+                    "/venta/contenedorReporte.zul", null, map);
+            window.doModal();
+        } catch (Exception e) {
+            System.out.println("ERROR EL PRESENTAR EL REPORTE " + e.getMessage());
+        } finally {
+            if (emf != null) {
+                emf.getTransaction().commit();
+            }
+
+        }
+
+    }
+
 
 }

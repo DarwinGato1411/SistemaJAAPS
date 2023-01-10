@@ -1234,7 +1234,7 @@ public class Facturar extends SelectorComposer<Component> {
                         multaCobrada = Boolean.TRUE;
                         valorMulta.setCantidad(BigDecimal.ONE);
                         valorMulta.setProducto(prodMulta);
-                        valorMulta.setDescripcion("INTERES VALORES IMPAGOS");
+                        valorMulta.setDescripcion("MULTA POR 2 MESES IMPAGOS");
                         valorMulta.setDetPordescuento(BigDecimal.ZERO);
                         valorMulta.setCodigo(prodMulta.getProdCodigo());
                         valorMulta.setEsProducto(producto.getProdEsproducto());
@@ -1338,7 +1338,7 @@ public class Facturar extends SelectorComposer<Component> {
                     cobroTotalMulta = ArchivoUtils.redondearDecimales(cobroTotalMulta, 2);
                     valorMulta.setCantidad(BigDecimal.ONE);
                     valorMulta.setProducto(prodMulta);
-                    valorMulta.setDescripcion("INTERES VALORES IMPAGOS");
+                    valorMulta.setDescripcion("MULTA POR 2 MESES IMPAGOS");
                     valorMulta.setDetPordescuento(BigDecimal.ZERO);
                     valorMulta.setCodigo(prodMulta.getProdCodigo());
                     valorMulta.setEsProducto(producto.getProdEsproducto());
@@ -2764,7 +2764,10 @@ public class Facturar extends SelectorComposer<Component> {
             CuSubCuenta material = servicioSubcuenta.findByNombre("VENTA DE MATERIALES").get(0);
             CuSubCuenta desechosSolidos = servicioSubcuenta.findByNombre("DESECHOS SOLIDOS").get(0);
             CuSubCuenta medioAmbiente = servicioSubcuenta.findByNombre("MEDIO AMBIENTE").get(0);
-            CuSubCuenta valoresImpagos = servicioSubcuenta.findByNombre("VALORES IMPAGOS INTERES").get(0);
+            CuSubCuenta valoresImpagos = servicioSubcuenta.findByNombre("TARIFA POR VALORES IMPAGOS INTERES").get(0);
+            CuSubCuenta valoresImpagos2 = servicioSubcuenta.findByNombre("TARIFA MULTAS POR DOS MESES IMPAGOS").get(0);
+         
+            
             BigDecimal valorConsumo = consumoAguaPotable.getSubcTotal();
             BigDecimal valorExcedente = excedente.getSubcTotal();
             BigDecimal valorAlcantarillado = alcantarillado.getSubcTotal();
@@ -2774,6 +2777,8 @@ public class Facturar extends SelectorComposer<Component> {
             BigDecimal valorDesechosSolidos = desechosSolidos.getSubcTotal();
             BigDecimal valorMedioAmbiente = medioAmbiente.getSubcTotal();
             BigDecimal valorValoresImpagos = valoresImpagos.getSubcTotal();
+            BigDecimal valorValoresImpagos2 = valoresImpagos2.getSubcTotal();
+            
             AcSubCuenta acConsumoAguaPotable = new AcSubCuenta();
             AcSubCuenta acExcedente = new AcSubCuenta();
             AcSubCuenta acAlcantarillado = new AcSubCuenta();
@@ -2783,6 +2788,7 @@ public class Facturar extends SelectorComposer<Component> {
             AcSubCuenta acDesechosSolidos = new AcSubCuenta();
             AcSubCuenta acMedioAmbiente = new AcSubCuenta();
             AcSubCuenta acValoresImpagos = new AcSubCuenta();
+            AcSubCuenta acValoresImpagos2 = new AcSubCuenta();
 
             java.util.Date fecha = new Date();
             if (listaPedido.size() > 0) {
@@ -2795,62 +2801,70 @@ public class Facturar extends SelectorComposer<Component> {
                             consumoAguaPotable.setSubcTotal(valorConsumo.add(totalItem));
                             servicioSubcuenta.modificar(consumoAguaPotable);
                             acConsumoAguaPotable.setIdSubCuenta(consumoAguaPotable);
-                            acConsumoAguaPotable.setDebe(totalItem);
+                            acConsumoAguaPotable.setHaber(totalItem);
                             acConsumoAguaPotable.setFechaAcSubcuenta(fecha);
                             servicioAcSubcuenta.crear(acConsumoAguaPotable);
                         } else if (item.getDescripcion().equals("EXCEDENTE")) {
                             excedente.setSubcTotal(valorExcedente.add(totalItem));
                             servicioSubcuenta.modificar(excedente);
                             acExcedente.setIdSubCuenta(excedente);
-                            acExcedente.setDebe(totalItem);
+                            acExcedente.setHaber(totalItem);
                             acExcedente.setFechaAcSubcuenta(fecha);
                             servicioAcSubcuenta.crear(acExcedente);
                         } else if (item.getDescripcion().equals("ALCANTARILLADO")) {
                             alcantarillado.setSubcTotal(valorAlcantarillado.add(totalItem));
                             servicioSubcuenta.modificar(alcantarillado);
                             acAlcantarillado.setIdSubCuenta(alcantarillado);
-                            acAlcantarillado.setDebe(totalItem);
+                            acAlcantarillado.setHaber(totalItem);
                             acAlcantarillado.setFechaAcSubcuenta(fecha);
                             servicioAcSubcuenta.crear(acAlcantarillado);
                         } else if (item.getDescripcion().equals("MULTAS")) {
                             multas.setSubcTotal(valorMultas.add(totalItem));
                             servicioSubcuenta.modificar(multas);
                             acMultas.setIdSubCuenta(multas);
-                            acMultas.setDebe(totalItem);
+                            acMultas.setHaber(totalItem);
                             acMultas.setFechaAcSubcuenta(fecha);
                             servicioAcSubcuenta.crear(acMultas);
                         } else if (item.getDescripcion().equals("DESECHOS SOLIDOS")) {
                             desechosSolidos.setSubcTotal(valorDesechosSolidos.add(totalItem));
                             servicioSubcuenta.modificar(desechosSolidos);
                             acDesechosSolidos.setIdSubCuenta(desechosSolidos);
-                            acDesechosSolidos.setDebe(totalItem);
+                            acDesechosSolidos.setHaber(totalItem);
                             acDesechosSolidos.setFechaAcSubcuenta(fecha);
                             servicioAcSubcuenta.crear(acDesechosSolidos);
                         } else if (item.getDescripcion().equals("MEDIO AMBIENTE")) {
                             medioAmbiente.setSubcTotal(valorMedioAmbiente.add(totalItem));
                             servicioSubcuenta.modificar(medioAmbiente);
                             acMedioAmbiente.setIdSubCuenta(medioAmbiente);
-                            acMedioAmbiente.setDebe(totalItem);
+                            acMedioAmbiente.setHaber(totalItem);
                             acMedioAmbiente.setFechaAcSubcuenta(fecha);
                             servicioAcSubcuenta.crear(acMedioAmbiente);
                         } else if (item.getDescripcion().equals("INTERES VALORES IMPAGOS")) {
                             valoresImpagos.setSubcTotal(valorValoresImpagos.add(totalItem));
                             servicioSubcuenta.modificar(valoresImpagos);
                             acValoresImpagos.setIdSubCuenta(valoresImpagos);
-                            acValoresImpagos.setDebe(totalItem);
+                            acValoresImpagos.setHaber(totalItem);
                             acValoresImpagos.setFechaAcSubcuenta(fecha);
                             servicioAcSubcuenta.crear(acValoresImpagos);
+                        } else if (item.getDescripcion().equals("MULTA POR 2 MESES IMPAGOS")) {
+                            valoresImpagos2.setSubcTotal(valorValoresImpagos2.add(totalItem));
+                            servicioSubcuenta.modificar(valoresImpagos2);
+                            acValoresImpagos2.setIdSubCuenta(valoresImpagos2);
+                            acValoresImpagos2.setHaber(totalItem);
+                            acValoresImpagos2.setFechaAcSubcuenta(fecha);
+                            servicioAcSubcuenta.crear(acValoresImpagos2);                            
                         } else {
                             material.setSubcTotal(valorMaterial.add(item.getTotal()));
                             servicioSubcuenta.modificar(material);
                             acMaterial.setIdSubCuenta(material);
-                            acMaterial.setDebe(totalItem);
+                            acMaterial.setHaber(totalItem);
                             acMaterial.setFechaAcSubcuenta(fecha);
                             servicioAcSubcuenta.crear(acMaterial);
                         }
                     }
 
                 }
+
 
                 if (tipoVenta.equals("SINF")) {
 
@@ -2964,7 +2978,11 @@ public class Facturar extends SelectorComposer<Component> {
                     factura.setIdCliente(clienteBuscado);
                     /*GENERAMOS LA CLAVE DE ACCESO PARA ENVIAR LA FACTURA DIRECTAMENTE ASI NO ESTE 
                     AUTORIZADA*/
+<<<<<<< HEAD
                     String claveAcceso = ArchivoUtils.generaClave(factura.getFacFecha(), "01", amb.getAmRuc(), amb.getAmCodigo(), amb.getAmEstab() + amb.getAmPtoemi(), factura.getFacNumeroText(), "12345678", "1");
+=======
+                    String claveAcceso = ArchivoUtils.generaClave(factura.getFacFecha(), "01", amb.getAmRuc(), amb.getAmCodigo(), amb.getAmEstab()+amb.getAmPtoemi(), factura.getFacNumeroText(), "12345678", "1");
+>>>>>>> 84587984858e072cb58b694a68b2b059aeabfced
                     factura.setFacClaveAcceso(claveAcceso);
                     factura.setFacClaveAutorizacion(claveAcceso);
 
@@ -3000,7 +3018,11 @@ public class Facturar extends SelectorComposer<Component> {
                         guiaremision.setPuntoemision(factura.getPuntoemision());
                         guiaremision.setCodestablecimiento(factura.getCodestablecimiento());
                         guiaremision.setEstadosri("PENDIENTE");
+<<<<<<< HEAD
                         String claveAccesoGuia = ArchivoUtils.generaClave(guiaremision.getFacFecha(), "06", amb.getAmRuc(), amb.getAmCodigo(), amb.getAmEstab() + amb.getAmPtoemi(), guiaremision.getFacNumeroText(), "12345678", "1");
+=======
+                        String claveAccesoGuia = ArchivoUtils.generaClave(guiaremision.getFacFecha(), "06", amb.getAmRuc(), amb.getAmCodigo(), amb.getAmEstab()+amb.getAmPtoemi(), guiaremision.getFacNumeroText(), "12345678", "1");
+>>>>>>> 84587984858e072cb58b694a68b2b059aeabfced
                         guiaremision.setFacClaveAcceso(claveAccesoGuia);
                         guiaremision.setFacClaveAutorizacion(claveAccesoGuia);
                         guiaremision.setCodTipoambiente(factura.getCod_tipoambiente().getCodTipoambiente());
