@@ -13,7 +13,7 @@
                 <tab label="Estadistica Mensual de Movimiento de Corte" sclass="menutabs"/>
                 <tab label="Listado Detallado de Cobros" sclass="menutabs"/>
                 <tab label="Comprobante Diario" sclass="menutabs"/>
-                <tab label="Estadistica Mensual de Movimiento de Corte" sclass="menutabs"/>
+                <tab label="Estadistica Mensual de Movimiento de Cartera" sclass="menutabs"/>
                 <tab label="Diario General" sclass="menutabs"/>
                 <tab label="Mayor general" sclass="menutabs"/>
                 
@@ -407,19 +407,43 @@
 
                               
                     <div  class="container-fluid" >
-                        <div  class="row" >
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4  form-group "  >
-                                <label value="(*)" style="color:transparent;font-weight:bold"/>Fecha:
-              
-                                <datebox compact="true"
-                                         readonly="true"   style="font-weight:bold" buttonVisible="true" 
-                                         lenient="true" 
-                                         format="dd/MM/yyyy" />
+                        <div class="row">
+                            <div  class="col-12 col-sm-12 col-md-2 col-lg-2 ">
+                                <label value="Inicio: "   />
+                                <datebox   value="@bind(vm.inicio)" 
+                                           readonly="true" style="font-weight:bold;" 
+                                           onCreate="self.value = new Date()"                                                    
+                                           buttonVisible="true" 
+                                           lenient="true"  format="dd/MM/yyyy" 
+                                           constraint="no empty: Ingrese de inicio de la busqueda"/> 
                             </div>
+                            <div  class="col-12 col-sm-12 col-md-3 col-lg-3 ">
+                                <label value="Fin: "  />
+                                <datebox   value="@bind(vm.fin)" 
+                                           readonly="true" style="font-weight:bold;" 
+                                           onCreate="self.value = new Date()"                                                   
+                                           buttonVisible="true" 
+                                           lenient="true"  format="dd/MM/yyyy" 
+                                           constraint="no empty: IBuscar por fecha fin de la busqueda"/> 
+                                <button   image="/imagenes/buscar1.png"  
+                                          onClick="@command('buscarmovcartera')"  
+                                          class="btn btn-primary btn-sm "
+                                          tooltiptext="Buscar"/>
+                       
+                            </div>
+                            <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
+                            <label value="(*)" style="color:transparent;font-weight:bold"/>Ver Reporte                            
+                                 <button   image="/iconos/pdfrep2.png"  
+                                        onClick="@command('llamarReportMovCartera')"  
+                                        class="btn btn-primary btn-sm "
+                                        tooltiptext="Ver Reporte"/>
+
+                            </div> 
+                          
                         </div>
                         <div class="row " align="center">                            
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 " align="start">
-                                <listbox model="@load(vm.listaCuSubCuenta2)" 
+                                <listbox model="@load(vm.listaMovCartera)" 
                                          nonselectableTags=""  
                                          mold="paging" pageSize="12"  > 
                                     <custom-attributes org.zkoss.zul.listbox.rod="true"/>
@@ -438,9 +462,9 @@
                                     </auxhead>       
                                     
                                     <listhead> 
-                                        <listheader width="20%"  label="Rubros Facturados" /> 
-                                        <listheader width="50%"  label="Saldo Anterior" /> 
-                                        <listheader width="15%"  label="Ingreso" /> 
+                                        <listheader width="50%"  label="Rubros Facturados" /> 
+                                        <listheader width="15%"  label="Saldo Anterior" /> 
+                                        <listheader width="15%"  label="Ingresado" /> 
                                         <listheader width="15%"  label="Cobrado" />
                                         <listheader width="15%"  label="NC" /> 
                                         <listheader width="15%"  label="Deterioro" />
@@ -456,7 +480,7 @@
                                                 <textbox readonly="true" 
                                                          class="form-control form-control-sm"
                                                          style="font-size:12px;background:#EBF5FB"  
-                                                        value="@bind(each.subcNumero)"
+                                                        value="@bind(each.detDescripcion)"
                                                          width="100%" />
                                                 <!--     value="@bind(each.subcNumero)" value="@bind(each.subcNombre)" -->
                                             </listcell>
@@ -464,16 +488,17 @@
                                                 <textbox readonly="true" 
                                                          class="form-control form-control-sm"
                                                          style="font-size:12px;background:#EBF5FB"
-                                                         value="@bind(each.subcNombre)"   
+                                                         
                                                          width="100%" />
                                             </listcell>
                                             <listcell  zclass = "mycss-listcell">
                                             <decimalbox readonly="true" format="###.##" 
-                                                        value="@bind(each.subcSaldo)" width="100%" />
+                                                        
+                                                        width="100%" />
                                             </listcell>
                                             <listcell  zclass = "mycss-listcell">
                                             <decimalbox readonly="true" format="###.##" 
-                                                        value="@bind(each.subcTotal)" width="100%" />
+                                                        value="@bind(each.facTotal)" width="100%" />
                                             </listcell>
 
                                                                      

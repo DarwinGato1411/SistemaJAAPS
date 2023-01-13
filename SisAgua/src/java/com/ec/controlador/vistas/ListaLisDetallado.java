@@ -23,10 +23,12 @@ import com.ec.vista.servicios.ServicioAcumuladoDiarioUsuario;
 import com.ec.vista.servicios.ServicioListadoDetallado;
 import com.ec.vista.servicios.ServicioListadoDetalladoOrdenado;
 import com.ec.vista.servicios.ServicioListadoItems;
+import com.ec.vista.servicios.ServicioMovimientoCartera;
 import com.ec.vistas.Acumuladopordia;
 import com.ec.vistas.ListadoDetallado;
 import com.ec.vistas.ListadoDetalladoOrdenado;
 import com.ec.vistas.ListadoItems;
+import com.ec.vistas.MovimientoCartera;
 import com.ec.vistas.RotacionProducto;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -90,6 +92,9 @@ public class ListaLisDetallado {
     ServicioListadoDetalladoOrdenado servicioDetalladoOrdenado = new ServicioListadoDetalladoOrdenado();
     private List<ListadoDetalladoOrdenado> listaListItemsOrd = new ArrayList<ListadoDetalladoOrdenado>();
     
+    ServicioMovimientoCartera servicioMovimientoCartera = new ServicioMovimientoCartera();
+    private List<MovimientoCartera> listaMovCartera = new ArrayList<MovimientoCartera>();
+    
     private List<Acumuladopordia> listaAcumuladopordias = new ArrayList<Acumuladopordia>();
     ServicioAcumuladoVentas servicioAcumuladoVentas = new ServicioAcumuladoVentas();
      private Date fechainicioDiaria = new Date();
@@ -110,7 +115,7 @@ public class ListaLisDetallado {
         consultaItems();
         fechainicioDiaria = calendar.getTime();
         consultaVentasDiarias();
-        
+          consultaDetalleMovCartera();
     }
 
     @Command
@@ -145,6 +150,31 @@ public class ListaLisDetallado {
             //item.setPorcentaje(ArchivoUtils.redondearDecimales(porcentaje, 2));
         }
     }
+    //Movimiento de Cartera
+        @Command
+    @NotifyChange({"listaMovCartera", "inicio", "fin"})
+    public void buscarmovcartera() {
+
+        consultaDetalleMovCartera();
+
+    }
+    private void consultaDetalleMovCartera() {
+        totalVenta = BigDecimal.ZERO;
+        listaMovCartera = servicioMovimientoCartera.findByMes(inicio, fin);
+
+        /*Calculo el total*/
+        for (ListadoDetalladoOrdenado item : listaListItemsOrd) {
+            totalVenta = totalVenta.add(item.getFacTotal());
+        }
+        /*coloco el porcentaje*/
+        for (ListadoDetalladoOrdenado item : listaListItemsOrd) {
+            BigDecimal itemporcient = BigDecimal.valueOf(100.0).multiply(item.getFacTotal());
+            // BigDecimal porcentaje = itemporcient.divide(totalVenta, 4, RoundingMode.FLOOR);
+
+            //item.setPorcentaje(ArchivoUtils.redondearDecimales(porcentaje, 2));
+        }
+    }
+    
      @Command
     @NotifyChange({"listaCuSubCuenta2"})
     public void buscarlistaCuSubCuenta2() {
@@ -317,6 +347,22 @@ public class ListaLisDetallado {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
+    public ServicioMovimientoCartera getServicioMovimientoCartera() {
+        return servicioMovimientoCartera;
+    }
+
+    public void setServicioMovimientoCartera(ServicioMovimientoCartera servicioMovimientoCartera) {
+        this.servicioMovimientoCartera = servicioMovimientoCartera;
+    }
+
+    public List<MovimientoCartera> getListaMovCartera() {
+        return listaMovCartera;
+    }
+
+    public void setListaMovCartera(List<MovimientoCartera> listaMovCartera) {
+        this.listaMovCartera = listaMovCartera;
+    }
     
     
 
@@ -474,6 +520,62 @@ public class ListaLisDetallado {
         }
 
     }
+     
+     //movimiento de cartera 
+      //reporte diario
+          @Command
+    public void llamarReportMovCartera() throws JRException, IOException, NamingException, SQLException {
+        reporteMovCartera();
+    }
+     public void reporteMovCartera() throws JRException, IOException, NamingException, SQLException {
+
+        EntityManager emf = HelperPersistencia.getEMF();
+
+        try {
+            emf.getTransaction().begin();
+            con = emf.unwrap(Connection.class);
+
+            String reportFile = Executions.getCurrent().getDesktop().getWebApp()
+                    .getRealPath("/reportes");
+            String reportPath = "";
+            
+                reportPath = reportFile + File.separator + "movimientocartera.jasper";
+            
+
+            Map<String, Object> parametros = new HashMap<String, Object>();
+
+            //  parametros.put("codUsuario", String.valueOf(credentialLog.getAdUsuario().getCodigoUsuario()));
+            parametros.put("inicio", inicio);
+            parametros.put("fin", fin);
+        
+
+            if (con != null) {
+                System.out.println("Conexión Realizada Correctamenteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+            }
+            FileInputStream is = null;
+            is = new FileInputStream(reportPath);
+
+            byte[] buf = JasperRunManager.runReportToPdf(is, parametros, con);
+            InputStream mediais = new ByteArrayInputStream(buf);
+            AMedia amedia = new AMedia("Reporte", "pdf", "application/pdf", mediais);
+            fileContent = amedia;
+            final HashMap<String, AMedia> map = new HashMap<String, AMedia>();
+//para pasar al visor
+            map.put("pdf", fileContent);
+            org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
+                    "/venta/contenedorReporte.zul", null, map);
+            window.doModal();
+        } catch (Exception e) {
+            System.out.println("ERROR EL PRESENTAR EL REPORTE " + e.getMessage());
+        } finally {
+            if (emf != null) {
+                emf.getTransaction().commit();
+            }
+
+        }
+
+    }
+
 
 
 }
