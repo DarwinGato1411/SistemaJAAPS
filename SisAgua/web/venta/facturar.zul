@@ -111,7 +111,7 @@
                                                 <listcell zclass = "mycss-listcell">   
                                                     <image  src="/iconos/Forward.png" 
                                                             onClick="@command('buscarLecturasPendientes',valor=each)" 
-                                                            tooltiptext="Asignar producto"/> 
+                                                            tooltiptext="Buscar lecturas"/> 
                                                   
                                                 </listcell>
                                             </listitem>
@@ -250,9 +250,9 @@
                                      <div class="contenedorBoton" align="end" >   
                                                 <button src="/iconos/Forward.png"
                                                          style=" border: none;
-    color: white;
-    height: 30px;
-    border-radius: 15px;"        
+                                                        color: white;
+                                                        height: 30px;
+                                                        border-radius: 15px;"        
                                                         autodisable="self"
                                                         label="Agregar nota de entrega"
                                                         class="btnGuardar"

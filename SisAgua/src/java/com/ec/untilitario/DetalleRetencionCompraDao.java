@@ -32,6 +32,7 @@ public class DetalleRetencionCompraDao {
     private RetencionCompra rcoCodigo;
 
     Tipoivaretencion tipoivaretencion;
+    private String drcDocumento;
 
     public BigDecimal getDrcBaseImponible() {
         return drcBaseImponible;
@@ -111,6 +112,14 @@ public class DetalleRetencionCompraDao {
 
     public void setTipoivaretencion(Tipoivaretencion tipoivaretencion) {
         this.tipoivaretencion = tipoivaretencion;
+    }
+
+    public String getDrcDocumento() {
+        return drcDocumento;
+    }
+
+    public void setDrcDocumento(String drcDocumento) {
+        this.drcDocumento = drcDocumento;
     }
 
 }

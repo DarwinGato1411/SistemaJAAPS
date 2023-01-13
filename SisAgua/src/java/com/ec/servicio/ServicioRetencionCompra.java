@@ -57,15 +57,16 @@ public class ServicioRetencionCompra {
             DetalleRetencionCompra compra = null;
             for (DetalleRetencionCompraDao item : compraDao) {
                 compra = new DetalleRetencionCompra(
-                        item.getDrcBaseImponible(),
-                        item.getDrcPorcentaje(),
-                        item.getDrcValorRetenido(),
-                        item.getTireCodigo(),
-                        retencionCompra);
+                            item.getDrcBaseImponible(),
+                            item.getDrcPorcentaje(),
+                            item.getDrcValorRetenido(),
+                            item.getTireCodigo(),
+                            retencionCompra);
                 compra.setIdTipoivaretencion(item.getTipoivaretencion());
                 compra.setDrcDescripcion(item.getDrcDescripcion());
                 compra.setDrcCodImpuestoAsignado(item.getCodImpuestoAsignado());
                 compra.setDrcTipoRegistro(item.getTipoResgistro());
+                compra.setDrcDocumento(item.getDrcDocumento());
                 em.persist(compra);
             }
             em.getTransaction().commit();
@@ -87,11 +88,11 @@ public class ServicioRetencionCompra {
             DetalleRetencionCompra compra = null;
             for (DetalleRetencionCompraDao item : compraDao) {
                 compra = new DetalleRetencionCompra(
-                        item.getDrcBaseImponible(),
-                        item.getDrcPorcentaje(),
-                        item.getDrcValorRetenido(),
-                        item.getTireCodigo(),
-                        retencionCompra);
+                            item.getDrcBaseImponible(),
+                            item.getDrcPorcentaje(),
+                            item.getDrcValorRetenido(),
+                            item.getTireCodigo(),
+                            retencionCompra);
 
                 if (item.getRcoCodigo() != null) {
                     compra.setDrcCodigo(item.getDrcCodigo());
@@ -232,7 +233,7 @@ public class ServicioRetencionCompra {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT a FROM RetencionCompra a WHERE a.rcoFecha BETWEEN :inicio AND :fin ORDER BY a.rcoFecha DESC ");
+            Query query = em.createQuery("SELECT a FROM RetencionCompra a WHERE a.rcoFecha BETWEEN :inicio AND :fin ORDER BY a.rcoSecuencial DESC ");
             query.setParameter("inicio", inicio);
             query.setParameter("fin", fin);
             listaRetencionCompras = (List<RetencionCompra>) query.getResultList();
@@ -253,7 +254,7 @@ public class ServicioRetencionCompra {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT a FROM RetencionCompra a WHERE a.idCabecera.cabNumFactura LIKE :cabNumFactura ORDER BY a.rcoFecha DESC ");
+            Query query = em.createQuery("SELECT a FROM RetencionCompra a WHERE a.idCabecera.cabNumFactura LIKE :cabNumFactura ORDER BY a.rcoSecuencial DESC ");
             query.setParameter("cabNumFactura", "%" + valor + "%");
             listaRetencionCompras = (List<RetencionCompra>) query.getResultList();
             em.getTransaction().commit();
@@ -273,7 +274,7 @@ public class ServicioRetencionCompra {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT a FROM RetencionCompra a WHERE a.rcoSecuencialText LIKE :rcoSecuencialText ORDER BY a.rcoFecha DESC ");
+            Query query = em.createQuery("SELECT a FROM RetencionCompra a WHERE a.rcoSecuencialText LIKE :rcoSecuencialText ORDER BY a.rcoSecuencial DESC ");
             query.setParameter("rcoSecuencialText", "%" + valor + "%");
             listaRetencionCompras = (List<RetencionCompra>) query.getResultList();
             em.getTransaction().commit();

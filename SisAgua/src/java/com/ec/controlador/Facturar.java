@@ -611,6 +611,10 @@ public class Facturar extends SelectorComposer<Component> {
             valor.setCodigo(productoBuscado.getProdCodigo());
             valor.setEsProducto(producto.getProdEsproducto());
 
+//            valor.setMesCobro(medidorEncontrado.getMesActual().getNombre());
+            /*GREGA LECTURA AL REGISTRO*/
+//            valor.setLectura(lectura);
+
             BigDecimal costVentaTipoCliente = BigDecimal.ZERO;
             BigDecimal costVentaTipoClienteInicial = BigDecimal.ZERO;
             String tipoVenta = "NORMAL";
@@ -774,13 +778,50 @@ public class Facturar extends SelectorComposer<Component> {
             basicaMasExcedente = valorCobroBase.add(valorCobroExce);
             alcantarillado = (basicaMasExcedente.multiply(detalleTarifa.getDettPorcentajeAlcantarillado())).divide(BigDecimal.valueOf(100));
 
+            /*AMBIENTE*/
+            BigDecimal metrosBaseAmbienteUno = BigDecimal.valueOf(30);
+            BigDecimal metrosBaseAmbienteDos = BigDecimal.valueOf(31);
+            BigDecimal excedenteAmbiente = BigDecimal.ZERO;
+            Boolean baseUno = Boolean.FALSE;
+            Boolean baseDos = Boolean.FALSE;
+
+            BigDecimal adicionalesAmbiente = lectura.getLecMetrosCubicos().subtract(metrosBaseAmbienteUno);
+
+            BigDecimal adicionalesAmbienteDos = lectura.getLecMetrosCubicos().subtract(metrosBaseAmbienteDos);
+
+            if (adicionalesAmbiente.doubleValue() <= 0) {
+                excedenteAmbiente = BigDecimal.ZERO;
+                baseUno = Boolean.TRUE;
+            } else if (adicionalesAmbienteDos.doubleValue() == 0) {
+                excedenteAmbiente = BigDecimal.ZERO;
+                baseDos = Boolean.TRUE;
+            } else if (adicionalesAmbienteDos.doubleValue() > 0) {
+                excedenteAmbiente = adicionalesAmbienteDos;
+                baseDos = Boolean.TRUE;
+            } else {
+                excedenteAmbiente = BigDecimal.ZERO;
+                baseUno = Boolean.TRUE;
+            }
+
             if (detalleTarifa.getDettValidadesecho()) {
                 desechos = (basicaMasExcedente.multiply(detalleTarifa.getDettPorcentajeDesechos())).divide(BigDecimal.valueOf(100));
                 desechos = ArchivoUtils.redondearDecimales(desechos, 2);
             } else {
                 desechos = detalleTarifa.getDettDesechos();
             }
-            ambiente = detalleTarifa.getDettAmbiente();
+
+            if (baseUno) {
+                ambiente = detalleTarifa.getDettAmbiente();
+            }
+            if (baseDos) {
+                ambiente = BigDecimal.valueOf(1);
+            }
+
+            if (excedenteAmbiente.doubleValue() > 0) {
+                BigDecimal valorExedenteAmb = excedenteAmbiente.multiply(BigDecimal.valueOf(0.02));
+                ambiente = BigDecimal.valueOf(1).add(valorExedenteAmb);
+            }
+
             ambiente = ArchivoUtils.redondearDecimales(ambiente, 2);
             alcantarillado = ArchivoUtils.redondearDecimales(alcantarillado, 2);
 
@@ -2856,6 +2897,24 @@ public class Facturar extends SelectorComposer<Component> {
                         facturaNueva.setIdEstado(servicioEstadoFactura.findByEstCodigo(estdoFactura));
                         facturaNueva.setFacTotalBaseGravaba(facturaNueva.getFacSubtotal());
                         //servicioFactura.crear(facturaNueva);
+                        if (detalleFactura.size() > 0) {
+                            DetalleFacturaDAO recuAO = detalleFactura.get(0);
+                            if (recuAO.getLectura() != null) {
+                                facturaNueva.setFacLecAnterior(recuAO.getLectura() != null ? recuAO.getLectura().getLecAnterior() : BigDecimal.ZERO);
+                                facturaNueva.setFacLecActual(recuAO.getLectura() != null ? recuAO.getLectura().getLecActual() : BigDecimal.ZERO);
+                                facturaNueva.setFacMetrosCubicos(recuAO.getLectura() != null ? recuAO.getLectura().getLecMetrosCubicos() : BigDecimal.ZERO);
+                                facturaNueva.setFacLecMes(recuAO.getLectura() != null ? recuAO.getLectura().getLecMes() : 0);
+                                facturaNueva.setFacMedidor(recuAO.getLectura() != null ? recuAO.getLectura().getIdMedidor().getMedNumero() : "S/N");
+                                facturaNueva.setFacDirMedidor(recuAO.getLectura() != null ? recuAO.getLectura().getIdMedidor().getMedDireccion() : "S/N");
+                            } else {
+                                facturaNueva.setFacLecAnterior(BigDecimal.ZERO);
+                                facturaNueva.setFacLecActual(BigDecimal.ZERO);
+                                facturaNueva.setFacMetrosCubicos(BigDecimal.ZERO);
+                                facturaNueva.setFacLecMes(new Date().getMonth());
+                                facturaNueva.setFacMedidor(medidorEncontrado != null ? medidorEncontrado.getMedNumero() : "S/N");
+                                facturaNueva.setFacDirMedidor(medidorEncontrado != null ? medidorEncontrado.getMedDireccion() : "S/N");
+                            }
+                        }
 
                         servicioFactura.guardarFactura(detalleFactura, facturaNueva);
 
@@ -2892,6 +2951,25 @@ public class Facturar extends SelectorComposer<Component> {
                         verificarFact.setIdEstado(servicioEstadoFactura.findByEstCodigo(estdoFactura));
                         verificarFact.setFacTotalBaseGravaba(verificarFact.getFacSubtotal());
 
+                        if (detalleFactura.size() > 0) {
+                            DetalleFacturaDAO recuAO = detalleFactura.get(0);
+                            if (recuAO.getLectura() != null) {
+                                verificarFact.setFacLecAnterior(recuAO.getLectura() != null ? recuAO.getLectura().getLecAnterior() : BigDecimal.ZERO);
+                                verificarFact.setFacLecActual(recuAO.getLectura() != null ? recuAO.getLectura().getLecActual() : BigDecimal.ZERO);
+                                verificarFact.setFacMetrosCubicos(recuAO.getLectura() != null ? recuAO.getLectura().getLecMetrosCubicos() : BigDecimal.ZERO);
+                                verificarFact.setFacLecMes(recuAO.getLectura() != null ? recuAO.getLectura().getLecMes() : 0);
+                                verificarFact.setFacMedidor(recuAO.getLectura() != null ? recuAO.getLectura().getIdMedidor().getMedNumero() : "S/N");
+                                verificarFact.setFacDirMedidor(recuAO.getLectura() != null ? recuAO.getLectura().getIdMedidor().getMedDireccion() : "S/N");
+                            } else {
+                                verificarFact.setFacLecAnterior(BigDecimal.ZERO);
+                                verificarFact.setFacLecActual(BigDecimal.ZERO);
+                                verificarFact.setFacMetrosCubicos(BigDecimal.ZERO);
+                                verificarFact.setFacLecMes(new Date().getMonth());
+                                verificarFact.setFacMedidor(medidorEncontrado != null ? medidorEncontrado.getMedNumero() : "S/N");
+                                verificarFact.setFacDirMedidor(medidorEncontrado != null ? medidorEncontrado.getMedDireccion() : "S/N");
+                            }
+                        }
+
                         servicioFactura.guardarFacturaVentaDiaria(detalleFactura, verificarFact);
                     }
 
@@ -2900,7 +2978,9 @@ public class Facturar extends SelectorComposer<Component> {
                     factura.setIdCliente(clienteBuscado);
                     /*GENERAMOS LA CLAVE DE ACCESO PARA ENVIAR LA FACTURA DIRECTAMENTE ASI NO ESTE 
                     AUTORIZADA*/
+
                     String claveAcceso = ArchivoUtils.generaClave(factura.getFacFecha(), "01", amb.getAmRuc(), amb.getAmCodigo(), amb.getAmEstab()+amb.getAmPtoemi(), factura.getFacNumeroText(), "12345678", "1");
+
                     factura.setFacClaveAcceso(claveAcceso);
                     factura.setFacClaveAutorizacion(claveAcceso);
 
@@ -2936,7 +3016,9 @@ public class Facturar extends SelectorComposer<Component> {
                         guiaremision.setPuntoemision(factura.getPuntoemision());
                         guiaremision.setCodestablecimiento(factura.getCodestablecimiento());
                         guiaremision.setEstadosri("PENDIENTE");
+
                         String claveAccesoGuia = ArchivoUtils.generaClave(guiaremision.getFacFecha(), "06", amb.getAmRuc(), amb.getAmCodigo(), amb.getAmEstab()+amb.getAmPtoemi(), guiaremision.getFacNumeroText(), "12345678", "1");
+
                         guiaremision.setFacClaveAcceso(claveAccesoGuia);
                         guiaremision.setFacClaveAutorizacion(claveAccesoGuia);
                         guiaremision.setCodTipoambiente(factura.getCod_tipoambiente().getCodTipoambiente());
@@ -3478,10 +3560,8 @@ public class Facturar extends SelectorComposer<Component> {
     private void cargaNotaEntrega() {
         String clienteCedula = buscarCliente;
         listalistaNotaEntregaDatos = servicioFactura.findAllNotaEnt(clienteBuscado);
-//        listalistaNotaEntregaDatos = servicioFactura.findNotaEntPorCliente(buscarCliente);
         setListaNotaEntregaModel(new ListModelList<Factura>(listalistaNotaEntregaDatos));
         ((ListModelList<Factura>) listaNotaEntregaModel).setMultiple(true);
-//        buscarCliente = clienteCedula;
     }
 
     @Command
@@ -3505,12 +3585,12 @@ public class Facturar extends SelectorComposer<Component> {
         }
         listaDetalleFacturaDAODatos = listaDetalleFacturaDAOMOdel.getInnerList();
         //ingresa un registro vacio
-         
+
         for (DetalleFacturaDAO item : listaPedidoPost) {
-            
+
             for (Factura fac : seleccionNotaEntrega) {
-                
-                if (item.getNumeroNtv().compareTo(fac.getFacNumNotaEntrega())==0)  {
+
+                if (item.getNumeroNtv().compareTo(fac.getFacNumNotaEntrega()) == 0) {
                     Clients.showNotification("La nota de entrega ya fue agregada", Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
                     return;
                 }

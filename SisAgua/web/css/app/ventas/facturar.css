@@ -616,7 +616,7 @@ div.z-listheader-cnt {
     }
 
     .factura_header > .fact_row {
-        width: 50%;
+        width: 100%;
         flex-direction: row;
     }
 
@@ -760,4 +760,40 @@ div.z-listheader-cnt {
     font-size: 12px;
     color: #333;
     height: 30px;
+}
+
+.retencion_header > .fact_row {
+    position: relative;
+    background-color: #eee;
+    padding: 1em;
+    border-radius: 10px;
+    display: flex;
+    /*flex-direction: column;*/
+    width: 100%;
+    gap: 1em;
+}
+
+.paint_all_row {
+    width: 100% !important;
+    background-color: #eee;
+    border-radius: 10px;
+}
+
+.retencion_header > .fact_row:first-child:after {
+    content: "";
+    width: 99%;
+    height: 1px;
+    background-color: #ccc;
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+}
+
+.retencion_header > .fact_row > .wrapper_data {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
 }
