@@ -251,8 +251,9 @@ public class AutorizarDocumentos {
                         + "        <ptoEmi>" + amb.getAmPtoemi() + "</ptoEmi>\n"
                         + "        <secuencial>" + valor.getFacNumeroText() + "</secuencial>\n"
                         + "        <dirMatriz>" + removeCaracteres(amb.getAmDireccionMatriz()) + "</dirMatriz>\n"
-                      + (!amb.getAmGeneral() ? ((amb.getAmRimpe() ? "<contribuyenteRimpe>CONTRIBUYENTE R\u00c9GIMEN RIMPE</contribuyenteRimpe>\n" : "")) : "")
+                     
                         + (amb.getAmAgeRet() ? "<agenteRetencion>1</agenteRetencion>\n" : "")
+                         + (!amb.getAmGeneral() ? ((amb.getAmRimpe() ? "<contribuyenteRimpe>CONTRIBUYENTE R\u00c9GIMEN RIMPE</contribuyenteRimpe>\n" : "")) : "")
                         //  + "        <agenteRetencion>12345678</agenteRetencion>\n"
                         + "</infoTributaria>\n"
                         + "<infoFactura>\n"

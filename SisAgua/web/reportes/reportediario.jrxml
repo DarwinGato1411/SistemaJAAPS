@@ -117,7 +117,6 @@
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
 					<jr:column width="90">
-						<jr:tableHeader style="table_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table_TH" height="31" rowSpan="1"/>
 						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
 							<staticText>
@@ -128,17 +127,15 @@
 								<text><![CDATA[CUENTA]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField>
 								<reportElement x="0" y="0" width="90" height="20"/>
-								<textElement/>
+								<textElement verticalAlignment="Middle"/>
 								<textFieldExpression class="java.lang.String"><![CDATA[$F{subc_numero}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
 					<jr:column width="201">
-						<jr:tableHeader style="table_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table_TH" height="31" rowSpan="1"/>
 						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
 							<staticText>
@@ -149,21 +146,19 @@
 								<text><![CDATA[NOMNRE CUENTA]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField>
 								<reportElement x="0" y="0" width="201" height="20"/>
-								<textElement/>
+								<textElement verticalAlignment="Middle"/>
 								<textFieldExpression class="java.lang.String"><![CDATA[$F{subc_nombre}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
 					<jr:column width="108">
-						<jr:tableHeader style="table_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table_TH" height="31" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="108" height="31"/>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[TOTALES:]]></text>
@@ -178,22 +173,21 @@
 								<text><![CDATA[FECHA]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table" height="30" rowSpan="1">
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="108" height="30"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="108" height="20"/>
+								<box leftPadding="2"/>
+								<textElement verticalAlignment="Middle"/>
 								<textFieldExpression class="java.util.Date"><![CDATA[$F{fecha_ac_subcuenta}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
 					<jr:column width="54">
-						<jr:tableHeader style="table_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table_TH" height="31" rowSpan="1">
-							<textField>
+							<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="54" height="31"/>
 								<textElement/>
-								<textFieldExpression class="java.lang.String"><![CDATA[$V{sumaDebito}]]></textFieldExpression>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumaDebito}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
 						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
@@ -205,22 +199,20 @@
 								<text><![CDATA[DEBITO]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement/>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+								<reportElement x="4" y="0" width="50" height="20"/>
+								<textElement verticalAlignment="Middle"/>
 								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{haber}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
 					<jr:column width="52">
-						<jr:tableHeader style="table_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table_TH" height="31" rowSpan="1">
-							<textField>
+							<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="52" height="31"/>
 								<textElement/>
-								<textFieldExpression class="java.lang.String"><![CDATA[$V{sumaCredito}]]></textFieldExpression>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumaCredito}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
 						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
@@ -232,11 +224,10 @@
 								<text><![CDATA[CREDITO]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
-							<textField>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement/>
+								<textElement verticalAlignment="Middle"/>
 								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{debe}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>

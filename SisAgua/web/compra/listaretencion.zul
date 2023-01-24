@@ -145,7 +145,7 @@
                                     <image src="/iconos/armareval.png"   
                                            onClick="@command('cambiarEstado',valor=each)"                                    
                                            class="btn-secondary btn-sm"                                               
-                                           tooltiptext="Cambiar estado de la factura"/> 
+                                           tooltiptext="Cambiar estado de la retencion"/> 
                                 </listcell>
                                 <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">
                                     <image if="${each.drcEstadosri!='AUTORIZADO'}"
@@ -185,7 +185,7 @@
                                     
                                     
                                     <image if="${each.drcEstadosri!='AUTORIZADO'}"
-                                           src="/iconos/eliminar.png"   
+                                           src="/iconos/delete.png"   
                                            class="grow"  
                                            onClick="@command('eliminarRetencion',valor=each)"                                              
                                            tooltiptext="Eliminar retencion"/> 

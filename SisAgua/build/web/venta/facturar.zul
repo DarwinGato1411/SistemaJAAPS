@@ -190,7 +190,7 @@
                                                 </listcell>
                                                 <listcell zclass = "mycss-listcell">   
                                                     <image  src="/iconos/Forward.png" 
-                                                    style=" height: auto;
+                                                            style=" height: auto;
                                                         background-color: transparent;   border-radius: 15px;"
                                                             onClick="@command('agregarLectura',valor=each)" 
                                                             tooltiptext="Asignar producto"/> 
@@ -201,7 +201,7 @@
                                     </listbox>   
                                     <listbox model="@load(vm.listaNotaEntregaModel)" 
                                              mold="paging"  
-                                              height="150px"           
+                                             height="150px"           
                                              nonselectableTags="" checkmark="true"  
                                              multiple="true"  pageSize="12" 
                                              onSelect="@command('seleccionarRegistrosNotaEntrega')"   >
@@ -244,12 +244,22 @@
                                                     <decimalbox format="###.##" readonly="true" 
                                                                 value="@bind(each.facTotal)" width="96%"/>
                                                 </listcell>                                                         
+                                                <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">
+                                    
+                                    
+                                                    <image 
+                                                           src="/iconos/eliminar.png"   
+                                                           class="grow"  
+                                                           onClick="@command('eliminarNotaEntrega',valor=each)"                                              
+                                                           tooltiptext="Eliminar retencion"/> 
+                                                    
+                                                </listcell>                                                        
                                             </listitem>
                                         </template>
                                     </listbox>
-                                     <div class="contenedorBoton" align="end" >   
-                                                <button src="/iconos/Forward.png"
-                                                         style=" border: none;
+                                    <div class="contenedorBoton" align="end" >   
+                                        <button src="/iconos/Forward.png"
+                                                        style=" border: none;
                                                         color: white;
                                                         height: 30px;
                                                         border-radius: 15px;"        
@@ -258,8 +268,8 @@
                                                         class="btnGuardar"
                                                         onClick="@command('seleccionarNotaEntrega')"
                                                         tooltiptext="Agregar nota entrega"/>                      
-                                                <!--                                                                  -->
-                                            </div>  
+                                        <!--                                                                  -->
+                                    </div>  
                                     <listbox model="@load(vm.listaKardexProducto)" 
                                              nonselectableTags=""    mold="paging" pageSize="5"  >
                                         <custom-attributes org.zkoss.zul.listbox.rod="true"/>

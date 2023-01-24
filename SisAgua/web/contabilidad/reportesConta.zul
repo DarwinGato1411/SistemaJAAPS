@@ -241,7 +241,7 @@
                     </listbox>
          
                 </tabpanel>
-                               <tabpanel  height="100%" width="98%"  >                   
+                <tabpanel  height="100%" width="98%"  >                   
 
                               
                     <div  class="container-fluid" >
@@ -256,18 +256,18 @@
                                 <button   image="/imagenes/buscar1.png"  
                                           onClick="@command('buscarDiaria')"  
                                           class="btn btn-primary btn-sm  "
-                                          tooltiptext="Buscar el total de las facturas"/>                                     
+                                          tooltiptext="Generar y buscar asiento"/>                                     
                             </div> 
-                            <div class="input-group-append">
+<!--                            <div class="col-12 col-sm-12 col-md-2 col-lg-2 input-group-append">
 
                                  <label value="(*)" style="color:transparent;font-weight:bold"/>Generar Asiento
                                     <button   image="/imagenes/reporte1.png"  
                                           onClick="@command('guardar')"  
                                           class="btn btn-primary btn-sm  "
                                           tooltiptext="Generar Asiento "/>                                     
-                            </div>  
-                             <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
-                            <label value="(*)" style="color:transparent;font-weight:bold"/>Ver Reporte                            
+                            </div>  -->
+                             <div  class="col-12 col-sm-12 col-md-2 col-lg-2 input-group-append">
+                            <label value="(*)" style="color:transparent;font-weight:bold"/>                           
                                  <button   image="/iconos/pdfrep2.png"  
                                         onClick="@command('llamarReporteDiario')"  
                                         class="btn btn-primary btn-sm "
@@ -275,7 +275,7 @@
 
                             </div> 
                         </div>
-                                                             <listbox model="@load(vm.listaAcumuladopordias)" 
+<!--                          <listbox model="@load(vm.listaAcumuladopordias)" 
                              nonselectableTags=""  mold="paging" pageSize="20"  >
                         <custom-attributes org.zkoss.zul.listbox.rod="true"/>
                     
@@ -312,39 +312,38 @@
                                 
                             </listitem>
                         </template>
-                    </listbox>
+                    </listbox>-->
                     <div>  </div>
                         <div class="row " align="center">                            
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 " align="start">
-                                <listbox model="@load(vm.listaCuSubCuenta2)" 
+                                <listbox model="@load(vm.listaComprobanteDiario)" 
                                          nonselectableTags=""  
                                          mold="paging" pageSize="12"  > 
                                     <custom-attributes org.zkoss.zul.listbox.rod="true"/>
                                     
                                     <auxhead>
-                                        <auxheader colspan="12" >  
-                                            <div class="row">
-                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
-                                                    
-                                                    <label value="Subcuentas"   />
-                                                   
-                                                </div>
-                                            </div>
-                                
-                                        </auxheader>
+
                                     </auxhead>       
                                     
                                     <listhead> 
-                                        <listheader width="20%"  label="Cuenta" /> 
-                                        <listheader width="50%"  label="Nombre Cuenta" /> 
-                                        <listheader width="15%"  label="Debito" /> 
-                                        <listheader width="15%"  label="Credito" /> 
+                                        <listheader width="10%"  label="Fecha" /> 
+                                        <listheader width="20%"  label="Numero subcuenta" /> 
+                                        <listheader width="50%"  label="Nombre subcuenta" /> 
+                                           <listheader width="15%"  label="Haber" /> 
+                                        <listheader width="15%"  label="Debe" /> 
+                                     
                                                                   
                                     </listhead>  
                         
                     
                                     <template name="model">                                                            
                                         <listitem>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                 <datebox compact="true" value="@bind(each.fechaAcSubcuenta)" 
+                                             style="font-size:11px;background-color:#d6eefd"
+                                             buttonVisible="false" lenient="true" readonly="true"
+                                             format="medium" width="100%"  />
+                                            </listcell>
                                             <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
                                                 <textbox readonly="true" 
                                                          class="form-control form-control-sm"
@@ -362,11 +361,11 @@
                                             </listcell>
                                             <listcell  zclass = "mycss-listcell">
                                             <decimalbox readonly="true" format="###.##" 
-                                                        value="@bind(each.subcSaldo)" width="100%" />
+                                                        value="@bind(each.debe)" width="100%" />
                                             </listcell>
                                             <listcell  zclass = "mycss-listcell">
                                             <decimalbox readonly="true" format="###.##" 
-                                                        value="@bind(each.subcTotal)" width="100%" />
+                                                        value="@bind(each.haber)" width="100%" />
                                             </listcell>
 
                                                                      
@@ -397,13 +396,13 @@
                                                          
                                                          style="text-align:center;font-size:2em;color:blue"/>
                                
-                                        </div>--> 
+                            </div>--> 
                         </div>
                     </div>  
     
                             
                 </tabpanel> 
-                   <tabpanel  height="100%" width="98%"  >                   
+                <tabpanel  height="100%" width="98%"  >                   
 
                               
                     <div  class="container-fluid" >
@@ -456,7 +455,7 @@
                                                 <textbox readonly="true" 
                                                          class="form-control form-control-sm"
                                                          style="font-size:12px;background:#EBF5FB"  
-                                                        value="@bind(each.subcNumero)"
+                                                         value="@bind(each.subcNumero)"
                                                          width="100%" />
                                                 <!--     value="@bind(each.subcNumero)" value="@bind(each.subcNombre)" -->
                                             </listcell>
@@ -468,12 +467,12 @@
                                                          width="100%" />
                                             </listcell>
                                             <listcell  zclass = "mycss-listcell">
-                                            <decimalbox readonly="true" format="###.##" 
-                                                        value="@bind(each.subcSaldo)" width="100%" />
+                                                <decimalbox readonly="true" format="###.##" 
+                                                            value="@bind(each.subcSaldo)" width="100%" />
                                             </listcell>
                                             <listcell  zclass = "mycss-listcell">
-                                            <decimalbox readonly="true" format="###.##" 
-                                                        value="@bind(each.subcTotal)" width="100%" />
+                                                <decimalbox readonly="true" format="###.##" 
+                                                            value="@bind(each.subcTotal)" width="100%" />
                                             </listcell>
 
                                                                      
@@ -487,7 +486,7 @@
                             
                 </tabpanel> 
                 
-                              <tabpanel  height="100%" width="98%"  >                   
+                <tabpanel  height="100%" width="98%"  >                   
 
                               
                     <div  class="container-fluid" >
@@ -538,7 +537,7 @@
                                                 <textbox readonly="true" 
                                                          class="form-control form-control-sm"
                                                          style="font-size:12px;background:#EBF5FB"  
-                                                        value="@bind(each.subcNumero)"
+                                                         value="@bind(each.subcNumero)"
                                                          width="100%" />
                                                 <!--     value="@bind(each.subcNumero)" value="@bind(each.subcNombre)" -->
                                             </listcell>
@@ -550,12 +549,12 @@
                                                          width="100%" />
                                             </listcell>
                                             <listcell  zclass = "mycss-listcell">
-                                            <decimalbox readonly="true" format="###.##" 
-                                                        value="@bind(each.subcSaldo)" width="100%" />
+                                                <decimalbox readonly="true" format="###.##" 
+                                                            value="@bind(each.subcSaldo)" width="100%" />
                                             </listcell>
                                             <listcell  zclass = "mycss-listcell">
-                                            <decimalbox readonly="true" format="###.##" 
-                                                        value="@bind(each.subcTotal)" width="100%" />
+                                                <decimalbox readonly="true" format="###.##" 
+                                                            value="@bind(each.subcTotal)" width="100%" />
                                             </listcell>
 
                                                                      
@@ -568,9 +567,9 @@
     
                             
                 
-                   </tabpanel> 
+                </tabpanel> 
                 
-                              <tabpanel  height="100%" width="98%"  >                   
+                <tabpanel  height="100%" width="98%"  >                   
 
                               
                     <div  class="container-fluid" >
@@ -622,7 +621,7 @@
                                                 <textbox readonly="true" 
                                                          class="form-control form-control-sm"
                                                          style="font-size:12px;background:#EBF5FB"  
-                                                        value="@bind(each.subcNumero)"
+                                                         value="@bind(each.subcNumero)"
                                                          width="100%" />
                                                 <!--     value="@bind(each.subcNumero)" value="@bind(each.subcNombre)" -->
                                             </listcell>
@@ -634,12 +633,12 @@
                                                          width="100%" />
                                             </listcell>
                                             <listcell  zclass = "mycss-listcell">
-                                            <decimalbox readonly="true" format="###.##" 
-                                                        value="@bind(each.subcSaldo)" width="100%" />
+                                                <decimalbox readonly="true" format="###.##" 
+                                                            value="@bind(each.subcSaldo)" width="100%" />
                                             </listcell>
                                             <listcell  zclass = "mycss-listcell">
-                                            <decimalbox readonly="true" format="###.##" 
-                                                        value="@bind(each.subcTotal)" width="100%" />
+                                                <decimalbox readonly="true" format="###.##" 
+                                                            value="@bind(each.subcTotal)" width="100%" />
                                             </listcell>
 
                                                                      
