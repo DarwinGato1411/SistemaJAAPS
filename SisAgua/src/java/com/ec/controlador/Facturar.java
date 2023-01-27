@@ -1331,7 +1331,7 @@ public class Facturar extends SelectorComposer<Component> {
                     
                     valorMultaInt.setDetCantpordescuento(valorDescuentoInt.multiply(valorMultaInt.getCantidad()));
                 } else if (dias >= 30) {
-                    BigDecimal porcentMulta = parametrizar.getParMultaCorte() != null ? parametrizar.getParMultaPorcentaje() : BigDecimal.ZERO;
+                    BigDecimal porcentMulta = parametrizar.getParMultaPorcentaje() != null ? parametrizar.getParMultaPorcentaje() : BigDecimal.ZERO;
                     
                     BigDecimal cobroTotalMulta = (baseImponibleMulta.divide(BigDecimal.valueOf(100.0))).multiply(porcentMulta);
                     cobroTotalMulta = ArchivoUtils.redondearDecimales(cobroTotalMulta, 2);

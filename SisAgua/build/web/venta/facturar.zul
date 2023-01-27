@@ -100,7 +100,7 @@
                                                     <textbox style="font-size:12px;background:white"
                                                              class="form-control form-control-sm"  
                                                              readonly="true"
-                                                             value="@bind(each.idPredio.idPropietario.propApellido)"  />
+                                                             value="@bind(each.idPredio.idPropietario.propDireccion)"  />
                                                 </listcell>
                                                 <listcell zclass = "mycss-listcell">
                                                     <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
@@ -218,6 +218,7 @@
                                             </listheader> 
                                             <listheader width="15%"  label="Fecha" /> 
                                             <listheader width="15%"  label="Total "  />                                 
+                                            <listheader width="5%"  label=" "  />                                 
                                         </listhead>  
                         
                     

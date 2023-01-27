@@ -60,6 +60,7 @@
             </listheader>     
             
             <listheader width="5%"  label="" align="center"/>
+            <listheader width="5%"  label="" align="center"/>
         </listhead>  
         <template name="model">                                                            
             <listitem>       
@@ -117,10 +118,18 @@
                 </listcell>-->
                 
                 <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
+                   <checkbox 
+                       
+                        onCheck="@command('activarDesactivar',valor=each)"
+                        label="ACTIVO" 
+                        checked="@bind(each.medActivo)" 
+                    />
+                </listcell>
+                <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
                     <image src="/iconos/editar.png"
                            class="grow"
                            onClick="@command('actualizar',valor=each)" 
-                           tooltiptext="Modificar"/> 
+                           tooltiptext="Activar o desactivar medidor"/> 
                 </listcell>
             </listitem>
         </template>

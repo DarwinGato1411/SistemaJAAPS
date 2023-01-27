@@ -13,6 +13,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zul.Messagebox;
 
 /**
  *
@@ -36,6 +37,7 @@ public class AdmMedidor {
     private void findMedidorPorNombreApellidoCedula() {
         listaDatos = servicioMedidor.findLikeNombreApellidoCedula(buscarNombre);
     }
+
     private void findMedidorPorNumero() {
         listaDatos = servicioMedidor.findMedidorNumero(buscarNumero);
     }
@@ -45,6 +47,7 @@ public class AdmMedidor {
     public void buscarMedidorNombreApellidoNumero() {
         findMedidorPorNombreApellidoCedula();
     }
+
     @Command
     @NotifyChange({"listaDatos", "buscarNumero"})
     public void buscarMedidorNumero() {
@@ -56,7 +59,7 @@ public class AdmMedidor {
     public void nuevo() {
         buscarNombre = "";
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                "/nuevo/medidor.zul", null, null);
+                    "/nuevo/medidor.zul", null, null);
         window.doModal();
         findMedidorPorNombreApellidoCedula();
     }
@@ -68,12 +71,26 @@ public class AdmMedidor {
         final HashMap<String, Medidor> map = new HashMap<String, Medidor>();
         map.put("valor", valor);
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                "/nuevo/medidor.zul", null, map);
+                    "/nuevo/medidor.zul", null, map);
         window.doModal();
         findMedidorPorNombreApellidoCedula();
     }
 
-  
+    @Command
+    @NotifyChange({"listaDatos", "buscarNombre"})
+    public void activarDesactivar(@BindingParam("valor") Medidor valor) {
+//        if (Messagebox.show("¿Desea activar o desactiva el medidor?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
+
+            
+               
+                servicioMedidor.modificar(valor);
+            
+           
+
+//        }
+
+    }
+
     public String getBuscarNombre() {
         return buscarNombre;
     }
@@ -97,7 +114,5 @@ public class AdmMedidor {
     public void setBuscarNumero(String buscarNumero) {
         this.buscarNumero = buscarNumero;
     }
-    
-    
 
 }

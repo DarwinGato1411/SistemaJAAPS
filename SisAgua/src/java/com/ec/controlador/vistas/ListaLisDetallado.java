@@ -26,6 +26,7 @@ import com.ec.vistas.Acumuladopordia;
 import com.ec.vistas.ListadoDetallado;
 import com.ec.vistas.ListadoDetalladoOrdenado;
 import com.ec.vistas.ListadoItems;
+import com.ec.vistas.MovimientoCartera;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -78,14 +79,12 @@ public class ListaLisDetallado {
 
     ServicioListadoDetalladoOrdenado servicioDetalladoOrdenado = new ServicioListadoDetalladoOrdenado();
     private List<ListadoDetalladoOrdenado> listaListItemsOrd = new ArrayList<ListadoDetalladoOrdenado>();
-<<<<<<< HEAD
-
-=======
+   
     
     ServicioMovimientoCartera servicioMovimientoCartera = new ServicioMovimientoCartera();
     private List<MovimientoCartera> listaMovCartera = new ArrayList<MovimientoCartera>();
-    
->>>>>>> 1cb74b8c9515ae84b7f99ceec203207dca16ae3d
+
+  
     private List<Acumuladopordia> listaAcumuladopordias = new ArrayList<Acumuladopordia>();
     ServicioAcumuladoVentas servicioAcumuladoVentas = new ServicioAcumuladoVentas();
     private Date fechainicioDiaria = new Date();
@@ -109,12 +108,8 @@ public class ListaLisDetallado {
         consultaItems();
         fechainicioDiaria = calendar.getTime();
         consultaVentasDiarias();
-<<<<<<< HEAD
         comprobanteDiario();
 
-=======
-          consultaDetalleMovCartera();
->>>>>>> 1cb74b8c9515ae84b7f99ceec203207dca16ae3d
     }
 
     @Command
@@ -126,7 +121,7 @@ public class ListaLisDetallado {
     }
 
     @Command
-    @NotifyChange({"listaAcumuladopordias", "fechainicioDiaria","listaComprobanteDiario"})
+    @NotifyChange({"listaAcumuladopordias", "fechainicioDiaria", "listaComprobanteDiario"})
     public void buscarDiaria() {
         ServicioSubCuenta servicioSubcuenta = new ServicioSubCuenta();
         ServicioAcSubcuenta servicioAcSubcuenta = new ServicioAcSubcuenta();
@@ -154,7 +149,6 @@ public class ListaLisDetallado {
 
         consultaVentasDiarias();
         comprobanteDiario();
-        
 
     }
 
@@ -174,18 +168,15 @@ public class ListaLisDetallado {
             //item.setPorcentaje(ArchivoUtils.redondearDecimales(porcentaje, 2));
         }
     }
-<<<<<<< HEAD
 
     @Command
-=======
-    //Movimiento de Cartera
-        @Command
     @NotifyChange({"listaMovCartera", "inicio", "fin"})
     public void buscarmovcartera() {
 
         consultaDetalleMovCartera();
 
     }
+
     private void consultaDetalleMovCartera() {
         totalVenta = BigDecimal.ZERO;
         listaMovCartera = servicioMovimientoCartera.findByMes(inicio, fin);
@@ -202,9 +193,8 @@ public class ListaLisDetallado {
             //item.setPorcentaje(ArchivoUtils.redondearDecimales(porcentaje, 2));
         }
     }
-    
-     @Command
->>>>>>> 1cb74b8c9515ae84b7f99ceec203207dca16ae3d
+
+    @Command
     @NotifyChange({"listaCuSubCuenta2"})
     public void buscarlistaCuSubCuenta2() {
 
@@ -234,7 +224,6 @@ public class ListaLisDetallado {
 
     @Command
     @NotifyChange({"listaComprobanteDiario"})
-
     public void guardar() throws ParseException {
 
         ServicioSubCuenta servicioSubcuenta = new ServicioSubCuenta();
@@ -382,8 +371,6 @@ public class ListaLisDetallado {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-<<<<<<< HEAD
-=======
 
     public ServicioMovimientoCartera getServicioMovimientoCartera() {
         return servicioMovimientoCartera;
@@ -400,9 +387,6 @@ public class ListaLisDetallado {
     public void setListaMovCartera(List<MovimientoCartera> listaMovCartera) {
         this.listaMovCartera = listaMovCartera;
     }
-    
-    
->>>>>>> 1cb74b8c9515ae84b7f99ceec203207dca16ae3d
 
     @Command
     @NotifyChange({"listaListItems"})
@@ -557,14 +541,15 @@ public class ListaLisDetallado {
         }
 
     }
-     
-     //movimiento de cartera 
-      //reporte diario
-          @Command
+
+    //movimiento de cartera 
+    //reporte diario
+    @Command
     public void llamarReportMovCartera() throws JRException, IOException, NamingException, SQLException {
         reporteMovCartera();
     }
-     public void reporteMovCartera() throws JRException, IOException, NamingException, SQLException {
+
+    public void reporteMovCartera() throws JRException, IOException, NamingException, SQLException {
 
         EntityManager emf = HelperPersistencia.getEMF();
 
@@ -573,18 +558,16 @@ public class ListaLisDetallado {
             con = emf.unwrap(Connection.class);
 
             String reportFile = Executions.getCurrent().getDesktop().getWebApp()
-                    .getRealPath("/reportes");
+                        .getRealPath("/reportes");
             String reportPath = "";
-            
-                reportPath = reportFile + File.separator + "movimientocartera.jasper";
-            
+
+            reportPath = reportFile + File.separator + "movimientocartera.jasper";
 
             Map<String, Object> parametros = new HashMap<String, Object>();
 
             //  parametros.put("codUsuario", String.valueOf(credentialLog.getAdUsuario().getCodigoUsuario()));
             parametros.put("inicio", inicio);
             parametros.put("fin", fin);
-        
 
             if (con != null) {
                 System.out.println("Conexión Realizada Correctamenteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
@@ -600,7 +583,7 @@ public class ListaLisDetallado {
 //para pasar al visor
             map.put("pdf", fileContent);
             org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                    "/venta/contenedorReporte.zul", null, map);
+                        "/venta/contenedorReporte.zul", null, map);
             window.doModal();
         } catch (Exception e) {
             System.out.println("ERROR EL PRESENTAR EL REPORTE " + e.getMessage());
@@ -612,7 +595,6 @@ public class ListaLisDetallado {
         }
 
     }
-
 
     public List<ComprobanteDiario> getListaComprobanteDiario() {
         return listaComprobanteDiario;

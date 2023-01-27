@@ -426,12 +426,14 @@ public class Compras {
     private void calcularValoresTotales() {
         BigDecimal valorTotal = BigDecimal.ZERO;
         BigDecimal valorTotalCero = BigDecimal.ZERO;
+         BigDecimal totalizado = BigDecimal.ZERO;
 
         List<DetalleCompraUtil> listaPedido = listaCompraProductosMOdel.getInnerList();
         if (listaPedido.size() > 0) {
             for (DetalleCompraUtil item : listaPedido) {
 
                 if (item.getProducto() != null) {
+                    totalizado=totalizado.add(item.getTotal());
                     valorTotal = valorTotal.add(item.getProducto().getProdGrabaIva() ? item.getTotal() : BigDecimal.ZERO);
                     valorTotalCero = valorTotalCero.add(!item.getProducto().getProdGrabaIva() ? item.getTotal() : BigDecimal.ZERO);
                 }
@@ -442,7 +444,7 @@ public class Compras {
             subTotalFactura = valorTotal;
             BigDecimal valorIva = subTotalFactura.multiply(BigDecimal.valueOf(0.12));
             ivaFactura = valorIva;
-            valorTotalFactura = valorTotal.add(valorIva).add(subTotalFacturaCero);
+            valorTotalFactura = totalizado;
             subTotalFactura.setScale(4, RoundingMode.FLOOR);
             ivaFactura.setScale(4, RoundingMode.FLOOR);
             valorTotalFactura.setScale(4, RoundingMode.FLOOR);

@@ -48,7 +48,7 @@
                                      constraint="no empty: Ingrese la fecha "/>
                             <div class="input-group-append">
                                 <button   image="/imagenes/buscar1.png"  
-                                          onClick="@command('listaAsientoContable')"  
+                                          onClick="@command('buscarAC')"  
                                           class="btn btn-primary btn-sm  "
                                           tooltiptext="Buscar "/>                                     
                             </div>  
