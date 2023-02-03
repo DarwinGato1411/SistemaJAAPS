@@ -7,6 +7,7 @@ package com.ec.servicio;
 import com.ec.entidad.Lectura;
 import com.ec.entidad.Medidor;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
@@ -143,7 +144,7 @@ public class ServicioLectura {
         return listaLecturas;
     }
 
-    public void iniciarProximoMes(Integer mes) {
+    public void iniciarProximoMes(Integer mes, Date fecha) {
         try {
             em = HelperPersistencia.getEMF();
 
@@ -154,6 +155,7 @@ public class ServicioLectura {
             StoredProcedureQuery queryStore = em.createStoredProcedureQuery("iniciar_proximo_mes_par");
             queryStore.registerStoredProcedureParameter("numeromes", Integer.class, ParameterMode.IN);
             queryStore.setParameter("numeromes", mes);
+            queryStore.setParameter("fecharegistro", fecha);
             queryStore.executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {

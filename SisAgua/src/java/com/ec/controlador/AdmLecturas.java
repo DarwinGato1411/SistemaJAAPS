@@ -93,7 +93,7 @@ public class AdmLecturas {
     public void iniciarMesSiguiente() {
 
         if (Messagebox.show("Al generar una nueva tabla de lecturas, los lecturas de " + buscarMes.getNombre() + " serán eliminadas" + "\n Desea continuar?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
-            servicioLectura.iniciarProximoMes(buscarMes.getNumero());
+            servicioLectura.iniciarProximoMes(buscarMes.getNumero(),fechaCreacion);
             findMesAndNuMedidor();
         } else {
             Clients.showNotification("Solicitud cancelada",
