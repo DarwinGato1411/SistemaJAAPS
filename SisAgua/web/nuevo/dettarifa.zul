@@ -38,44 +38,28 @@
                 <label value="(*) " style="color:red;font-weight:bold"/>Excedente ($):
                 
                 <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,3})?$/:Ingrese solo numeros"                                                                                                              
-                            value="@bind(vm.entidad.dettPorcentajeExcedente)"   
+                            value="@bind(vm.entidad.dettPrecioExcedente)"   
                             class="form-control" />
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
-                <label value="(*) " style="color:red;font-weight:bold"/>% Alcantarillado :
+                <label value="(*) " style="color:red;font-weight:bold"/> Alcantarillado ($):
                 
                 <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,2})?$/:Ingrese solo numeros"                                                                                                              
-                            value="@bind(vm.entidad.dettPorcentajeAlcantarillado)"   
+                            value="@bind(vm.entidad.dettAlcantarillado)"   
                             class="form-control" />
             </div>
             
             <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
-                <label value="(*) " style="color:red;font-weight:bold"/>Precio Ambiente :
+                <label value="(*) " style="color:red;font-weight:bold"/>Precio Ambiente ($):
                 
                 <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,3})?$/:Ingrese solo numeros"                                                                                                              
                             value="@bind(vm.entidad.dettAmbiente)"   
                             class="form-control" />
             </div>
             
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
-                <radiogroup 
-                    onCheck="@command('verificarPrecioPorcentaje')" 
-                    selectedItem="@bind(vm.precioPorcentaje)"  >                   
-                    <radio label="Porcentaje" value="TRUE"/>
-                    <space bar="false"  />   
-                    <radio label="Precio" value="FALSE"/>                          
-                </radiogroup>
-            </div>
-            
-             <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group " visible="@bind(vm.entidad.dettValidadesecho)"  >
-                <label value="% Desechos :" style="color:black;"/>
-                
-                <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,3})?$/:Ingrese solo numeros"                                                                                                              
-                            value="@bind(vm.entidad.dettPorcentajeDesechos)"   
-                            class="form-control" />
-            </div>
-             <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  visible="@bind(!vm.entidad.dettValidadesecho)">
-                <label value="Desechos ($) :" style="color:black"/>
+
+             <div class="col-12 col-sm-12 col-md-6 col-lg-6  form-group "  >
+                <label value="(*) " style="color:red;font-weight:bold"/>Desechos ($):
                 
                 <textbox    constraint="/^[0-9]{1,9}(?:[.][0-9]{1,3})?$/:Ingrese solo numeros"                                                                                                              
                             value="@bind(vm.entidad.dettDesechos)"   

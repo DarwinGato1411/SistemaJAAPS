@@ -107,7 +107,7 @@ public class ServicioDetalleTarifas {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM DetalleTarifa a WHERE a.idTarifa =:idTarifa");
+            Query query = em.createQuery("SELECT  a FROM DetalleTarifa a WHERE a.idTarifa =:idTarifa ORDER BY a.idDetalleTar asc");
             query.setParameter("idTarifa", idTarifa);
             listaDetalleTarifas = (List<DetalleTarifa>) query.getResultList();
 
