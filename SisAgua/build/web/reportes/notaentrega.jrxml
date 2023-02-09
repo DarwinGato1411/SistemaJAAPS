@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaentrega" language="groovy" pageWidth="212" pageHeight="842" columnWidth="172" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="20" isIgnorePagination="true">
 	<property name="ireport.zoom" value="2.3579476910000023"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="254"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -304,7 +304,7 @@ and tipoambiente.am_estado is true;]]>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>
 			</line>
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="40" width="51" height="30"/>
 				<imageExpression class="java.lang.String"><![CDATA[$F{am_dir_img_punto_venta}]]></imageExpression>
 			</image>

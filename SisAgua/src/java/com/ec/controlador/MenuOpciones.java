@@ -307,6 +307,10 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnLecturas() {
         Executions.sendRedirect("/venta/admlecturas.zul");
     }
+    @Listen("onClick = #btnEstadisticoMensual")
+    public void btnEstadisticoMensual() {
+        Executions.sendRedirect("/contabilidad/estadisticomensual.zul");
+    }
 
     @Command
     public void facturar(@BindingParam("valor") DetalleFacturaDAO valor) {

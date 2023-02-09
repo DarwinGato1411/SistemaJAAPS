@@ -104,6 +104,7 @@
                                
                                 <menuitem label="Reportes Contabilidad" id="btnReportesConta" />
                                 <menuitem label="Codigos retencion" id="btnListaTipoRetencion" />
+                                <menuitem label="Estadistico mensual" id="btnEstadisticoMensual" />
                             </menupopup>
                         </menu>
                         

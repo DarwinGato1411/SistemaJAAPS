@@ -908,7 +908,7 @@ public class Facturar extends SelectorComposer<Component> {
             valorExcedente.setDetPordescuento(DESCUENTOGENERAL);
             valorExcedente.setCodigo(productoBuscado.getProdCodigo());
             valorExcedente.setEsProducto(producto.getProdEsproducto());
-            valorExcedente.setTotalInicial(alcantarillado);
+            valorExcedente.setTotalInicial(valorCobroExce);
             valorExcedente.setTotal(ArchivoUtils.redondearDecimales(valorCobroExce, 2));
             // valorExcedente.setLectura(lectura);
             //para llenar lectura como producto
