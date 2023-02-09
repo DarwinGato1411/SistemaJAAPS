@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window  id="windowHistorico"  position="center" class="col-12 col-sm-12 col-md-9 col-lg-9"  closable="true"  
+         apply="org.zkoss.bind.BindComposer" 
+         viewModel="@id('vm') @init('com.ec.controlador.Historial')">
+    
+    <caption label="Historico de pago" style="font-weight:bold"/> 
+    
+    <div  class="container-fluid " >
+                  
+        <listbox  width="100%" model="@load(vm.listaDatosHistorial)" 
+                      height="300px"
+                      mold="paging" pageSize="10"
+                      checkmark="false"  
+                      multiple="false"              
+                      nonselectableTags=""
+                      style="margin-bottom:10px">
+            <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                                       
+            <listhead>  
+                <listheader width="15%"  label="# Medidor" ></listheader>                   
+                <listheader width="65%"  label="Detalle" ></listheader>             
+                <listheader width="20%" label="Mes"></listheader>              
+                <listheader width="20%" label="Año"></listheader>              
+            </listhead>  
+            <template name="model">                                                            
+                <listitem>  
+                    <listcell zclass = "mycss-listcell">
+                        <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                     class="form-control form-control-sm"  
+                                     value="@bind(each.detMedidor)"  />
+                    </listcell>
+                    <listcell zclass = "mycss-listcell">
+                        <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                     class="form-control form-control-sm"  
+                                     value="@bind(each.detDescripcion)"  />
+                    </listcell>
+                 
+                    <listcell zclass = "mycss-listcell">
+                        <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                     class="form-control form-control-sm"   
+                                     value="@bind(each.mesText)"                             />
+                    </listcell>
+                    <listcell zclass = "mycss-listcell">
+                        <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                                     class="form-control form-control-sm"   
+                                     value="@bind(each.anio)"                             />
+                    </listcell>
+                </listitem>
+            </template>
+        </listbox>    
+    </div>
+</window>
