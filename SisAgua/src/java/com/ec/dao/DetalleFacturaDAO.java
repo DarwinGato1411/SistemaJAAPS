@@ -60,6 +60,12 @@ public class DetalleFacturaDAO {
     private String mesCobro = "";
     private Integer numeroNtv = 0;
 
+    private BigDecimal lecAnterior;
+    private BigDecimal lecActual;
+    private String numMedidor;
+    private Integer mes;
+    private String dirMedidor;
+
     public DetalleFacturaDAO() {
     }
 
@@ -373,6 +379,46 @@ public class DetalleFacturaDAO {
 
     public void setNumeroNtv(Integer numeroNtv) {
         this.numeroNtv = numeroNtv;
+    }
+
+    public BigDecimal getLecAnterior() {
+        return lecAnterior;
+    }
+
+    public void setLecAnterior(BigDecimal lecAnterior) {
+        this.lecAnterior = lecAnterior;
+    }
+
+    public BigDecimal getLecActual() {
+        return lecActual;
+    }
+
+    public void setLecActual(BigDecimal lecActual) {
+        this.lecActual = lecActual;
+    }
+
+    public String getNumMedidor() {
+        return numMedidor;
+    }
+
+    public void setNumMedidor(String numMedidor) {
+        this.numMedidor = numMedidor;
+    }
+
+    public Integer getMes() {
+        return mes;
+    }
+
+    public void setMes(Integer mes) {
+        this.mes = mes;
+    }
+
+    public String getDirMedidor() {
+        return dirMedidor;
+    }
+
+    public void setDirMedidor(String dirMedidor) {
+        this.dirMedidor = dirMedidor;
     }
 
 }

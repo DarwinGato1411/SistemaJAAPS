@@ -112,9 +112,9 @@
                         </listheader> 
                         <listheader width="15%"  label="Base" />              
                         <listheader width="15%"  label="Excedente ($)" />              
-                        <listheader width="15%"  label="% Alcantarillado" />              
-                        <listheader width="15%"  label="Desechos" />              
-                        <listheader width="15%"  label="Ambiente" />              
+                        <listheader width="15%"  label="Alcantarillado ($)" />              
+                        <listheader width="15%"  label="Desechos ($)" />              
+                        <listheader width="15%"  label="Ambiente ($)" />              
                         <listheader width="10%"  label="" align="center"/>
                     </listhead>  
                     <template name="model">                                                            
@@ -133,21 +133,18 @@
                             </listcell>
                             <listcell zclass = "mycss-listcell">
                                 <decimalbox format="###.####" readonly="true" 
-                                            value="@bind(each.dettPorcentajeExcedente)" width="96%"/>
+                                            value="@bind(each.dettPrecioExcedente)" width="96%"/>
                             </listcell>
                             <listcell zclass = "mycss-listcell">
                                 <decimalbox format="###.###" readonly="true" 
-                                            value="@bind(each.dettPorcentajeAlcantarillado)" width="96%"/>
+                                            value="@bind(each.dettAlcantarillado)" width="96%"/>
                             </listcell>
                             <listcell zclass = "mycss-listcell">
-                                <div  if="${each.dettValidadesecho}">
-                                    %<decimalbox format="###.##" readonly="true" 
-                                                value="@bind(each.dettPorcentajeDesechos)" width="80%"/>
-                                </div>  
-                                <div  if="${!each.dettValidadesecho}">
-                                    $<decimalbox format="###.###" readonly="true" 
-                                                             value="@bind(each.dettDesechos)" width="80%"/>
-                                </div>
+ 
+                               
+                                <decimalbox format="###.###" readonly="true" 
+                                                value="@bind(each.dettDesechos)" width="80%"/>
+                          
                                
                             </listcell>
                             <listcell zclass = "mycss-listcell">
@@ -158,7 +155,7 @@
                                 <image src="/iconos/editar.png"
                                        class="grow"
                                        onClick="@command('actualizarDetalle',valor=each)" 
-                                       tooltiptext="Modificar producto"/> 
+                                       tooltiptext="Modificar detalle"/> 
                             </listcell>
                         </listitem>
                     </template>

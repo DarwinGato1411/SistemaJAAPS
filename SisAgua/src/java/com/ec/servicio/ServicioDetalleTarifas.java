@@ -99,6 +99,31 @@ public class ServicioDetalleTarifas {
         return entidad;
     }
 
+    public DetalleTarifa findIdTarifaTipo(Tarifa idTarifa,String sigla) {
+
+        List<DetalleTarifa> listaDetalleTarifas = new ArrayList<DetalleTarifa>();
+        DetalleTarifa entidad = null;
+        try {
+            //Connection connection = em.unwrap(Connection.class);
+            em = HelperPersistencia.getEMF();
+            em.getTransaction().begin();
+            Query query = em.createQuery("SELECT  a FROM DetalleTarifa a WHERE a.tipo=:tipo and a.idTarifa=:idTarifa ");
+            query.setParameter("tipo", sigla);
+            query.setParameter("idTarifa", idTarifa);
+           
+            listaDetalleTarifas = (List<DetalleTarifa>) query.getResultList();
+            entidad = listaDetalleTarifas.size() > 0 ? listaDetalleTarifas.get(0) : null;
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error en lsa consulta findIdTarifaAndMetros" + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return entidad;
+    }
+
     public List<DetalleTarifa> findIdTarifa(Tarifa idTarifa) {
 
         List<DetalleTarifa> listaDetalleTarifas = new ArrayList<DetalleTarifa>();

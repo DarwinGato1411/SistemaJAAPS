@@ -57,24 +57,24 @@ public class ServicioFactura {
             em.getTransaction().begin();
 
             DetalleFacturaDAO recuAO = detalleFacturaDAOs.get(0);
-            if(recuAO.getLectura() != null){
-            factura.setFacLecAnterior(recuAO.getLectura() != null? recuAO.getLectura().getLecAnterior():BigDecimal.ZERO);
-            factura.setFacLecActual(recuAO.getLectura() != null? recuAO.getLectura().getLecActual():BigDecimal.ZERO );
-            factura.setFacMetrosCubicos(recuAO.getLectura() != null? recuAO.getLectura().getLecMetrosCubicos():BigDecimal.ZERO);
-            factura.setFacLecMes(recuAO.getLectura() != null? recuAO.getLectura().getLecMes():0 );
-            factura.setFacMedidor(recuAO.getLectura() != null? recuAO.getLectura().getIdMedidor().getMedNumero():"S/N");
-            factura.setFacDirMedidor(recuAO.getLectura() != null ? recuAO.getLectura().getIdMedidor().getMedDireccion() : "S/N");
+            if (recuAO.getLectura() != null) {
+                factura.setFacLecAnterior(recuAO.getLectura() != null ? recuAO.getLectura().getLecAnterior() : BigDecimal.ZERO);
+                factura.setFacLecActual(recuAO.getLectura() != null ? recuAO.getLectura().getLecActual() : BigDecimal.ZERO);
+                factura.setFacMetrosCubicos(recuAO.getLectura() != null ? recuAO.getLectura().getLecMetrosCubicos() : BigDecimal.ZERO);
+                factura.setFacLecMes(recuAO.getLectura() != null ? recuAO.getLectura().getLecMes() : 0);
+                factura.setFacMedidor(recuAO.getLectura() != null ? recuAO.getLectura().getIdMedidor().getMedNumero() : "S/N");
+                factura.setFacDirMedidor(recuAO.getLectura() != null ? recuAO.getLectura().getIdMedidor().getMedDireccion() : "S/N");
             }
             em.persist(factura);
             em.flush();
             DetalleFactura detalleFactura = null;
             for (DetalleFacturaDAO item : detalleFacturaDAOs) {
                 detalleFactura = new DetalleFactura(item.getCantidad(),
-                        item.getDescripcion(),
-                        item.getSubTotal(),
-                        item.getTotal(),
-                        item.getProducto(),
-                        factura, item.getTipoVenta());
+                            item.getDescripcion(),
+                            item.getSubTotal(),
+                            item.getTotal(),
+                            item.getProducto(),
+                            factura, item.getTipoVenta());
                 detalleFactura.setDetIva(item.getDetIva());
                 detalleFactura.setDetTotalconiva(item.getDetTotalconiva());
 
@@ -103,14 +103,14 @@ public class ServicioFactura {
                 detalleFactura.setProvincia(item.getProvincia());
                 detalleFactura.setNumerotel(item.getNumerotel());
                 detalleFactura.setCodigoCantonMatriculacion(item.getCodigoCantonMatriculacion());
-                 detalleFactura.setDetLecActual(item.getLectura() != null ? item.getLectura().getLecActual() : BigDecimal.ZERO);
+                detalleFactura.setDetLecActual(item.getLectura() != null ? item.getLectura().getLecActual() : BigDecimal.ZERO);
                 detalleFactura.setDetLecAnterior(item.getLectura() != null ? item.getLectura().getLecAnterior() : BigDecimal.ZERO);
                 detalleFactura.setDetMetrosCubicos(item.getLectura() != null ? item.getLectura().getLecMetrosCubicos() : BigDecimal.ZERO);
                 detalleFactura.setDetLecMes(item.getLectura() != null ? item.getLectura().getLecMes() : 0);
                 detalleFactura.setDetMedidor(item.getLectura() != null ? item.getLectura().getIdMedidor().getMedNumero() : "");
                 detalleFactura.setDetDirMedidor(item.getLectura() != null ? item.getLectura().getIdMedidor().getMedBarrio() : "");
                 detalleFactura.setIdLectura(item.getLectura());
-                
+
                 if (item.getLectura() != null) {
                     Lectura actual = item.getLectura();
                     actual.setLecPagada("S");
@@ -140,11 +140,11 @@ public class ServicioFactura {
             DetalleFactura detalleFactura = null;
             for (DetalleFacturaDAO item : detalleFacturaDAOs) {
                 detalleFactura = new DetalleFactura(item.getCantidad(),
-                        item.getDescripcion(),
-                        item.getSubTotal(),
-                        item.getTotal(),
-                        item.getProducto(),
-                        factura, item.getTipoVenta());
+                            item.getDescripcion(),
+                            item.getSubTotal(),
+                            item.getTotal(),
+                            item.getProducto(),
+                            factura, item.getTipoVenta());
                 detalleFactura.setDetIva(item.getDetIva());
                 detalleFactura.setDetTotalconiva(item.getDetTotalconiva());
 //                servicioDetalleFactura.modificar(detalleFactura);
@@ -171,11 +171,11 @@ public class ServicioFactura {
             DetalleFactura detalleFactura = null;
             for (DetalleFacturaDAO item : detalleFacturaDAOs) {
                 detalleFactura = new DetalleFactura(item.getCantidad(),
-                        item.getDescripcion(),
-                        item.getSubTotal(),
-                        item.getTotal(),
-                        item.getProducto(),
-                        factura, item.getTipoVenta());
+                            item.getDescripcion(),
+                            item.getSubTotal(),
+                            item.getTotal(),
+                            item.getProducto(),
+                            factura, item.getTipoVenta());
                 detalleFactura.setDetSubtotaldescuento(item.getSubTotalDescuento());
                 detalleFactura.setDetTotaldescuento(item.getDetTotaldescuento());
                 detalleFactura.setDetPordescuento(item.getDetPordescuento());
