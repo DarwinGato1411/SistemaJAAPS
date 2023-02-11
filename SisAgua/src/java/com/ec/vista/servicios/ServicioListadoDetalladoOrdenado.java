@@ -5,17 +5,11 @@
  */
 package com.ec.vista.servicios;
 import com.ec.servicio.HelperPersistencia;
-import com.ec.vistas.CantVentProductos;
 import com.ec.vistas.ListadoDetalladoOrdenado;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Query;
 /**
  *
@@ -41,7 +35,7 @@ public class ServicioListadoDetalladoOrdenado {
            // Query query = em.createQuery("SELECT new com.ec.vistas.RotacionProducto(max(a.prodNombre),SUM(a.cantidadVenta),SUM(a.valorVentaProducto)) FROM RotacionProducto a WHERE a.facFecha BETWEEN :inicio and :fin  GROUP BY a.idProducto" );
           // Query query = em.createQuery("SELECT new com.ec.vistas.ListadoDetalladoOrdenado( a.idFactura, a.facNumero, a.facFecha, a.medNumero, a.propNombre, a.propApellido, a.facMetrosCubicos )FROM ListadoDetallado a  WHERE a.facFecha  BETWEEN :inicio and :fin " );
            
-          Query query = em.createQuery("SELECT new com.ec.vistas.ListadoDetalladoOrdenado( a.idFactura, a.facNumero, a.facFecha, a.medNumero, a.propNombre, a.propApellido, a.facMetrosCubicos, a.agua, a.excedente, a.alcantarrillado, a.desechos, a.medioAmbiente, a.interes1, a.interes2, a.facTotal )FROM ListadoDetalladoOrdenado a  WHERE a.facFecha  BETWEEN :inicio and :fin " );
+          Query query = em.createQuery("SELECT new com.ec.vistas.ListadoDetalladoOrdenado( max(a.idFactura), a.facNumero, max(a.facFecha),max( a.medNumero), max(a.propNombre), max(a.propApellido), max(a.facMetrosCubicos), sum(a.agua), sum(a.excedente), sum(a.alcantarrillado), sum(a.desechos), sum(a.medioAmbiente), sum(a.interes1), sum(a.interes2), max(a.facTotal),sum(a.derechos),sum(a.multas),sum(a.material),sum(a.garantia))FROM ListadoDetalladoOrdenado a  WHERE  a.facFecha  BETWEEN :inicio and :fin  GROUP BY  a.facNumero " );
             query.setParameter("inicio", inicio);
             query.setParameter("fin", fin);
             listaLisDetalladoOrdenado = (List<ListadoDetalladoOrdenado>) query.getResultList();

@@ -6,7 +6,6 @@
 package com.ec.vista.servicios;
 
 import com.ec.servicio.HelperPersistencia;
-import com.ec.vistas.ListadoDetalladoOrdenado;
 import com.ec.vistas.MovimientoCartera;
 import java.util.ArrayList;
 import java.util.Date;

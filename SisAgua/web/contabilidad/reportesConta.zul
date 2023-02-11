@@ -11,7 +11,7 @@
         <tabbox  width="100%"  tabscroll="true" >
             <tabs >
                 <tab label="Estadistica Mensual de Movimiento de Corte" sclass="menutabs"/>
-                <tab label="Listado Detallado de Cobros" sclass="menutabs"/>
+                <!--<tab label="Listado Detallado de Cobros" sclass="menutabs"/>-->
                 <tab label="Comprobante Diario" sclass="menutabs"/>
                 <tab label="Estadistica Mensual de Movimiento de Cartera" sclass="menutabs"/>
                 <tab label="Diario General" sclass="menutabs"/>
@@ -96,7 +96,9 @@
                         </div>
                     </div>
                 </tabpanel>
-                <tabpanel  width="99%"  >                    
+                
+                
+<!--                <tabpanel  width="99%"  >                    
                     <div class="row">
                        
                         <div class=" input-group col-12 col-sm-12 col-md-4 col-lg-4 ">
@@ -122,6 +124,10 @@
                                
                         </div>
                          <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
+                                <button   image="/iconos/pdfrep2.png"  
+                                        onClick="@command('llamarReporteDetallado')"  
+                                        class="btn btn-primary btn-sm "
+                                        tooltiptext="Descargar en Excel"/>
                                 <button   image="/iconos/pdfrep2.png"  
                                         onClick="@command('llamarReporteDetallado')"  
                                         class="btn btn-primary btn-sm "
@@ -241,6 +247,9 @@
                     </listbox>
          
                 </tabpanel>
+                
+                -->
+                
                                <tabpanel  height="100%" width="98%"  >                   
 
                               

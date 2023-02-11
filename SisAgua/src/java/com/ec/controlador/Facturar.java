@@ -1337,7 +1337,7 @@ public class Facturar extends SelectorComposer<Component> {
                     cobroTotalMulta = ArchivoUtils.redondearDecimales(cobroTotalMulta, 2);
                     valorMulta.setCantidad(BigDecimal.ONE);
                     valorMulta.setProducto(prodMulta);
-                    valorMulta.setDescripcion("MULTA POR 2 MESES IMPAGOS");
+                    valorMulta.setDescripcion("INTERES VALORES IMPAGOS");
                     valorMulta.setDetPordescuento(BigDecimal.ZERO);
                     valorMulta.setCodigo(prodMulta.getProdCodigo());
                     valorMulta.setEsProducto(producto.getProdEsproducto());

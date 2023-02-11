@@ -5,28 +5,15 @@
  */
 package com.ec.controlador.vistas;
 
-import com.ec.entidad.Factura;
-import com.ec.entidad.contabilidad.AcSubCuenta;
-import com.ec.entidad.contabilidad.ComprobanteDiario;
-import com.ec.entidad.contabilidad.CuSubCuenta;
-import com.ec.seguridad.EnumSesion;
-import com.ec.seguridad.UserCredential;
 import com.ec.servicio.HelperPersistencia;
 import com.ec.servicio.ServicioAcumuladoVentas;
-import com.ec.servicio.contabilidad.ServicioAcSubcuenta;
-import com.ec.servicio.contabilidad.ServicioSubCuenta;
 import com.ec.untilitario.ArchivoUtils;
-import com.ec.untilitario.ModeloAcumuladoDiaUsuario;
-import com.ec.vista.servicios.ServicioAcumuladoDiarioUsuario;
-import com.ec.vista.servicios.ServicioComprobanteDiario;
 import com.ec.vista.servicios.ServicioListadoDetallado;
 import com.ec.vista.servicios.ServicioListadoDetalladoOrdenado;
-import com.ec.vista.servicios.ServicioListadoItems;
 import com.ec.vista.servicios.ServicioMovimientoCartera;
 import com.ec.vistas.Acumuladopordia;
 import com.ec.vistas.ListadoDetallado;
 import com.ec.vistas.ListadoDetalladoOrdenado;
-import com.ec.vistas.ListadoItems;
 import com.ec.vistas.MovimientoCartera;
 
 import java.io.ByteArrayInputStream;
@@ -39,7 +26,6 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.List;
@@ -64,15 +50,13 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.Session;
-import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Filedownload;
 
 /**
  *
  * @author HC
  */
-public class ListaLisDetallado {
+public class ListaLisDetalladoOrdenado {
 
     ServicioListadoDetallado servicioListadoDetallado = new ServicioListadoDetallado();
 
@@ -84,12 +68,6 @@ public class ListaLisDetallado {
 
     private List<ListadoDetallado> listaListDetallado = new ArrayList<ListadoDetallado>();
 
-    ServicioListadoItems servicioListadoItems = new ServicioListadoItems();
-    private List<ListadoItems> listaListItems = new ArrayList<ListadoItems>();
-
-    ServicioSubCuenta servicioSubCuenta2 = new ServicioSubCuenta();
-    private List<CuSubCuenta> listaCuSubCuenta2 = new ArrayList<CuSubCuenta>();
-
     ServicioListadoDetalladoOrdenado servicioDetalladoOrdenado = new ServicioListadoDetalladoOrdenado();
     private List<ListadoDetalladoOrdenado> listaListItemsOrd = new ArrayList<ListadoDetalladoOrdenado>();
 
@@ -100,26 +78,16 @@ public class ListaLisDetallado {
     ServicioAcumuladoVentas servicioAcumuladoVentas = new ServicioAcumuladoVentas();
     private Date fechainicioDiaria = new Date();
 
-    ServicioAcumuladoDiarioUsuario servicioAcumuladoDiarioUsuario = new ServicioAcumuladoDiarioUsuario();
-    UserCredential credential = new UserCredential();
-    private BigDecimal totFactura = BigDecimal.ZERO;
-
-    ServicioComprobanteDiario servicioComprobanteDiario = new ServicioComprobanteDiario();
-    private List<ComprobanteDiario> listaComprobanteDiario = new ArrayList<ComprobanteDiario>();
-
-    public ListaLisDetallado() {
+    public ListaLisDetalladoOrdenado() {
 
         Calendar calendar = Calendar.getInstance(); //obtiene la fecha de hoy 
         calendar.add(Calendar.DATE, -6); //el -3 indica que se le restaran 3 dias 
         inicio = calendar.getTime();
 
         //fechainicioDiaria.setDate(-7);
-        consultaCuSubCuentas();
         consultaDetalle();
-        consultaItems();
+
         fechainicioDiaria = calendar.getTime();
-        consultaVentasDiarias();
-        comprobanteDiario();
 
     }
 
@@ -131,184 +99,10 @@ public class ListaLisDetallado {
 
     }
 
-    @Command
-    @NotifyChange({"listaAcumuladopordias", "fechainicioDiaria", "listaComprobanteDiario"})
-    public void buscarDiaria() {
-        ServicioSubCuenta servicioSubcuenta = new ServicioSubCuenta();
-        ServicioAcSubcuenta servicioAcSubcuenta = new ServicioAcSubcuenta();
-
-        Session sess = Sessions.getCurrent();
-        UserCredential cre = (UserCredential) sess.getAttribute(EnumSesion.userCredential.getNombre());
-        credential = cre;
-        if (servicioAcumuladoDiarioUsuario.findCierrePorUsuario(fechainicioDiaria, credential.getUsuarioSistema()).size() > 0) {
-            ModeloAcumuladoDiaUsuario acumuladoDiaUsuario = servicioAcumuladoDiarioUsuario.findCierrePorUsuario(fechainicioDiaria, credential.getUsuarioSistema()).get(0);
-            totFactura = ArchivoUtils.redondearDecimales(acumuladoDiaUsuario.getValorFacturas(), 2);
-        } else {
-            totFactura = BigDecimal.ZERO;
-        }
-
-        CuSubCuenta valorCajaGeneral = servicioSubcuenta.findByNombre("CAJA GENERAL").get(0);
-        BigDecimal valorTotal = totFactura;
-        AcSubCuenta acCajaGeneral = new AcSubCuenta();
-
-        valorCajaGeneral.setSubcTotal(valorTotal.add(valorTotal));
-        servicioSubcuenta.modificar(valorCajaGeneral);
-        acCajaGeneral.setIdSubCuenta(valorCajaGeneral);
-        acCajaGeneral.setDebe(valorTotal);
-        acCajaGeneral.setFechaAcSubcuenta(fecha);
-        servicioAcSubcuenta.crear(acCajaGeneral);
-
-        consultaVentasDiarias();
-        comprobanteDiario();
-
-    }
-
     private void consultaDetalle() {
         totalVenta = BigDecimal.ZERO;
         listaListItemsOrd = servicioDetalladoOrdenado.findByMes(inicio, fin);
 
-        /*Calculo el total*/
-        for (ListadoDetalladoOrdenado item : listaListItemsOrd) {
-            totalVenta = totalVenta.add(item.getFacTotal());
-        }
-        /*coloco el porcentaje*/
-        for (ListadoDetalladoOrdenado item : listaListItemsOrd) {
-            BigDecimal itemporcient = BigDecimal.valueOf(100.0).multiply(item.getFacTotal());
-            // BigDecimal porcentaje = itemporcient.divide(totalVenta, 4, RoundingMode.FLOOR);
-
-            //item.setPorcentaje(ArchivoUtils.redondearDecimales(porcentaje, 2));
-        }
-    }
-
-    @Command
-    @NotifyChange({"listaMovCartera", "inicio", "fin"})
-    public void buscarmovcartera() {
-
-        consultaDetalleMovCartera();
-
-    }
-
-    private void consultaDetalleMovCartera() {
-        totalVenta = BigDecimal.ZERO;
-        listaMovCartera = servicioMovimientoCartera.findByMes(inicio, fin);
-
-        /*Calculo el total*/
-        for (ListadoDetalladoOrdenado item : listaListItemsOrd) {
-            totalVenta = totalVenta.add(item.getFacTotal());
-        }
-        /*coloco el porcentaje*/
-        for (ListadoDetalladoOrdenado item : listaListItemsOrd) {
-            BigDecimal itemporcient = BigDecimal.valueOf(100.0).multiply(item.getFacTotal());
-            // BigDecimal porcentaje = itemporcient.divide(totalVenta, 4, RoundingMode.FLOOR);
-
-            //item.setPorcentaje(ArchivoUtils.redondearDecimales(porcentaje, 2));
-        }
-    }
-
-    @Command
-    @NotifyChange({"listaCuSubCuenta2"})
-    public void buscarlistaCuSubCuenta2() {
-
-        consultaCuSubCuentas();
-
-    }
-    //  @AfterCompose
-/*    public void afterCompose(@ExecutionArgParam("valor") Producto producto, @ContextParam(ContextType.VIEW) Component view) throws ParseException {
-        Selectors.wireComponents(view, this, false);
-       // fecha= new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
-        Session sess = Sessions.getCurrent();
-        UserCredential cre = (UserCredential) sess.getAttribute(EnumSesion.userCredential.getNombre());
-        credential = cre;
-            if (servicioAcumuladoDiarioUsuario.findCierrePorUsuario(fecha, credential.getUsuarioSistema()).size() > 0) {
-            ModeloAcumuladoDiaUsuario acumuladoDiaUsuario = servicioAcumuladoDiarioUsuario.findCierrePorUsuario(fecha, credential.getUsuarioSistema()).get(0);
-              totFactura = ArchivoUtils.redondearDecimales(acumuladoDiaUsuario.getValorFacturas(), 2);
-         } else {
-              totFactura = BigDecimal.ZERO;
-          }
-
-    }*/
- /*   @Command
-    @NotifyChange({"listaAcumuladopordias","fechainicioDiaria"})
-    public void cambioFecha() {
-
-    }*/
-
-    @Command
-    @NotifyChange({"listaComprobanteDiario"})
-    public void guardar() throws ParseException {
-
-        ServicioSubCuenta servicioSubcuenta = new ServicioSubCuenta();
-        ServicioAcSubcuenta servicioAcSubcuenta = new ServicioAcSubcuenta();
-
-        Session sess = Sessions.getCurrent();
-        UserCredential cre = (UserCredential) sess.getAttribute(EnumSesion.userCredential.getNombre());
-        credential = cre;
-        if (servicioAcumuladoDiarioUsuario.findCierrePorUsuario(fechainicioDiaria, credential.getUsuarioSistema()).size() > 0) {
-            ModeloAcumuladoDiaUsuario acumuladoDiaUsuario = servicioAcumuladoDiarioUsuario.findCierrePorUsuario(fechainicioDiaria, credential.getUsuarioSistema()).get(0);
-            totFactura = ArchivoUtils.redondearDecimales(acumuladoDiaUsuario.getValorFacturas(), 2);
-        } else {
-            totFactura = BigDecimal.ZERO;
-        }
-
-        CuSubCuenta valorCajaGeneral = servicioSubcuenta.findByNombre("CAJA GENERAL").get(0);
-        BigDecimal valorTotal = totFactura;
-        AcSubCuenta acCajaGeneral = new AcSubCuenta();
-
-        valorCajaGeneral.setSubcTotal(valorTotal.add(valorTotal));
-        servicioSubcuenta.modificar(valorCajaGeneral);
-        acCajaGeneral.setIdSubCuenta(valorCajaGeneral);
-        acCajaGeneral.setDebe(valorTotal);
-        acCajaGeneral.setFechaAcSubcuenta(fecha);
-        servicioAcSubcuenta.crear(acCajaGeneral);
-        /*   try {
-                System.out.println("cierreCaja " + cierreCaja.getIdCierre());
-                DispararReporte.reporteCierrecaja(cierreCaja.getIdCierre());
-            } catch (JRException ex) {
-                Logger.getLogger(CierreCajaVm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(CierreCajaVm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NamingException ex) {
-                Logger.getLogger(CierreCajaVm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(CierreCajaVm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-        windowCierre.detach();*/
-        comprobanteDiario();
-
-    }
-
-    private void consultaCuSubCuentas() {
-
-        listaCuSubCuenta2 = servicioSubCuenta2.listadoTotal();
-
-    }
-
-    private void comprobanteDiario() {
-
-        listaComprobanteDiario = servicioComprobanteDiario.findByFecha(fechainicioDiaria);
-
-    }
-
-    private void consultaVentasDiarias() {
-        listaAcumuladopordias = servicioAcumuladoVentas.findAcumuladoventasdiariatotal(fechainicioDiaria);
-    }
-
-    public ServicioSubCuenta getServicioSubCuenta2() {
-        return servicioSubCuenta2;
-    }
-
-    public void setServicioSubCuenta2(ServicioSubCuenta servicioSubCuenta2) {
-        this.servicioSubCuenta2 = servicioSubCuenta2;
-    }
-
-    public List<CuSubCuenta> getListaCuSubCuenta2() {
-        return listaCuSubCuenta2;
-    }
-
-    public void setListaCuSubCuenta2(List<CuSubCuenta> listaCuSubCuenta2) {
-        this.listaCuSubCuenta2 = listaCuSubCuenta2;
     }
 
     public Date getInicio() {
@@ -399,36 +193,6 @@ public class ListaLisDetallado {
         this.listaMovCartera = listaMovCartera;
     }
 
-    @Command
-    @NotifyChange({"listaListItems"})
-    public void buscarListadoItems() {
-
-        consultaItems();
-
-    }
-
-    private void consultaItems() {
-
-        listaListItems = servicioListadoItems.listadoTotal();
-
-    }
-
-    public ServicioListadoItems getServicioListadoItems() {
-        return servicioListadoItems;
-    }
-
-    public void setServicioListadoItems(ServicioListadoItems servicioListadoItems) {
-        this.servicioListadoItems = servicioListadoItems;
-    }
-
-    public List<ListadoItems> getListaListItems() {
-        return listaListItems;
-    }
-
-    public void setListaListItems(List<ListadoItems> listaListItems) {
-        this.listaListItems = listaListItems;
-    }
-
     public ServicioListadoDetalladoOrdenado getServicioDetalladoOrdenado() {
         return servicioDetalladoOrdenado;
     }
@@ -473,58 +237,6 @@ public class ListaLisDetallado {
             //  parametros.put("codUsuario", String.valueOf(credentialLog.getAdUsuario().getCodigoUsuario()));
             parametros.put("inicio", inicio);
             parametros.put("fin", fin);
-
-            if (con != null) {
-                System.out.println("Conexión Realizada Correctamenteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-            }
-            FileInputStream is = null;
-            is = new FileInputStream(reportPath);
-
-            byte[] buf = JasperRunManager.runReportToPdf(is, parametros, con);
-            InputStream mediais = new ByteArrayInputStream(buf);
-            AMedia amedia = new AMedia("Reporte", "pdf", "application/pdf", mediais);
-            fileContent = amedia;
-            final HashMap<String, AMedia> map = new HashMap<String, AMedia>();
-//para pasar al visor
-            map.put("pdf", fileContent);
-            org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                        "/venta/contenedorReporte.zul", null, map);
-            window.doModal();
-        } catch (Exception e) {
-            System.out.println("ERROR EL PRESENTAR EL REPORTE " + e.getMessage());
-        } finally {
-            if (emf != null) {
-                emf.getTransaction().commit();
-            }
-
-        }
-
-    }
-
-    //reporte diario
-    @Command
-    public void llamarReporteDiario() throws JRException, IOException, NamingException, SQLException {
-        reporteDiario();
-    }
-
-    public void reporteDiario() throws JRException, IOException, NamingException, SQLException {
-
-        EntityManager emf = HelperPersistencia.getEMF();
-
-        try {
-            emf.getTransaction().begin();
-            con = emf.unwrap(Connection.class);
-
-            String reportFile = Executions.getCurrent().getDesktop().getWebApp()
-                        .getRealPath("/reportes");
-            String reportPath = "";
-
-            reportPath = reportFile + File.separator + "reportediario.jasper";
-
-            Map<String, Object> parametros = new HashMap<String, Object>();
-
-            //  parametros.put("codUsuario", String.valueOf(credentialLog.getAdUsuario().getCodigoUsuario()));
-            parametros.put("inicio", fechainicioDiaria);
 
             if (con != null) {
                 System.out.println("Conexión Realizada Correctamenteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
@@ -607,14 +319,6 @@ public class ListaLisDetallado {
 
     }
 
-    public List<ComprobanteDiario> getListaComprobanteDiario() {
-        return listaComprobanteDiario;
-    }
-
-    public void setListaComprobanteDiario(List<ComprobanteDiario> listaComprobanteDiario) {
-        this.listaComprobanteDiario = listaComprobanteDiario;
-    }
-
     /*EXPORTAR A EXCEL
     lstFacturas
      */
@@ -682,7 +386,7 @@ public class ListaLisDetallado {
             chfe.setCellStyle(estiloCelda);
 
             HSSFCell ch1 = r.createCell(j++);
-            ch1.setCellValue(new HSSFRichTextString("F Emision"));
+            ch1.setCellValue(new HSSFRichTextString("F Factura"));
             ch1.setCellStyle(estiloCelda);
 
             HSSFCell chfe1 = r.createCell(j++);
@@ -722,21 +426,32 @@ public class ListaLisDetallado {
             ch4.setCellStyle(estiloCelda);
 
             HSSFCell ch5a = r.createCell(j++);
-            ch5a.setCellValue(new HSSFRichTextString("Interes 1"));
+            ch5a.setCellValue(new HSSFRichTextString("Int Val Imp"));
             ch5a.setCellStyle(estiloCelda);
 
             HSSFCell ch5ab = r.createCell(j++);
-            ch5ab.setCellValue(new HSSFRichTextString("Interes 2"));
+            ch5ab.setCellValue(new HSSFRichTextString("Mult 2 Mes Imp"));
             ch5ab.setCellStyle(estiloCelda);
-
             HSSFCell ch5abc = r.createCell(j++);
-            ch5abc.setCellValue(new HSSFRichTextString("Total"));
+            ch5abc.setCellValue(new HSSFRichTextString("Derechos"));
             ch5abc.setCellStyle(estiloCelda);
+            HSSFCell ch5abd = r.createCell(j++);
+            ch5abd.setCellValue(new HSSFRichTextString("Multas"));
+            ch5abd.setCellStyle(estiloCelda);
+            HSSFCell ch5abe = r.createCell(j++);
+            ch5abe.setCellValue(new HSSFRichTextString("Materiales"));
+            ch5abe.setCellStyle(estiloCelda);
+            HSSFCell ch5abf = r.createCell(j++);
+            ch5abf.setCellValue(new HSSFRichTextString("Garantia"));
+            ch5abf.setCellStyle(estiloCelda);
+
+            HSSFCell ch5abcg = r.createCell(j++);
+            ch5abcg.setCellValue(new HSSFRichTextString("Total"));
+            ch5abcg.setCellStyle(estiloCelda);
 
 //            HSSFCell ch5 = r.createCell(j++);
 //            ch5.setCellValue(new HSSFRichTextString("ESTADO"));
 //            ch5.setCellStyle(estiloCelda);
-
             int rownum = 1;
             int i = 0;
             BigDecimal subTotal = BigDecimal.ZERO;
@@ -753,40 +468,60 @@ public class ListaLisDetallado {
                 HSSFCell cf = r.createCell(i++);
                 cf.setCellValue(new HSSFRichTextString(item.getIdFactura().toString()));
 
+                HSSFCell cf12 = r.createCell(i++);
+                cf12.setCellValue(new HSSFRichTextString(item.getFacNumero().toString()));
+
                 HSSFCell cf1 = r.createCell(i++);
                 cf1.setCellValue(new HSSFRichTextString(sm.format(item.getFacFecha())));
 
                 HSSFCell cf11 = r.createCell(i++);
-                cf11.setCellValue(new HSSFRichTextString(item.getMedNumero().toString()));
+                cf11.setCellValue(new HSSFRichTextString(item.getMedNumero() == null ? "" : item.getMedNumero().toString()));
 
                 HSSFCell c0 = r.createCell(i++);
-                c0.setCellValue(new HSSFRichTextString(item.getPropNombre()));
+                c0.setCellValue(new HSSFRichTextString(item.getPropNombre() == null ? "" : item.getPropNombre()));
 
                 HSSFCell c0a = r.createCell(i++);
-                c0a.setCellValue(new HSSFRichTextString(item.getPropApellido()));
+                c0a.setCellValue(new HSSFRichTextString(item.getPropApellido() == null ? "" : item.getPropApellido()));
 
                 HSSFCell c1 = r.createCell(i++);
-                c1.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getFacMetrosCubicos()==null?BigDecimal.ZERO:item.getFacMetrosCubicos(), 2)).toString()));
+                c1.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getFacMetrosCubicos() == null ? BigDecimal.ZERO : item.getFacMetrosCubicos(), 2)).toString()));
 
                 HSSFCell c11 = r.createCell(i++);
-                c11.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getAgua()==null?BigDecimal.ZERO:item.getAgua(), 2)).toString()));
+                c11.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getAgua() == null ? BigDecimal.ZERO : item.getAgua(), 2)).toString()));
                 HSSFCell c11a = r.createCell(i++);
-                c11a.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getExcedente()==null?BigDecimal.ZERO:item.getExcedente(), 2)).toString()));
+                c11a.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getExcedente() == null ? BigDecimal.ZERO : item.getExcedente(), 2)).toString()));
                 HSSFCell c11ab = r.createCell(i++);
-                c11ab.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getAlcantarrillado()==null?BigDecimal.ZERO:item.getAlcantarrillado(), 2)).toString()));
+                c11ab.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getAlcantarrillado() == null ? BigDecimal.ZERO : item.getAlcantarrillado(), 2)).toString()));
 
                 HSSFCell c12 = r.createCell(i++);
-                c12.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getDesechos()==null?BigDecimal.ZERO:item.getDesechos(), 2)).toString()));
+                c12.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getDesechos() == null ? BigDecimal.ZERO : item.getDesechos(), 2)).toString()));
+               
                 HSSFCell c12a = r.createCell(i++);
-                c12a.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMedioAmbiente()==null?BigDecimal.ZERO:item.getMedioAmbiente(), 2)).toString()));
-
+                c12a.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMedioAmbiente() == null ? BigDecimal.ZERO : item.getMedioAmbiente(), 2)).toString()));
+                
                 HSSFCell c2 = r.createCell(i++);
-                c2.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getInteres1()==null?BigDecimal.ZERO:item.getInteres1(), 2)).toString()));
-
+                c2.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getInteres1() == null ? BigDecimal.ZERO : item.getInteres1(), 2)).toString()));
+                
                 HSSFCell c3 = r.createCell(i++);
-                c3.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getInteres2()==null?BigDecimal.ZERO:item.getInteres2(), 2)).toString()));
+                c3.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getInteres2() == null ? BigDecimal.ZERO : item.getInteres2(), 2)).toString()));
+               
+                
+                HSSFCell c4 = r.createCell(i++);
+                c4.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getDerechos()== null ? BigDecimal.ZERO : item.getDerechos(), 2)).toString()));
+               
+                
+                HSSFCell c5 = r.createCell(i++);
+                c5.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMultas()== null ? BigDecimal.ZERO : item.getMultas(), 2)).toString()));
+               
+                
+                HSSFCell c6 = r.createCell(i++);
+                c6.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMaterial()== null ? BigDecimal.ZERO : item.getMaterial(), 2)).toString()));
+               
+                HSSFCell c7 = r.createCell(i++);
+                c7.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getGarantia()== null ? BigDecimal.ZERO : item.getGarantia(), 2)).toString()));
+               
                 HSSFCell c3a = r.createCell(i++);
-                c3a.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getFacTotal()==null?BigDecimal.ZERO:item.getFacTotal(), 2)).toString()));
+                c3a.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getFacTotal() == null ? BigDecimal.ZERO : item.getFacTotal(), 2)).toString()));
 
 //                HSSFCell c4 = r.createCell(i++);
 //                c4.setCellValue(new HSSFRichTextString(item.g));
@@ -795,8 +530,6 @@ public class ListaLisDetallado {
                 rownum += 1;
 
             }
-
-           
 
             for (int k = 0; k <= listaListItemsOrd.size(); k++) {
                 s.autoSizeColumn(k);
