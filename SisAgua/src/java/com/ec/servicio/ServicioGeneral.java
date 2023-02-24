@@ -80,11 +80,11 @@ public class ServicioGeneral {
 //           Query elimina= em.createNativeQuery("delete from model_ruta;");
 //            int i=elimina.executeUpdate();
 //            System.out.println("VALOR BORRA "+i);
-            StoredProcedureQuery queryStore = em.createStoredProcedureQuery("crealecturasmedidorresagado");
-            queryStore.registerStoredProcedureParameter("mes", Integer.class, ParameterMode.IN);
-            queryStore.registerStoredProcedureParameter("fecha", Date.class, ParameterMode.IN);
-            queryStore.setParameter("mes", mes);
-            queryStore.setParameter("fecha", fecha);
+                StoredProcedureQuery queryStore = em.createStoredProcedureQuery("crealecturasmedidorresagado");
+                queryStore.registerStoredProcedureParameter("mes", Integer.class, ParameterMode.IN);
+                queryStore.registerStoredProcedureParameter("fecha", Date.class, ParameterMode.IN);
+                queryStore.setParameter("mes", mes);
+                queryStore.setParameter("fecha", fecha);
             queryStore.executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {

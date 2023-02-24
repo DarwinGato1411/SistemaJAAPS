@@ -91,10 +91,11 @@
                                 <menuitem label="ATS Ventas" id="btnContabilidad"  /> 
                                 <menuitem label="ATS Compras y Ventas" id="btnContabilidadATS"  /> 
                                 <menuitem label="Retenciones por casillero" id="btnRetencionesCasillero"  />
+                                <menuitem label="Listado detallado" id="btnListadoDetallado"  />
                             </menupopup>
                         </menu>
                         
-                        <menu label="Contabilidad" id="menuContabilidad">
+<!--                        <menu label="Contabilidad" id="menuContabilidad">
                             <menupopup>            
                                  <menuitem label="Crear retenciones" id="btnCrearRet"  /> 
                                      <menuitem label="Listado de retenciones" id="btnRetenciones"  />                                                             
@@ -105,7 +106,7 @@
                                 <menuitem label="Reportes Contabilidad" id="btnReportesConta" />
                                 <menuitem label="Codigos retencion" id="btnListaTipoRetencion" />
                             </menupopup>
-                        </menu>
+                        </menu>-->
                         
                         <menuitem label="Catalogos" id="btnAdministarVenta"  />
 <!--                        <menuitem image="/iconos/fact.png" label="Facturar" onClick="@command('facturar')" />

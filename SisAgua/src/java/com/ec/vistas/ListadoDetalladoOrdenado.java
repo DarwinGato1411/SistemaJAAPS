@@ -22,37 +22,39 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "listado_detallado_ordenado")
-public class ListadoDetalladoOrdenado implements Serializable{
-     
+public class ListadoDetalladoOrdenado implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Column(name = "id_factura")
-    @Id private BigInteger idFactura;
-    
+    @Id
+    private BigInteger idFactura;
+
     @Column(name = "fac_numero")
-    @Id private BigInteger facNumero;
-    
+    @Id
+    private BigInteger facNumero;
+
     @Column(name = "fac_fecha")
     @Temporal(TemporalType.DATE)
     private Date facFecha;
-    
+
     @Column(name = "med_numero")
     private String medNumero;
-    
+
     @Column(name = "prop_nombre")
     private String propNombre;
-        
+
     @Column(name = "prop_apellido")
     private String propApellido;
-    
+
     @Column(name = "fac_metros_cubicos")
     private BigDecimal facMetrosCubicos;
-        
+
     @Column(name = "agua")
     private BigDecimal agua;
-    
+
     @Column(name = "excedente")
     private BigDecimal excedente;
-        
+
     @Column(name = "alcantarrillado")
     private BigDecimal alcantarrillado;
 
@@ -61,17 +63,24 @@ public class ListadoDetalladoOrdenado implements Serializable{
 
     @Column(name = "medio_ambiente")
     private BigDecimal medioAmbiente;
-    
+
     @Column(name = "interes1")
     private BigDecimal interes1;
-        
+
     @Column(name = "interes2")
     private BigDecimal interes2;
-    
+
+    @Column(name = "derechos")
+    private BigDecimal derechos;
+    @Column(name = "multas")
+    private BigDecimal multas;
+    @Column(name = "material")
+    private BigDecimal material;
+    @Column(name = "garantia")
+    private BigDecimal garantia;
     @Column(name = "fac_total")
     private BigDecimal facTotal;
-        
-    
+
     public ListadoDetalladoOrdenado() {
     }
 
@@ -91,6 +100,33 @@ public class ListadoDetalladoOrdenado implements Serializable{
         this.interes1 = interes1;
         this.interes2 = interes2;
         this.facTotal = facTotal;
+    }
+
+    public ListadoDetalladoOrdenado(BigInteger idFactura, BigInteger facNumero, Date facFecha, String medNumero, String propNombre, String propApellido, BigDecimal facMetrosCubicos, BigDecimal agua, BigDecimal excedente, BigDecimal alcantarrillado, BigDecimal desechos, BigDecimal medioAmbiente, BigDecimal interes1, BigDecimal interes2, BigDecimal facTotal,
+                BigDecimal derechos,
+                BigDecimal multas,
+                BigDecimal material,
+                BigDecimal garantia
+                ) {
+        this.idFactura = idFactura;
+        this.facNumero = facNumero;
+        this.facFecha = facFecha;
+        this.medNumero = medNumero;
+        this.propNombre = propNombre;
+        this.propApellido = propApellido;
+        this.facMetrosCubicos = facMetrosCubicos;
+        this.agua = agua;
+        this.excedente = excedente;
+        this.alcantarrillado = alcantarrillado;
+        this.desechos = desechos;
+        this.medioAmbiente = medioAmbiente;
+        this.interes1 = interes1;
+        this.interes2 = interes2;
+        this.facTotal = facTotal;
+        this.derechos = derechos;
+        this.multas = multas;
+        this.material = material;
+        this.garantia = garantia;
     }
 
     public BigInteger getIdFactura() {
@@ -213,9 +249,36 @@ public class ListadoDetalladoOrdenado implements Serializable{
         this.facTotal = facTotal;
     }
 
-   
-  
+    public BigDecimal getDerechos() {
+        return derechos;
+    }
+
+    public void setDerechos(BigDecimal derechos) {
+        this.derechos = derechos;
+    }
+
+    public BigDecimal getMultas() {
+        return multas;
+    }
+
+    public void setMultas(BigDecimal multas) {
+        this.multas = multas;
+    }
+
+    public BigDecimal getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(BigDecimal material) {
+        this.material = material;
+    }
+
+    public BigDecimal getGarantia() {
+        return garantia;
+    }
+
+    public void setGarantia(BigDecimal garantia) {
+        this.garantia = garantia;
+    }
+
 }
-    
-
-

@@ -302,6 +302,10 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnListarCierre() {
         Executions.sendRedirect("/reportevistas/listacierrecaja.zul");
     }
+    @Listen("onClick = #btnListadoDetallado")
+    public void btnListadoDetallado() {
+        Executions.sendRedirect("/reportevistas/listadodetalladoord.zul");
+    }
 
     @Listen("onClick = #btnLecturas")
     public void btnLecturas() {

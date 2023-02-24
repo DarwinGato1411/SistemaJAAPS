@@ -132,7 +132,8 @@
             
                                             <listheader width="20px"  label="" />
                                             <listheader width="20%"  label="# Medidor" />
-                                            <listheader width="20%"  label="# Mes" />
+                                            <listheader width="20%"  label="Mes" />
+                                            <listheader width="20%"  label="Anio" />
 
                                             <listheader width="20%"  label="Lectura anterior" />
                        
@@ -161,6 +162,12 @@
                                                              class="form-control form-control-sm"  
                                                              readonly="true"
                                                              value="@bind(each.mesActual.nombre)"  />
+                                                </listcell>
+                                                  <listcell zclass = "mycss-listcell">
+                                                    <textbox style="font-size:12px;background:white"
+                                                             class="form-control form-control-sm"  
+                                                             readonly="true"
+                                                             value="@bind(each.lecAnio)"  />
                                                 </listcell>
                                                 <listcell zclass = "mycss-listcell">
                                                     <textbox style="font-size:12px;background:white"

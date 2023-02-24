@@ -27,7 +27,6 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 /**
@@ -46,11 +45,13 @@ public class NuevoPropietario {
 
     ServicioCliente servicioCliente = new ServicioCliente();
     ServicioPredio servicioPredio = new ServicioPredio();
+    Cliente cliente = null;
 
     @AfterCompose
     public void afterCompose(@ExecutionArgParam("valor") Propietario valor, @ContextParam(ContextType.VIEW) Component view) {
         Selectors.wireComponents(view, this, false);
         parametrizar = servicioParametrizar.FindALlParametrizar();
+        cliente = servicioCliente.FindClienteForCedulaPropietario(entidad.getPorpCedula());
         if (valor != null) {
             this.entidad = valor;
             accion = "update";
@@ -110,7 +111,7 @@ public class NuevoPropietario {
     @Command
     public void guardar() {
         if (entidad.getPorpCedula() != null
-                && entidad.getPropNombre() != null) {
+                    && entidad.getPropNombre() != null) {
 
             Propietario prop = servicioPropietario.findCedula(entidad.getPorpCedula());
 //            if (prop != null && accion.equals("create")) {
@@ -118,7 +119,7 @@ public class NuevoPropietario {
 //                        Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 3000, true);
 //                return;
 //            }
-            Cliente cliente = null;
+
             if (accion.equals("create")) {
                 /*Crea el cliente */
                 cliente = new Cliente();
@@ -146,7 +147,6 @@ public class NuevoPropietario {
 
                 wPropietario.detach();
             } else {
-                cliente = servicioCliente.FindClienteForCedulaPropietario(entidad.getPorpCedula());
 
                 if (cliente == null) {
                     cliente = new Cliente();
@@ -181,7 +181,7 @@ public class NuevoPropietario {
         } else {
 
             Clients.showNotification("Verifique la informacion requerida",
-                    Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 3000, true);
+                        Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 3000, true);
         }
     }
 
