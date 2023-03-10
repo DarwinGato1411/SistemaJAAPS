@@ -144,7 +144,7 @@ public class ServicioLectura {
         return listaLecturas;
     }
 
-    public void iniciarProximoMes(Integer mes, Date fecha) {
+     public void iniciarProximoMes(Integer mes, Date fecha) {
         try {
             em = HelperPersistencia.getEMF();
 
@@ -154,6 +154,7 @@ public class ServicioLectura {
 //            System.out.println("VALOR BORRA "+i);
             StoredProcedureQuery queryStore = em.createStoredProcedureQuery("iniciar_proximo_mes_par");
             queryStore.registerStoredProcedureParameter("numeromes", Integer.class, ParameterMode.IN);
+            queryStore.registerStoredProcedureParameter("fecharegistro", Date.class, ParameterMode.IN);
             queryStore.setParameter("numeromes", mes);
             queryStore.setParameter("fecharegistro", fecha);
             queryStore.executeUpdate();
