@@ -71,8 +71,8 @@ public class ServicioGeneral {
 
         return compraVenta;
     }
-    
-      public void iniciarLecturaMedidor(Integer mes,Date fecha) {
+
+    public void iniciarLecturaMedidor(Integer mes, Date fecha) {
         try {
             em = HelperPersistencia.getEMF();
 
@@ -85,6 +85,29 @@ public class ServicioGeneral {
             queryStore.registerStoredProcedureParameter("fecha", Date.class, ParameterMode.IN);
             queryStore.setParameter("mes", mes);
             queryStore.setParameter("fecha", fecha);
+            queryStore.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("error iniciarProximoMes " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+    }
+
+    public void generarEstadisticoMensual(Date inicio, Date fin) {
+        try {
+            em = HelperPersistencia.getEMF();
+
+            em.getTransaction().begin();
+//           Query elimina= em.createNativeQuery("delete from model_ruta;");
+//            int i=elimina.executeUpdate();
+//            System.out.println("VALOR BORRA "+i);
+            StoredProcedureQuery queryStore = em.createStoredProcedureQuery("generar_estadistico_mensual");
+            queryStore.registerStoredProcedureParameter("fecha_inicio_par", Date.class, ParameterMode.IN);
+            queryStore.registerStoredProcedureParameter("fecha_fin_par", Date.class, ParameterMode.IN);
+            queryStore.setParameter("fecha_inicio_par", inicio);
+            queryStore.setParameter("fecha_fin_par", fin);
             queryStore.executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
