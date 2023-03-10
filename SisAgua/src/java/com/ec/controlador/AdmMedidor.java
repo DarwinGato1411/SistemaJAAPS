@@ -78,17 +78,8 @@ public class AdmMedidor {
 
     @Command
     @NotifyChange({"listaDatos", "buscarNombre"})
-    public void activarDesactivar(@BindingParam("valor") Medidor valor) {
-//        if (Messagebox.show("¿Desea activar o desactiva el medidor?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
-
-            
-               
+    public void activarDesactivar(@BindingParam("valor") Medidor valor) {      
                 servicioMedidor.modificar(valor);
-            
-           
-
-//        }
-
     }
 
     public String getBuscarNombre() {

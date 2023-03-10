@@ -77,6 +77,7 @@ public class ListaLisDetalladoOrdenado {
     private List<Acumuladopordia> listaAcumuladopordias = new ArrayList<Acumuladopordia>();
     ServicioAcumuladoVentas servicioAcumuladoVentas = new ServicioAcumuladoVentas();
     private Date fechainicioDiaria = new Date();
+    private String buscar = "";
 
     public ListaLisDetalladoOrdenado() {
 
@@ -101,7 +102,7 @@ public class ListaLisDetalladoOrdenado {
 
     private void consultaDetalle() {
         totalVenta = BigDecimal.ZERO;
-        listaListItemsOrd = servicioDetalladoOrdenado.findByMes(inicio, fin);
+        listaListItemsOrd = servicioDetalladoOrdenado.findByMes(inicio, fin, buscar);
 
     }
 
@@ -495,31 +496,28 @@ public class ListaLisDetalladoOrdenado {
 
                 HSSFCell c12 = r.createCell(i++);
                 c12.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getDesechos() == null ? BigDecimal.ZERO : item.getDesechos(), 2)).toString()));
-               
+
                 HSSFCell c12a = r.createCell(i++);
                 c12a.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMedioAmbiente() == null ? BigDecimal.ZERO : item.getMedioAmbiente(), 2)).toString()));
-                
+
                 HSSFCell c2 = r.createCell(i++);
                 c2.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getInteres1() == null ? BigDecimal.ZERO : item.getInteres1(), 2)).toString()));
-                
+
                 HSSFCell c3 = r.createCell(i++);
                 c3.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getInteres2() == null ? BigDecimal.ZERO : item.getInteres2(), 2)).toString()));
-               
-                
+
                 HSSFCell c4 = r.createCell(i++);
-                c4.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getDerechos()== null ? BigDecimal.ZERO : item.getDerechos(), 2)).toString()));
-               
-                
+                c4.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getDerechos() == null ? BigDecimal.ZERO : item.getDerechos(), 2)).toString()));
+
                 HSSFCell c5 = r.createCell(i++);
-                c5.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMultas()== null ? BigDecimal.ZERO : item.getMultas(), 2)).toString()));
-               
-                
+                c5.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMultas() == null ? BigDecimal.ZERO : item.getMultas(), 2)).toString()));
+
                 HSSFCell c6 = r.createCell(i++);
-                c6.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMaterial()== null ? BigDecimal.ZERO : item.getMaterial(), 2)).toString()));
-               
+                c6.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMaterial() == null ? BigDecimal.ZERO : item.getMaterial(), 2)).toString()));
+
                 HSSFCell c7 = r.createCell(i++);
-                c7.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getGarantia()== null ? BigDecimal.ZERO : item.getGarantia(), 2)).toString()));
-               
+                c7.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getGarantia() == null ? BigDecimal.ZERO : item.getGarantia(), 2)).toString()));
+
                 HSSFCell c3a = r.createCell(i++);
                 c3a.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getFacTotal() == null ? BigDecimal.ZERO : item.getFacTotal(), 2)).toString()));
 
@@ -542,6 +540,14 @@ public class ListaLisDetalladoOrdenado {
         }
         return pathSalida;
 
+    }
+
+    public String getBuscar() {
+        return buscar;
+    }
+
+    public void setBuscar(String buscar) {
+        this.buscar = buscar;
     }
 
 }

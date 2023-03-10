@@ -41,7 +41,7 @@ import org.zkoss.zul.Window;
  * @author gato
  */
 public class NuevoMedidor {
-    
+
     @Wire
     Window wMedidor;
     private ListModelList<Predio> listaPredioModel;
@@ -52,22 +52,21 @@ public class NuevoMedidor {
     ServicioMedidor servicioMedidor = new ServicioMedidor();
     private String accion = "create";
     private String buscarPredio = "";
-    
+
     ServicioTarifa servicioTarifa = new ServicioTarifa();
     private List<Tarifa> listatarifas = new ArrayList<Tarifa>();
     private Tarifa tarifaSelected = null;
-    
+
     ServicioUbicacionMedidor servicioUbicacionMedidor = new ServicioUbicacionMedidor();
     private List<UbicacionMedidor> listaUbicacion = new ArrayList<UbicacionMedidor>();
-    private UbicacionMedidor ubicacionSelected=null;
-    
-     private ModeloMeses buscarMes = new ModeloMeses();
-     private Date fechaCreacion = new Date();
-     ServicioGeneral servicioGeneral = new ServicioGeneral();
-                      Calendar fecha = Calendar.getInstance();
-                  int mes = fecha.get(Calendar.MONTH) + 1;
+    private UbicacionMedidor ubicacionSelected = null;
 
-     
+    private ModeloMeses buscarMes = new ModeloMeses();
+    private Date fechaCreacion = new Date();
+    ServicioGeneral servicioGeneral = new ServicioGeneral();
+    Calendar fecha = Calendar.getInstance();
+    int mes = fecha.get(Calendar.MONTH) + 1;
+
     @AfterCompose
     public void afterCompose(@ExecutionArgParam("valor") Medidor valor, @ContextParam(ContextType.VIEW) Component view) {
         Selectors.wireComponents(view, this, false);
@@ -79,7 +78,7 @@ public class NuevoMedidor {
             setListaPredioModel(new ListModelList<Predio>(getListaPredios()));
             ((ListModelList<Predio>) listaPredioModel).setMultiple(false);
             listaPredioModel.setSelection(listaPredios);
-            ubicacionSelected=valor.getIdUbicacionMedidor()!=null?valor.getIdUbicacionMedidor():null;
+            ubicacionSelected = valor.getIdUbicacionMedidor() != null ? valor.getIdUbicacionMedidor() : null;
         } else {
             this.entidad = new Medidor();
             entidad.setMedFechaRegistro(new Date());
@@ -94,153 +93,151 @@ public class NuevoMedidor {
                 }
             }
             obtenerPredios();
-           
+
         }
-        
+
         listatarifas = servicioTarifa.findLikeTariDescripcion("");
-         listaUbicacion = servicioUbicacionMedidor.findByNombre("");
+        listaUbicacion = servicioUbicacionMedidor.findByNombre("");
     }
-    
+
     private void findLikePredio() {
         listaPredios = servicioPredio.findLikePreDireccionCedulaNombre(buscarPredio);
     }
-    
+
     private void obtenerPredios() {
         findLikePredio();
         setListaPredioModel(new ListModelList<Predio>(getListaPredios()));
         ((ListModelList<Predio>) listaPredioModel).setMultiple(false);
         //listaPropietariosModel.addToSelection(entidad.getIdPropietario());
     }
-    
+
     @Command
     @NotifyChange("entidad")
     public void seleccionarRegistros() {
         Predio predioSelected = null;
-        
+
         registrosSeleccionados = ((ListModelList<Predio>) getListaPredioModel()).getSelection();
         for (Predio item : registrosSeleccionados) {
             predioSelected = item;
-            
+
         }
         entidad.setIdPredio(predioSelected);
-        
+
     }
-    
+
     @Command
     @NotifyChange({"listaPredioModel", "buscarPredio"})
     public void buscarPropietario() {
         obtenerPredios();
     }
-    
+
     @Command
     public void guardar() {
         entidad.setIdTarifa(tarifaSelected);
         if (entidad.getIdTarifa() != null
-                && entidad.getIdPredio() != null
-                && !entidad.getMedNumero().equals("")
-                &&ubicacionSelected!=null) {
+                    && entidad.getIdPredio() != null
+                    && !entidad.getMedNumero().equals("")
+                    && ubicacionSelected != null) {
             entidad.setIdUbicacionMedidor(ubicacionSelected);
             entidad.setMedBarrio(ubicacionSelected.getUbimNombre());
             if (accion.equals("create")) {
-                
+
                 servicioMedidor.crear(entidad);
-              servicioGeneral.iniciarLecturaMedidor(mes, fechaCreacion);
+                servicioGeneral.iniciarLecturaMedidor(mes, fechaCreacion);
 //                System.out.println("fechaCreacion " + fechaCreacion);
             } else {
                 servicioMedidor.modificar(entidad);
             }
-                // fechaCreacion.setMonth(buscarMes.getNumero() - 1);
+            // fechaCreacion.setMonth(buscarMes.getNumero() - 1);
 
-                 
-               // servicioGeneral.iniciarLecturaMedidor(mes, fechaCreacion);
-                System.out.println("fechaCreacion " + fechaCreacion + " el mes es: " + mes);
+            // servicioGeneral.iniciarLecturaMedidor(mes, fechaCreacion);
+            System.out.println("fechaCreacion " + fechaCreacion + " el mes es: " + mes);
             wMedidor.detach();
         } else {
-            
+
             Clients.showNotification("Verifique la informacion requerida",
-                    Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 3000, true);
+                        Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 3000, true);
         }
     }
-    
-  
+
     public ListModelList<Predio> getListaPredioModel() {
         return listaPredioModel;
     }
-    
+
     public void setListaPredioModel(ListModelList<Predio> listaPredioModel) {
         this.listaPredioModel = listaPredioModel;
     }
-    
+
     public List<Predio> getListaPredios() {
         return listaPredios;
     }
-    
+
     public void setListaPredios(List<Predio> listaPredios) {
         this.listaPredios = listaPredios;
     }
-    
+
     public Set<Predio> getRegistrosSeleccionados() {
         return registrosSeleccionados;
     }
-    
+
     public void setRegistrosSeleccionados(Set<Predio> registrosSeleccionados) {
         this.registrosSeleccionados = registrosSeleccionados;
     }
-    
+
     public String getBuscarPredio() {
         return buscarPredio;
     }
-    
+
     public void setBuscarPredio(String buscarPredio) {
         this.buscarPredio = buscarPredio;
     }
-    
+
     public Medidor getEntidad() {
         return entidad;
     }
-    
+
     public void setEntidad(Medidor entidad) {
         this.entidad = entidad;
     }
-    
+
     public String getAccion() {
         return accion;
     }
-    
+
     public void setAccion(String accion) {
         this.accion = accion;
     }
-    
+
     public List<Tarifa> getListatarifas() {
         return listatarifas;
     }
-    
+
     public void setListatarifas(List<Tarifa> listatarifas) {
         this.listatarifas = listatarifas;
     }
-    
+
     public Tarifa getTarifaSelected() {
         return tarifaSelected;
     }
-    
+
     public void setTarifaSelected(Tarifa tarifaSelected) {
         this.tarifaSelected = tarifaSelected;
     }
-    
+
     public List<UbicacionMedidor> getListaUbicacion() {
         return listaUbicacion;
     }
-    
+
     public void setListaUbicacion(List<UbicacionMedidor> listaUbicacion) {
         this.listaUbicacion = listaUbicacion;
     }
-    
+
     public UbicacionMedidor getUbicacionSelected() {
         return ubicacionSelected;
     }
-    
+
     public void setUbicacionSelected(UbicacionMedidor ubicacionSelected) {
         this.ubicacionSelected = ubicacionSelected;
     }
-    
+
 }

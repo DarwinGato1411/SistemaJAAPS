@@ -1,38 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-<<<<<<< HEAD
-=======
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
-<<<<<<< HEAD
-        <group/>
-=======
-        <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/web/venta/admmedidor.zul</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/web/venta/administrar.zul</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/src/java/com/ec/vistas/ListadoDetallado.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/src/java/com/ec/servicio/contabilidad/ServicioSubCuenta.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/src/java/com/ec/servicio/ServicioMedidor.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/src/java/com/ec/vista/servicios/ServicioListadoDetalladoOrdenado.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/web/contabilidad/reportesConta.zul</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/web/venta/facturar.zul</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/setup/glassfish-resources.xml</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/vistas/ListaLisDetallado.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/Facturar.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/AdmMedidor.java</file>
-            <file>file:/C:/Users/HC/Documents/GitHub/agua/SistemaJAAPS/SisAgua/src/java/com/ec/vistas/ListadoDetalladoOrdenado.java</file>
-=======
-            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/setup/glassfish-resources.xml</file>
-            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/web/inicio.zul</file>
-            <file>file:/D:/PROYECTOS/SISTEMA_AGUA_CONTABILIDAD/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/Facturar.java</file>
->>>>>>> c734ac6b51cae06859980f992574cfb73f7ed919
-        </group>
->>>>>>> 84587984858e072cb58b694a68b2b059aeabfced
->>>>>>> 6f469bd74697f991751d6e4232dffd3abcb10093
-    </open-files>
->>>>>>> 1cb74b8c9515ae84b7f99ceec203207dca16ae3d
 </project-private>

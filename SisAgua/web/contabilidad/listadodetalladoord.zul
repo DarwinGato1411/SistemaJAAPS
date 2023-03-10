@@ -65,7 +65,15 @@
                     
                         <listhead> 
                             <listheader width="25%"  label="Cobro Nro." />                            
-                            <listheader width="25%"  label="Factura No." />
+                            <listheader width="25%"   >
+                                
+                                <textbox value="@bind(vm.buscar)"  
+                                         tooltiptext="# Factura"
+                                         class="form-control form-control-sm"                                         
+                                         placeholder="Numero de factura"
+                                         onOK="@command('buscarListadoDetallado')"
+                                         onChange="self.setValue(self.getValue().toUpperCase());" />
+                            </listheader>
                             <listheader width="25%"  label="Fecha" />
                             <listheader width="25%"  label="Conexión" />
                             <listheader width="25%"  label="Nombre" />
