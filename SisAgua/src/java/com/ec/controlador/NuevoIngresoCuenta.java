@@ -6,7 +6,6 @@
 package com.ec.controlador;
 
 import com.ec.dao.CuSubCuentaDAO;
-import com.ec.dao.DetalleFacturaDAO;
 import com.ec.dao.NuevoAsientoManual;
 import com.ec.entidad.contabilidad.AsientoContable;
 import com.ec.entidad.contabilidad.CuSubCuenta;
@@ -27,7 +26,6 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.xel.VariableResolver;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;

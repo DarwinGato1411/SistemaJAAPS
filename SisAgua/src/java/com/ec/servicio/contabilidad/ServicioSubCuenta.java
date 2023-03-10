@@ -115,5 +115,26 @@ public class ServicioSubCuenta {
         }
         return listaCuSubCuentas;
     }
+public CuSubCuenta findById(Integer idSubcuenta) {
+
+        List<CuSubCuenta> listaLisItems = new ArrayList<CuSubCuenta>();
+        try {
+            em = HelperPersistencia.getEMF();
+            em.getTransaction().begin();
+            //  Query query = em.createQuery("SELECT new com.ec.vistas.RotacionProducto(max(a.prodNombre),SUM(a.cantidadVenta),SUM(a.valorVentaProducto)) FROM RotacionProducto a WHERE a.facFecha BETWEEN :inicio and :fin  GROUP BY a.idProducto" );
+            Query query = em.createQuery("SELECT  a FROM CuSubCuenta a WHERE a.idSubCuenta=:idSubCuenta ");
+            query.setParameter("idSubCuenta", idSubcuenta);
+            listaLisItems = (List<CuSubCuenta>) query.getResultList();
+
+            em.getTransaction().commit();
+            return listaLisItems.isEmpty() ? null : listaLisItems.get(0);
+        } catch (Exception e) {
+            System.out.println("Error en lsa consulta CuSubCuenta " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return null;
+    }
 
 }
