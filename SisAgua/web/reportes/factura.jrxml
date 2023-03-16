@@ -429,13 +429,6 @@ where factura.fac_numero=$P{numfactura};]]>
 				<text><![CDATA[Direcciòn Sucursal:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="11" y="266" width="178" height="20"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Razón Social / Nombres Apellidos: ]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="11" y="201" width="219" height="20"/>
 				<textElement>
 					<font isBold="true"/>
@@ -481,21 +474,21 @@ where factura.fac_numero=$P{numfactura};]]>
 				<text><![CDATA[Contribuyente Especial Nro]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="189" y="266" width="361" height="20"/>
-				<textElement>
+				<reportElement x="10" y="264" width="539" height="26"/>
+				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_apellidos}+" "+$F{cli_nombres}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Razón Social / Nombres Apellidos: "+$F{cli_apellidos}+" "+$F{cli_nombres}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="400" y="290" width="75" height="20"/>
+				<reportElement x="339" y="290" width="75" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Identificación:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="474" y="290" width="80" height="20"/>
+				<reportElement x="414" y="290" width="140" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_cedula}]]></textFieldExpression>
 			</textField>
