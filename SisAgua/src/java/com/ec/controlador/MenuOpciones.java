@@ -5,8 +5,10 @@
 package com.ec.controlador;
 
 import com.ec.dao.DetalleFacturaDAO;
+import com.ec.entidad.Parametrizar;
 import com.ec.seguridad.EnumSesion;
 import com.ec.seguridad.UserCredential;
+import com.ec.servicio.ServicioParametrizar;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.Component;
@@ -16,6 +18,7 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Menu;
 import org.zkoss.zul.Menuitem;
 
@@ -56,35 +59,19 @@ public class MenuOpciones extends SelectorComposer<Component> {
     UserCredential credential = new UserCredential();
     private String acceso = "";
 
+ 
+
     public MenuOpciones() {
         Session sess = Sessions.getCurrent();
         UserCredential cre = (UserCredential) sess.getAttribute(EnumSesion.userCredential.getNombre());
         credential = cre;
+        
     }
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
-//        if (credential.getUsuarioSistema() != null) {
-//
-//            if (credential.getUsuarioSistema().getUsuNivel() == 1) {
-//                btnFacturar.setVisible(Boolean.TRUE);
-//                menuVentas.setVisible(Boolean.TRUE);
-//                menuCompras.setVisible(Boolean.TRUE);
-//                menuKardex.setVisible(Boolean.TRUE);
-//                menuReportes.setVisible(Boolean.TRUE);
-//                menuContabilidad.setVisible(Boolean.TRUE);
-//                btnAdministarVenta.setVisible(Boolean.TRUE);
-//            } else {
-//                btnFacturar.setVisible(Boolean.TRUE);
-//                menuVentas.setVisible(Boolean.FALSE);
-//                menuCompras.setVisible(Boolean.FALSE);
-//                menuKardex.setVisible(Boolean.FALSE);
-//                menuReportes.setVisible(Boolean.FALSE);
-//                menuContabilidad.setVisible(Boolean.FALSE);
-//                btnAdministarVenta.setVisible(Boolean.FALSE);
-//            }
-//        }
+
     }
 
     @Listen("onClick = #buttonConsultar")
@@ -304,10 +291,12 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnLecturas() {
         Executions.sendRedirect("/venta/admlecturas.zul");
     }
+
     @Listen("onClick = #btnEstadisticoMensual")
     public void btnEstadisticoMensual() {
         Executions.sendRedirect("/contabilidad/estadisticomensual.zul");
     }
+
     @Listen("onClick = #btnReporteDetCob")
     public void btnReporteDetCob() {
         Executions.sendRedirect("/contabilidad/listadodetalladoord.zul");
@@ -349,6 +338,8 @@ public class MenuOpciones extends SelectorComposer<Component> {
 
     }
 
+    
+
     public UserCredential getCredential() {
         return credential;
     }
@@ -364,4 +355,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void setAcceso(String acceso) {
         this.acceso = acceso;
     }
+
+ 
+
 }

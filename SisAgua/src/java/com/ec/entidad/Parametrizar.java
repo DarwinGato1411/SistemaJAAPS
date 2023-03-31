@@ -121,6 +121,8 @@ public class Parametrizar implements Serializable {
     @Column(name = "par_multa_porcentaje")
     private BigDecimal parMultaPorcentaje;
 
+    
+
     public Parametrizar() {
     }
 
@@ -363,5 +365,6 @@ public class Parametrizar implements Serializable {
     public String toString() {
         return "com.ec.entidad.Parametrizar[ codParametrizar=" + codParametrizar + " ]";
     }
+
 
 }

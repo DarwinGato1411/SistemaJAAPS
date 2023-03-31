@@ -94,7 +94,7 @@ public class EstadisticoMensual implements Serializable {
     }
 
     public BigDecimal getSaldoAnterior() {
-        return saldoAnterior;
+        return saldoAnterior==null?BigDecimal.ZERO:saldoAnterior;
     }
 
     public void setSaldoAnterior(BigDecimal saldoAnterior) {
@@ -102,7 +102,7 @@ public class EstadisticoMensual implements Serializable {
     }
 
     public BigDecimal getTotalIngreso() {
-        return totalIngreso;
+        return totalIngreso==null?BigDecimal.ZERO:totalIngreso;
     }
 
     public void setTotalIngreso(BigDecimal totalIngreso) {
@@ -110,7 +110,7 @@ public class EstadisticoMensual implements Serializable {
     }
 
     public BigDecimal getRecaudo() {
-        return recaudo;
+        return recaudo==null?BigDecimal.ZERO:recaudo;
     }
 
     public void setRecaudo(BigDecimal recaudo) {
@@ -118,7 +118,7 @@ public class EstadisticoMensual implements Serializable {
     }
 
     public BigDecimal getSaldoActual() {
-        return saldoActual;
+        return saldoActual==null?BigDecimal.ZERO:saldoActual;
     }
 
     public void setSaldoActual(BigDecimal saldoActual) {
