@@ -119,7 +119,7 @@ public class ServicioLectura {
         return listaLecturas;
     }
 
-    public List<Lectura> findMesAndNumMedidor(String busqueda, Integer mes,Integer lecAnio) {
+    public List<Lectura> findMesAndNumMedidor(String busqueda, Integer mes, Integer lecAnio) {
 
         List<Lectura> listaLecturas = new ArrayList<Lectura>();
         try {
@@ -131,7 +131,7 @@ public class ServicioLectura {
             query.setParameter("propNombre", "%" + busqueda + "%");
             query.setParameter("propApellido", "%" + busqueda + "%");
             query.setParameter("lecMes", mes);
-             query.setParameter("lecAnio", lecAnio);
+            query.setParameter("lecAnio", lecAnio);
 
             listaLecturas = (List<Lectura>) query.getResultList();
             em.getTransaction().commit();
@@ -154,6 +154,7 @@ public class ServicioLectura {
 //            System.out.println("VALOR BORRA "+i);
             StoredProcedureQuery queryStore = em.createStoredProcedureQuery("iniciar_proximo_mes_par");
             queryStore.registerStoredProcedureParameter("numeromes", Integer.class, ParameterMode.IN);
+            queryStore.registerStoredProcedureParameter("fecharegistro", Date.class, ParameterMode.IN);
             queryStore.setParameter("numeromes", mes);
             queryStore.setParameter("fecharegistro", fecha);
             queryStore.executeUpdate();
@@ -165,7 +166,7 @@ public class ServicioLectura {
         }
 
     }
-    
+
     public List<Lectura> finbByMedidor(Medidor valor) {
 
         List<Lectura> listaLecturas = new ArrayList<Lectura>();
@@ -173,7 +174,7 @@ public class ServicioLectura {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM Lectura a WHERE a.idMedidor =:idMedidor  AND a.lecPagada='N' ORDER BY A.lecMes ASC" );
+            Query query = em.createQuery("SELECT  a FROM Lectura a WHERE a.idMedidor =:idMedidor  AND a.lecPagada='N' ORDER BY A.lecMes ASC");
             query.setParameter("idMedidor", valor);
 
             listaLecturas = (List<Lectura>) query.getResultList();
