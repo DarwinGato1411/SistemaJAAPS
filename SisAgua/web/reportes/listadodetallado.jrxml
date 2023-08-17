@@ -30,10 +30,15 @@
 		<parameter name="fin" class="java.util.Date">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
+		<parameter name="fac_numero" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
 		<queryString>
-			<![CDATA[SELECT id_factura, fac_numero, fac_fecha, med_numero, prop_nombre, prop_apellido, fac_metros_cubicos, agua, excedente, alcantarrillado, desechos, medio_ambiente, interes1, interes2, fac_total
+			<![CDATA[SELECT max(id_factura)id_factura, max(fac_numero)fac_numero,  max(fac_fecha)fac_fecha, max(med_numero)med_numero,  max(prop_nombre)prop_nombre,  max(prop_apellido)prop_apellido,  sum(fac_metros_cubicos)fac_metros_cubicos,  sum(agua)agua,  sum(excedente)excedente,
+ sum(alcantarrillado)alcantarrillado,  sum(desechos)desechos,  sum(medio_ambiente)medio_ambiente,  sum(interes1)interes1,  sum(interes2)interes2, sum(derechos)derechos, sum(multas)multas, sum(material)material, sum(garantia)garantia, sum(otros)otros,sum(factibilidad) factibilidad,  sum(fac_total)fac_total
 FROM listado_detallado_ordenado
-WHERE fac_fecha BETWEEN $P{inicio} AND $P{fin};]]>
+WHERE fac_fecha BETWEEN $P{inicio} AND $P{fin}  and CAST(fac_numero as TEXT) like '%' ||$P{fac_numero}||'%'
+GROUP BY  fac_numero ;]]>
 		</queryString>
 		<field name="id_factura" class="java.lang.Integer"/>
 		<field name="fac_numero" class="java.lang.Integer"/>
@@ -49,6 +54,12 @@ WHERE fac_fecha BETWEEN $P{inicio} AND $P{fin};]]>
 		<field name="medio_ambiente" class="java.math.BigDecimal"/>
 		<field name="interes1" class="java.math.BigDecimal"/>
 		<field name="interes2" class="java.math.BigDecimal"/>
+		<field name="derechos" class="java.math.BigDecimal"/>
+		<field name="multas" class="java.math.BigDecimal"/>
+		<field name="material" class="java.math.BigDecimal"/>
+		<field name="garantia" class="java.math.BigDecimal"/>
+		<field name="otros" class="java.math.BigDecimal"/>
+		<field name="factibilidad" class="java.math.BigDecimal"/>
 		<field name="fac_total" class="java.math.BigDecimal"/>
 		<variable name="fac_total_sum" class="java.lang.Number" calculation="Sum">
 			<variableExpression><![CDATA[$F{fac_total}]]></variableExpression>
@@ -75,6 +86,24 @@ WHERE fac_fecha BETWEEN $P{inicio} AND $P{fin};]]>
 		<variable name="total_interes2" class="java.lang.Number" calculation="Sum">
 			<variableExpression><![CDATA[$F{interes2}]]></variableExpression>
 		</variable>
+		<variable name="derecho" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{derechos}]]></variableExpression>
+		</variable>
+		<variable name="factibilidad" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{factibilidad}]]></variableExpression>
+		</variable>
+		<variable name="multa" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{multas}]]></variableExpression>
+		</variable>
+		<variable name="material" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{material}]]></variableExpression>
+		</variable>
+		<variable name="garantia" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{garantia}]]></variableExpression>
+		</variable>
+		<variable name="otros" class="java.lang.Number" calculation="Sum">
+			<variableExpression><![CDATA[$F{otros}]]></variableExpression>
+		</variable>
 	</subDataset>
 	<parameter name="inicio" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -82,6 +111,7 @@ WHERE fac_fecha BETWEEN $P{inicio} AND $P{fin};]]>
 	<parameter name="fin" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="fac_numero" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select * from tipoambiente limit 1;]]>
 	</queryString>
@@ -134,13 +164,13 @@ WHERE fac_fecha BETWEEN $P{inicio} AND $P{fin};]]>
 	<field name="am_general" class="java.lang.Boolean"/>
 	<field name="am_ripme" class="java.lang.Boolean"/>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="64" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="32" width="802" height="32"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18"/>
 				</textElement>
-				<text><![CDATA[JUNTA DE AGUA POTABlE AYORA]]></text>
+				<text><![CDATA[JUNTA DE AGUA POTABLE AYORA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="158" y="0" width="479" height="32"/>
@@ -152,16 +182,36 @@ WHERE fac_fecha BETWEEN $P{inicio} AND $P{fin};]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
+		<band height="48" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="309" height="20"/>
+				<reportElement x="0" y="0" width="335" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_nombre_comercial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="335" y="0" width="100" height="20"/>
+				<reportElement x="335" y="0" width="467" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{am_direccion_matriz}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="55" height="20"/>
+				<textElement/>
+				<text><![CDATA[Desde:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="20" width="43" height="20"/>
+				<textElement/>
+				<text><![CDATA[hasta]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="55" y="20" width="103" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{inicio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="201" y="20" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{fin}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -177,294 +227,646 @@ WHERE fac_fecha BETWEEN $P{inicio} AND $P{fin};]]>
 						<datasetParameter name="fin">
 							<datasetParameterExpression><![CDATA[$P{fin}]]></datasetParameterExpression>
 						</datasetParameter>
+						<datasetParameter name="fac_numero">
+							<datasetParameterExpression><![CDATA[$P{fac_numero}]]></datasetParameterExpression>
+						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="44">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1"/>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="44" height="30"/>
+								<reportElement x="0" y="0" width="30" height="20"/>
 								<textElement textAlignment="Center">
-									<font size="8"/>
+									<font size="7"/>
 								</textElement>
 								<text><![CDATA[Nro. Documento]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="44" height="20"/>
-								<textElement textAlignment="Center"/>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.lang.Integer"><![CDATA[$F{id_factura}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+					<jr:column width="37">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1"/>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30"/>
-								<textElement textAlignment="Center"/>
+								<reportElement x="0" y="0" width="37" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
 								<text><![CDATA[Nro. Factura]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement textAlignment="Center"/>
+								<reportElement x="0" y="0" width="37" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.lang.Integer"><![CDATA[$F{fac_numero}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="40">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+					<jr:column width="43">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1"/>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="40" height="30"/>
-								<textElement textAlignment="Center"/>
+								<reportElement x="0" y="0" width="43" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
 								<text><![CDATA[Fecha]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="40" height="20"/>
-								<textElement textAlignment="Center"/>
+							<textField pattern="dd/MM/yyyy">
+								<reportElement x="0" y="0" width="43" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.util.Date"><![CDATA[$F{fac_fecha}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+					<jr:column width="46">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1"/>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30"/>
-								<textElement textAlignment="Center"/>
+								<reportElement x="0" y="0" width="46" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
 								<text><![CDATA[Nro. Medidor]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement textAlignment="Center"/>
+								<reportElement x="0" y="0" width="46" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.lang.String"><![CDATA[$F{med_numero}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="167">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+					<jr:column width="195">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1"/>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="167" height="30"/>
-								<textElement textAlignment="Center"/>
+								<reportElement x="0" y="0" width="195" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
 								<text><![CDATA[Nombre y Apellido]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="167" height="20"/>
-								<textElement textAlignment="Center">
-									<font size="8"/>
+								<reportElement x="0" y="0" width="195" height="20"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{prop_nombre} + $F{prop_apellido}]]></textFieldExpression>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{prop_apellido}+" "+$F{prop_nombre}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1"/>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1"/>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30"/>
-								<textElement textAlignment="Center"/>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
 								<text><![CDATA[m3]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement textAlignment="Center"/>
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{fac_metros_cubicos}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fac_metros_cubicos}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="14"/>
-								<textElement/>
-								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_agua}]]></textFieldExpression>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="14">
+									<printWhenExpression><![CDATA[$V{total_agua}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_agua}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30"/>
-								<textElement textAlignment="Center"/>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
 								<text><![CDATA[Agua]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement textAlignment="Center"/>
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{agua}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{agua}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="14"/>
-								<textElement/>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="14">
+									<printWhenExpression><![CDATA[$V{total_excedente}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
 								<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_excedente}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30"/>
-								<textElement textAlignment="Center"/>
-								<text><![CDATA[Excedente]]></text>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Exced]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement textAlignment="Center"/>
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{excedente}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{excedente}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="14"/>
-								<textElement/>
-								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_alcantarrillado}]]></textFieldExpression>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="14">
+									<printWhenExpression><![CDATA[$V{total_alcantarrillado}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_alcantarrillado}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30"/>
-								<textElement textAlignment="Center"/>
-								<text><![CDATA[Alcantarrillado]]></text>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Alcant]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement textAlignment="Center"/>
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{alcantarrillado}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{alcantarrillado}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="14"/>
-								<textElement/>
-								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_desechos}]]></textFieldExpression>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="14">
+									<printWhenExpression><![CDATA[$V{total_desechos}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_desechos}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30"/>
-								<textElement textAlignment="Center"/>
-								<text><![CDATA[Desechos]]></text>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Desech]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement textAlignment="Center"/>
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{desechos}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{desechos}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="14"/>
-								<textElement/>
-								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_ma}]]></textFieldExpression>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="14">
+									<printWhenExpression><![CDATA[$V{total_ma}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_ma}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30"/>
-								<textElement textAlignment="Center"/>
-								<text><![CDATA[Medio Ambiente]]></text>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Ambiente]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement textAlignment="Center"/>
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{medio_ambiente}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{medio_ambiente}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="14"/>
-								<textElement/>
-								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_interes1}]]></textFieldExpression>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00" isBlankWhenNull="false">
+								<reportElement mode="Transparent" x="0" y="0" width="30" height="15" forecolor="#000000" backcolor="#FFFFFF">
+									<printWhenExpression><![CDATA[$V{total_interes1}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+									<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_interes1}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30"/>
-								<textElement textAlignment="Center"/>
-								<text><![CDATA[Interes 1]]></text>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Int Val Imp]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement textAlignment="Center"/>
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{interes1}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{interes1}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="14"/>
-								<textElement/>
-								<textFieldExpression class="java.lang.String"><![CDATA[$V{total_interes2}]]></textFieldExpression>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00" isBlankWhenNull="false">
+								<reportElement mode="Transparent" x="0" y="0" width="30" height="15" forecolor="#000000" backcolor="#FFFFFF">
+									<printWhenExpression><![CDATA[$V{total_interes2}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+									<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_interes2}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30"/>
-								<textElement textAlignment="Center"/>
-								<text><![CDATA[Interes 2]]></text>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Mul 2 Mes Imp]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement textAlignment="Center"/>
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{interes2}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{interes2}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50">
-						<jr:tableFooter style="table_TH" height="14" rowSpan="1">
-							<textField pattern="">
-								<reportElement x="0" y="0" width="50" height="14"/>
-								<textElement/>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00" isBlankWhenNull="false">
+								<reportElement mode="Transparent" x="0" y="0" width="30" height="15" forecolor="#000000" backcolor="#FFFFFF">
+									<printWhenExpression><![CDATA[$V{derecho}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+									<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{derecho}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25"/>
+									<leftPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Derechos]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{derechos}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{derechos}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00" isBlankWhenNull="false">
+								<reportElement mode="Transparent" x="0" y="0" width="30" height="15" forecolor="#000000" backcolor="#FFFFFF">
+									<printWhenExpression><![CDATA[$V{factibilidad}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+									<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{factibilidad}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25"/>
+									<leftPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Factibilid]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{factibilidad}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{factibilidad}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00" isBlankWhenNull="false">
+								<reportElement mode="Transparent" x="0" y="0" width="30" height="15" forecolor="#000000" backcolor="#FFFFFF">
+									<printWhenExpression><![CDATA[$V{multa}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+									<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{multa}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25"/>
+									<leftPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Multa]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{multas}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{multas}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00" isBlankWhenNull="false">
+								<reportElement mode="Transparent" x="0" y="0" width="30" height="15" forecolor="#000000" backcolor="#FFFFFF">
+									<printWhenExpression><![CDATA[$V{material}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+									<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{material}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25"/>
+									<leftPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Material]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{material}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{material}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00" isBlankWhenNull="false">
+								<reportElement mode="Transparent" x="0" y="0" width="30" height="15" forecolor="#000000" backcolor="#FFFFFF">
+									<printWhenExpression><![CDATA[$V{garantia}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+									<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{garantia}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25"/>
+									<leftPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Garantia]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{garantia}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{garantia}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00" isBlankWhenNull="false">
+								<reportElement mode="Transparent" x="0" y="0" width="30" height="15" forecolor="#000000" backcolor="#FFFFFF">
+									<printWhenExpression><![CDATA[$V{otros}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+									<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Number"><![CDATA[$V{otros}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25"/>
+									<leftPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Otros]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{otros}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{otros}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="30">
+						<jr:tableFooter style="table_TH" height="15" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="14">
+									<printWhenExpression><![CDATA[$V{fac_total_sum}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
 								<textFieldExpression class="java.lang.Number"><![CDATA[$V{fac_total_sum}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30"/>
-								<textElement textAlignment="Center"/>
+								<reportElement x="0" y="0" width="30" height="20"/>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25"/>
+									<leftPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font size="7"/>
+								</textElement>
 								<text><![CDATA[Total]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="50" height="20"/>
-								<textElement textAlignment="Center"/>
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="30" height="20">
+									<printWhenExpression><![CDATA[$F{fac_total}>0]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
 								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fac_total}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>

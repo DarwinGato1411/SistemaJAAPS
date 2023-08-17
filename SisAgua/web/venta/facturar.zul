@@ -130,7 +130,7 @@
                                         <listhead>   
                     
             
-                                            <listheader width="20px"  label="" />
+                                            <listheader width="45px"  label="" />
                                             <listheader width="20%"  label="# Medidor" />
                                             <listheader width="20%"  label="# Mes" />
 
@@ -149,6 +149,11 @@
                                                            class="grow"
                                                            onClick="@command('cambiarestado',valor=each)" 
                                                            tooltiptext="Cambiar Estado"/> 
+                                                    <image src="/iconos/eliminar.png"
+                                                           class="grow"
+                                                           height="18px"
+                                                           onClick="@command('eliminarLectura',valor=each)" 
+                                                           tooltiptext="Eliminar lectura Estado"/> 
                                                 </listcell>
                                                 <listcell zclass = "mycss-listcell">
                                                     <textbox readonly="true" style="font-size:12px;background:#EBF5FB"

@@ -144,6 +144,47 @@ public class ServicioLectura {
         return listaLecturas;
     }
 
+    public List<Lectura> findLecturasPorUsuarioNumMedidor(String busqueda, String pagada, Date inicio, Date fin) {
+
+        List<Lectura> listaLecturas = new ArrayList<Lectura>();
+        try {
+
+            String SQL = "SELECT  a FROM Lectura a WHERE (a.idMedidor.idPredio.idPropietario.propNombre LIKE :propNombre OR a.idMedidor.idPredio.idPropietario.propApellido LIKE :propApellido OR a.idMedidor.medNumero LIKE :medNumero) ";
+            String WHERE = " and a.lecFecha between :inicio and :fin ";
+            String WHEREESTADO = " and a.lecPagada=:lecPagada ";
+            String ORDERBY = " ORDER BY a.lecFecha ASC";
+            //Connection connection = em.unwrap(Connection.class);
+
+            if (pagada.equals("TODO")) {
+                SQL = SQL + WHERE + ORDERBY;
+            } else {
+                SQL = SQL + WHERE + WHEREESTADO + ORDERBY;
+            }
+            em = HelperPersistencia.getEMF();
+            em.getTransaction().begin();
+            Query query = em.createQuery(SQL);
+            query.setParameter("medNumero", "%" + busqueda + "%");
+            query.setParameter("propNombre", "%" + busqueda + "%");
+            query.setParameter("propApellido", "%" + busqueda + "%");
+            query.setParameter("inicio", inicio);
+            query.setParameter("fin", fin);
+            if (pagada.equals("TODO")) {
+
+            } else {
+                query.setParameter("lecPagada", pagada);
+            }
+
+            listaLecturas = (List<Lectura>) query.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error en lsa consulta lectura findIdMedidor " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return listaLecturas;
+    }
+
     public void iniciarProximoMes(Integer mes, Date fecha) {
         try {
             em = HelperPersistencia.getEMF();
@@ -176,6 +217,42 @@ public class ServicioLectura {
             em.getTransaction().begin();
             Query query = em.createQuery("SELECT  a FROM Lectura a WHERE a.idMedidor =:idMedidor  AND a.lecPagada='N' ORDER BY A.lecMes ASC");
             query.setParameter("idMedidor", valor);
+
+            listaLecturas = (List<Lectura>) query.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error en lsa consulta lectura findIdMedidor " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return listaLecturas;
+    }
+
+    /*busar lecturas de medidores activos e inactivos*/
+    public List<Lectura> findLecturasMedActivoInactivo(String busqueda, Boolean estado) {
+
+        List<Lectura> listaLecturas = new ArrayList<Lectura>();
+        try {
+
+            String SQL = "SELECT  a FROM Lectura a WHERE (a.idMedidor.idPredio.idPropietario.propNombre LIKE :propNombre OR a.idMedidor.idPredio.idPropietario.propApellido LIKE :propApellido OR a.idMedidor.medNumero LIKE :medNumero) ";
+            String WHERE = "  ";
+//            String WHERE = " and a.lecFecha between :inicio and :fin ";
+            String WHEREESTADO = " and a.idMedidor.medActivo=:medActivo ";
+            String ORDERBY = " ORDER BY a.idMedidor.idPredio.idPropietario.propNombre,a.idMedidor.idPredio.idPropietario.propApellido ASC";
+            //Connection connection = em.unwrap(Connection.class);
+
+            SQL = SQL + WHERE + WHEREESTADO + ORDERBY;
+
+            em = HelperPersistencia.getEMF();
+            em.getTransaction().begin();
+            Query query = em.createQuery(SQL);
+            query.setParameter("medNumero", "%" + busqueda + "%");
+            query.setParameter("propNombre", "%" + busqueda + "%");
+            query.setParameter("propApellido", "%" + busqueda + "%");
+//            query.setParameter("inicio", inicio);
+//            query.setParameter("fin", fin);
+            query.setParameter("medActivo", estado);
 
             listaLecturas = (List<Lectura>) query.getResultList();
             em.getTransaction().commit();

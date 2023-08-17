@@ -238,6 +238,7 @@ public class ListaLisDetalladoOrdenado {
             //  parametros.put("codUsuario", String.valueOf(credentialLog.getAdUsuario().getCodigoUsuario()));
             parametros.put("inicio", inicio);
             parametros.put("fin", fin);
+            parametros.put("fac_numero", buscar);
 
             if (con != null) {
                 System.out.println("Conexión Realizada Correctamenteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
@@ -436,6 +437,9 @@ public class ListaLisDetalladoOrdenado {
             HSSFCell ch5abc = r.createCell(j++);
             ch5abc.setCellValue(new HSSFRichTextString("Derechos"));
             ch5abc.setCellStyle(estiloCelda);
+            HSSFCell ch5abca = r.createCell(j++);
+            ch5abca.setCellValue(new HSSFRichTextString("Factibilidad"));
+            ch5abca.setCellStyle(estiloCelda);
             HSSFCell ch5abd = r.createCell(j++);
             ch5abd.setCellValue(new HSSFRichTextString("Multas"));
             ch5abd.setCellStyle(estiloCelda);
@@ -445,6 +449,9 @@ public class ListaLisDetalladoOrdenado {
             HSSFCell ch5abf = r.createCell(j++);
             ch5abf.setCellValue(new HSSFRichTextString("Garantia"));
             ch5abf.setCellStyle(estiloCelda);
+            HSSFCell ch5abfa = r.createCell(j++);
+            ch5abfa.setCellValue(new HSSFRichTextString("Otros"));
+            ch5abfa.setCellStyle(estiloCelda);
 
             HSSFCell ch5abcg = r.createCell(j++);
             ch5abcg.setCellValue(new HSSFRichTextString("Total"));
@@ -460,6 +467,21 @@ public class ListaLisDetalladoOrdenado {
             BigDecimal subTotal0 = BigDecimal.ZERO;
             BigDecimal IVATotal = BigDecimal.ZERO;
             BigDecimal total = BigDecimal.ZERO;
+
+            BigDecimal totalAg = BigDecimal.ZERO;
+            BigDecimal totalAl = BigDecimal.ZERO;
+            BigDecimal totalEx = BigDecimal.ZERO;
+            BigDecimal totalDes = BigDecimal.ZERO;
+            BigDecimal totalAmb = BigDecimal.ZERO;
+            BigDecimal totalInt1 = BigDecimal.ZERO;
+            BigDecimal totalInt2 = BigDecimal.ZERO;
+            BigDecimal totalDerech = BigDecimal.ZERO;
+            BigDecimal totalfactibilidad = BigDecimal.ZERO;
+            BigDecimal totalMulta = BigDecimal.ZERO;
+            BigDecimal totalMaterial = BigDecimal.ZERO;
+            BigDecimal totalGarant = BigDecimal.ZERO;
+            BigDecimal totalOtros = BigDecimal.ZERO;
+            BigDecimal totalTotal = BigDecimal.ZERO;
 
             for (ListadoDetalladoOrdenado item : listaListItemsOrd) {
                 i = 0;
@@ -489,37 +511,59 @@ public class ListaLisDetalladoOrdenado {
 
                 HSSFCell c11 = r.createCell(i++);
                 c11.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getAgua() == null ? BigDecimal.ZERO : item.getAgua(), 2)).toString()));
+                totalAg = totalAg.add(ArchivoUtils.redondearDecimales(item.getAgua() == null ? BigDecimal.ZERO : item.getAgua(), 2));
+
                 HSSFCell c11a = r.createCell(i++);
                 c11a.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getExcedente() == null ? BigDecimal.ZERO : item.getExcedente(), 2)).toString()));
+                totalEx = totalEx.add(ArchivoUtils.redondearDecimales(item.getExcedente() == null ? BigDecimal.ZERO : item.getExcedente(), 2));
+
                 HSSFCell c11ab = r.createCell(i++);
                 c11ab.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getAlcantarrillado() == null ? BigDecimal.ZERO : item.getAlcantarrillado(), 2)).toString()));
+                totalAl = totalAl.add(ArchivoUtils.redondearDecimales(item.getAlcantarrillado() == null ? BigDecimal.ZERO : item.getAlcantarrillado(), 2));
 
                 HSSFCell c12 = r.createCell(i++);
                 c12.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getDesechos() == null ? BigDecimal.ZERO : item.getDesechos(), 2)).toString()));
+                totalDes = totalDes.add(ArchivoUtils.redondearDecimales(item.getDesechos() == null ? BigDecimal.ZERO : item.getDesechos(), 2));
 
                 HSSFCell c12a = r.createCell(i++);
                 c12a.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMedioAmbiente() == null ? BigDecimal.ZERO : item.getMedioAmbiente(), 2)).toString()));
+                totalAmb = totalAmb.add(ArchivoUtils.redondearDecimales(item.getMedioAmbiente() == null ? BigDecimal.ZERO : item.getMedioAmbiente(), 2));
 
                 HSSFCell c2 = r.createCell(i++);
                 c2.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getInteres1() == null ? BigDecimal.ZERO : item.getInteres1(), 2)).toString()));
+                totalInt1 = totalInt1.add(ArchivoUtils.redondearDecimales(item.getInteres1() == null ? BigDecimal.ZERO : item.getInteres1(), 2));
 
                 HSSFCell c3 = r.createCell(i++);
                 c3.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getInteres2() == null ? BigDecimal.ZERO : item.getInteres2(), 2)).toString()));
+                totalInt2 = totalInt2.add(ArchivoUtils.redondearDecimales(item.getInteres2() == null ? BigDecimal.ZERO : item.getInteres2(), 2));
 
                 HSSFCell c4 = r.createCell(i++);
                 c4.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getDerechos() == null ? BigDecimal.ZERO : item.getDerechos(), 2)).toString()));
+                totalDerech = totalDerech.add(ArchivoUtils.redondearDecimales(item.getDerechos() == null ? BigDecimal.ZERO : item.getDerechos(), 2));
+
+                HSSFCell c44 = r.createCell(i++);
+                c44.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getFactibilidad() == null ? BigDecimal.ZERO : item.getFactibilidad(), 2)).toString()));
+                totalfactibilidad = totalfactibilidad.add(ArchivoUtils.redondearDecimales(item.getFactibilidad() == null ? BigDecimal.ZERO : item.getFactibilidad(), 2));
 
                 HSSFCell c5 = r.createCell(i++);
                 c5.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMultas() == null ? BigDecimal.ZERO : item.getMultas(), 2)).toString()));
+                totalMulta = totalMulta.add(ArchivoUtils.redondearDecimales(item.getMultas() == null ? BigDecimal.ZERO : item.getMultas(), 2));
 
                 HSSFCell c6 = r.createCell(i++);
                 c6.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getMaterial() == null ? BigDecimal.ZERO : item.getMaterial(), 2)).toString()));
+                totalMaterial = totalMaterial.add(ArchivoUtils.redondearDecimales(item.getMaterial() == null ? BigDecimal.ZERO : item.getMaterial(), 2));
 
                 HSSFCell c7 = r.createCell(i++);
                 c7.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getGarantia() == null ? BigDecimal.ZERO : item.getGarantia(), 2)).toString()));
+                totalGarant = totalGarant.add(ArchivoUtils.redondearDecimales(item.getGarantia() == null ? BigDecimal.ZERO : item.getGarantia(), 2));
+
+                HSSFCell c8 = r.createCell(i++);
+                c8.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getOtros() == null ? BigDecimal.ZERO : item.getOtros(), 2)).toString()));
+                totalOtros = totalOtros.add(ArchivoUtils.redondearDecimales(item.getOtros() == null ? BigDecimal.ZERO : item.getOtros(), 2));
 
                 HSSFCell c3a = r.createCell(i++);
                 c3a.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(item.getFacTotal() == null ? BigDecimal.ZERO : item.getFacTotal(), 2)).toString()));
+                totalTotal = totalTotal.add(ArchivoUtils.redondearDecimales(item.getFacTotal() == null ? BigDecimal.ZERO : item.getFacTotal(), 2));
 
 //                HSSFCell c4 = r.createCell(i++);
 //                c4.setCellValue(new HSSFRichTextString(item.g));
@@ -528,6 +572,90 @@ public class ListaLisDetalladoOrdenado {
                 rownum += 1;
 
             }
+
+            /*tottalizods*/
+            j = 0;
+            r = s.createRow(rownum);
+            HSSFCell chfeF1 = r.createCell(j++);
+            chfeF1.setCellValue(new HSSFRichTextString(""));
+            chfeF1.setCellStyle(estiloCelda);
+
+            HSSFCell chfeF2 = r.createCell(j++);
+            chfeF2.setCellValue(new HSSFRichTextString(""));
+            chfeF2.setCellStyle(estiloCelda);
+
+            HSSFCell chfeF3 = r.createCell(j++);
+            chfeF3.setCellValue(new HSSFRichTextString(""));
+            chfeF3.setCellStyle(estiloCelda);
+
+            HSSFCell chF4 = r.createCell(j++);
+            chF4.setCellValue(new HSSFRichTextString(""));
+            chF4.setCellStyle(estiloCelda);
+            HSSFCell chF41 = r.createCell(j++);
+            chF41.setCellValue(new HSSFRichTextString(""));
+            chF41.setCellStyle(estiloCelda);
+            HSSFCell chF42 = r.createCell(j++);
+            chF42.setCellValue(new HSSFRichTextString(""));
+            chF42.setCellStyle(estiloCelda);
+            HSSFCell chF423 = r.createCell(j++);
+            chF423.setCellValue(new HSSFRichTextString(""));
+            chF423.setCellStyle(estiloCelda);
+
+            HSSFCell chF5 = r.createCell(j++);
+            chF5.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalAg, 2)).toString()));
+            chF5.setCellStyle(estiloCelda);
+
+            HSSFCell chF6 = r.createCell(j++);
+            chF6.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalEx, 2)).toString()));
+            chF6.setCellStyle(estiloCelda);
+
+            HSSFCell chF7 = r.createCell(j++);
+            chF7.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalAl, 2)).toString()));
+            chF7.setCellStyle(estiloCelda);
+
+            HSSFCell chF8 = r.createCell(j++);
+            chF8.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalDes, 2)).toString()));
+            chF8.setCellStyle(estiloCelda);
+
+            HSSFCell chF9 = r.createCell(j++);
+            chF9.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalAmb, 2)).toString()));
+            chF9.setCellStyle(estiloCelda);
+
+            HSSFCell chF91 = r.createCell(j++);
+            chF91.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalInt1, 2)).toString()));
+            chF91.setCellStyle(estiloCelda);
+
+            HSSFCell chF92 = r.createCell(j++);
+            chF92.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalInt2, 2)).toString()));
+            chF92.setCellStyle(estiloCelda);
+
+            HSSFCell chF93 = r.createCell(j++);
+            chF93.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalDerech, 2)).toString()));
+            chF93.setCellStyle(estiloCelda);
+
+            HSSFCell chF94 = r.createCell(j++);
+            chF94.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalfactibilidad, 2)).toString()));
+            chF94.setCellStyle(estiloCelda);
+
+            HSSFCell chF945 = r.createCell(j++);
+            chF945.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalMulta, 2)).toString()));
+            chF945.setCellStyle(estiloCelda);
+
+            HSSFCell chF946 = r.createCell(j++);
+            chF946.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalMaterial, 2)).toString()));
+            chF946.setCellStyle(estiloCelda);
+
+            HSSFCell chF9462 = r.createCell(j++);
+            chF9462.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalGarant, 2)).toString()));
+            chF9462.setCellStyle(estiloCelda);
+
+            HSSFCell chF9461 = r.createCell(j++);
+            chF9461.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalOtros, 2)).toString()));
+            chF9461.setCellStyle(estiloCelda);
+
+            HSSFCell chF9463 = r.createCell(j++);
+            chF9463.setCellValue(new HSSFRichTextString((ArchivoUtils.redondearDecimales(totalTotal, 2)).toString()));
+            chF9463.setCellStyle(estiloCelda);
 
             for (int k = 0; k <= listaListItemsOrd.size(); k++) {
                 s.autoSizeColumn(k);

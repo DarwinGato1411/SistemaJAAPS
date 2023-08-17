@@ -111,8 +111,7 @@
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[select * from listado_estadistica_mensual
-WHERE fac_fecha BETWEEN $P{inicio} AND $P{fin};]]>
+			<![CDATA[select * from estadistico_mensual;]]>
 		</queryString>
 		<field name="id" class="java.lang.Long"/>
 		<field name="fac_fecha" class="java.sql.Date"/>
@@ -173,193 +172,58 @@ WHERE fac_fecha BETWEEN $P{inicio} AND $P{fin};]]>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
 					<jr:column width="90">
-						<jr:tableHeader style="table 4_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table 4_TH" height="30" rowSpan="1"/>
-						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="90" height="30"/>
-								<textElement textAlignment="Center">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Fecha]]></text>
-							</staticText>
-						</jr:columnHeader>
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="table 4_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="90" height="20"/>
-								<textElement/>
-								<textFieldExpression class="java.util.Date"><![CDATA[$F{fac_fecha}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
+						<jr:detailCell style="table 4_TD" height="20" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="44">
-						<jr:tableHeader style="table 4_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table 4_TH" height="30" rowSpan="1"/>
-						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="44" height="30"/>
-								<textElement textAlignment="Center">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Agua]]></text>
-							</staticText>
-						</jr:columnHeader>
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="table 4_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="44" height="20"/>
-								<textElement textAlignment="Center"/>
-								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{agua}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
+						<jr:detailCell style="table 4_TD" height="20" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="58">
-						<jr:tableHeader style="table 4_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table 4_TH" height="30" rowSpan="1"/>
-						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="58" height="30"/>
-								<textElement textAlignment="Center">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Excedente]]></text>
-							</staticText>
-						</jr:columnHeader>
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="table 4_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="48" height="20"/>
-								<textElement textAlignment="Center"/>
-								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{excedente}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
+						<jr:detailCell style="table 4_TD" height="20" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="79">
-						<jr:tableHeader style="table 4_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table 4_TH" height="30" rowSpan="1"/>
-						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="79" height="30"/>
-								<textElement textAlignment="Center">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Alcantarrillado]]></text>
-							</staticText>
-						</jr:columnHeader>
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="table 4_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="65" height="20"/>
-								<textElement textAlignment="Center"/>
-								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{alcantarrillado}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
+						<jr:detailCell style="table 4_TD" height="20" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="49">
-						<jr:tableHeader style="table 4_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table 4_TH" height="30" rowSpan="1"/>
-						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="49" height="30"/>
-								<textElement textAlignment="Center">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Desechos]]></text>
-							</staticText>
-						</jr:columnHeader>
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="table 4_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="49" height="20"/>
-								<textElement textAlignment="Center"/>
-								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{desechos}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
+						<jr:detailCell style="table 4_TD" height="20" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="56">
-						<jr:tableHeader style="table 4_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table 4_TH" height="30" rowSpan="1"/>
-						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="56" height="30"/>
-								<textElement textAlignment="Center">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Medio Ambiente]]></text>
-							</staticText>
-						</jr:columnHeader>
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="table 4_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="44" height="20"/>
-								<textElement textAlignment="Center"/>
-								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{medio_ambiente}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
+						<jr:detailCell style="table 4_TD" height="20" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="44">
-						<jr:tableHeader style="table 4_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table 4_TH" height="30" rowSpan="1"/>
-						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="44" height="30"/>
-								<textElement textAlignment="Center">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Interes]]></text>
-							</staticText>
-						</jr:columnHeader>
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="table 4_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="44" height="20"/>
-								<textElement textAlignment="Center"/>
-								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{interes1}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
+						<jr:detailCell style="table 4_TD" height="20" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="44">
-						<jr:tableHeader style="table 4_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table 4_TH" height="30" rowSpan="1"/>
-						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="44" height="30"/>
-								<textElement textAlignment="Center">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Interes]]></text>
-							</staticText>
-						</jr:columnHeader>
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="table 4_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="44" height="20"/>
-								<textElement textAlignment="Center"/>
-								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{interes2}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
+						<jr:detailCell style="table 4_TD" height="20" rowSpan="1"/>
 					</jr:column>
 					<jr:column width="44">
-						<jr:tableHeader style="table 4_TH" height="30" rowSpan="1"/>
 						<jr:tableFooter style="table 4_TH" height="30" rowSpan="1"/>
-						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="44" height="30"/>
-								<textElement textAlignment="Center">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Total]]></text>
-							</staticText>
-						</jr:columnHeader>
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="table 4_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="44" height="20"/>
-								<textElement textAlignment="Center"/>
-								<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fac_total}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
+						<jr:detailCell style="table 4_TD" height="20" rowSpan="1"/>
 					</jr:column>
 				</jr:table>
 			</componentElement>

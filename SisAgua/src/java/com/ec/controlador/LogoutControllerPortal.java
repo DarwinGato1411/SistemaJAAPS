@@ -5,11 +5,11 @@
 package com.ec.controlador;
 
 import com.ec.seguridad.AutentificadorLogeo;
-import com.ec.seguridad.AutentificadorService;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
+import com.ec.seguridad.AutentificadorService;
 
 public class LogoutControllerPortal extends SelectorComposer<Component> {
 

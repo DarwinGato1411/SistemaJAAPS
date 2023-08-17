@@ -3216,7 +3216,20 @@ input, button, select, textarea {
     gap: 0px;
 }
 
+
+.contenedorLecturas .inputshistorico{
+    /*display: grid;*/
+ grid-template-columns: repeat(10,1fr);
+    gap: 0px;
+}
 .contenedorLecturas .inputs .contenedorInput{
+
+    display: grid;
+
+    gap: 10px;
+    height: 25px;
+}
+.contenedorLecturas .inputshistorico .contenedorInput{
 
     display: grid;
 
@@ -3235,8 +3248,8 @@ input, button, select, textarea {
     grid-template-columns: 10% 90%;
 }
 
-.contenedorLecturas .inputs .contenedorInputBuscar{
-    grid-template-columns:  80% 5%;
+.contenedorLecturas .inputshistorico .contenedorInputBuscar{
+    grid-template-columns: repeat(10,1fr);
 
 }
 

@@ -42,14 +42,14 @@
                             </div>  
                                
                         </div>
-<!--                        <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
-                            <button   image="/iconos/pdfrep2.png"  
+                        <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
+                            <button   image="/iconos/pdfv1.png"  
                                       onClick="@command('llamarReporteDetallado')"  
                                       class="btn btn-primary btn-sm "
-                                      tooltiptext="Descargar en Excel"/>
+                                      tooltiptext="Descargar en pdf"/>
                             
 
-                        </div> -->
+                        </div> 
                         <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
                         
                             <button   image="/iconos/excel.png"  
@@ -87,9 +87,11 @@
                             <listheader width="25%"  label="Int Val Imp" />
                             <listheader width="15%"  label="Mult 2 Mes Imp" />                                                   
                             <listheader width="15%"  label="Derechos" />                                                   
+                            <listheader width="15%"  label="Factibilidad" tooltiptext="Derechos de factibilidad"  />                                                   
                             <listheader width="15%"  label="Multas" />                                                   
                             <listheader width="15%"  label="Materiales" />                                                   
                             <listheader width="15%"  label="Garantia" />                                                   
+                            <listheader width="15%"  label="Otros"   tooltiptext="Por servicios prestados" />                                                   
                             <listheader width="25%"  label="Total" align="rigth" /> 
                                                          
                         </listhead>  
@@ -175,6 +177,10 @@
                                     <decimalbox readonly="true" format="###.##" 
                                                 value="@bind(each.derechos)" width="100%" />
                                 </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.factibilidad)" width="100%" />
+                                </listcell>
                                 
                                 <listcell  zclass = "mycss-listcell">
                                     <decimalbox readonly="true" format="###.##" 
@@ -189,6 +195,10 @@
                                 <listcell  zclass = "mycss-listcell">
                                     <decimalbox readonly="true" format="###.##" 
                                                 value="@bind(each.garantia)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.otros)" width="100%" />
                                 </listcell>
                 
                 

@@ -43,6 +43,9 @@
                             <menupopup> 
                                 <menuitem label="Emitir Facturas" id="btnFacturar"  />
                                 <menuitem label="Lecturas" id="btnLecturas"  />
+                                <menuitem label="Historico lecturas" id="btnHistoricoLecturas"  />
+                                <menuitem label="Lecturas de medidores activos / inactivos" id="btnMedACtivo"  />
+                                <menuitem label="Notas de entrega" id="btnListaNeAll"  />
                                 <menuitem label="Cierre de caja" id="btnCierreCajaUsu"  />
                             </menupopup>
                         </menu>

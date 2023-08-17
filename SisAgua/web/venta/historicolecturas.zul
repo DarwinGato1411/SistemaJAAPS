@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?init class="com.ec.seguridad.Autentificador"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
+<?link rel="icon" type="image/x-icon" href="/iconos/deckxel.ico"?>
+<div apply="org.zkoss.bind.BindComposer" 
+     self="@define(content)"
+     viewModel="@id('vm') @init('com.ec.controlador.HistoricoLectura')"  width="100%"  >
+    
+    <style>
+        .z-listbox-autopaging .z-listcell-cnt {
+        height: 15px;
+        overflow: hidden;
+        }
+        div.z-listbox-body .z-listcell {
+        padding: 0px;
+        }
+        
+    </style>    
+    <div class=" row col-12 col-sm-12 col-md-12 col-lg-12">
+<!--        <div class="inputshistorico">
+            
+                   
+                    
+<div class="contenedorInput contenedorInputBuscar">
+        -->
+        <textbox value="@bind(vm.buscar)"
+                         style="width:250px"  
+                         class="form-control form-control-sm"
+                         tooltiptext="Buscar "                         
+                         placeholder="Buscar"
+                         onOK="@command('buscarLecturas')"
+                         onChange="self.setValue(self.getValue().toUpperCase());" />
+             
+            
+        <label value="Estado:" tooltiptext="Estado de la factura" style="font-weight: bold;padding: 5px;"   />
+        <combobox  selectedItem="@bind(vm.pagada)"                                      
+                                       style="width:100px"  readonly="true"  >
+            <comboitem label="TODO" value="TODO" />
+            <comboitem label="PENDIENTE" value="N" />
+            <comboitem label="PAGADO" value="S" />
+        </combobox>     
+         
+                                    
+        <label value="Inicio: "   />
+        <datebox compact="true" value="@bind(vm.inicio)" 
+                                         style="font-weight:bold;width:100px"
+                                      
+                                         buttonVisible="true" 
+                                         lenient="true" format="dd/MM/yyyy" 
+                                         constraint="no empty: Ingrese la fecha "/>
+        <label value="Fin: "   />
+        <datebox compact="true" value="@bind(vm.fin)" 
+                                         style="font-weight:bold;width:100px"                                               
+                                         buttonVisible="true" 
+                                         lenient="true" format="dd/MM/yyyy" 
+                                         constraint="no empty: Ingrese la fecha "/>
+         
+                        
+              
+        <button   image="/imagenes/buscar1.png" 
+                              label="Buscar"
+                              onClick="@command('buscarLecturas')"  
+                              tooltiptext="Buscar lecturas por medidor o cliente"
+                              class="btn  btn-primary btn-sm "/>
+                               
+          
+                     
+        <!--            </div>
+        </div>-->
+        
+
+    </div>
+    <listbox  width="100%" model="@load(vm.listaDatos)" 
+              mold="paging" pageSize="25"
+              checkmark="false"  
+              multiple="false"              
+              nonselectableTags="">
+        <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+            
+     
+        <listhead>   
+                    
+            <listheader width="5%"  label="# Medidor" />
+            <listheader width="20%"  label="Nombres" >              
+            </listheader> 
+            <listheader width="20%"  label="Apellidos" >              
+            </listheader> 
+            <listheader width="10%"  label="Estado" >              
+            </listheader> 
+            <listheader width="10%"  label="Lectura anterior" />
+                       
+            <listheader width="10%"  label="Lectura actual" />              
+            <listheader width="10%"  label="Metros cubicos" />  
+            <listheader width="10%"  label="Fecha lectura" />               
+            <listheader width="4%"  label="" align="center"/>              
+            <listheader width="4%"  label="" align="center"/>              
+          
+        </listhead>  
+        <template name="model">                                                            
+            <listitem>  
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idMedidor.medNumero)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idMedidor.idPredio.idPropietario.propNombre)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm"  
+                             value="@bind(each.idMedidor.idPredio.idPropietario.propApellido)"  />
+                </listcell>              
+                <zk  choose="@bind(each.lecPagada)" >
+                    <zk  when="${each.lecPagada == 'S'}"  >
+                        <listcell    zclass = "mycss-listcell"  style="background:#C7FEC1" >
+                            <label  value="PAGADA" width="96%"/>
+                        </listcell>
+                    </zk>
+                    <zk  when="${each.lecPagada == 'N'}"  >
+                        <listcell    zclass = "mycss-listcell"  style="background:#FFCFCD" >
+                            <label value="PENDIENTE"  width="96%"/>
+                        </listcell>
+                    </zk>
+                </zk>   
+                <listcell zclass = "mycss-listcell">
+                    <textbox style="font-size:12px;background:white"
+                             class="form-control form-control-sm"  
+                             onChange="@command('calcularmetroCubico',valor=each)"
+                             value="@bind(each.lecAnterior)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox  style="font-size:12px;background:white"
+                              class="form-control form-control-sm"  
+                              onChange="@command('calcularmetroCubico',valor=each)"
+                              value="@bind(each.lecActual)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    <textbox  style="font-size:12px;background:white"
+                              class="form-control form-control-sm"  
+                              value="@bind(each.lecMetrosCubicos)"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell">
+                    
+                    <datebox compact="true" 
+                             value="@bind(each.lecFecha)" 
+                             buttonVisible="false" lenient="true" 
+                             tooltiptext="Fecha"
+                             readonly="true"
+                             format="medium" width="98%"  />
+                </listcell>
+                <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
+                    <image src="/iconos/eliminar.png"
+                           class="grow"
+                           onClick="@command('eliminarLectura',valor=each)" 
+                           tooltiptext="Eliminar producto"/> 
+                </listcell>
+                <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
+                    <image src="/iconos/pagar.png"
+                           class="grow"
+                           onClick="@command('cambiarestado',valor=each)" 
+                           tooltiptext="Cambiar estado de la lectura"/> 
+                </listcell>
+            </listitem>
+        </template>
+    </listbox>       
+</div>

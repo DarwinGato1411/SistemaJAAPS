@@ -72,6 +72,8 @@ public class ListadoDetalladoOrdenado implements Serializable {
 
     @Column(name = "derechos")
     private BigDecimal derechos;
+    @Column(name = "factibilidad")
+    private BigDecimal factibilidad;
     @Column(name = "multas")
     private BigDecimal multas;
     @Column(name = "material")
@@ -80,6 +82,8 @@ public class ListadoDetalladoOrdenado implements Serializable {
     private BigDecimal garantia;
     @Column(name = "fac_total")
     private BigDecimal facTotal;
+    @Column(name = "otros")
+    private BigDecimal otros;
 
     public ListadoDetalladoOrdenado() {
     }
@@ -107,7 +111,7 @@ public class ListadoDetalladoOrdenado implements Serializable {
                 BigDecimal multas,
                 BigDecimal material,
                 BigDecimal garantia
-                ) {
+    ) {
         this.idFactura = idFactura;
         this.facNumero = facNumero;
         this.facFecha = facFecha;
@@ -127,6 +131,66 @@ public class ListadoDetalladoOrdenado implements Serializable {
         this.multas = multas;
         this.material = material;
         this.garantia = garantia;
+    }
+
+    public ListadoDetalladoOrdenado(BigInteger idFactura, BigInteger facNumero, Date facFecha, String medNumero, String propNombre, String propApellido, BigDecimal facMetrosCubicos, BigDecimal agua, BigDecimal excedente, BigDecimal alcantarrillado, BigDecimal desechos, BigDecimal medioAmbiente, BigDecimal interes1, BigDecimal interes2, BigDecimal facTotal,
+                BigDecimal derechos,
+                BigDecimal multas,
+                BigDecimal material,
+                BigDecimal garantia,
+                BigDecimal otros
+    ) {
+        this.idFactura = idFactura;
+        this.facNumero = facNumero;
+        this.facFecha = facFecha;
+        this.medNumero = medNumero;
+        this.propNombre = propNombre;
+        this.propApellido = propApellido;
+        this.facMetrosCubicos = facMetrosCubicos;
+        this.agua = agua;
+        this.excedente = excedente;
+        this.alcantarrillado = alcantarrillado;
+        this.desechos = desechos;
+        this.medioAmbiente = medioAmbiente;
+        this.interes1 = interes1;
+        this.interes2 = interes2;
+        this.facTotal = facTotal;
+        this.derechos = derechos;
+        this.multas = multas;
+        this.material = material;
+        this.garantia = garantia;
+        this.otros = otros;
+    }
+
+    public ListadoDetalladoOrdenado(BigInteger idFactura, BigInteger facNumero, Date facFecha, String medNumero, String propNombre, String propApellido, BigDecimal facMetrosCubicos, BigDecimal agua, BigDecimal excedente, BigDecimal alcantarrillado, BigDecimal desechos, BigDecimal medioAmbiente, BigDecimal interes1, BigDecimal interes2, BigDecimal facTotal,
+                BigDecimal derechos,
+                BigDecimal multas,
+                BigDecimal material,
+                BigDecimal garantia,
+                BigDecimal otros,
+                BigDecimal factibilidad
+    ) {
+        this.idFactura = idFactura;
+        this.facNumero = facNumero;
+        this.facFecha = facFecha;
+        this.medNumero = medNumero;
+        this.propNombre = propNombre;
+        this.propApellido = propApellido;
+        this.facMetrosCubicos = facMetrosCubicos;
+        this.agua = agua;
+        this.excedente = excedente;
+        this.alcantarrillado = alcantarrillado;
+        this.desechos = desechos;
+        this.medioAmbiente = medioAmbiente;
+        this.interes1 = interes1;
+        this.interes2 = interes2;
+        this.facTotal = facTotal;
+        this.derechos = derechos;
+        this.multas = multas;
+        this.material = material;
+        this.garantia = garantia;
+        this.otros = otros;
+        this.factibilidad = factibilidad;
     }
 
     public BigInteger getIdFactura() {
@@ -279,6 +343,22 @@ public class ListadoDetalladoOrdenado implements Serializable {
 
     public void setGarantia(BigDecimal garantia) {
         this.garantia = garantia;
+    }
+
+    public BigDecimal getOtros() {
+        return otros;
+    }
+
+    public void setOtros(BigDecimal otros) {
+        this.otros = otros;
+    }
+
+    public BigDecimal getFactibilidad() {
+        return factibilidad;
+    }
+
+    public void setFactibilidad(BigDecimal factibilidad) {
+        this.factibilidad = factibilidad;
     }
 
 }

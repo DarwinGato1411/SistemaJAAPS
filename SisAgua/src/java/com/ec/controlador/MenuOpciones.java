@@ -307,6 +307,21 @@ public class MenuOpciones extends SelectorComposer<Component> {
         Executions.sendRedirect("/venta/facturar.zul");
     }
 
+    
+    @Listen("onClick = #btnHistoricoLecturas")
+    public void btnHistoricoLecturas() {
+        Executions.sendRedirect("/venta/historicolecturas.zul");
+    }
+    @Listen("onClick = #btnMedACtivo")
+    public void btnMedACtivo() {
+        Executions.sendRedirect("/venta/lectura_activo_inactivo.zul");
+    }
+    
+    @Listen("onClick = #btnListaNeAll")
+    public void btnListaNeAll() {
+        Executions.sendRedirect("/venta/listanotaentregaall.zul");
+    }
+    
     @Listen("onClick = #btnCierreCajaUsu")
     public void btnCierreCaja() {
 //        if (credential.getUsuarioSistema().getUsuNivel() != 1) {

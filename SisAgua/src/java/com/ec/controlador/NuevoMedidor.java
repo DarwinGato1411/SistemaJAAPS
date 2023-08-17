@@ -143,7 +143,7 @@ public class NuevoMedidor {
             if (accion.equals("create")) {
 
                 servicioMedidor.crear(entidad);
-                servicioGeneral.iniciarLecturaMedidor(mes, fechaCreacion);
+              //  servicioGeneral.iniciarLecturaMedidor(mes, fechaCreacion);
 //                System.out.println("fechaCreacion " + fechaCreacion);
             } else {
                 servicioMedidor.modificar(entidad);
