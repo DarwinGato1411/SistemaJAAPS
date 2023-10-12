@@ -84,7 +84,11 @@
                             </menupopup>
                         </menu>
                          <menu label="Reportes" id="menuReportes">
-                            <menupopup>                                                                         
+                            <menupopup>   
+                                 <menuitem label="Estadistico diario" id="btnEstadisticoDiario" />
+                                 <menuitem label="Estadistico mensual" id="btnEstadisticoMensual" />
+                                 <menuitem label="Estadistico anual" id="btnEstadisticoAnual" />
+                                <menuitem label="Listado detallado de cobro" id="btnReporteDetCob" />                                                                      
                                 <menuitem label="Facturas autorizadas SRI" id="btnFactAutori"  />                              
                                 <menuitem label="Compras vs Ventas" id="btnBalanceUtilidad"  />
                                 <!--<menuitem label="Cantidad de venta (GLP)" id="btnRepVentCant" />-->
@@ -107,8 +111,7 @@
                                
                                 <menuitem label="Reportes Contabilidad" id="btnReportesConta" />
                                 <menuitem label="Codigos retencion" id="btnListaTipoRetencion" />
-                                <menuitem label="Estadistico mensual" id="btnEstadisticoMensual" />
-                                <menuitem label="Listado detalldo de cobro" id="btnReporteDetCob" />
+                               
                             </menupopup>
                         </menu>
                         

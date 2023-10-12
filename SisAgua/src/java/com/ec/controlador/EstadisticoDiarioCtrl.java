@@ -4,15 +4,13 @@
  */
 package com.ec.controlador;
 
-import com.ec.entidad.EstadisticoMensual;
+import com.ec.entidad.EstadisticoDiarioHistorico;
 import com.ec.entidad.EstadisticoMensualHistorico;
-import com.ec.entidad.Factura;
-import com.ec.entidad.RetencionCompra;
 import com.ec.servicio.HelperPersistencia;
 import com.ec.servicio.ServicioGeneral;
+import com.ec.servicio.contabilidad.ServicioEstadisticoDiarioHistorico;
 import java.util.Calendar;
 import java.util.Date;
-import com.ec.servicio.contabilidad.ServicioEstadisticoMensual;
 import com.ec.servicio.contabilidad.ServicioEstadisticoMensualHistorico;
 import com.ec.untilitario.ArchivoUtils;
 import java.io.ByteArrayInputStream;
@@ -54,10 +52,10 @@ import org.zkoss.zul.Filedownload;
  *
  * @author gato
  */
-public class EstadisticoMensualCtrl {
+public class EstadisticoDiarioCtrl {
 
-    ServicioEstadisticoMensualHistorico servicioEstadisticoMensual = new ServicioEstadisticoMensualHistorico();
-    private List<EstadisticoMensualHistorico> listaEstadisticoMensual = new ArrayList<EstadisticoMensualHistorico>();
+    ServicioEstadisticoDiarioHistorico servicioEstadisticoDiario = new ServicioEstadisticoDiarioHistorico();
+    private List<EstadisticoDiarioHistorico> listaEstadisticoDiario = new ArrayList<EstadisticoDiarioHistorico>();
 
     private Date inicio = new Date();
     private Date fin = new Date();
@@ -68,7 +66,7 @@ public class EstadisticoMensualCtrl {
     AMedia fileContent = null;
     Connection con = null;
 
-    public EstadisticoMensualCtrl() {
+    public EstadisticoDiarioCtrl() {
         Calendar calendar = Calendar.getInstance(); //obtiene la fecha de hoy 
         calendar.add(Calendar.DATE, -15);
 //        calendar.//el -3 indica que se le restaran 3 dias 
@@ -80,32 +78,34 @@ public class EstadisticoMensualCtrl {
     }
 
     private void consultarEstadisticoMensual() {
-        listaEstadisticoMensual = servicioEstadisticoMensual.findEstadisticoMensual(inicio, fin);
+        listaEstadisticoDiario = servicioEstadisticoDiario.findEstadisticoDairio(inicio, inicio);
     }
 
     @Command
-    @NotifyChange({"listaEstadisticoMensual", "inicio", "fin"})
+    @NotifyChange({"listaEstadisticoDiario", "inicio", "fin"})
     public void consultarEstadistico() {
-        servicioGeneral.generarEstadisticoMensual(inicio, fin);
+        servicioGeneral.generarEstadisticoDiario(inicio, inicio);
         consultarEstadisticoMensual();
     }
 
     @Command
-    @NotifyChange({"listaEstadisticoMensual", "inicio", "fin"})
-    public void calcular(@BindingParam("valor") EstadisticoMensualHistorico valor) {
+    @NotifyChange({"listaEstadisticoDiario", "inicio", "fin"})
+    public void calcular(@BindingParam("valor") EstadisticoDiarioHistorico valor) {
         BigDecimal saldo = valor.getSaldoAnterior().add(valor.getTotalIngreso()).subtract(valor.getRecaudo());
         valor.setSaldoActual(saldo);
-        servicioEstadisticoMensual.modificar(valor);
+        servicioEstadisticoDiario.modificar(valor);
         consultarEstadisticoMensual();
     }
 
-    public List<EstadisticoMensualHistorico> getListaEstadisticoMensual() {
-        return listaEstadisticoMensual;
+    public List<EstadisticoDiarioHistorico> getListaEstadisticoDiario() {
+        return listaEstadisticoDiario;
     }
 
-    public void setListaEstadisticoMensual(List<EstadisticoMensualHistorico> listaEstadisticoMensual) {
-        this.listaEstadisticoMensual = listaEstadisticoMensual;
+    public void setListaEstadisticoDiario(List<EstadisticoDiarioHistorico> listaEstadisticoDiario) {
+        this.listaEstadisticoDiario = listaEstadisticoDiario;
     }
+
+  
 
     public Date getInicio() {
         return inicio;
@@ -136,7 +136,7 @@ public class EstadisticoMensualCtrl {
         }
     }
 
-    private String exportarExcel() throws FileNotFoundException, IOException, ParseException {
+     private String exportarExcel() throws FileNotFoundException, IOException, ParseException {
         String directorioReportes = Executions.getCurrent().getDesktop().getWebApp().getRealPath("/reportes");
 
         Date date = new Date();
@@ -144,7 +144,7 @@ public class EstadisticoMensualCtrl {
         SimpleDateFormat sm = new SimpleDateFormat("yyy-MM-dd");
         String strDate = sm.format(date);
 
-        String pathSalida = directorioReportes + File.separator + "estadistico_mensual.xls";
+        String pathSalida = directorioReportes + File.separator + "estadistico_diario.xls";
         System.out.println("Direccion del reporte  " + pathSalida);
         try {
             int j = 1;
@@ -155,7 +155,7 @@ public class EstadisticoMensualCtrl {
             archivoXLS.createNewFile();
             FileOutputStream archivo = new FileOutputStream(archivoXLS);
             HSSFWorkbook wb = new HSSFWorkbook();
-            HSSFSheet s = wb.createSheet("EstadisticoS");
+            HSSFSheet s = wb.createSheet("Estadistico");
 
             HSSFFont fuente = wb.createFont();
             fuente.setBoldweight((short) 700);
@@ -209,7 +209,7 @@ public class EstadisticoMensualCtrl {
             BigDecimal cobrado = BigDecimal.ZERO;
             BigDecimal saldoActual = BigDecimal.ZERO;
 
-            for (EstadisticoMensualHistorico item : listaEstadisticoMensual) {
+            for (EstadisticoDiarioHistorico item : listaEstadisticoDiario) {
                 i = 0;
 
                 r = s.createRow(rownum);
@@ -261,7 +261,7 @@ public class EstadisticoMensualCtrl {
             chF5.setCellStyle(estiloCelda);
             
             
-            for (int k = 0; k <= listaEstadisticoMensual.size(); k++) {
+            for (int k = 0; k <= listaEstadisticoDiario.size(); k++) {
                 s.autoSizeColumn(k);
             }
             wb.write(archivo);
@@ -273,6 +273,7 @@ public class EstadisticoMensualCtrl {
         return pathSalida;
 
     }
+
 
     @Command
     public void estdisticoMensual() throws JRException, IOException, NamingException, SQLException {
@@ -291,7 +292,7 @@ public class EstadisticoMensualCtrl {
                     .getRealPath("/reportes");
             String reportPath = "";
 
-            reportPath = reportFile + File.separator + "estadisticamensual.jasper";
+            reportPath = reportFile + File.separator + "estadisticodiario.jasper";
 
             Map<String, Object> parametros = new HashMap<String, Object>();
 

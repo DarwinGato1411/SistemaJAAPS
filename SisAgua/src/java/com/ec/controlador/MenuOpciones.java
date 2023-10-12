@@ -296,6 +296,14 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnEstadisticoMensual() {
         Executions.sendRedirect("/contabilidad/estadisticomensual.zul");
     }
+    @Listen("onClick = #btnEstadisticoDiario")
+    public void btnEstadisticoDiario() {
+        Executions.sendRedirect("/contabilidad/estadisticodiario.zul");
+    }
+    @Listen("onClick = #btnEstadisticoAnual")
+    public void btnEstadisticoAnual() {
+        Executions.sendRedirect("/contabilidad/estadisticoanual.zul");
+    }
 
     @Listen("onClick = #btnReporteDetCob")
     public void btnReporteDetCob() {

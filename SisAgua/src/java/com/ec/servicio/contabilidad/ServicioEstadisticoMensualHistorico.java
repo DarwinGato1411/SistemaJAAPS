@@ -6,9 +6,11 @@
 package com.ec.servicio.contabilidad;
 
 import com.ec.entidad.EstadisticoMensual;
+import com.ec.entidad.EstadisticoMensualHistorico;
 
 import com.ec.servicio.HelperPersistencia;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -17,7 +19,7 @@ import javax.persistence.Query;
  *
  * @author HC
  */
-public class ServicioEstadisticoMensual {
+public class ServicioEstadisticoMensualHistorico {
     
     private EntityManager em;
 
@@ -29,7 +31,7 @@ public class ServicioEstadisticoMensual {
         this.em = em;
     }
 
-    public void crear(EstadisticoMensual estadisticoMensual) {
+    public void crear(EstadisticoMensualHistorico estadisticoMensual) {
 
         try {
             em = HelperPersistencia.getEMF();
@@ -44,7 +46,7 @@ public class ServicioEstadisticoMensual {
 
     }
 
-    public void eliminar(EstadisticoMensual estadisticoMensual) {
+    public void eliminar(EstadisticoMensualHistorico estadisticoMensual) {
 
         try {
             em = HelperPersistencia.getEMF();
@@ -60,7 +62,7 @@ public class ServicioEstadisticoMensual {
 
     }
 
-    public void modificar(EstadisticoMensual estadisticoMensual) {
+    public void modificar(EstadisticoMensualHistorico estadisticoMensual) {
 
         try {
             em = HelperPersistencia.getEMF();
@@ -75,17 +77,39 @@ public class ServicioEstadisticoMensual {
 
     }
 
-    public List<EstadisticoMensual> findEstadisticoMensual() {
+    public List<EstadisticoMensualHistorico> findEstadisticoMensual(Date inicio , Date fin ) {
 
-        List<EstadisticoMensual> listaEstadisticoMensual = new ArrayList<EstadisticoMensual>();
+        List<EstadisticoMensualHistorico> listaEstadisticoMensual = new ArrayList<EstadisticoMensualHistorico>();
         try {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM EstadisticoMensual a WHERE a.saldoAnterior>0 OR a.recaudo>0 OR a.saldoActual>0 OR a.totalIngreso>0  ORDER BY a.rubro ASC");
-//            query.setParameter("subcNombre", "%" + valor + "%");
+            Query query = em.createQuery("SELECT  a FROM EstadisticoMensualHistorico a WHERE a.fechaInicio BETWEEN :inicio and :fin  ORDER BY a.rubro ASC");
+            query.setParameter("inicio",inicio);
+            query.setParameter("fin",fin);
 
-            listaEstadisticoMensual = (List<EstadisticoMensual>) query.getResultList();
+            listaEstadisticoMensual = (List<EstadisticoMensualHistorico>) query.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error en lsa consulta estadisticoMensual findByNombre " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return listaEstadisticoMensual;
+    }
+    public List<EstadisticoMensualHistorico> findEstadisticoAnual(Date inicio , Date fin ) {
+
+        List<EstadisticoMensualHistorico> listaEstadisticoMensual = new ArrayList<EstadisticoMensualHistorico>();
+        try {
+            //Connection connection = em.unwrap(Connection.class);
+            em = HelperPersistencia.getEMF();
+            em.getTransaction().begin();
+            Query query = em.createQuery("SELECT  new com.ec.entidad.EstadisticoMensualHistorico(a.rubro,max(a.fechaInicio),max(a.fechaFin), sum(a.saldoAnterior),sum(a.totalIngreso),sum(a.recaudo),sum(a.saldoActual)) FROM EstadisticoMensualHistorico a WHERE a.fechaInicio BETWEEN :inicio and :fin GROUP BY a.rubro  ORDER BY a.rubro ASC");
+            query.setParameter("inicio",inicio);
+            query.setParameter("fin",fin);
+
+            listaEstadisticoMensual = (List<EstadisticoMensualHistorico>) query.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {
             System.out.println("Error en lsa consulta estadisticoMensual findByNombre " + e.getMessage());

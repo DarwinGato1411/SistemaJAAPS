@@ -4,16 +4,13 @@
  */
 package com.ec.controlador;
 
-import com.ec.entidad.EstadisticoMensual;
-import com.ec.entidad.EstadisticoMensualHistorico;
-import com.ec.entidad.Factura;
-import com.ec.entidad.RetencionCompra;
+import com.ec.entidad.EstadisticoAnualHistorico;
+import com.ec.entidad.EstadisticoDiarioHistorico;
 import com.ec.servicio.HelperPersistencia;
 import com.ec.servicio.ServicioGeneral;
+import com.ec.servicio.contabilidad.ServicioEstadisticoAnualHistorico;
 import java.util.Calendar;
 import java.util.Date;
-import com.ec.servicio.contabilidad.ServicioEstadisticoMensual;
-import com.ec.servicio.contabilidad.ServicioEstadisticoMensualHistorico;
 import com.ec.untilitario.ArchivoUtils;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -43,7 +40,6 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.AMedia;
@@ -54,10 +50,10 @@ import org.zkoss.zul.Filedownload;
  *
  * @author gato
  */
-public class EstadisticoMensualCtrl {
+public class EstadisticoAnualCtrl {
 
-    ServicioEstadisticoMensualHistorico servicioEstadisticoMensual = new ServicioEstadisticoMensualHistorico();
-    private List<EstadisticoMensualHistorico> listaEstadisticoMensual = new ArrayList<EstadisticoMensualHistorico>();
+    ServicioEstadisticoAnualHistorico servicioEstadisticoAnual = new ServicioEstadisticoAnualHistorico();
+    private List<EstadisticoAnualHistorico> listaEstadistico = new ArrayList<EstadisticoAnualHistorico>();
 
     private Date inicio = new Date();
     private Date fin = new Date();
@@ -68,43 +64,36 @@ public class EstadisticoMensualCtrl {
     AMedia fileContent = null;
     Connection con = null;
 
-    public EstadisticoMensualCtrl() {
+    public EstadisticoAnualCtrl() {
+        Date inicial = new Date();
         Calendar calendar = Calendar.getInstance(); //obtiene la fecha de hoy 
-        calendar.add(Calendar.DATE, -15);
+//        calendar.add(Calendar.MONTH, -10);
+        calendar.set(calendar.get(Calendar.YEAR), 0, 1);
 //        calendar.//el -3 indica que se le restaran 3 dias 
         inicio = calendar.getTime();
-        consultarEstadisticoMensual();
+//        consultarEstadisticoAnual();
         //fechainicioDiaria.setDate(-7);
         //consultaAC();
 
     }
 
-    private void consultarEstadisticoMensual() {
-        listaEstadisticoMensual = servicioEstadisticoMensual.findEstadisticoMensual(inicio, fin);
+    private void consultarEstadisticoAnual() {
+        listaEstadistico = servicioEstadisticoAnual.findEstadisticoAnual(inicio, fin);
     }
 
     @Command
-    @NotifyChange({"listaEstadisticoMensual", "inicio", "fin"})
+    @NotifyChange({"listaEstadistico", "inicio", "fin"})
     public void consultarEstadistico() {
-        servicioGeneral.generarEstadisticoMensual(inicio, fin);
-        consultarEstadisticoMensual();
+        servicioGeneral.generarEstadisticoAnual(inicio, fin);
+        consultarEstadisticoAnual();
     }
 
-    @Command
-    @NotifyChange({"listaEstadisticoMensual", "inicio", "fin"})
-    public void calcular(@BindingParam("valor") EstadisticoMensualHistorico valor) {
-        BigDecimal saldo = valor.getSaldoAnterior().add(valor.getTotalIngreso()).subtract(valor.getRecaudo());
-        valor.setSaldoActual(saldo);
-        servicioEstadisticoMensual.modificar(valor);
-        consultarEstadisticoMensual();
+    public List<EstadisticoAnualHistorico> getListaEstadistico() {
+        return listaEstadistico;
     }
 
-    public List<EstadisticoMensualHistorico> getListaEstadisticoMensual() {
-        return listaEstadisticoMensual;
-    }
-
-    public void setListaEstadisticoMensual(List<EstadisticoMensualHistorico> listaEstadisticoMensual) {
-        this.listaEstadisticoMensual = listaEstadisticoMensual;
+    public void setListaEstadistico(List<EstadisticoAnualHistorico> listaEstadistico) {
+        this.listaEstadistico = listaEstadistico;
     }
 
     public Date getInicio() {
@@ -144,7 +133,7 @@ public class EstadisticoMensualCtrl {
         SimpleDateFormat sm = new SimpleDateFormat("yyy-MM-dd");
         String strDate = sm.format(date);
 
-        String pathSalida = directorioReportes + File.separator + "estadistico_mensual.xls";
+        String pathSalida = directorioReportes + File.separator + "estadistico_anual.xls";
         System.out.println("Direccion del reporte  " + pathSalida);
         try {
             int j = 1;
@@ -155,7 +144,7 @@ public class EstadisticoMensualCtrl {
             archivoXLS.createNewFile();
             FileOutputStream archivo = new FileOutputStream(archivoXLS);
             HSSFWorkbook wb = new HSSFWorkbook();
-            HSSFSheet s = wb.createSheet("EstadisticoS");
+            HSSFSheet s = wb.createSheet("Estadistico");
 
             HSSFFont fuente = wb.createFont();
             fuente.setBoldweight((short) 700);
@@ -209,7 +198,7 @@ public class EstadisticoMensualCtrl {
             BigDecimal cobrado = BigDecimal.ZERO;
             BigDecimal saldoActual = BigDecimal.ZERO;
 
-            for (EstadisticoMensualHistorico item : listaEstadisticoMensual) {
+            for (EstadisticoAnualHistorico item : listaEstadistico) {
                 i = 0;
 
                 r = s.createRow(rownum);
@@ -220,21 +209,20 @@ public class EstadisticoMensualCtrl {
                 HSSFCell c0 = r.createCell(i++);
                 c0.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getSaldoAnterior(), 3).toString()));
                 saldoAnt = saldoAnt.add(ArchivoUtils.redondearDecimales(item.getSaldoAnterior(), 3));
-                
+
                 HSSFCell c1 = r.createCell(i++);
                 c1.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getTotalIngreso(), 3).toString()));
                 totGen = totGen.add(ArchivoUtils.redondearDecimales(item.getTotalIngreso(), 3));
-                
+
                 HSSFCell c2 = r.createCell(i++);
                 c2.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getRecaudo(), 3).toString()));
                 cobrado = cobrado.add(ArchivoUtils.redondearDecimales(item.getRecaudo(), 3));
-                
+
                 HSSFCell c3 = r.createCell(i++);
                 c3.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getSaldoActual(), 3).toString()));
                 saldoActual = saldoActual.add(ArchivoUtils.redondearDecimales(item.getSaldoActual(), 3));
-                
+
                 rownum += 1;
-                
 
             }
             j = 0;
@@ -254,14 +242,12 @@ public class EstadisticoMensualCtrl {
             HSSFCell chF4 = r.createCell(j++);
             chF4.setCellValue(new HSSFRichTextString(cobrado.toString()));
             chF4.setCellStyle(estiloCelda);
-            
-            
-             HSSFCell chF5 = r.createCell(j++);
+
+            HSSFCell chF5 = r.createCell(j++);
             chF5.setCellValue(new HSSFRichTextString(saldoActual.toString()));
             chF5.setCellStyle(estiloCelda);
-            
-            
-            for (int k = 0; k <= listaEstadisticoMensual.size(); k++) {
+
+            for (int k = 0; k <= listaEstadistico.size(); k++) {
                 s.autoSizeColumn(k);
             }
             wb.write(archivo);
@@ -291,7 +277,7 @@ public class EstadisticoMensualCtrl {
                     .getRealPath("/reportes");
             String reportPath = "";
 
-            reportPath = reportFile + File.separator + "estadisticamensual.jasper";
+            reportPath = reportFile + File.separator + "estadisticoanual.jasper";
 
             Map<String, Object> parametros = new HashMap<String, Object>();
 

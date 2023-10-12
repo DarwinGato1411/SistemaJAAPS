@@ -6,11 +6,11 @@
 <?link rel="icon" type="image/x-icon" href="/iconos/deckxel.ico"?>
 <zk  contentStyle="overflow:auto" with="100%" >
     <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
-          viewModel="@id('vm') @init('com.ec.controlador.EstadisticoMensualCtrl')" width="99%">
+          viewModel="@id('vm') @init('com.ec.controlador.EstadisticoDiarioCtrl')" width="99%">
         
         <tabbox  width="100%"  tabscroll="true" >
             <tabs >
-                <tab label="Estadistico mensual de movimiento de cartera" sclass="menutabs"/>
+                <tab label="Estadistico diario de movimiento de cartera" sclass="menutabs"/>
                
                                 
             </tabs>
@@ -21,18 +21,18 @@
                     <div  class="container-fluid" >
                         <div class="row " > 
                             <div  class=" col-12 col-sm-12 col-md-12 col-lg-12 " style="margin-bottom:3px">
-                                <label value="Inicio: "   />
+                                <label value="Dia: "   />
                                 <datebox   value="@bind(vm.inicio)" 
                                                style="font-weight:bold;"                                                   
                                                buttonVisible="true" 
                                                lenient="true"  format="dd/MM/yyyy" /> 
                
-                                <label value="Fin: "  />
+<!--                                <label value="Fin: "  />
                                 <datebox   value="@bind(vm.fin)" 
                                                style="font-weight:bold;" 
                                                onCreate="self.value = new Date()"                                                   
                                                buttonVisible="true" 
-                                               lenient="true"  format="dd/MM/yyyy"                                               /> 
+                                               lenient="true"  format="dd/MM/yyyy"                                               /> -->
                                 <button   image="/imagenes/buscar1.png"  
                                               onClick="@command('consultarEstadistico')"  
                                               class="btn btn-primary btn-sm "
@@ -56,7 +56,7 @@
                         </div>
                         <div class="row " align="center">                            
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 " align="start">
-                                <listbox model="@load(vm.listaEstadisticoMensual)" 
+                                <listbox model="@load(vm.listaEstadisticoDiario)" 
                                          nonselectableTags=""  
                                          mold="paging" pageSize="20"  > 
                                     <custom-attributes org.zkoss.zul.listbox.rod="true"/>
