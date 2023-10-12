@@ -179,10 +179,17 @@ public abstract class GenericXMLSignature {
             InputSource is = new InputSource(reader);
             is.setEncoding("ISO-8859-1");
 
+            String sSistemaOperativo = System.getProperty("os.name");
+            System.out.println(sSistemaOperativo);
+
 //        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbf.newDocumentBuilder();
-            doc = dBuilder.parse(is);
-          //  DocumentBuilder db = dbf.newDocumentBuilder();
+            if (sSistemaOperativo.toLowerCase().contains("wind")) {
+                doc = dBuilder.parse(is);
+            } else {
+                doc = dBuilder.parse(file);
+            }
+            //  DocumentBuilder db = dbf.newDocumentBuilder();
 
             //doc=db.parse(file);
         } catch (ParserConfigurationException ex) {

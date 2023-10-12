@@ -20,9 +20,9 @@
                         <custom-attributes org.zkoss.zul.listbox.rod="true"/>
                         <auxhead>
                             <auxheader colspan="12" >  
-                                <div class="row">
+                                <div  class="row contenedorCuadro">
                                   
-                                    <div  class="col-12 col-sm-12 col-md-2 col-lg-2 ">
+                                    <div  class="">
                                         <label value="Inicio: "   />
                                         <datebox   value="@bind(vm.inicio)" 
                                                    readonly="true" style="font-weight:bold;" 
@@ -31,7 +31,7 @@
                                                    lenient="true"  format="dd/MM/yyyy" 
                                                    constraint="no empty: Ingrese de inicio de la busqueda"/> 
                                     </div>
-                                    <div  class="col-12 col-sm-12 col-md-3 col-lg-3 ">
+                                    <div  class="col-lg-2 ">
                                         <label value="Fin: "  />
                                         <datebox   value="@bind(vm.fin)" 
                                                    readonly="true" style="font-weight:bold;" 
@@ -45,10 +45,12 @@
                                                   tooltiptext="Buscar"/>
                        
                                     </div>
-                                    <div  class="col-12 col-sm-12 col-md-3 col-lg-3 ">
+                                    <div  class="">
                                         <button   image="/imagenes/excel.png"  
                                                   onClick="@command('exportListboxToExcel')"  
-                                                  class="btn btn-primary btn-sm "
+                                                  class="btn btn-primary btn-sm  "
+                                                  width="100%"
+                                                  label="Descargar"
                                                   tooltiptext="Descargar"/>
 
                                     </div>
@@ -88,13 +90,13 @@
                         <template name="model">                                                            
                             <listitem>
                                 <listcell zclass = "mycss-listcell">
-                                  <textbox readonly="true" style="font-size:12px ;background:#EBF5FB"
-                                           class="form-control form-control-sm" 
-                                           value="@bind(each.cabNumFactura)" />
+                                    <textbox readonly="true" style="font-size:12px ;background:#EBF5FB"
+                                             class="form-control form-control-sm" 
+                                             value="@bind(each.cabNumFactura)" />
                                 </listcell>
                                 <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">
                                     <datebox style="font-size:12px"
-                                              class=" form-control-sm" 
+                                             class=" form-control-sm" 
                                              value="@bind(each.cabFechaEmision)" 
                                              buttonVisible="false" 
                                              lenient="true" 
@@ -123,18 +125,18 @@
                                 </listcell>
                                 <listcell zclass = "mycss-listcell">
                                     <textbox readonly="true"  style="font-size:12px"
-                                           class="form-control form-control-sm" 
-                                           value="@bind(each.cabEstado)" />
+                                             class="form-control form-control-sm" 
+                                             value="@bind(each.cabEstado)" />
                                 </listcell>
                                 <listcell zclass = "mycss-listcell">
                                     <textbox readonly="true"  style="font-size:12px ;background:#EBF5FB"
-                                           class="form-control form-control-sm" 
-                                           value="@bind(each.cabProveedor)" />
+                                             class="form-control form-control-sm" 
+                                             value="@bind(each.cabProveedor)" />
                                 </listcell>
                                 <listcell zclass = "mycss-listcell">
                                     <textbox readonly="true"  style="font-size:12px ;background:#EBF5FB"
-                                           class="form-control form-control-sm" 
-                                           value="@bind(each.idUsuario.usuNombre)"  />
+                                             class="form-control form-control-sm" 
+                                             value="@bind(each.idUsuario.usuNombre)"  />
                                     
                                 </listcell>
                                 <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">
@@ -146,7 +148,7 @@
                                     
                                     <image if="${each.cabRetencionAutori=='S'}" 
                                            src="/iconos/listo_uno.png"   
-                                            class=" grow"                                          
+                                           class=" grow"                                          
                                            tooltiptext="No se puede autorizar por que se encuentra en estado autorizado"/> 
                                 </listcell>
                                 <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">
@@ -157,7 +159,7 @@
                                            tooltiptext="Modificar factura"/>
                                     <image if="${each.cabRetencionAutori=='S'}" 
                                            src="/iconos/listo_uno.png"   
-                                                 class=" grow"                                       
+                                           class=" grow"                                       
                                            tooltiptext="No se puede autorizar por que se encuentra en estado autorizado"/> 
                                 </listcell>
                                 

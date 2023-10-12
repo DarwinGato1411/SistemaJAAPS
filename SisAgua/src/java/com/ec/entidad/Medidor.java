@@ -65,6 +65,7 @@ public class Medidor implements Serializable {
     private String medBarrio;
     @Column(name = "med_anio")
     private Integer medAnio;
+
     @Column(name = "med_direccion")
     private String medDireccion;
     @JoinColumn(name = "id_estado_lectura", referencedColumnName = "id_estado_lectura")
@@ -82,6 +83,8 @@ public class Medidor implements Serializable {
     @JoinColumn(name = "id_ubicacion_medidor", referencedColumnName = "id_ubicacion_medidor")
     @ManyToOne
     private UbicacionMedidor idUbicacionMedidor;
+    @Column(name = "med_activo")
+    private Boolean medActivo;
 
     public Medidor() {
     }
@@ -226,6 +229,14 @@ public class Medidor implements Serializable {
     @Override
     public String toString() {
         return "com.ec.entidad.Medidor[ idMedidor=" + idMedidor + " ]";
+    }
+
+    public Boolean getMedActivo() {
+        return medActivo==null?Boolean.FALSE:medActivo;
+    }
+
+    public void setMedActivo(Boolean medActivo) {
+        this.medActivo = medActivo;
     }
 
 }

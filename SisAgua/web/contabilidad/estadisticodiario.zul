@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?init class="com.ec.seguridad.Autentificador"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
+<?link rel="icon" type="image/x-icon" href="/iconos/deckxel.ico"?>
+<zk  contentStyle="overflow:auto" with="100%" >
+    <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
+          viewModel="@id('vm') @init('com.ec.controlador.EstadisticoDiarioCtrl')" width="99%">
+        
+        <tabbox  width="100%"  tabscroll="true" >
+            <tabs >
+                <tab label="Estadistico diario de movimiento de cartera" sclass="menutabs"/>
+               
+                                
+            </tabs>
+            <tabpanels >
+                <tabpanel  height="100%" width="98%"  >                   
+
+                       
+                    <div  class="container-fluid" >
+                        <div class="row " > 
+                            <div  class=" col-12 col-sm-12 col-md-12 col-lg-12 " style="margin-bottom:3px">
+                                <label value="Dia: "   />
+                                <datebox   value="@bind(vm.inicio)" 
+                                               style="font-weight:bold;"                                                   
+                                               buttonVisible="true" 
+                                               lenient="true"  format="dd/MM/yyyy" /> 
+               
+<!--                                <label value="Fin: "  />
+                                <datebox   value="@bind(vm.fin)" 
+                                               style="font-weight:bold;" 
+                                               onCreate="self.value = new Date()"                                                   
+                                               buttonVisible="true" 
+                                               lenient="true"  format="dd/MM/yyyy"                                               /> -->
+                                <button   image="/imagenes/buscar1.png"  
+                                              onClick="@command('consultarEstadistico')"  
+                                              class="btn btn-primary btn-sm "
+                                              tooltiptext="Buscar estadistico"/>
+                                
+                                <button   image="/iconos/pdfv1.png"  
+                                                  onClick="@command('estdisticoMensual')"  
+                                                  class="btn btn-primary btn-sm  "
+                                                  label="Descargar"
+                                                  tooltiptext="Descargar pdf"/>
+                                <button   image="/imagenes/excel.png"  
+                                                  onClick="@command('exportListboxToExcel')"  
+                                                  class="btn btn-primary btn-sm  "
+                                                  label="Descargar"
+                                                  tooltiptext="Descargar"/>
+                                
+                                             
+                                  
+                                   
+                            </div>
+                        </div>
+                        <div class="row " align="center">                            
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 " align="start">
+                                <listbox model="@load(vm.listaEstadisticoDiario)" 
+                                         nonselectableTags=""  
+                                         mold="paging" pageSize="20"  > 
+                                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                                    <listhead> 
+                                        <listheader width="60%"  label="Rubro facturado" /> 
+                                        <listheader width="10%"  label="Saldo anterior" /> 
+                                        <listheader width="10%"  label="Total generado" /> 
+                                        <listheader width="10%"  label="Cobrado" /> 
+                                        <listheader width="10%"  label="Saldo Actual" /> 
+                                                                  
+                                    </listhead>  
+                        
+                    
+                                    <template name="model">                                                            
+                                        <listitem>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"  
+                                                         value="@bind(each.rubro)"
+                                                         width="100%" />
+                                                <!--     value="@bind(each.subcNumero)" value="@bind(each.subcNombre)" -->
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <decimalbox format="###.###" readonly="true" 
+                                                            value="@bind(each.saldoAnterior)" width="96%"/>
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <decimalbox format="###.###" readonly="false" if="${each.mostrar}"
+                                                onOK="@command('calcular',valor=each)"
+                                                            value="@bind(each.totalIngreso)" width="96%"/>
+                                                <decimalbox format="###.###" readonly="true" style="font-size:12px;background:#EBF5FB"  if="${!each.mostrar}"
+                                                            value="@bind(each.totalIngreso)" width="96%"/>
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <decimalbox format="###.###" readonly="true" 
+                                                            value="@bind(each.recaudo)" width="96%"/>
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <decimalbox format="###.###" readonly="true" style="font-size:12px;background:#EBF5FB" 
+                                                 
+                                                            value="@bind(each.saldoActual)" width="96%"/>
+                                            </listcell>
+
+                                                                     
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </div>
+                        </div>
+                    </div>  
+    
+                            
+                </tabpanel>                
+             
+            </tabpanels>
+            
+            
+        </tabbox>
+        
+    </hbox>
+
+
+</zk>

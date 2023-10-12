@@ -10,9 +10,12 @@
 
         <tabbox  width="100%"  tabscroll="true" >
             <tabs >
+                <tab label="Estadistica Mensual de Movimiento de Corte" sclass="menutabs"/>
+                <!--<tab label="Listado Detallado de Cobros" sclass="menutabs"/>-->
                 <tab label="Comprobante Diario" sclass="menutabs"/>
-                <tab label="Listado detallado de cobros" sclass="menutabs"/>
-                <!--<tab label="Estadistica Mensual de Movimiento de Cartera" sclass="menutabs"/>-->
+                <tab label="Estadistica Mensual de Movimiento de Cartera" sclass="menutabs"/>
+                <tab label="Diario General" sclass="menutabs"/>
+                <tab label="Mayor general" sclass="menutabs"/>
                 
             </tabs>
             <tabpanels >
@@ -93,7 +96,9 @@
                         </div>
                     </div>
                 </tabpanel>
-                <tabpanel  width="99%"  >                    
+                
+                
+<!--                <tabpanel  width="99%"  >                    
                     <div class="row">
                        
                         <div class=" input-group col-12 col-sm-12 col-md-4 col-lg-4 ">
@@ -119,14 +124,18 @@
                                
                         </div>
                          <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
-                                <button   image="/imagenes/excel.png"  
-                                        onClick="@command('exportExcelDiario')"  
+                                <button   image="/iconos/pdfrep2.png"  
+                                        onClick="@command('llamarReporteDetallado')"  
+                                        class="btn btn-primary btn-sm "
+                                        tooltiptext="Descargar en Excel"/>
+                                <button   image="/iconos/pdfrep2.png"  
+                                        onClick="@command('llamarReporteDetallado')"  
                                         class="btn btn-primary btn-sm "
                                         tooltiptext="Descargar en Excel"/>
 
                             </div> 
                     </div>
-                     <listbox model="@load(vm.listaListDetallado)" 
+                     <listbox model="@load(vm.listaListItemsOrd)" 
                              nonselectableTags=""  mold="paging" pageSize="20"  >
                         <custom-attributes org.zkoss.zul.listbox.rod="true"/>
                     
@@ -138,7 +147,13 @@
                             <listheader width="25%"  label="Nombre" />
                             <listheader width="25%"  label="Apellido" />
                             <listheader width="15%"  label="(m3)" />
-                            <listheader width="25%"  label="Descripción" />                                                        
+                            <listheader width="25%"  label="Agua" /> 
+                            <listheader width="25%"  label="Excedente" />
+                            <listheader width="25%"  label="Alcantarrillado" />
+                            <listheader width="25%"  label="Desechos" />
+                            <listheader width="25%"  label="Medio Ambiente" />
+                            <listheader width="25%"  label="Interes" />
+                            <listheader width="15%"  label="Interes" />                                                   
                             <listheader width="25%"  label="Total" align="rigth" /> 
                                                          
                         </listhead>  
@@ -190,15 +205,40 @@
                                       style="font-size:12px;background:#EBF5FB"    
                                              value="@bind(each.facMetrosCubicos)" width="100%" />
                                </listcell>
-                               <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
-                                    <textbox readonly="true" 
-                                      class="form-control form-control-sm"
-                                      style="font-size:12px;background:#EBF5FB"    
-                                             value="@bind(each.detDescripcion)" width="100%" />
+
+                               <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.agua)" width="100%" />
                                </listcell>
                                <listcell  zclass = "mycss-listcell">
                                     <decimalbox readonly="true" format="###.##" 
-                                                value="@bind(each.detTotal)" width="100%" />
+                                                value="@bind(each.excedente)" width="100%" />
+                                </listcell>
+                               <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.alcantarrillado)" width="100%" />
+                                </listcell>
+                               <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.desechos)" width="100%" />
+                                </listcell>
+                               <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.medioAmbiente)" width="100%" />
+                                </listcell>
+                               <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.interes1)" width="100%" />
+                                </listcell>
+                               <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.interes2)" width="100%" />
+                                </listcell>
+                                 
+                
+                               <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.facTotal)" width="100%" />
                                 </listcell>
                                                                        
                                 
@@ -207,8 +247,175 @@
                     </listbox>
          
                 </tabpanel>
-                <tabpanel height="100%" hflex="min">
-                    <div class="container-fluid">
+                
+                -->
+                
+                               <tabpanel  height="100%" width="98%"  >                   
+
+                              
+                    <div  class="container-fluid" >
+                        <div  class="row" >
+                            <label value="Inicio: " style="font-weight: bold;padding: 5px;"   />
+                            <datebox compact="true" value="@bind(vm.fechainicioDiaria)" 
+                                     style="font-weight:bold;" 
+                                     buttonVisible="true" 
+                                     lenient="true" format="dd/MM/yyyy" 
+                                     constraint="no empty: Selecciona el mes a consultar "/>
+                             <div class="input-group-append">
+                                <button   image="/imagenes/buscar1.png"  
+                                          onClick="@command('buscarDiaria')"  
+                                          class="btn btn-primary btn-sm  "
+                                          tooltiptext="Buscar el total de las facturas"/>                                     
+                            </div> 
+                            <div class="input-group-append">
+
+                                 <label value="(*)" style="color:transparent;font-weight:bold"/>Generar Asiento
+                                    <button   image="/imagenes/reporte1.png"  
+                                          onClick="@command('guardar')"  
+                                          class="btn btn-primary btn-sm  "
+                                          tooltiptext="Generar Asiento "/>                                     
+                            </div>  
+                             <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
+                            <label value="(*)" style="color:transparent;font-weight:bold"/>Ver Reporte                            
+                                 <button   image="/iconos/pdfrep2.png"  
+                                        onClick="@command('llamarReporteDiario')"  
+                                        class="btn btn-primary btn-sm "
+                                        tooltiptext="Ver Reporte"/>
+
+                            </div> 
+                        </div>
+                                                             <listbox model="@load(vm.listaAcumuladopordias)" 
+                             nonselectableTags=""  mold="paging" pageSize="20"  >
+                        <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                    
+                        <listhead> 
+                            <listheader width="25%"  label="Total con facturas" />                            
+                            <listheader width="25%"  label="Total con Notas Venta" />                                                        
+                            <listheader width="25%"  label="Total" align="rigth" /> 
+                            <listheader width="25%"  label="Fecha" align="lefth" />                             
+                        </listhead>  
+                        
+                    
+                        <template name="model">                                                            
+                            <listitem>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.facTotal)" width="100%" />
+                                </listcell>
+                                <listcell zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.totalntv)" width="100%" />
+                                </listcell>
+                                <listcell zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.totalacumulado)" width="100%" />
+                                </listcell>
+                                <listcell zclass = "mycss-listcell" style="font-size:11px;background-color:#d6eefd">
+                                 
+                                    <datebox compact="true" value="@bind(each.facFecha)" 
+                                             style="font-size:11px;background-color:#d6eefd"
+                                             buttonVisible="false" lenient="true" readonly="true"
+                                             format="medium" width="100%"  />
+                                </listcell>
+                                                                         
+                                
+                            </listitem>
+                        </template>
+                    </listbox>
+                    <div>  </div>
+                        <div class="row " align="center">                            
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 " align="start">
+                                <listbox model="@load(vm.listaCuSubCuenta2)" 
+                                         nonselectableTags=""  
+                                         mold="paging" pageSize="12"  > 
+                                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                                    
+                                    <auxhead>
+                                        <auxheader colspan="12" >  
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
+                                                    
+                                                    <label value="Subcuentas"   />
+                                                   
+                                                </div>
+                                            </div>
+                                
+                                        </auxheader>
+                                    </auxhead>       
+                                    
+                                    <listhead> 
+                                        <listheader width="20%"  label="Cuenta" /> 
+                                        <listheader width="50%"  label="Nombre Cuenta" /> 
+                                        <listheader width="15%"  label="Debito" /> 
+                                        <listheader width="15%"  label="Credito" /> 
+                                                                  
+                                    </listhead>  
+                        
+                    
+                                    <template name="model">                                                            
+                                        <listitem>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"  
+                                                        value="@bind(each.subcNumero)"
+                                                         width="100%" />
+                                                <!--     value="@bind(each.subcNumero)" value="@bind(each.subcNombre)" -->
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"
+                                                         value="@bind(each.subcNombre)"   
+                                                         width="100%" />
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell">
+                                            <decimalbox readonly="true" format="###.##" 
+                                                        value="@bind(each.subcSaldo)" width="100%" />
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell">
+                                            <decimalbox readonly="true" format="###.##" 
+                                                        value="@bind(each.subcTotal)" width="100%" />
+                                            </listcell>
+
+                                                                     
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </div>
+                                       <!-- <div class="col-12 col-sm-12 col-md-1 col-lg-1">   
+                                            <label value="DEBITO" class="form-control-sm" 
+                                                   style="font-weight:bold;font-size:0.8em"/>
+                                
+                                            <decimalbox  format="###.##"   
+                                                         width="98%"
+                                                         readonly="true" 
+                                                         class="form-control-sm"
+                                                         
+                                                         style="text-align:center;font-size:2em;color:blue"/>
+                               
+                                        </div>   
+                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">   
+                                            <label value="CREDITO:" class="form-control-sm" 
+                                                   style="font-weight:bold;font-size:0.8em"/>
+                                
+                                            <decimalbox  format="###.##"   
+                                                         width="98%"
+                                                         readonly="true" 
+                                                         class="form-control-sm"
+                                                         
+                                                         style="text-align:center;font-size:2em;color:blue"/>
+                               
+                                        </div>--> 
+                        </div>
+                    </div>  
+    
+                            
+                </tabpanel> 
+                   <tabpanel  height="100%" width="98%"  >                   
+
+                              
+                    <div  class="container-fluid" >
                         <div class="row">
                             <div  class="col-12 col-sm-12 col-md-2 col-lg-2 ">
                                 <label value="Inicio: "   />
@@ -228,33 +435,34 @@
                                            lenient="true"  format="dd/MM/yyyy" 
                                            constraint="no empty: IBuscar por fecha fin de la busqueda"/> 
                                 <button   image="/imagenes/buscar1.png"  
-                                          onClick="@command('buscarForFechas')"  
+                                          onClick="@command('buscarmovcartera')"  
                                           class="btn btn-primary btn-sm "
                                           tooltiptext="Buscar"/>
                        
                             </div>
-                            <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                                <image src="/iconos/xml.png"   
-                                       class="btn btn btn-secondary btn-sm "
-                                       onClick="@command('descargaATS')"
-                                       tooltiptext="General ATS"/>
+                            <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
+                            <label value="(*)" style="color:transparent;font-weight:bold"/>Ver Reporte                            
+                                 <button   image="/iconos/pdfrep2.png"  
+                                        onClick="@command('llamarReportMovCartera')"  
+                                        class="btn btn-primary btn-sm "
+                                        tooltiptext="Ver Reporte"/>
 
-                            </div>
+                            </div> 
+                          
                         </div>
-                  
                         <div class="row " align="center">                            
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 " align="start">
-               <!--                 <listbox model="@load(vm.listaDatosLectura)" 
+                                <listbox model="@load(vm.listaMovCartera)" 
                                          nonselectableTags=""  
-                                         mold="paging" pageSize="12"  >
+                                         mold="paging" pageSize="12"  > 
                                     <custom-attributes org.zkoss.zul.listbox.rod="true"/>
                                     
-                                  <auxhead>
+                                    <auxhead>
                                         <auxheader colspan="12" >  
                                             <div class="row">
                                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
                                                     
-                                                    <label value="Ventas acumuladas"   />
+                                                    <label value="Rubros"   />
                                                    
                                                 </div>
                                             </div>
@@ -263,67 +471,221 @@
                                     </auxhead>       
                                     
                                     <listhead> 
-                                        <listheader width="15%"  label="Periodo de Cobranza" /> 
-                                        <listheader width="20%"  label="Num Prefacturas Emitidas" /> 
-                                        <listheader width="20%"  label="Num Prefacturas Pagadas" />    
-                                        <listheader width="15%"  label="Num Prefacturas Impagas" />        
-                                        <listheader width="15%"  label="Total Básico Facturado" />        
-                                        <listheader width="15%"  label="Total Excedentes" />        
-                                        <listheader width="15%"  label="Total Counsumo" />        
-                                        <listheader width="15%"  label="" />                                                             
+                                        <listheader width="50%"  label="Rubros Facturados" /> 
+                                        <listheader width="15%"  label="Saldo Anterior" /> 
+                                        <listheader width="15%"  label="Ingresado" /> 
+                                        <listheader width="15%"  label="Cobrado" />
+                                        <listheader width="15%"  label="NC" /> 
+                                        <listheader width="15%"  label="Deterioro" />
+                                        <listheader width="15%"  label="Saldo Actual" />
+                                        <listheader width="15%"  label="%" />
+                                                                  
                                     </listhead>  
                         
                     
                                     <template name="model">                                                            
                                         <listitem>
-                                            <listcell>
-                                                <textbox readonly="true"  style="font-size:12px;background:#EBF5FB"                            
-                                                         class="form-control form-control-sm" value="@bind(each.detalleFacturaDAO.detDescripcion)" width="96%" />
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"  
+                                                        value="@bind(each.detDescripcion)"
+                                                         width="100%" />
+                                                <!--     value="@bind(each.subcNumero)" value="@bind(each.subcNombre)" -->
                                             </listcell>
-                                            <listcell>
-                                                <textbox readonly="true"  style="font-size:12px;background:#EBF5FB"                            
-                                                         class="form-control form-control-sm" value="@bind(each.facFecha)" width="96%" />
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"
+                                                         
+                                                         width="100%" />
                                             </listcell>
-                                            <listcell>
-                                                <textbox readonly="true"  style="font-size:12px;background:#EBF5FB"                            
-                                                         class="form-control form-control-sm" value="@bind(each.estNombre)" width="96%" />
+                                            <listcell  zclass = "mycss-listcell">
+                                            <decimalbox readonly="true" format="###.##" 
+                                                        
+                                                        width="100%" />
                                             </listcell>
-                                            <listcell>
-                                                <textbox readonly="true"  style="font-size:12px;background:#EBF5FB"                            
-                                                         class="form-control form-control-sm" value="@bind(each.estNombre)" width="96%" />
+                                            <listcell  zclass = "mycss-listcell">
+                                            <decimalbox readonly="true" format="###.##" 
+                                                        value="@bind(each.facTotal)" width="100%" />
                                             </listcell>
-                                            <listcell>
-                                                <textbox readonly="true"  style="font-size:12px;background:#EBF5FB"                            
-                                                         class="form-control form-control-sm" value="@bind(each.estNombre)" width="96%" />
-                                            </listcell>
-                                            <listcell>
-                                                <textbox readonly="true"  style="font-size:12px;background:#EBF5FB"                            
-                                                         class="form-control form-control-sm" value="@bind(each.estNombre)" width="96%" />
-                                            </listcell>
-                                            <listcell  zclass = "mycss-listcell" >    
-                                     
-                                                <image src="/iconos/tecketera.jpg"   
-                                                       class="btn btn btn-secondary btn-sm grow"                                         
-                                                       onClick="@command('reporteComprobante',valor=each)"
-                                                       tooltiptext="Imprimir comprobante"/>
-                              
-                                            </listcell>
-                                            <listcell  zclass = "mycss-listcell" >    
-                                     
-                                                <image src="/iconos/factelect.jpg"   
-                                                       class="btn btn btn-secondary btn-sm grow"                                         
-                                                       onClick="@command('reporteNotaVenta',valor=each)"
-                                                       tooltiptext="Imprimir factura"/>
-                              
-                                            </listcell>                                           
+
+                                                                     
                                         </listitem>
                                     </template>
-                                </listbox>-->
+                                </listbox>
                             </div>
                         </div>
-                    </div>
-                    asdasdas
-                </tabpanel>
+                    </div>  
+   
+                            
+                </tabpanel> 
+                
+                              <tabpanel  height="100%" width="98%"  >                   
+
+                              
+                    <div  class="container-fluid" >
+                        <div  class="row" >
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4  form-group "  >
+                                <label value="(*)" style="color:transparent;font-weight:bold"/>Fecha:
+              
+                                <datebox compact="true"
+                                         readonly="true"   style="font-weight:bold" buttonVisible="true" 
+                                         lenient="true" 
+                                         format="dd/MM/yyyy" />
+                            </div>
+                        </div>
+                        <div class="row " align="center">                            
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 " align="start">
+                                <listbox model="@load(vm.listaCuSubCuenta2)" 
+                                         nonselectableTags=""  
+                                         mold="paging" pageSize="12"  > 
+                                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                                    
+                                    <auxhead>
+                                        <auxheader colspan="12" >  
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
+                                                    
+                                                    <label value="Diario General"   />
+                                                   
+                                                </div>
+                                            </div>
+                                
+                                        </auxheader>
+                                    </auxhead>       
+                                    
+                                    <listhead> 
+                                        <listheader width="20%"  label="Nro COmprobante" /> 
+                                        <listheader width="50%"  label="Cuenta" /> 
+                                        <listheader width="15%"  label="Nombre" /> 
+                                        <listheader width="15%"  label="Detalle" />
+                                        <listheader width="15%"  label="Debe" /> 
+                                        <listheader width="15%"  label="Credito" />
+                                                                  
+                                    </listhead>  
+                        
+                    
+                                    <template name="model">                                                            
+                                        <listitem>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"  
+                                                        value="@bind(each.subcNumero)"
+                                                         width="100%" />
+                                                <!--     value="@bind(each.subcNumero)" value="@bind(each.subcNombre)" -->
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"
+                                                         value="@bind(each.subcNombre)"   
+                                                         width="100%" />
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell">
+                                            <decimalbox readonly="true" format="###.##" 
+                                                        value="@bind(each.subcSaldo)" width="100%" />
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell">
+                                            <decimalbox readonly="true" format="###.##" 
+                                                        value="@bind(each.subcTotal)" width="100%" />
+                                            </listcell>
+
+                                                                     
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </div>
+                        </div>
+                    </div>  
+    
+                            
+                
+                   </tabpanel> 
+                
+                              <tabpanel  height="100%" width="98%"  >                   
+
+                              
+                    <div  class="container-fluid" >
+                        <div  class="row" >
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4  form-group "  >
+                                <label value="(*)" style="color:transparent;font-weight:bold"/>Fecha:
+              
+                                <datebox compact="true"
+                                         readonly="true"   style="font-weight:bold" buttonVisible="true" 
+                                         lenient="true" 
+                                         format="dd/MM/yyyy" />
+                            </div>
+                        </div>
+                        <div class="row " align="center">                            
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 " align="start">
+                                <listbox model="@load(vm.listaCuSubCuenta2)" 
+                                         nonselectableTags=""  
+                                         mold="paging" pageSize="12"  > 
+                                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                                    
+                                    <auxhead>
+                                        <auxheader colspan="12" >  
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
+                                                    
+                                                    <label value="Mayor General"   />
+                                                   
+                                                </div>
+                                            </div>
+                                
+                                        </auxheader>
+                                    </auxhead>       
+                                    
+                                    <listhead> 
+                                        <listheader width="20%"  label="Fecha" /> 
+                                        <listheader width="50%"  label="Tipo" /> 
+                                        <listheader width="15%"  label="Numero Comprobante" /> 
+                                        <listheader width="15%"  label="Detalle" />
+                                        <listheader width="15%"  label="Debito" /> 
+                                        <listheader width="15%"  label="Credito" />
+                                        <listheader width="15%"  label="Saldo" />
+                                                                  
+                                    </listhead>  
+                        
+                    
+                                    <template name="model">                                                            
+                                        <listitem>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"  
+                                                        value="@bind(each.subcNumero)"
+                                                         width="100%" />
+                                                <!--     value="@bind(each.subcNumero)" value="@bind(each.subcNombre)" -->
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"
+                                                         value="@bind(each.subcNombre)"   
+                                                         width="100%" />
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell">
+                                            <decimalbox readonly="true" format="###.##" 
+                                                        value="@bind(each.subcSaldo)" width="100%" />
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell">
+                                            <decimalbox readonly="true" format="###.##" 
+                                                        value="@bind(each.subcTotal)" width="100%" />
+                                            </listcell>
+
+                                                                     
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </div>
+                        </div>
+                    </div>  
+    
+                            
+                </tabpanel> 
             </tabpanels>
         </tabbox>
         

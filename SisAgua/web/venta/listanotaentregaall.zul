@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?init class="com.ec.seguridad.Autentificador"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
+<?link rel="icon" type="image/x-icon" href="/iconos/deckxel.ico"?>
+<zk  contentStyle="overflow:auto" class="col-12 col-sm-12 col-md-12 col-lg-12" >
+      
+ 
+    <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
+          viewModel="@id('vm') @init('com.ec.controlador.ListaNotaEntregaAll')" >
+        <tabbox id="tboxPrincipal"  width="100%" >
+            <tabs>
+                <tab label="Lista de facturas emitidas" sclass="menutabs" /> 
+            </tabs>
+            <tabpanels >
+                
+                <tabpanel  width="99%"  >                    
+                    <div class="contenedorListaFacturas">
+                        <div class="contenedorCuadro">
+
+                            <label value="Estado:" tooltiptext="Estado nota entrega" style="font-weight: bold;padding: 5px;"   />
+                            <combobox  selectedItem="@bind(vm.estadoBusqueda)"                                      
+                                       style="width:100px"  readonly="true"  >
+                                <!--<comboitem label="TODO" value="TODO" />-->
+                                <comboitem label="PENDIENTE" value="N" />
+                                <comboitem label="PAGADO" value="S" />
+                            </combobox>
+                            
+                            <!--                            <button   image="/imagenes/buscar1.png"  
+                              onClick="@command('buscarEstado')"  
+                              class="btn btn-primary btn-sm  "
+                              tooltiptext="Buscar facturas por estado"/>                                     
+                            -->
+                        
+                            <div class="btn-group" >
+                                <label value="Inicio: " style="font-weight: bold;padding: 5px;"   />
+                                <datebox compact="true" value="@bind(vm.fechainicio)" 
+                                         style="font-weight:bold;width:100px"
+                                      
+                                         buttonVisible="true" 
+                                         lenient="true" format="dd/MM/yyyy" 
+                                         constraint="no empty: Ingrese la fecha "/>
+                                <label value="Fin: "  style="font-weight: bold;padding: 5px;"   />
+                                <datebox compact="true" value="@bind(vm.fechafin)" 
+                                         style="font-weight:bold;width:100px"                                               
+                                         buttonVisible="true" 
+                                         lenient="true" format="dd/MM/yyyy" 
+                                         constraint="no empty: Ingrese la fecha "/>
+                            
+                                <button   image="/imagenes/buscar1.png"  
+                                          onClick="@command('buscarFechas')"  
+                                          class="btn btn-primary btn-sm  "
+                                          tooltiptext="Buscar nota entrega por fecha"/>                                     
+                          
+                            </div>        
+                        </div>
+                        <!--<div class="col-12 col-sm-12 col-md-6 col-lg-6" align="start" ></div>-->
+                        <!--<div class="col-12 col-sm-12 col-md-4 col-lg-4" align="end" ></div>-->
+                        
+                        
+                    </div>
+                    <listbox model="@load(vm.lstFacturas)" 
+                             nonselectableTags=""  mold="paging" pageSize="25"  >
+                        <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                    
+                        <listhead> 
+                            <listheader width="10%"  label="Numero"
+                                        sort="auto(facNumNotaEntrega)">
+                                <!--                                <textbox value="@bind(vm.buscarNumFactura)"  
+                                tooltiptext="# Factura"
+                                class="form-control form-control-sm"                                         
+                                placeholder="Numero de factura"
+                                onOK="@command('buscarLikeNumFactura')"
+                                onChange="self.setValue(self.getValue().toUpperCase());" />-->
+                                
+                            </listheader> 
+                            <listheader width="10%"  label="Cedula" >
+                              
+                                
+                            </listheader>    
+                            <listheader width="45%" label="Nombre"  >
+                                
+                            </listheader> 
+                            <listheader width="10%"  label="Fecha" sort="auto(facFecha)" /> 
+                            <listheader width="10%"  label="Estado " align="rigth" /> 
+                            <listheader width="10%"  label="Total "  /> 
+                       
+                                
+                            <listheader width="5%"  label="" align="rigth" />        
+                            <listheader width="5%"  label="" align="rigth" />        
+                            <!--<listheader width="4%"  label="" align="rigth" />-->        
+                        </listhead>  
+                        
+                    
+                        <template name="model">                                                            
+                            <listitem>
+                                <listcell zclass = "mycss-listcell">
+                                    <textbox readonly="true"  style="font-size:12px;background:#EBF5FB"                            
+                                             class="form-control form-control-sm" value="@bind(each.facNumNotaEntrega)" width="96%" />
+                                </listcell>
+                                <listcell zclass = "mycss-listcell">
+                                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"                            
+                                             class="form-control form-control-sm" 
+                                             value="@bind(each.idCliente.cliCedula)" width="96%" />
+                                </listcell>
+                                <listcell zclass = "mycss-listcell">
+                                    <textbox readonly="true"  style="font-size:12px;background:#EBF5FB"                            
+                                             class="form-control form-control-sm" 
+                                             value="@bind(each.idCliente.cliNombre)" width="96%" />
+                                </listcell>
+                            
+                                <listcell  zclass = "mycss-listcell">
+                                    <datebox compact="true" value="@bind(each.facFecha)" 
+                                             buttonVisible="false" lenient="true" readonly="true"
+                                             format="medium" width="98%"  />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"                            
+                                             class="form-control form-control-sm" 
+                                             value="@bind(each.facNotaEntregaProcess)" width="96%" />
+                                </listcell>
+                                <listcell zclass = "mycss-listcell">
+                                    <decimalbox format="###.##" readonly="true" 
+                                                value="@bind(each.facTotal)" width="96%"/>
+                                </listcell>                               
+                                <listcell  zclass = "mycss-listcell" >    
+                                     
+                                    <image src="/iconos/pagar.png"
+                                           class="grow"
+                                           onClick="@command('cambiarestado',valor=each)" 
+                                           tooltiptext="Cambiar Estado"/>
+                              
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell" >    
+                                     
+                                    <image src="/iconos/eliminar.png" 
+                                           class="grow"
+                                           onClick="@command('eliminarNotaEntrega',valor=each)" 
+                                           tooltiptext="Cambiar Estado"/>
+                              
+                                </listcell>
+                              
+                            </listitem>
+                        </template>
+                    </listbox>
+         
+                </tabpanel>
+                
+
+            </tabpanels>
+            
+        </tabbox>
+    </hbox>
+
+
+</zk>

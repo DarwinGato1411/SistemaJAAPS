@@ -24,7 +24,7 @@
                 <tab label="Usuario" sclass="menutabs" /> 
                 <tab label="Configuraciones" sclass="menutabs" /> 
                 <tab label="Parametrizar Empresa" sclass="menutabs" /> 
-                <tab label="Consultar catastro" sclass="menutabs" /> 
+                <!--<tab label="Consultar catastro" sclass="menutabs" />--> 
             </tabs>
             <tabpanels >
                 

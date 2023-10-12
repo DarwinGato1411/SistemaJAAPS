@@ -34,13 +34,7 @@
               nonselectableTags="*">
         <custom-attributes org.zkoss.zul.listbox.rod="true"/>
         <listhead>     
-             <listheader width="10%"  sort="auto(medNumero)" >             
-                 <textbox value="@bind(vm.buscarNumero)" 
-                         class="form-control form-control-sm"
-                         tooltiptext="# "                         
-                         placeholder="#"
-                         onOK="@command('buscarMedidorNumero')" /> 
-            </listheader>
+            
              <listheader width="10%"  label="Cedula" />         
             <listheader width="20%"   sort="auto(propNombre)" >
                 <textbox value="@bind(vm.buscarNombre)" 
@@ -52,21 +46,25 @@
             </listheader>     
             <listheader width="20%" label="Apellido"  sort="auto(idPredio.idPropietario.propApellido)" >
                 
-            </listheader>     
+            </listheader> 
+             <listheader width="10%"  sort="auto(medNumero)" >             
+                 <textbox value="@bind(vm.buscarNumero)" 
+                         class="form-control form-control-sm"
+                         tooltiptext="# "                         
+                         placeholder="#"
+                         onOK="@command('buscarMedidorNumero')" /> 
+            </listheader>    
             <listheader width="25%" label="Ubicacion"  >                
             </listheader>     
             <listheader width="10%" label="Tarifa"   >                
             </listheader>     
             
             <listheader width="5%"  label="" align="center"/>
+            <listheader width="5%"  label="" align="center"/>
         </listhead>  
         <template name="model">                                                            
             <listitem>       
-                 <listcell zclass = "mycss-listcell">
-                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
-                             class="form-control form-control-sm" 
-                             value="@bind(each.medNumero)" />
-                </listcell>         
+                      
                   <listcell zclass = "mycss-listcell">
                     <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
                              class="form-control form-control-sm"  
@@ -82,6 +80,11 @@
                              class="form-control form-control-sm"  
                              value="@bind(each.idPredio.idPropietario.propApellido)"  />
                 </listcell>
+                   <listcell zclass = "mycss-listcell">
+                    <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
+                             class="form-control form-control-sm" 
+                             value="@bind(each.medNumero)" />
+                </listcell> 
                 <listcell zclass = "mycss-listcell">
                     <textbox readonly="true" style="font-size:12px;background:#EBF5FB"
                              class="form-control form-control-sm"  
@@ -115,10 +118,18 @@
                 </listcell>-->
                 
                 <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
+                   <checkbox 
+                       
+                        onCheck="@command('activarDesactivar',valor=each)"
+                        label="ACTIVO" 
+                        checked="@bind(each.medActivo)" 
+                    />
+                </listcell>
+                <listcell zclass = "mycss-listcell" style="font-size:12px;background:#F8F9F9">    
                     <image src="/iconos/editar.png"
                            class="grow"
                            onClick="@command('actualizar',valor=each)" 
-                           tooltiptext="Modificar"/> 
+                           tooltiptext="Activar o desactivar medidor"/> 
                 </listcell>
             </listitem>
         </template>

@@ -23,6 +23,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Connection;
@@ -607,8 +608,19 @@ public class ArchivoUtils {
 
     /*APROXIMACION DE DECIMALES*/
     public static BigDecimal redondearDecimales(BigDecimal valorInicial, int numeroDecimales) {
-        double parteEntera, resultado;
-        resultado = valorInicial.doubleValue();
+//        double parteEntera, resultado;
+//        resultado = valorInicial.doubleValue();
+//        parteEntera = Math.floor(resultado);
+//        Double resutl = BigDecimal.valueOf(resultado).subtract(BigDecimal.valueOf(parteEntera)).doubleValue();
+//        resultado = resutl * Math.pow(10, numeroDecimales);
+//        resultado = Math.round(resultado);
+//        BigDecimal resulDes = BigDecimal.valueOf(resultado);
+//        BigDecimal divide = BigDecimal.valueOf(resulDes.doubleValue()).divide(BigDecimal.valueOf(Math.pow(10, numeroDecimales)));
+//        resultado = (divide.add(BigDecimal.valueOf(parteEntera))).doubleValue();
+//        return BigDecimal.valueOf(resultado);
+        
+         double parteEntera, resultado;
+        resultado = valorInicial.setScale(4, RoundingMode.CEILING).doubleValue();
         parteEntera = Math.floor(resultado);
         Double resutl = BigDecimal.valueOf(resultado).subtract(BigDecimal.valueOf(parteEntera)).doubleValue();
         resultado = resutl * Math.pow(10, numeroDecimales);

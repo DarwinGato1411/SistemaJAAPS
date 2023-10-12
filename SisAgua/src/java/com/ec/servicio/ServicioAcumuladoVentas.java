@@ -152,4 +152,29 @@ public class ServicioAcumuladoVentas {
 
         return listaAcumuladoventass;
     }
+       
+              public List<Acumuladopordia> findAcumuladoventasdiariatotal(Date inicio) {
+
+        List<Acumuladopordia> listaAcumuladoventass = new ArrayList<Acumuladopordia>();
+        try {
+            //Connection connection = em.unwrap(Connection.class);
+
+          
+            em = HelperPersistencia.getEMF();
+            em.getTransaction().begin();
+           // Query query = em.createQuery("SELECT new com.ec.servicio.ServicioAcumuladoVentas( a.facTotal )  FROM Acumuladopordia a WHERE a.facFecha = :inicio");
+           
+           Query query = em.createQuery("SELECT a FROM Acumuladopordia a WHERE a.facFecha = :inicio ");
+            query.setParameter("inicio", inicio);
+            
+            listaAcumuladoventass = (List<Acumuladopordia>) query.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error en la consulta findAcumuladoventasdiaria " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return listaAcumuladoventass;
+    }
 }

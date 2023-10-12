@@ -64,6 +64,8 @@ public class Lectura implements Serializable {
     private String lecDescripcion;
     @Column(name = "lec_mes")
     private Integer lecMes;
+    @Column(name = "lec_anio")
+    private Integer lecAnio;
  
     @JoinColumn(name = "id_medidor", referencedColumnName = "id_medidor")
     @ManyToOne
@@ -224,6 +226,14 @@ public class Lectura implements Serializable {
 
     public void setMesActual(ModeloMeses mesActual) {
         mesActual = mesActual;
+    }
+
+    public Integer getLecAnio() {
+        return lecAnio;
+    }
+
+    public void setLecAnio(Integer lecAnio) {
+        this.lecAnio = lecAnio;
     }
 
 }

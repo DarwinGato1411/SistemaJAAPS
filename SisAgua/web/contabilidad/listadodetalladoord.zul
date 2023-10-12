@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?init class="com.ec.seguridad.Autentificador"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
+<?link rel="icon" type="image/x-icon" href="/iconos/deckxel.ico"?>
+<zk  contentStyle="overflow:auto" with="100%" >
+    <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
+          viewModel="@id('vm') @init('com.ec.controlador.vistas.ListaLisDetalladoOrdenado')" width="99%">
+
+        <tabbox  width="100%"  tabscroll="true" >
+            <tabs >
+                
+                <tab label="Listado Detallado de Cobros" sclass="menutabs"/>
+                
+                
+            </tabs>
+            <tabpanels >
+               
+                <tabpanel  width="99%"  >                    
+                    <div class="row">
+                       
+                        <div class=" input-group col-12 col-sm-12 col-md-4 col-lg-4 ">
+
+                            <label value="Inicio: " style="font-weight: bold;padding: 5px;"   />
+                            <datebox compact="true" value="@bind(vm.inicio)" 
+                                     style="font-weight:bold;" 
+                                     buttonVisible="true" 
+                                     lenient="true" format="dd/MM/yyyy" 
+                                     constraint="no empty: Selecciona el mes a consultar "/>
+                            <label value="Fin: "  style="font-weight: bold;padding: 5px;"   />
+                            <datebox compact="true" value="@bind(vm.fin)" 
+                                     style="font-weight:bold;"                                               
+                                     buttonVisible="true" 
+                                     lenient="true" format="dd/MM/yyyy" 
+                                     constraint="no empty: Ingrese la fecha "/>
+                            <div class="input-group-append">
+                                <button   image="/imagenes/buscar1.png"  
+                                          onClick="@command('buscarListadoDetallado')"  
+                                          class="btn btn-primary btn-sm  "
+                                          tooltiptext="Buscar "/>                                     
+                            </div>  
+                               
+                        </div>
+                        <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
+                            <button   image="/iconos/pdfv1.png"  
+                                      onClick="@command('llamarReporteDetallado')"  
+                                      class="btn btn-primary btn-sm "
+                                      tooltiptext="Descargar en pdf"/>
+                            
+
+                        </div> 
+                        <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
+                        
+                            <button   image="/iconos/excel.png"  
+                                      onClick="@command('exportListboxToExcel')"  
+                                      class="btn btn-primary btn-sm "
+                                      tooltiptext="Descargar en Excel"/>
+
+                        </div> 
+                    </div>
+                    <listbox model="@load(vm.listaListItemsOrd)" 
+                             nonselectableTags=""  mold="paging" pageSize="20"  >
+                        <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                    
+                        <listhead> 
+                            <listheader width="25%"  label="Cobro Nro." />                            
+                            <listheader width="25%"   >
+                                
+                                <textbox value="@bind(vm.buscar)"  
+                                         tooltiptext="# Factura"
+                                         class="form-control form-control-sm"                                         
+                                         placeholder="Numero de factura"
+                                         onOK="@command('buscarListadoDetallado')"
+                                         onChange="self.setValue(self.getValue().toUpperCase());" />
+                            </listheader>
+                            <listheader width="25%"  label="Fecha" />
+                            <listheader width="25%"  label="Conexión" />
+                            <listheader width="25%"  label="Nombre" />
+                            <listheader width="25%"  label="Apellido" />
+                            <listheader width="15%"  label="(m3)" />
+                            <listheader width="25%"  label="Agua" /> 
+                            <listheader width="25%"  label="Excedente" />
+                            <listheader width="25%"  label="Alcantarrillado" />
+                            <listheader width="25%"  label="Desechos" />
+                            <listheader width="25%"  label="Medio Ambiente" />
+                            <listheader width="25%"  label="Int Val Imp" />
+                            <listheader width="15%"  label="Mult 2 Mes Imp" />                                                   
+                            <listheader width="15%"  label="Derechos" />                                                   
+                            <listheader width="15%"  label="Factibilidad" tooltiptext="Derechos de factibilidad"  />                                                   
+                            <listheader width="15%"  label="Multas" />                                                   
+                            <listheader width="15%"  label="Materiales" />                                                   
+                            <listheader width="15%"  label="Garantia" />                                                   
+                            <listheader width="15%"  label="Otros"   tooltiptext="Por servicios prestados" />                                                   
+                            <listheader width="25%"  label="Total" align="rigth" /> 
+                                                         
+                        </listhead>  
+                        
+                    
+                        <template name="model">                                                            
+                            <listitem>
+                                <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                    <textbox readonly="true" 
+                                             class="form-control form-control-sm"
+                                             style="font-size:12px;background:#EBF5FB"    
+                                             value="@bind(each.idFactura)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                    <textbox readonly="true" 
+                                             class="form-control form-control-sm"
+                                             style="font-size:12px;background:#EBF5FB"    
+                                             value="@bind(each.facNumero)" width="100%" />
+                                </listcell>
+                                <listcell zclass = "mycss-listcell" style="font-size:11px;background-color:#d6eefd">
+                                 
+                                    <datebox compact="true" value="@bind(each.facFecha)" 
+                                             style="font-size:11px;background-color:#d6eefd"
+                                             buttonVisible="false" lenient="true" readonly="true"
+                                             format="medium" width="100%"  />
+                                </listcell>
+                                
+                                <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                    <textbox readonly="true" 
+                                             class="form-control form-control-sm"
+                                             style="font-size:12px;background:#EBF5FB"    
+                                             value="@bind(each.medNumero)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                    <textbox readonly="true" 
+                                             class="form-control form-control-sm"
+                                             style="font-size:12px;background:#EBF5FB"    
+                                             value="@bind(each.propNombre)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                    <textbox readonly="true" 
+                                             class="form-control form-control-sm"
+                                             style="font-size:12px;background:#EBF5FB"    
+                                             value="@bind(each.propApellido)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                    <textbox readonly="true" 
+                                             class="form-control form-control-sm"
+                                             style="font-size:12px;background:#EBF5FB"    
+                                             value="@bind(each.facMetrosCubicos)" width="100%" />
+                                </listcell>
+
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.agua)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.excedente)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.alcantarrillado)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.desechos)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.medioAmbiente)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.interes1)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.interes2)" width="100%" />
+                                </listcell>
+                                 
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.derechos)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.factibilidad)" width="100%" />
+                                </listcell>
+                                
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.multas)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.material)" width="100%" />
+                                </listcell>
+                                
+                
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.garantia)" width="100%" />
+                                </listcell>
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.otros)" width="100%" />
+                                </listcell>
+                
+                
+                                <listcell  zclass = "mycss-listcell">
+                                    <decimalbox readonly="true" format="###.##" 
+                                                value="@bind(each.facTotal)" width="100%" />
+                                </listcell>
+                                                                       
+                                
+                            </listitem>
+                        </template> 
+                    </listbox>
+         
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+        
+    </hbox>
+
+
+</zk>

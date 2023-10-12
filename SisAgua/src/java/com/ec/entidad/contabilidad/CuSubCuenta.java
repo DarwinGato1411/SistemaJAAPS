@@ -7,6 +7,7 @@ package com.ec.entidad.contabilidad;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -60,9 +62,26 @@ public class CuSubCuenta implements Serializable {
     @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta")
     @ManyToOne
     private CuCuenta idCuenta;
+    
+ @OneToMany(mappedBy = "idSubCuenta")
+    private Collection<AcSubCuenta> acSubCuentaCollection;
+
 
     public CuSubCuenta() {
     }
+
+
+
+    public CuSubCuenta(Integer idSubCuenta, String subcNumero, String subcNombre, BigDecimal subcTotal, BigDecimal subcSaldo, BigDecimal subcOtro, CuCuenta idCuenta) {
+        this.idSubCuenta = idSubCuenta;
+        this.subcNumero = subcNumero;
+        this.subcNombre = subcNombre;
+        this.subcTotal = subcTotal;
+        this.subcSaldo = subcSaldo;
+        this.subcOtro = subcOtro;
+        this.idCuenta = idCuenta;
+    }
+    
 
     public CuSubCuenta(Integer idSubCuenta) {
         this.idSubCuenta = idSubCuenta;
@@ -124,6 +143,16 @@ public class CuSubCuenta implements Serializable {
         this.idCuenta = idCuenta;
     }
 
+    public Collection<AcSubCuenta> getAcSubCuentaCollection() {
+        return acSubCuentaCollection;
+    }
+
+    public void setAcSubCuentaCollection(Collection<AcSubCuenta> acSubCuentaCollection) {
+        this.acSubCuentaCollection = acSubCuentaCollection;
+    }
+
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -146,7 +175,7 @@ public class CuSubCuenta implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ec.entidad.partida.CuSubCuenta[ idSubCuenta=" + idSubCuenta + " ]";
+        return "com.ec.entidad.contabilidad.CuSubCuenta[ idSubCuenta=" + idSubCuenta + " ]";
     }
     
 }

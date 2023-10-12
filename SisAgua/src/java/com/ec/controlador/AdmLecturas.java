@@ -4,11 +4,10 @@
  */
 package com.ec.controlador;
 
-import com.ec.entidad.Factura;
 import com.ec.entidad.Lectura;
 import com.ec.servicio.ServicioGeneral;
 import com.ec.servicio.ServicioLectura;
-import com.ec.untilitario.ArchivoUtils;
+import com.ec.untilitario.ListadoAnio;
 import com.ec.untilitario.ListadoMeses;
 import com.ec.untilitario.ModeloMeses;
 import java.io.File;
@@ -51,19 +50,24 @@ public class AdmLecturas {
     private String buscar = "";
     private ModeloMeses buscarMes = new ModeloMeses();
     private List<ModeloMeses> meses = new ArrayList<ModeloMeses>();
+    private List<ModeloMeses> anios = new ArrayList<ModeloMeses>();
+    private ModeloMeses buscarAnio = new ModeloMeses();
     private Date fechaCreacion = new Date();
     ServicioGeneral servicioGeneral = new ServicioGeneral();
 
     public AdmLecturas() {
+        anios = ListadoAnio.getListaAnio();
+        buscarAnio = ListadoAnio.getAnioActual();
         meses = ListadoMeses.getListaMeses();
         buscarMes = ListadoMeses.getMesActual();
+
         findMesAndNuMedidor();
 
     }
 
     private void findMesAndNuMedidor() {
         System.out.println("buscarMes.getMonth() " + buscarMes);
-        listaDatos = servicioLectura.findMesAndNumMedidor(buscar, buscarMes.getNumero());
+        listaDatos = servicioLectura.findMesAndNumMedidor(buscar, buscarMes.getNumero(), buscarAnio.getNumero());
 
     }
 
@@ -81,26 +85,26 @@ public class AdmLecturas {
             System.out.println("fechaCreacion " + fechaCreacion);
             servicioGeneral.iniciarLecturaMedidor(buscarMes.getNumero(), fechaCreacion);
             findMesAndNuMedidor();
-        } 
+        }
     }
 
     @Command
     @NotifyChange({"listaDatos", "buscarMes"})
     public void iniciarMesSiguiente() {
-        
-        if (Messagebox.show("Al generar una nueva tabla de lecturas, los lecturas de " + buscarMes.getNombre()+ " serán eliminadas" + "\n Desea continuar?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
-            servicioLectura.iniciarProximoMes(buscarMes.getNumero());
+
+        if (Messagebox.show("Al generar una nueva tabla de lecturas, los lecturas de " + buscarMes.getNombre() + " serán eliminadas" + "\n Desea continuar?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
+            servicioLectura.iniciarProximoMes(buscarMes.getNumero(),fechaCreacion);
             findMesAndNuMedidor();
         } else {
             Clients.showNotification("Solicitud cancelada",
-                    Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
+                        Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
         }
     }
-    
+
     @Command
     @NotifyChange({"listaDatos", "buscar"})
     public void cambiarestado(@BindingParam("valor") Lectura valor) {
-        
+
         if (Messagebox.show("Desea cambiar el Estado", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
             if (valor.getLecPagada() == "S") {
                 valor.setLecPagada("N");
@@ -109,9 +113,9 @@ public class AdmLecturas {
                 valor.setLecPagada("S");
                 servicioLectura.modificar(valor);
             }
-        }else {
+        } else {
             Clients.showNotification("Solicitud cancelada",
-                    Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
+                        Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
         }
     }
 
@@ -119,7 +123,7 @@ public class AdmLecturas {
     @NotifyChange({"listaDatos", "buscar"})
     public void nuevo() {
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                "/nuevo/propietario.zul", null, null);
+                    "/nuevo/propietario.zul", null, null);
         window.doModal();
         findMesAndNuMedidor();
     }
@@ -130,13 +134,13 @@ public class AdmLecturas {
         if (valor.getLecAnterior() == null) {
             valor.setLecAnterior(BigDecimal.ZERO);
             Clients.showNotification("La lectura anterior no puede estar vacia",
-                    Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
+                        Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
             return;
         }
         if (valor.getLecActual() == null) {
             valor.setLecAnterior(BigDecimal.ZERO);
             Clients.showNotification("La lectura actual no puede estar vacia",
-                    Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
+                        Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
             return;
         }
 
@@ -149,14 +153,14 @@ public class AdmLecturas {
     public void actualizar(@BindingParam("valor") Lectura valor) {
 
         if (valor.getLecActual() != null
-                && valor.getLecAnterior() != null) {
+                    && valor.getLecAnterior() != null) {
 
             servicioLectura.modificar(valor);
             Clients.showNotification("Modificado correctamente",
-                    Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 3000, true);
+                        Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 3000, true);
         } else {
             Clients.showNotification("La lectura anterior y actual no puede estar vacia",
-                    Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
+                        Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
         }
 
     }
@@ -314,6 +318,22 @@ public class AdmLecturas {
         }
         return pathSalida;
 
+    }
+
+    public List<ModeloMeses> getAnios() {
+        return anios;
+    }
+
+    public void setAnios(List<ModeloMeses> anios) {
+        this.anios = anios;
+    }
+
+    public ModeloMeses getBuscarAnio() {
+        return buscarAnio;
+    }
+
+    public void setBuscarAnio(ModeloMeses buscarAnio) {
+        this.buscarAnio = buscarAnio;
     }
 
 }

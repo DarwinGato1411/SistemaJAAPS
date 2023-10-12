@@ -6,11 +6,11 @@
 <?link rel="icon" type="image/x-icon" href="/iconos/deckxel.ico"?>
 <zk  contentStyle="overflow:auto" with="100%" >
     
-         <style>
-     .z-listbox-autopaging .z-listcell-cnt {
-    height: 15px;
-    overflow: hidden;
-}
+    <style>
+        .z-listbox-autopaging .z-listcell-cnt {
+        height: 15px;
+        overflow: hidden;
+        }
         
     </style>
     <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
@@ -22,107 +22,170 @@
             </tabs>
             <tabpanels >
                 <tabpanel  height="100%" width="98%"  >
-                    <div class="container-fluid">
-                        <div class="row ">
+                    <div class="contenedorCompras container-fluid">
+                        <div class="">
                             
                             
-                            <div class="row col-12 col-sm-12 col-md-12 col-lg-12">
-                              
-                                <div class=" col-12 col-sm-12 col-md-3 col-lg-3">
-                                    <div class="input-group mb-3">
-                                        <textbox   class="form-control form-control-sm "  
-                                                   placeholder="Cedula"
-                                                   readonly="false" 
-                                                   onDoubleClick="@command('buscarProveedorEnLista')" 
-                                                   value="@bind(vm.proveedorSeleccionado.provCedula)" 
-                                                   style="font-weight:bold"
-                                                   maxlength="13"  />
-                                        <div class="input-group-append">
-                                            <button   image="/imagenes/buscar1.png" 
-                                                      onClick="@command('buscarProveedorEnLista')"  
-                                                      tooltiptext="Buscar proveedor"
-                                                      class="btn  btn-warning btn-sm "/>
+                            <div  class="contendorFormularios">
+                                
+                                <div class="contenedorCuadro">
+                                    <div class="cedula">
+                                        <div class="input-group mb-3">
+                                            <textbox   class="form-control form-control-sm "  
+                                                       placeholder="Cedula"
+                                                       readonly="false" 
+                                                       onDoubleClick="@command('buscarProveedorEnLista')" 
+                                                       value="@bind(vm.proveedorSeleccionado.provCedula)" 
+                                                       style="font-weight:bold"
+                                                       maxlength="13"  />
+                                            <div class="input-group-append">
+                                                <button   image="/imagenes/buscar1.png" 
+                                                          onClick="@command('buscarProveedorEnLista')"  
+                                                          tooltiptext="Buscar proveedor"
+                                                          class="btn  btn-warning btn-sm "/>
                                
                                
+                                            </div>
+                                        </div>
+                          
+                                        <div class="">
+                                            <div class="input-group mb-3">
+                                                <textbox  readonly="true" 
+                                                          style="font-weight:bold" 
+                                                          placeholder="Nombre proveedor"
+                                                          class="form-control form-control-sm" 
+                                                          value="@bind(vm.proveedorSeleccionado.provNombre)"  />
+                                            </div>
+                                        </div>
+                                
+                                        <div class="">
+                                            <div class="input-group mb-3">
+                                                <textbox  readonly="true" 
+                                                          style="font-weight:bold" 
+                                                          placeholder="022222222"
+                                                          class="form-control form-control-sm" 
+                                                          value="@bind(vm.proveedorSeleccionado.provTelefono)"  />
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <div class="input-group mb-3">
+                                                <textbox  readonly="true" 
+                                                          style="font-weight:bold" 
+                                                          placeholder="Tabacundo la Esperanza"
+                                                          class="form-control form-control-sm" 
+                                                          value="@bind(vm.proveedorSeleccionado.provDireccion)"  />
+                                            </div>
                                         </div>
                                     </div>
-                        
-                                </div>
-                                    
-                                
-                                
-                                <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                                    <div class="input-group mb-3">
-                                        <textbox  readonly="true" 
-                                                  style="font-weight:bold" 
-                                                  placeholder="Nombre proveedor"
-                                                  class="form-control form-control-sm" 
-                                                  value="@bind(vm.proveedorSeleccionado.provNombre)"  />
-                                    </div>
-                                </div>
-                                
-                                <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                                    <div class="input-group mb-3">
-                                        <textbox  readonly="true" 
-                                                  style="font-weight:bold" 
-                                                  placeholder="022222222"
-                                                  class="form-control form-control-sm" 
-                                                  value="@bind(vm.proveedorSeleccionado.provTelefono)"  />
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-5 col-lg-5">
-                                    <div class="input-group mb-3">
-                                        <textbox  readonly="true" 
-                                                  style="font-weight:bold" 
-                                                  placeholder="Tabacundo la Esperanza"
-                                                  class="form-control form-control-sm" 
-                                                  value="@bind(vm.proveedorSeleccionado.provDireccion)"  />
-                                    </div>
-                                </div>
-                                
-                                
-                                
-                                
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div class="input-group mb-3">
-                                        <label value="AUTORZA:" class="labelNuevoNegro" />
-                                        <textbox  readonly="false" 
-                                                  maxlength="49" 
-                                                  style="font-weight:bold"                                              
-                                                  value="@bind(vm.cabeceraCompra.cabAutorizacion)" 
-                                                  class="form-control form-control-sm"   />
+                                    <div class="cedula">
+                                        <div class="input-group mb-3">
+                                            <label value="Autoriza:" class="labelNuevoNegro" />
+                                            <textbox  readonly="false" 
+                                                     maxlength="49" 
+                                                     style="font-weight:bold"                                              
+                                                     value="@bind(vm.cabeceraCompra.cabAutorizacion)" 
+                                                     class="form-control form-control-sm"   />
                                
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-3 col-lg-3 " align="center">
-                                    <div class="input-group mb-3">
-                                        <label value="Nº FACTURA: "  class="labelNuevoNegro"/>                            
-                                        <textbox class="form-control form-control-sm " 
-                                         maxlength="15"   
-                                                 onChange="self.setValue(self.getValue().toUpperCase());"
-                                                 placeholder="001001000000008"
-                                                 value="@bind(vm.numeroFactura)"  />
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-3 col-lg-3  form-group " align="center"  >
+                                        </div>
+                                    
+                                        <div class="" align="center">
+                                            <div class="input-group mb-3">
+                                                <label value="Nº Factura: "  class="labelNuevoNegro"/>                            
+                                                <textbox class="form-control form-control-sm " 
+                                                         maxlength="15"   
+                                                         onChange="self.setValue(self.getValue().toUpperCase());"
+                                                         placeholder="001001000000008"
+                                                         value="@bind(vm.numeroFactura)"  />
+                                            </div>
+                                        </div>
+                                        <div class="" align="center"  >
                               
-                                    <div class="input-group mb-3">
-                                        <label value="F FACTURA:" class="labelNuevoNegro" />
-                                        <datebox compact="true" value="@bind(vm.fechafacturacion)" 
-                                                 readonly="true" style="font-weight:bold;"                                          
-                                                 buttonVisible="true" 
-                                                 lenient="true" format="dd/MM/yyyy" 
-                                                 constraint="no empty: Ingrese su fecha de la orden"/>
+                                            <div class="input-group mb-3">
+                                                <label value="F. Factura:" class="labelNuevoNegro" />
+                                                <datebox compact="true" value="@bind(vm.fechafacturacion)" 
+                                                         readonly="true" style="font-weight:bold;"                                          
+                                                         buttonVisible="true" 
+                                                         lenient="true" format="dd/MM/yyyy" 
+                                                         constraint="no empty: Ingrese su fecha de la orden"/>
 
                          
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-<!--                            </div>
-                           
                                 
-                            
-                                <div class="row  col-12 col-sm-12 col-md-10 col-lg-10">-->
-                                <div class="col-12 col-sm-12 col-md-5 col-lg-5 hidden-sm-down" >
+                                <div class="contenedorCuadro" >
+                                    
+                                    
+                                    <div class="contenedorInputsCompras">
+                                        
+                                        <div class="inputs" >
+                                            <label value="Subtotal 12%:" class="form-control-sm"
+                                                       style="font-weight:bold;font-size:0.8em;"/>
+
+                                            <decimalbox  format="###.##"  
+                                                             value="@bind(vm.subTotalFactura)"                                             
+                                                             readonly="true"                                                              
+                                                            
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                                                             class="form-control form-control-sm" />
+                                        </div>
+                                        <div class="input" >
+                                            <label value="Subtotal 0%:" class="form-control-sm"
+                                                       style="font-weight:bold;font-size:0.8em;"/>
+
+                                            <decimalbox  format="###.##"  
+                                                             value="@bind(vm.subTotalFacturaCero)"                                             
+                                                             readonly="true"                                                              
+                                                             
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                                                             class="form-control form-control-sm" />
+                                        </div>
+                                        <div class="input" >
+                                            <label value="IVA" class="form-control-sm"
+                                                       style="font-weight:bold;font-size:0.8em;"/>
+                                           
+                                            <decimalbox  format="###.##"  
+                                                             value="@bind(vm.ivaFactura)"
+                                                             readonly="true" 
+                                                            
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                                                             class="form-control form-control-sm" />
+                                        </div>
+                                        <div class="input" >
+                                            <label value="Total:" class="forQm-control-sm"
+                                                       style="font-weight:bold;font-size:0.8em;"/>
+                                            
+                                            <decimalbox  format="###.##"  
+                                                             value="@bind(vm.valorTotalFactura)"
+                                                             readonly="true" 
+                                                            
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                                                             class="form-control form-control-sm" />
+                                        </div>
+                                          
+                                        <div class="" >
+                                            <button src="/iconos/guardar.png"   
+                                                        width="100%"
+                                                        style="height:50px "            
+                                                        autodisable="self"
+                                                        label="Guardar"
+                                                        class="boton btnGuardar"
+                                                        
+                                                        onClick="@command('Guardar')"
+                                                        tooltiptext="Guardar mercaderia"/>
+                                        </div>
+                                    </div>
+                                   
+                                    
+                                  
+                                   
+                                
+                                </div>
+                           
+                            </div>
+                            <div class="contenedorTablas">
+                                <div class="" >
                                     <listbox model="@load(vm.listaKardexProducto)" 
                                              nonselectableTags=""    mold="paging" pageSize="10"  >
                                         <custom-attributes org.zkoss.zul.listbox.rod="true"/>
@@ -202,7 +265,7 @@
                                     </listbox>
                                 </div>
                                 
-                                <div class="col-12 col-sm-12 col-md-7 col-lg-7 hidden-sm-down" align="end" >
+                                <div class="" align="end" >
                                     <listbox  model="@load(vm.listaCompraProductosMOdel)"
                                               mold="paging"
                                               height="340px" autopaging="true" 
@@ -287,71 +350,7 @@
                                     </listbox>
                                 </div>
                             </div>
-                            <div class="row  col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:5px" >
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12" >
-                                    <toolbar  id="tb" height="52px"  align="end" style="background-color:#d6eefd;" >
-                                        <div class="row  col-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="col-12 col-sm-12 col-md-2 col-lg-2 " >
-                                                <label value="SUBTOTAL 12%" class="form-control-sm"
-                                                       style="font-weight:bold;font-size:0.8em;"/>
-
-                                                <decimalbox  format="###.##"  
-                                                             value="@bind(vm.subTotalFactura)"                                             
-                                                             readonly="true"                                                              
-                                                             style="text-align:center;font-size:1.8em;background-color:#FF9990;"
-                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
-                                                             class="form-control form-control-sm" />
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-2 col-lg-2 " >
-                                                <label value="SUBTOTAL 0%" class="form-control-sm"
-                                                       style="font-weight:bold;font-size:0.8em;"/>
-
-                                                <decimalbox  format="###.##"  
-                                                             value="@bind(vm.subTotalFacturaCero)"                                             
-                                                             readonly="true"                                                              
-                                                             style="text-align:center;font-size:1.8em;background-color:#FF9990;"
-                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
-                                                             class="form-control form-control-sm" />
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-2 col-lg-2  " >
-                                                <label value="IVA" class="form-control-sm"
-                                                       style="font-weight:bold;font-size:0.8em;"/>
-                                           
-                                                <decimalbox  format="###.##"  
-                                                             value="@bind(vm.ivaFactura)"
-                                                             readonly="true" 
-                                                             style="text-align:center;font-size:1.8em;background-color:#90DCFF;"
-                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
-                                                             class="form-control form-control-sm" />
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-2 col-lg-2  " >
-                                                <label value="TOTAL" class="forQm-control-sm"
-                                                       style="font-weight:bold;font-size:0.8em;"/>
-                                            
-                                                <decimalbox  format="###.##"  
-                                                             value="@bind(vm.valorTotalFactura)"
-                                                             readonly="true" 
-                                                             style="text-align:center;font-size:1.8em;background-color:#90DCFF;"
-                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
-                                                             class="form-control form-control-sm" />
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-2 col-lg-2 "  ></div>
-                                            <div class="col-12 col-sm-12 col-md-2 col-lg-2 " >
-                                                <button src="/iconos/guardar.png"   
-                                                      
-                                                        style="height:50px "            
-                                                        autodisable="self"
-                                                        label="Guardar"
-                                                        class="btn btn btn-success btn-sm "
-                                                        
-                                                        onClick="@command('Guardar')"
-                                                        tooltiptext="Guardar mercaderia"/>
-                                            </div>
-                                        </div>
-                                    </toolbar>
-                                    
-                                </div>
-                            </div>
+                            
                             
                         </div>
 

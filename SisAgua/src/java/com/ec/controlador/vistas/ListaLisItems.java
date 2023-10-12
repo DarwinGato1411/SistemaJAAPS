@@ -5,6 +5,8 @@
  */
 package com.ec.controlador.vistas;
 
+import com.ec.entidad.contabilidad.CuSubCuenta;
+import com.ec.servicio.contabilidad.ServicioSubCuenta;
 import com.ec.vista.servicios.ServicioListadoItems;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -25,7 +27,7 @@ import com.ec.vistas.ListadoItems;
 public class ListaLisItems {
     ServicioListadoItems servicioListadoItems = new ServicioListadoItems();
      private List<ListadoItems> listaListItems = new ArrayList<ListadoItems>();
-    
+        
     @Command
     @NotifyChange({"listaListItems"})
     public void buscarListadoItems() {
@@ -38,8 +40,8 @@ public class ListaLisItems {
         listaListItems  = servicioListadoItems.listadoTotal();
 
     }
-
-    public ServicioListadoItems getServicioListadoItems() {
+    
+       public ServicioListadoItems getServicioListadoItems() {
         return servicioListadoItems;
     }
 

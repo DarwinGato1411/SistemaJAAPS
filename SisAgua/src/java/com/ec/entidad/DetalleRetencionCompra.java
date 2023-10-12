@@ -65,6 +65,8 @@ public class DetalleRetencionCompra implements Serializable {
     private String drcCodImpuestoAsignado;
     @Column(name = "drc_descripcion")
     private String drcDescripcion;
+    @Column(name = "drc_documento")
+    private String drcDocumento;
 
     @JoinColumn(name = "tire_codigo", referencedColumnName = "tire_codigo")
     @ManyToOne
@@ -201,6 +203,14 @@ public class DetalleRetencionCompra implements Serializable {
     @Override
     public String toString() {
         return "com.ec.entidad.DetalleRetencionCompra[ drcCodigo=" + drcCodigo + " ]";
+    }
+
+    public String getDrcDocumento() {
+        return drcDocumento;
+    }
+
+    public void setDrcDocumento(String drcDocumento) {
+        this.drcDocumento = drcDocumento;
     }
 
 }

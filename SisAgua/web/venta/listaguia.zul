@@ -13,14 +13,15 @@
             </tabs>
             <tabpanels >
                 
-                <tabpanel  width="99%"  >                    
-                    <div class="row">
+                <tabpanel  width="100%"  >                    
+                    <div class="contenedorCuadro contenedorGuia">
                        
-                        <div class=" input-group col-12 col-sm-12 col-md-4 col-lg-4 ">
+                        <div class="contenedorInputsGuia">
 
                             <label value="Inicio: " style="font-weight: bold;padding: 5px;"   />
                             <datebox compact="true" value="@bind(vm.fechainicio)" 
                                         style="font-weight:bold;" 
+                                        class="fecha"
                                         buttonVisible="true" 
                                         lenient="true" format="dd/MM/yyyy" 
                                         constraint="no empty: Ingrese la fecha "/>
@@ -28,18 +29,20 @@
                             <datebox compact="true" value="@bind(vm.fechafin)" 
                                            style="font-weight:bold;"                                               
                                            buttonVisible="true" 
-                                           lenient="true" format="dd/MM/yyyy" 
+                                           lenient="true" format="dd/MM/yyyy"
+                                           class="fecha" 
                                            constraint="no empty: Ingrese la fecha "/>
                             <div class="input-group-append">
                                 <button   image="/imagenes/buscar1.png"  
                                         onClick="@command('buscarFechas')"  
-                                        class="btn btn-primary btn-sm  "
+                                        class="boton btnGuardar"
+                                        label="Buscar facturas por fecha"
                                         tooltiptext="Buscar facturas por fecha"/>                                     
                             </div>         
                         </div>
                        
                     </div>
-                    <listbox model="@load(vm.lstGuiaRemision)" 
+                    <listbox class="tablaGuia" model="@load(vm.lstGuiaRemision)" 
                              nonselectableTags=""  mold="paging" pageSize="12"  >
                         <custom-attributes org.zkoss.zul.listbox.rod="true"/>
                     

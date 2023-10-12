@@ -15,39 +15,39 @@
             <tabpanels >
                 
                 <tabpanel  width="99%"  >                    
-                    <div class="row">
+                    <div class="row contenedorKardex">
                        
-                        <div class=" input-group col-12 col-sm-12 col-md-4 col-lg-4 ">
-                            <div class="input-group-append">
-                            <label  style="font-weight:bold" 
-                                    value="Estado:"  />
-                            <radiogroup  selectedItem="@bind(vm.estdoKardex)"   
-                                         onCheck="@command('consultaKardexMinimoMax')">
-                                <space bar="true"  /> 
-                                <radio label="Menor al minimo" value="MEM" />  
-                                <space bar="true"  />                                                                        
-                                <radio  label="Mayo o igual al minimo" value="MAM"/>     
-                                <space bar="true"  />                                                                        
-                                <radio  label="Todo" value="TOD"/> 
+                        <div class="contenedorCuadro contenedorInputsKardex">
+                            <div class="contendedorCheck">
+                                <label  style="font-weight:bold" 
+                                        value="Estado:"  />
+                                <radiogroup  selectedItem="@bind(vm.estdoKardex)"   
+                                             onCheck="@command('consultaKardexMinimoMax')">
+                                    
+                                    <radio label="Menor al minimo" value="MEM" />  
+                                                                                             
+                                    <radio  label="Mayo o igual al minimo" value="MAM"/>     
+                                                                                              
+                                    <radio  label="Todo" value="TOD"/> 
                                                                                   
-                            </radiogroup>
-
-                            
-                                <button   image="/imagenes/buscar1.png"  
-                                          onClick="@command('buscarDiaria')"  
-                                          class="btn btn-primary btn-sm  "
-                                          tooltiptext="Buscar el total de las facturas"/>                                     
+                                </radiogroup>
                             </div>   
-                               
-                        </div>
-                        <div  class="col-12 col-sm-12 col-md-1 col-lg-1 ">
+                            
+                            <button   image="/imagenes/buscar1.png"  
+                                          onClick="@command('buscarDiaria')"  
+                                          class="boton btnGuardar"
+                                          label="Buscar el total de las facturas"
+                                          tooltiptext="Buscar el total de las facturas"/>     
                             <button   image="/imagenes/excel.png"  
-                                      onClick="@command('exportToExcel')"  
-                                      class="btn btn-primary btn-sm "
-                                      tooltiptext="Descargar en Excel"/>
-
-                        </div> 
-                        <div  class="col-12 col-sm-12 col-md-5 col-lg-5 "></div>
+                                          onClick="@command('exportToExcel')"  
+                                          class="boton btnInfo"
+                                          label="Descargar en Excel"
+                                          tooltiptext="Descargar en Excel"/>                                
+                          
+                          
+                        </div>
+                        
+                     
                         
                     </div>
                     <listbox model="@load(vm.listKardex)" 
@@ -67,13 +67,13 @@
                         <template name="model">                                                            
                             <listitem>
                                 <listcell  zclass = "mycss-listcell" if="${each.verificaStock}" 
-                                          style="font-size:11px;background-color:#C7FEC1">
+                                           style="font-size:11px;background-color:#C7FEC1">
                                     <textbox readonly="true" style="font-size:12px ;background:#C7FEC1"
                                              class="form-control form-control-sm" 
                                              value="@bind(each.idProducto.prodCodigo)" width="100%" />
                                 </listcell>
                                 <listcell  zclass = "mycss-listcell" if="${!each.verificaStock}" 
-                                 style="font-size:11px;background-color:#F1876A">
+                                           style="font-size:11px;background-color:#F1876A">
                                     <textbox readonly="true" style="font-size:12px ;background:#F1876A"
                                              class="form-control form-control-sm" 
                                              value="@bind(each.idProducto.prodCodigo)" width="100%" />
@@ -85,7 +85,7 @@
                                              value="@bind(each.idProducto.prodNombre)" width="100%" />
                                 </listcell>
                                 <listcell zclass = "mycss-listcell" if="${!each.verificaStock}" 
-                                 style="font-size:11px;background-color:#F1876A">
+                                          style="font-size:11px;background-color:#F1876A">
                                     <textbox readonly="true" style="font-size:12px ;background-color:#F1876A"
                                              class="form-control form-control-sm" 
                                              value="@bind(each.idProducto.prodNombre)" width="100%" />

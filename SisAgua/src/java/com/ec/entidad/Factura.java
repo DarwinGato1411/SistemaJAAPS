@@ -85,6 +85,7 @@ public class Factura implements Serializable {
     @Column(name = "fac_fecha")
     @Temporal(TemporalType.DATE)
     private Date facFecha;
+
     @Column(name = "fac_fecha_sustento")
     @Temporal(TemporalType.DATE)
     private Date facFechaSustento;
@@ -207,8 +208,16 @@ public class Factura implements Serializable {
     private String facMedidor;
     @Column(name = "fac_lec_mes")
     private Integer facLecMes;
+
     @Column(name = "fac_dir_medidor")
     private String facDirMedidor;
+
+    /*para conocer la fecha de fcaturacion de la nota de entrega*/
+    @Column(name = "fac_fecha_facturacion")
+    @Temporal(TemporalType.DATE)
+    private Date facFechaFacturacion;
+    @Column(name = "id_nota_entrega")
+    private Integer idNotaEntrega;
 
     public Factura() {
     }
@@ -725,6 +734,22 @@ public class Factura implements Serializable {
     @Override
     public String toString() {
         return "com.ec.entidad.Factura[ idFactura=" + idFactura + " ]";
+    }
+
+    public Date getFacFechaFacturacion() {
+        return facFechaFacturacion;
+    }
+
+    public void setFacFechaFacturacion(Date facFechaFacturacion) {
+        this.facFechaFacturacion = facFechaFacturacion;
+    }
+
+    public Integer getIdNotaEntrega() {
+        return idNotaEntrega;
+    }
+
+    public void setIdNotaEntrega(Integer idNotaEntrega) {
+        this.idNotaEntrega = idNotaEntrega;
     }
 
 }

@@ -10,10 +10,14 @@
         
         <tabbox  width="100%"  tabscroll="true" >
             <tabs >
-                <tab label="Anexo Transaccional Simplificado" sclass="menutabs"/>
-                
+               
+                <tab label="Ingreso  de cuentas contables" sclass="menutabs"/>
+                <!--<tab label="Ingresos Facturas" sclass="menutabs"/>-->
+                <!--<tab label="Ingresos Retenciones" sclass="menutabs"/>-->
+                                
             </tabs>
             <tabpanels >
+                
                 <tabpanel  height="100%" width="98%"  >
                     <div class="container-fluid">
                         <div class="row " align="center">                            
@@ -86,9 +90,9 @@
                                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 "  visible="@bind(vm.activarGrupo)">                                                    
                                                     <label value="GRUPO"   />  
                                                     <image  src="/iconos/nuevo_pro-24.png"
-                                                     class="btn btn btn-secondary btn-sm "
-                                                     onClick="@command('nuevoGrupo')"
-                                                     tooltiptext="Nueva grupo"/>                                                 
+                                                            class="btn btn btn-secondary btn-sm "
+                                                            onClick="@command('nuevoGrupo')"
+                                                            tooltiptext="Nueva grupo"/>                                                 
                                                 </div>
                                             </div>
                                 
@@ -138,9 +142,9 @@
                                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 " visible="@bind(vm.activarCuenta)" >                                                    
                                                     <label value="CUENTA"   /> 
                                                     <image  src="/iconos/nuevo_pro-24.png"
-                                                    class="btn btn btn-secondary btn-sm "
-                                                    onClick="@command('nuevaCuenta')"
-                                                    tooltiptext="Nueva clase"/>                                                  
+                                                            class="btn btn btn-secondary btn-sm "
+                                                            onClick="@command('nuevaCuenta')"
+                                                            tooltiptext="Nueva clase"/>                                                  
                                                 </div>
                                             </div>
                                 
@@ -190,9 +194,9 @@
                                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 " visible="@bind(vm.activarSubCuenta)">                                                    
                                                     <label value="SUBCUENTA"   />
                                                     <image  src="/iconos/nuevo_pro-24.png"
-                                                    class="btn btn btn-secondary btn-sm "
-                                                    onClick="@command('nuevaSubCuenta')"
-                                                    tooltiptext="Nueva subcuenta"/>                                                   
+                                                            class="btn btn btn-secondary btn-sm "
+                                                            onClick="@command('nuevaSubCuenta')"
+                                                            tooltiptext="Nueva subcuenta"/>                                                   
                                                 </div>
                                             </div>
                                 
@@ -231,7 +235,140 @@
                         </div>
                     </div>
                 </tabpanel>
+<!--                <tabpanel  height="100%" width="98%"  >                   
+
+                              
+                    <div  class="container-fluid" >
+                        <div  class="row" >
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4  form-group "  >
+                                <label value="(*)" style="color:transparent;font-weight:bold"/>Fecha:
+              
+                                <datebox compact="true"
+                                         readonly="true"   style="font-weight:bold" buttonVisible="true" 
+                                         lenient="true" 
+                                         format="dd/MM/yyyy" />
+                            </div>
+                        </div>
+                        <div class="row " align="center">                            
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 " align="start">
+                                <listbox model="@load(vm.listaCuSubCuenta2)" 
+                                         nonselectableTags=""  
+                                         mold="paging" pageSize="12"  > 
+                                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                                    
+                                    <auxhead>
+                                        <auxheader colspan="12" >  
+
+                                
+                                        </auxheader>
+                                    </auxhead>       
+                                    
+                                    <listhead> 
+                                        <listheader width="20%"  label="Por Pagar" /> 
+                                        <listheader width="80%"  label="Descripcion" /> 
+                                        <listheader width="20%"  label="Valor" /> 
+                                        <listheader width="20%"  label="Cancelado" />
+                                        <listheader width="80%"  label="Descripcion" />
+                                        <listheader width="20%"  label="Valor" /> 
+                                                                  
+                                    </listhead>  
+                        
+                    
+                                    <template name="model">                                                            
+                                        <listitem>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"    
+                                                         width="100%" />
+                                                     value="@bind(each.subcNumero)" value="@bind(each.subcNombre)" 
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"    
+                                                         width="100%" />
+                                            </listcell>
+
+                                                                     
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </div>
+                        </div>
+                    </div>  
+    
+                            
+                </tabpanel> 
+
+                <tabpanel  height="100%" width="98%"  >                   
+
+                              
+                    <div  class="container-fluid" >
+                        <div  class="row" >
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4  form-group "  >
+                                <label value="(*)" style="color:transparent;font-weight:bold"/>Fecha:
+              
+                                <datebox compact="true"
+                                         readonly="true"   style="font-weight:bold" buttonVisible="true" 
+                                         lenient="true" 
+                                         format="dd/MM/yyyy" />
+                            </div>
+                        </div>
+                        <div class="row " align="center">                            
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 " align="start">
+                                <listbox model="@load(vm.listaCuSubCuenta2)" 
+                                         nonselectableTags=""  
+                                         mold="paging" pageSize="12"  > 
+                                    <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+                                    
+                                    <auxhead>
+                                        <auxheader colspan="12" >  
+
+                                
+                                        </auxheader>
+                                    </auxhead>       
+                                    
+                                    <listhead> 
+                                        <listheader width="20%"  label="Por Pagar" /> 
+                                        <listheader width="80%"  label="Descripcion" /> 
+                                        <listheader width="20%"  label="Valor" /> 
+                                        <listheader width="20%"  label="Cancelado" />
+                                        <listheader width="80%"  label="Descripcion" />
+                                        <listheader width="20%"  label="Valor" /> 
+                                                                  
+                                    </listhead>  
+                        
+                    
+                                    <template name="model">                                                            
+                                        <listitem>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"    
+                                                         width="100%" />
+                                                     value="@bind(each.subcNumero)" value="@bind(each.subcNombre)" 
+                                            </listcell>
+                                            <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
+                                                <textbox readonly="true" 
+                                                         class="form-control form-control-sm"
+                                                         style="font-size:12px;background:#EBF5FB"    
+                                                         width="100%" />
+                                            </listcell>
+
+                                                                     
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </div>
+                        </div>
+                    </div>  
+    
+                            
+                </tabpanel> -->
             </tabpanels>
+            
+            
         </tabbox>
         
     </hbox>
