@@ -84,12 +84,13 @@
                                                 <decimalbox format="###.###" readonly="true" 
                                                             value="@bind(each.saldoAnterior)" width="96%"/>
                                             </listcell>
+<!--                                            <decimalbox format="###.###" readonly="true" style="font-size:12px;background:#EBF5FB"  if="${!each.mostrar}"
+                                                            value="@bind(each.totalIngreso)" width="96%"/>-->
                                             <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
-                                                <decimalbox format="###.###" readonly="false" if="${each.mostrar}"
+                                                <decimalbox format="###.###" readonly="true" 
                                                 onOK="@command('calcular',valor=each)"
                                                             value="@bind(each.totalIngreso)" width="96%"/>
-                                                <decimalbox format="###.###" readonly="true" style="font-size:12px;background:#EBF5FB"  if="${!each.mostrar}"
-                                                            value="@bind(each.totalIngreso)" width="96%"/>
+                                                
                                             </listcell>
                                             <listcell  zclass = "mycss-listcell" style="font-size:12px;background:#EBF5FB"    >
                                                 <decimalbox format="###.###" readonly="true" 

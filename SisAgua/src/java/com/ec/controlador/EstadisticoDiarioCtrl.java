@@ -298,7 +298,7 @@ public class EstadisticoDiarioCtrl {
 
             //  parametros.put("codUsuario", String.valueOf(credentialLog.getAdUsuario().getCodigoUsuario()));
             parametros.put("inicio", inicio);
-            parametros.put("fin", fin);
+            parametros.put("fin", inicio);
 
             if (con != null) {
                 System.out.println("Conexión Realizada Correctamenteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
