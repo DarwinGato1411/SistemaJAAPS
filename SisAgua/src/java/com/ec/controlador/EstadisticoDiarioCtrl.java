@@ -5,13 +5,13 @@
 package com.ec.controlador;
 
 import com.ec.entidad.EstadisticoDiarioHistorico;
-import com.ec.entidad.EstadisticoMensualHistorico;
+
 import com.ec.servicio.HelperPersistencia;
 import com.ec.servicio.ServicioGeneral;
 import com.ec.servicio.contabilidad.ServicioEstadisticoDiarioHistorico;
 import java.util.Calendar;
 import java.util.Date;
-import com.ec.servicio.contabilidad.ServicioEstadisticoMensualHistorico;
+
 import com.ec.untilitario.ArchivoUtils;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -105,8 +105,6 @@ public class EstadisticoDiarioCtrl {
         this.listaEstadisticoDiario = listaEstadisticoDiario;
     }
 
-  
-
     public Date getInicio() {
         return inicio;
     }
@@ -136,7 +134,7 @@ public class EstadisticoDiarioCtrl {
         }
     }
 
-     private String exportarExcel() throws FileNotFoundException, IOException, ParseException {
+    private String exportarExcel() throws FileNotFoundException, IOException, ParseException {
         String directorioReportes = Executions.getCurrent().getDesktop().getWebApp().getRealPath("/reportes");
 
         Date date = new Date();
@@ -147,7 +145,6 @@ public class EstadisticoDiarioCtrl {
         String pathSalida = directorioReportes + File.separator + "estadistico_diario.xls";
         System.out.println("Direccion del reporte  " + pathSalida);
         try {
-            int j = 1;
             File archivoXLS = new File(pathSalida);
             if (archivoXLS.exists()) {
                 archivoXLS.delete();
@@ -164,44 +161,48 @@ public class EstadisticoDiarioCtrl {
             estiloCelda.setAlignment((short) 2);
             estiloCelda.setFont(fuente);
 
-            HSSFCellStyle estiloCeldaInterna = wb.createCellStyle();
-            estiloCeldaInterna.setWrapText(true);
-            estiloCeldaInterna.setAlignment((short) 5);
-            estiloCeldaInterna.setFont(fuente);
-
-            HSSFCellStyle estiloCelda1 = wb.createCellStyle();
-            estiloCelda1.setWrapText(true);
-            estiloCelda1.setFont(fuente);
-
             HSSFRow r = null;
 
-            HSSFCell c = null;
+            // Crear la primera fila (fila 0) con los valores quemados
             r = s.createRow(0);
 
             HSSFCell chfe = r.createCell(0);
-            chfe.setCellValue(new HSSFRichTextString("Rubro"));
+            chfe.setCellValue(new HSSFRichTextString("Fecha inico"));
             chfe.setCellStyle(estiloCelda);
 
+            int j = 1;
             HSSFCell ch1 = r.createCell(j++);
-            ch1.setCellValue(new HSSFRichTextString("Saldo anterior"));
+            ch1.setCellValue(new HSSFRichTextString(sm.format(inicio)));
             ch1.setCellStyle(estiloCelda);
 
-            HSSFCell ch2 = r.createCell(j++);
-            ch2.setCellValue(new HSSFRichTextString("Total Ingreso"));
-            ch2.setCellStyle(estiloCelda);
 
-            HSSFCell ch3 = r.createCell(j++);
-            ch3.setCellValue(new HSSFRichTextString("Cobrado"));
-            ch3.setCellStyle(estiloCelda);
 
-            HSSFCell ch4 = r.createCell(j++);
-            ch4.setCellValue(new HSSFRichTextString("Saldo actual"));
-            ch4.setCellStyle(estiloCelda);
+            // Crear una nueva fila (fila 1) para los nuevos valores quemados
+            r = s.createRow(1);
 
-//            HSSFCell ch5 = r.createCell(j++);
-//            ch5.setCellValue(new HSSFRichTextString("Clace_Acceso"));
-//            ch5.setCellStyle(estiloCelda);
-            int rownum = 1;
+            HSSFCell nuevoValor1 = r.createCell(0);
+            nuevoValor1.setCellValue(new HSSFRichTextString("Rubro"));
+            nuevoValor1.setCellStyle(estiloCelda);
+
+            j = 1;
+            HSSFCell nuevoValor2 = r.createCell(j++);
+            nuevoValor2.setCellValue(new HSSFRichTextString("Saldo anterior"));
+            nuevoValor2.setCellStyle(estiloCelda);
+
+            HSSFCell nuevoValor3 = r.createCell(j++);
+            nuevoValor3.setCellValue(new HSSFRichTextString("Total Ingreso"));
+            nuevoValor3.setCellStyle(estiloCelda);
+
+            HSSFCell nuevoValor4 = r.createCell(j++);
+            nuevoValor4.setCellValue(new HSSFRichTextString("Cobrado"));
+            nuevoValor4.setCellStyle(estiloCelda);
+
+            HSSFCell nuevoValor5 = r.createCell(j++);
+            nuevoValor5.setCellValue(new HSSFRichTextString("Saldo actual"));
+            nuevoValor5.setCellStyle(estiloCelda);
+
+            // Iniciar desde la fila 2 para los datos dinámicos
+            int rownum = 2;
             int i = 0;
 
             BigDecimal saldoAnt = BigDecimal.ZERO;
@@ -220,27 +221,27 @@ public class EstadisticoDiarioCtrl {
                 HSSFCell c0 = r.createCell(i++);
                 c0.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getSaldoAnterior(), 3).toString()));
                 saldoAnt = saldoAnt.add(ArchivoUtils.redondearDecimales(item.getSaldoAnterior(), 3));
-                
+
                 HSSFCell c1 = r.createCell(i++);
                 c1.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getTotalIngreso(), 3).toString()));
                 totGen = totGen.add(ArchivoUtils.redondearDecimales(item.getTotalIngreso(), 3));
-                
+
                 HSSFCell c2 = r.createCell(i++);
                 c2.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getRecaudo(), 3).toString()));
                 cobrado = cobrado.add(ArchivoUtils.redondearDecimales(item.getRecaudo(), 3));
-                
+
                 HSSFCell c3 = r.createCell(i++);
                 c3.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getSaldoActual(), 3).toString()));
                 saldoActual = saldoActual.add(ArchivoUtils.redondearDecimales(item.getSaldoActual(), 3));
-                
-                rownum += 1;
-                
 
+             
+
+                rownum++;
             }
             j = 0;
             r = s.createRow(rownum);
             HSSFCell chfeF1 = r.createCell(j++);
-            chfeF1.setCellValue(new HSSFRichTextString(""));
+            chfeF1.setCellValue(new HSSFRichTextString("Totales"));
             chfeF1.setCellStyle(estiloCelda);
 
             HSSFCell chfeF2 = r.createCell(j++);
@@ -254,26 +255,21 @@ public class EstadisticoDiarioCtrl {
             HSSFCell chF4 = r.createCell(j++);
             chF4.setCellValue(new HSSFRichTextString(cobrado.toString()));
             chF4.setCellStyle(estiloCelda);
-            
-            
-             HSSFCell chF5 = r.createCell(j++);
+
+            HSSFCell chF5 = r.createCell(j++);
             chF5.setCellValue(new HSSFRichTextString(saldoActual.toString()));
             chF5.setCellStyle(estiloCelda);
-            
-            
+
             for (int k = 0; k <= listaEstadisticoDiario.size(); k++) {
                 s.autoSizeColumn(k);
             }
             wb.write(archivo);
             archivo.close();
-
         } catch (IOException e) {
             System.out.println("error " + e.getMessage());
         }
         return pathSalida;
-
     }
-
 
     @Command
     public void estdisticoMensual() throws JRException, IOException, NamingException, SQLException {
@@ -298,10 +294,10 @@ public class EstadisticoDiarioCtrl {
 
             //  parametros.put("codUsuario", String.valueOf(credentialLog.getAdUsuario().getCodigoUsuario()));
             parametros.put("inicio", inicio);
-            parametros.put("fin", fin);
+            parametros.put("fin", inicio);
 
             if (con != null) {
-                System.out.println("Conexión Realizada Correctamenteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                System.out.println("Conexión Realizada Correctamente");
             }
             FileInputStream is = null;
             is = new FileInputStream(reportPath);

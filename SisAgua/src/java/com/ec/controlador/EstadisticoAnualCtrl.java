@@ -133,10 +133,9 @@ public class EstadisticoAnualCtrl {
         SimpleDateFormat sm = new SimpleDateFormat("yyy-MM-dd");
         String strDate = sm.format(date);
 
-        String pathSalida = directorioReportes + File.separator + "estadistico_anual.xls";
+        String pathSalida = directorioReportes + File.separator + "estadistico_diario.xls";
         System.out.println("Direccion del reporte  " + pathSalida);
         try {
-            int j = 1;
             File archivoXLS = new File(pathSalida);
             if (archivoXLS.exists()) {
                 archivoXLS.delete();
@@ -153,44 +152,54 @@ public class EstadisticoAnualCtrl {
             estiloCelda.setAlignment((short) 2);
             estiloCelda.setFont(fuente);
 
-            HSSFCellStyle estiloCeldaInterna = wb.createCellStyle();
-            estiloCeldaInterna.setWrapText(true);
-            estiloCeldaInterna.setAlignment((short) 5);
-            estiloCeldaInterna.setFont(fuente);
-
-            HSSFCellStyle estiloCelda1 = wb.createCellStyle();
-            estiloCelda1.setWrapText(true);
-            estiloCelda1.setFont(fuente);
-
             HSSFRow r = null;
 
-            HSSFCell c = null;
+            // Crear la primera fila (fila 0) con los valores quemados
             r = s.createRow(0);
 
             HSSFCell chfe = r.createCell(0);
-            chfe.setCellValue(new HSSFRichTextString("Rubro"));
+            chfe.setCellValue(new HSSFRichTextString("Fecha inico"));
             chfe.setCellStyle(estiloCelda);
 
+            int j = 1;
             HSSFCell ch1 = r.createCell(j++);
-            ch1.setCellValue(new HSSFRichTextString("Saldo anterior"));
+            ch1.setCellValue(new HSSFRichTextString(sm.format(inicio)));
             ch1.setCellStyle(estiloCelda);
 
             HSSFCell ch2 = r.createCell(j++);
-            ch2.setCellValue(new HSSFRichTextString("Total Ingreso"));
+            ch2.setCellValue(new HSSFRichTextString("Fecha final"));
             ch2.setCellStyle(estiloCelda);
 
             HSSFCell ch3 = r.createCell(j++);
-            ch3.setCellValue(new HSSFRichTextString("Cobrado"));
+            ch3.setCellValue(new HSSFRichTextString(sm.format(fin)));
             ch3.setCellStyle(estiloCelda);
 
-            HSSFCell ch4 = r.createCell(j++);
-            ch4.setCellValue(new HSSFRichTextString("Saldo actual"));
-            ch4.setCellStyle(estiloCelda);
+            // Crear una nueva fila (fila 1) para los nuevos valores quemados
+            r = s.createRow(1);
 
-//            HSSFCell ch5 = r.createCell(j++);
-//            ch5.setCellValue(new HSSFRichTextString("Clace_Acceso"));
-//            ch5.setCellStyle(estiloCelda);
-            int rownum = 1;
+            HSSFCell nuevoValor1 = r.createCell(0);
+            nuevoValor1.setCellValue(new HSSFRichTextString("Rubro"));
+            nuevoValor1.setCellStyle(estiloCelda);
+
+            j = 1;
+            HSSFCell nuevoValor2 = r.createCell(j++);
+            nuevoValor2.setCellValue(new HSSFRichTextString("Saldo anterior"));
+            nuevoValor2.setCellStyle(estiloCelda);
+
+            HSSFCell nuevoValor3 = r.createCell(j++);
+            nuevoValor3.setCellValue(new HSSFRichTextString("Total Ingreso"));
+            nuevoValor3.setCellStyle(estiloCelda);
+
+            HSSFCell nuevoValor4 = r.createCell(j++);
+            nuevoValor4.setCellValue(new HSSFRichTextString("Cobrado"));
+            nuevoValor4.setCellStyle(estiloCelda);
+
+            HSSFCell nuevoValor5 = r.createCell(j++);
+            nuevoValor5.setCellValue(new HSSFRichTextString("Saldo actual"));
+            nuevoValor5.setCellStyle(estiloCelda);
+
+            // Iniciar desde la fila 2 para los datos dinámicos
+            int rownum = 2;
             int i = 0;
 
             BigDecimal saldoAnt = BigDecimal.ZERO;
@@ -222,13 +231,14 @@ public class EstadisticoAnualCtrl {
                 c3.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getSaldoActual(), 3).toString()));
                 saldoActual = saldoActual.add(ArchivoUtils.redondearDecimales(item.getSaldoActual(), 3));
 
-                rownum += 1;
+               
 
+                rownum++;
             }
             j = 0;
             r = s.createRow(rownum);
             HSSFCell chfeF1 = r.createCell(j++);
-            chfeF1.setCellValue(new HSSFRichTextString(""));
+            chfeF1.setCellValue(new HSSFRichTextString("Totales"));
             chfeF1.setCellStyle(estiloCelda);
 
             HSSFCell chfeF2 = r.createCell(j++);
@@ -252,12 +262,10 @@ public class EstadisticoAnualCtrl {
             }
             wb.write(archivo);
             archivo.close();
-
         } catch (IOException e) {
             System.out.println("error " + e.getMessage());
         }
         return pathSalida;
-
     }
 
     @Command

@@ -2,6 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/Deckxel/Desarrollo/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/EstadisticoDiarioCtrl.java</file>
+            <file>file:/E:/Deckxel/Desarrollo/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/EstadisticoAnualCtrl.java</file>
+            <file>file:/E:/Deckxel/Desarrollo/SistemaJAAPS/SisAgua/src/java/com/ec/controlador/EstadisticoMensualCtrl.java</file>
+            <file>file:/E:/Deckxel/Desarrollo/SistemaJAAPS/SisAgua/src/conf/persistence.xml</file>
+        </group>
     </open-files>
 </project-private>
