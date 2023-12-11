@@ -17,13 +17,25 @@
     </style>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-2 col-sm-2 col-md-1 col-lg-1 form-group " align="start"  >
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 form-group " align="start"  >
                 <image  src="/iconos/nuevo_pro-24.png"
                         class="btn btn btn-secondary btn-sm "
                         onClick="@command('nuevo')"
                         tooltiptext="Nueva tarifa"/>
+ <image  src="/iconos/excel1.png"
+                                        class="btn btn btn-secondary btn-sm "
+                                        onClick="@command('exportListboxToExcel')"
+                                        tooltiptext="Descargar medidores"/>
                     
             </div>
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 form-group " align="start"  >
+                <radiogroup selectedItem="@bind(vm.medidorActivo)">
+                    <radio label="Activo" value="activo" onClick="@command('actualizarActivo')"  />
+                    <space />
+                    <radio label="Inactivo" value="inactivo" onClick="@command('actualizarActivo')" />
+                </radiogroup>
+            </div>
+
                         
         </div>
     </div> 

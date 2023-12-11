@@ -95,6 +95,36 @@ public class ServicioMedidor {
         return listaMedidors;
     }
 
+    public List<Medidor> findLikeNombreApellidoCedulaActivo(String valor, boolean activo) {
+
+        List<Medidor> listaMedidors = new ArrayList<Medidor>();
+        try {
+            //Connection connection = em.unwrap(Connection.class);
+            em = HelperPersistencia.getEMF();
+            em.getTransaction().begin();
+            String queryString = "SELECT a FROM Medidor a WHERE a.medActivo = :medActivo "
+                    + "AND (a.idPredio.idPropietario.porpCedula LIKE :porpCedula "
+                    + "OR a.idPredio.idPropietario.propNombre LIKE :propNombre "
+                    + "OR a.idPredio.idPropietario.propApellido LIKE :propApellido) "
+                    + "ORDER BY CAST(a.medNumero as NUMERIC) ASC";
+            Query query = em.createQuery(queryString);
+            query.setParameter("porpCedula", "%" + valor + "%");
+            query.setParameter("propNombre", "%" + valor + "%");
+            query.setParameter("propApellido", "%" + valor + "%");
+            query.setParameter("medActivo", activo);
+            System.out.println("asdasd");
+            //query.setMaxResults(200);
+            listaMedidors = (List<Medidor>) query.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error en lsa consulta medidor findLikeMedNumero " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return listaMedidors;
+    }
+
     public List<Medidor> findMedidorNumero(String valor) {
 
         List<Medidor> listaMedidors = new ArrayList<Medidor>();
@@ -171,7 +201,7 @@ public class ServicioMedidor {
             em.getTransaction().begin();
             Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medNumero =:medNumero  AND a.medActivo=:medActivo ORDER BY a.idPredio.idPropietario.propNombre ASC");
             query.setParameter("medNumero", valor);
-             query.setParameter("medActivo", Boolean.TRUE);
+            query.setParameter("medActivo", Boolean.TRUE);
             //query.setMaxResults(200);
             listaMedidors = (List<Medidor>) query.getResultList();
             em.getTransaction().commit();
@@ -204,7 +234,7 @@ public class ServicioMedidor {
 
         return listaMedidors;
     }
-    
+
     public List<Medidor> findByNombreApellido(String valor) {
 
         List<Medidor> listaMedidors = new ArrayList<Medidor>();
