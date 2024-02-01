@@ -95,15 +95,15 @@ public class ServicioMedidor {
         return listaMedidors;
     }
 
-    public List<Medidor> findMedidorNumero(String valor) {
+    public List<Medidor> findEactivoInactivo(Boolean valor) {
 
         List<Medidor> listaMedidors = new ArrayList<Medidor>();
         try {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medNumero=:medNumero ORDER BY CAST(a.medNumero as NUMERIC) ASC");
-            query.setParameter("medNumero", valor);
+            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medActivo=:medActivo ORDER BY CAST(a.medNumero as NUMERIC) ASC");
+            query.setParameter("medActivo", valor);
             //query.setMaxResults(200);
             listaMedidors = (List<Medidor>) query.getResultList();
             em.getTransaction().commit();
@@ -216,6 +216,27 @@ public class ServicioMedidor {
             query.setParameter("propNombre", "%" + valor + "%");
             query.setParameter("propApellido", "%" + valor + "%");
             query.setParameter("medActivo", Boolean.TRUE);
+            //query.setMaxResults(200);
+            listaMedidors = (List<Medidor>) query.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error en lsa consulta medidor findLikeMedNumero " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return listaMedidors;
+    }
+    
+    public List<Medidor> findMedidorNumero(String valor) {
+
+        List<Medidor> listaMedidors = new ArrayList<Medidor>();
+        try {
+            //Connection connection = em.unwrap(Connection.class);
+            em = HelperPersistencia.getEMF();
+            em.getTransaction().begin();
+            Query query = em.createQuery("SELECT  a FROM Medidor a WHERE a.medNumero=:medNumero ORDER BY CAST(a.medNumero as NUMERIC) ASC");
+            query.setParameter("medNumero", valor);
             //query.setMaxResults(200);
             listaMedidors = (List<Medidor>) query.getResultList();
             em.getTransaction().commit();

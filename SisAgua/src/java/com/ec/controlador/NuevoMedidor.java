@@ -83,6 +83,7 @@ public class NuevoMedidor {
             this.entidad = new Medidor();
             entidad.setMedFechaRegistro(new Date());
             entidad.setMedNumero("");
+            entidad.setMedActivo(Boolean.TRUE);
             accion = "create";
             Medidor ultimoMedidor = servicioMedidor.findUltimoMedidorRegistrado();
             if (ultimoMedidor != null) {
@@ -135,28 +136,23 @@ public class NuevoMedidor {
     public void guardar() {
         entidad.setIdTarifa(tarifaSelected);
         if (entidad.getIdTarifa() != null
-                    && entidad.getIdPredio() != null
-                    && !entidad.getMedNumero().equals("")
-                    && ubicacionSelected != null) {
+                && entidad.getIdPredio() != null
+                && !entidad.getMedNumero().equals("")
+                && ubicacionSelected != null) {
             entidad.setIdUbicacionMedidor(ubicacionSelected);
             entidad.setMedBarrio(ubicacionSelected.getUbimNombre());
             if (accion.equals("create")) {
 
                 servicioMedidor.crear(entidad);
-              //  servicioGeneral.iniciarLecturaMedidor(mes, fechaCreacion);
-//                System.out.println("fechaCreacion " + fechaCreacion);
             } else {
                 servicioMedidor.modificar(entidad);
             }
-            // fechaCreacion.setMonth(buscarMes.getNumero() - 1);
-
-            // servicioGeneral.iniciarLecturaMedidor(mes, fechaCreacion);
             System.out.println("fechaCreacion " + fechaCreacion + " el mes es: " + mes);
             wMedidor.detach();
         } else {
 
             Clients.showNotification("Verifique la informacion requerida",
-                        Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 3000, true);
+                    Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 3000, true);
         }
     }
 

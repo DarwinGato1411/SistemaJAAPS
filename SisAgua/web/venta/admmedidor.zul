@@ -21,7 +21,25 @@
                 <image  src="/iconos/nuevo_pro-24.png"
                         class="btn btn btn-secondary btn-sm "
                         onClick="@command('nuevo')"
-                        tooltiptext="Nueva tarifa"/>
+                        tooltiptext="Nueva medidor"/>
+                    
+            </div>
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 form-group " align="start"  >
+                <radiogroup 
+                    onCheck="@command('buscarActivoIncativo')" 
+                    selectedItem="@bind(vm.activoInactivo)"  >                   
+                    <radio label="ACTIVO" value="${true}"/>
+                    <space bar="false"  />   
+                    <radio label="INACTIVO" value="${false}"/>                          
+                </radiogroup>
+                    
+            </div>
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 form-group " align="start"  >
+               <button   image="/imagenes/excel.png" width="100px" 
+                                      label="Descargar"
+                                      onClick="@command('exportListboxToExcel')"  
+                                      class="boton btnInfo"
+                                      tooltiptext="Descargar"/>
                     
             </div>
                         
