@@ -284,12 +284,45 @@
                                             </div>   
                                 
                                             <div class="contenedorInput">         
-                                                <label value="Base 12%:" class="form-control-sm" 
+                                                <label value="Base 5%:" class="form-control-sm" 
                                                 />
                                                                   
                                                 <decimalbox  format="###.##"   
                                                             
-                                                             value="@bind(vm.subTotalCotizacion)" 
+                                                             value="@bind(vm.subTotalCotizacion5)" 
+                                                             readonly="true" 
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                                                             class="form-control-sm" />
+                                            </div>   
+                                            <div class="contenedorInput">         
+                                                <label value="IVA 5%:" class="form-control-sm" 
+                                                />
+                                                                  
+                                                <decimalbox  format="###.##"   
+                                                            
+                                                             value="@bind(vm.ivaCotizacion5)" 
+                                                             readonly="true" 
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                                                             class="form-control-sm" />
+                                            </div>   
+                                            <div class="contenedorInput">         
+                                                <label value="Base 15%:" class="form-control-sm" 
+                                                />
+                                                                  
+                                                <decimalbox  format="###.##"   
+                                                            
+                                                             value="@bind(vm.subTotalCotizacion15)" 
+                                                             readonly="true" 
+                                                             onChange="self.setValue(self.getValue().toUpperCase().trim());" 
+                                                             class="form-control-sm" />
+                                            </div>   
+                                            <div class="contenedorInput">         
+                                                <label value="IVA 15%:" class="form-control-sm" 
+                                                />
+                                                                  
+                                                <decimalbox  format="###.##"   
+                                                            
+                                                             value="@bind(vm.ivaCotizacion15)" 
                                                              readonly="true" 
                                                              onChange="self.setValue(self.getValue().toUpperCase().trim());" 
                                                              class="form-control-sm" />

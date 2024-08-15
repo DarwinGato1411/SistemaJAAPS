@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +24,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -108,9 +111,9 @@ public class Producto implements Serializable {
     private BigDecimal prodSubsidio;
     @Column(name = "prod_precio_sin_subsidio")
     private BigDecimal prodPrecioSinSubsidio;
- 
+
     @Column(name = "prod_cantidad_inicial")
-    private Integer prodCantidadInicial;
+    private BigDecimal prodCantidadInicial;
     @Column(name = "prod_graba_iva")
     private Boolean prodGrabaIva;
     @Column(name = "prod_es_agua")
@@ -140,9 +143,29 @@ public class Producto implements Serializable {
     private Boolean prodEsproducto;
 
     @OneToMany(mappedBy = "idProducto")
-    private Collection<DetalleCompraSri> detalleCompraSriCollection;  
-     @Column(name = "pord_costo_promedio_compra")
+    private Collection<DetalleCompraSri> detalleCompraSriCollection;
+    @Column(name = "pord_costo_promedio_compra")
     private BigDecimal pordCostoPromedioCompra;
+
+    @Column(name = "prod_unidad_medida")
+    private String prodUnidadMedida;
+    @Column(name = "prod_unidad_conversion")
+    private String prodUnidadConversion;
+    @Column(name = "prod_factor_conversion")
+    private BigDecimal prodFactorConversion;
+
+    @Column(name = "prod_fecha_registro")
+    @Temporal(TemporalType.DATE)
+    private Date prodFechaRegistro;
+    @Column(name = "prod_esreceta")
+    private Boolean prodEsreceta;
+    @Column(name = "prod_codigo_iva")
+    private Integer prodCodigoIva;
+    @Column(name = "prod_porcentaje_iva")
+    private Integer prodPorcentajeIva;
+
+    @Column(name = "prod_imagen")
+    private String prodImagen;
 
     public Producto() {
     }
@@ -325,11 +348,11 @@ public class Producto implements Serializable {
         this.prodIsPrincipal = prodIsPrincipal;
     }
 
-    public Integer getProdCantidadInicial() {
+    public BigDecimal getProdCantidadInicial() {
         return prodCantidadInicial;
     }
 
-    public void setProdCantidadInicial(Integer prodCantidadInicial) {
+    public void setProdCantidadInicial(BigDecimal prodCantidadInicial) {
         this.prodCantidadInicial = prodCantidadInicial;
     }
 
@@ -480,7 +503,6 @@ public class Producto implements Serializable {
         this.prodEsAgua = prodEsAgua;
     }
 
-
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -498,4 +520,69 @@ public class Producto implements Serializable {
     public String toString() {
         return "com.ec.entidad.Producto[ idProducto=" + idProducto + " ]";
     }
+
+    public Date getProdFechaRegistro() {
+        return prodFechaRegistro;
+    }
+
+    public void setProdFechaRegistro(Date prodFechaRegistro) {
+        this.prodFechaRegistro = prodFechaRegistro;
+    }
+
+    public Boolean getProdEsreceta() {
+        return prodEsreceta;
+    }
+
+    public void setProdEsreceta(Boolean prodEsreceta) {
+        this.prodEsreceta = prodEsreceta;
+    }
+
+    public Integer getProdCodigoIva() {
+        return prodCodigoIva;
+    }
+
+    public void setProdCodigoIva(Integer prodCodigoIva) {
+        this.prodCodigoIva = prodCodigoIva;
+    }
+
+    public Integer getProdPorcentajeIva() {
+        return prodPorcentajeIva;
+    }
+
+    public void setProdPorcentajeIva(Integer prodPorcentajeIva) {
+        this.prodPorcentajeIva = prodPorcentajeIva;
+    }
+
+    public String getProdImagen() {
+        return prodImagen;
+    }
+
+    public void setProdImagen(String prodImagen) {
+        this.prodImagen = prodImagen;
+    }
+
+    public String getProdUnidadMedida() {
+        return prodUnidadMedida;
+    }
+
+    public void setProdUnidadMedida(String prodUnidadMedida) {
+        this.prodUnidadMedida = prodUnidadMedida;
+    }
+
+    public String getProdUnidadConversion() {
+        return prodUnidadConversion;
+    }
+
+    public void setProdUnidadConversion(String prodUnidadConversion) {
+        this.prodUnidadConversion = prodUnidadConversion;
+    }
+
+    public BigDecimal getProdFactorConversion() {
+        return prodFactorConversion;
+    }
+
+    public void setProdFactorConversion(BigDecimal prodFactorConversion) {
+        this.prodFactorConversion = prodFactorConversion;
+    }
+
 }
