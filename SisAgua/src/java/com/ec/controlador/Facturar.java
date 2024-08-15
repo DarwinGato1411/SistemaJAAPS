@@ -809,17 +809,18 @@ public class Facturar extends SelectorComposer<Component> {
                 desechos = detalleTarifa.getDettDesechos();
             }
 
-            if (baseUno) {
-                ambiente = detalleTarifa.getDettAmbiente();
-            }
-            if (baseDos) {
-                ambiente = BigDecimal.valueOf(1);
-            }
+             ambiente = detalleTarifa.getDettAmbiente();
+//            if (baseUno) {
+//                ambiente = detalleTarifa.getDettAmbiente();
+//            }
+//            if (baseDos) {
+//                ambiente = BigDecimal.valueOf(1);
+//            }
 
-            if (excedenteAmbiente.doubleValue() > 0) {
-                BigDecimal valorExedenteAmb = excedenteAmbiente.multiply(BigDecimal.valueOf(0.02));
-                ambiente = BigDecimal.valueOf(1).add(valorExedenteAmb);
-            }
+//            if (excedenteAmbiente.doubleValue() > 0) {
+//                BigDecimal valorExedenteAmb = excedenteAmbiente.multiply(BigDecimal.valueOf(0.02));
+//                ambiente = BigDecimal.valueOf(1).add(valorExedenteAmb);
+//            }
 
             ambiente = ArchivoUtils.redondearDecimales(ambiente, 2);
             alcantarillado = ArchivoUtils.redondearDecimales(alcantarillado, 2);
