@@ -529,7 +529,7 @@ public class ListaComprasSri {
                 nuevoProd.setPordCostoVentaRef(detalle.getPrecioUnitario());
                 nuevoProd.setProdAbreviado("");
                 nuevoProd.setProdCantMinima(BigDecimal.TEN);
-                nuevoProd.setProdCantidadInicial(detalle.getCantidad().intValue());
+                nuevoProd.setProdCantidadInicial(detalle.getCantidad());
                 nuevoProd.setProdCodigo(detalle.getCodigoPrincipal());
                 nuevoProd.setProdCostoPreferencial(BigDecimal.ZERO);
                 nuevoProd.setProdCostoPreferencialDos(BigDecimal.ZERO);

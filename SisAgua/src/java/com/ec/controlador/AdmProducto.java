@@ -289,12 +289,12 @@ public class AdmProducto {
                     kardex.setKarDetalle("INICIO DE INVENTARIO: " + producto.getProdNombre());
                     kardex.setKarFecha(new Date());
                     kardex.setKarFechaKardex(new Date());
-                    kardex.setKarTotal(BigDecimal.valueOf(producto.getProdCantidadInicial()));
+                    kardex.setKarTotal(producto.getProdCantidadInicial());
                     servicioKardex.crear(kardex);
                     detalleKardex.setIdKardex(kardex);
                     detalleKardex.setDetkFechacreacion(new Date());
                     detalleKardex.setDetkFechakardex(new Date());
-                    detalleKardex.setDetkCantidad(BigDecimal.valueOf(producto.getProdCantidadInicial()));
+                    detalleKardex.setDetkCantidad(producto.getProdCantidadInicial());
                     detalleKardex.setDetkDetalles("Aumenta INICIO DE INVETARIO ");
                     detalleKardex.setDetkKardexmanual(Boolean.FALSE);
                     detalleKardex.setIdTipokardex(servicioTipoKardex.findByTipkSigla("ING"));

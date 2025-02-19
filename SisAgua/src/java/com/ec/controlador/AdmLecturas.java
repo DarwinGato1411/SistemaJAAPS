@@ -93,11 +93,11 @@ public class AdmLecturas {
     public void iniciarMesSiguiente() {
 
         if (Messagebox.show("Al generar una nueva tabla de lecturas, los lecturas de " + buscarMes.getNombre() + " serán eliminadas" + "\n Desea continuar?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
-            servicioLectura.iniciarProximoMes(buscarMes.getNumero(),fechaCreacion);
+            servicioLectura.iniciarProximoMes(buscarMes.getNumero(), fechaCreacion);
             findMesAndNuMedidor();
         } else {
             Clients.showNotification("Solicitud cancelada",
-                        Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
+                    Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
         }
     }
 
@@ -115,7 +115,7 @@ public class AdmLecturas {
             }
         } else {
             Clients.showNotification("Solicitud cancelada",
-                        Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
+                    Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
         }
     }
 
@@ -123,7 +123,7 @@ public class AdmLecturas {
     @NotifyChange({"listaDatos", "buscar"})
     public void nuevo() {
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                    "/nuevo/propietario.zul", null, null);
+                "/nuevo/propietario.zul", null, null);
         window.doModal();
         findMesAndNuMedidor();
     }
@@ -134,13 +134,13 @@ public class AdmLecturas {
         if (valor.getLecAnterior() == null) {
             valor.setLecAnterior(BigDecimal.ZERO);
             Clients.showNotification("La lectura anterior no puede estar vacia",
-                        Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
+                    Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
             return;
         }
         if (valor.getLecActual() == null) {
             valor.setLecAnterior(BigDecimal.ZERO);
             Clients.showNotification("La lectura actual no puede estar vacia",
-                        Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
+                    Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
             return;
         }
 
@@ -153,14 +153,14 @@ public class AdmLecturas {
     public void actualizar(@BindingParam("valor") Lectura valor) {
 
         if (valor.getLecActual() != null
-                    && valor.getLecAnterior() != null) {
+                && valor.getLecAnterior() != null) {
 
             servicioLectura.modificar(valor);
             Clients.showNotification("Modificado correctamente",
-                        Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 3000, true);
+                    Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 3000, true);
         } else {
             Clients.showNotification("La lectura anterior y actual no puede estar vacia",
-                        Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
+                    Clients.NOTIFICATION_TYPE_ERROR, null, "middle_center", 3000, true);
         }
 
     }
@@ -276,6 +276,10 @@ public class AdmLecturas {
             ch22.setCellValue(new HSSFRichTextString("Metros cubicos"));
             ch22.setCellStyle(estiloCelda);
 
+            HSSFCell ch23 = r.createCell(j++);
+            ch23.setCellValue(new HSSFRichTextString("Estado"));
+            ch23.setCellStyle(estiloCelda);
+
             int rownum = 1;
             int i = 0;
 
@@ -291,7 +295,7 @@ public class AdmLecturas {
                 cf1.setCellValue(new HSSFRichTextString(item.getIdMedidor().getIdPredio().getIdPropietario().getPropNombre().toString()));
 
                 HSSFCell cf11 = r.createCell(i++);
-                cf11.setCellValue(new HSSFRichTextString(item.getIdMedidor().getIdPredio().getIdPropietario().getPropApellido().toString()));
+                cf11.setCellValue(new HSSFRichTextString(item.getIdMedidor().getIdPredio().getIdPropietario().getPropApellido() != null ? item.getIdMedidor().getIdPredio().getIdPropietario().getPropApellido().toString() : ""));
 
                 HSSFCell c0 = r.createCell(i++);
                 c0.setCellValue(new HSSFRichTextString(item.getLecAnterior().toString()));
@@ -301,6 +305,9 @@ public class AdmLecturas {
 
                 HSSFCell c11 = r.createCell(i++);
                 c11.setCellValue(new HSSFRichTextString(item.getLecMetrosCubicos().toString()));
+
+                HSSFCell c111 = r.createCell(i++);
+                c111.setCellValue(new HSSFRichTextString(item.getLecPagada().equals("S") ? "PAGADA" : "PENDIENTE"));
 
                 /*autemta la siguiente fila*/
                 rownum += 1;

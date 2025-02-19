@@ -67,6 +67,7 @@ public class DetalleKardex implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "detk_cantidad")
     private BigDecimal detkCantidad;
+
     @Column(name = "detk_fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date detkFechacreacion;
@@ -75,6 +76,7 @@ public class DetalleKardex implements Serializable {
     @Size(max = 300)
     @Column(name = "detk_detalles")
     private String detkDetalles;
+
     @Column(name = "id_ingreso")
     private Integer idIngreso;
     @Column(name = "idventa")
@@ -91,6 +93,13 @@ public class DetalleKardex implements Serializable {
     @JoinColumn(name = "id_factura", referencedColumnName = "id_factura")
     @ManyToOne
     private Factura idFactura;
+
+    @Column(name = "detk_ingreso_cantidad_sin_transformar")
+    private BigDecimal detkIngresoCantidadSinTransformar;
+    @Column(name = "detk_unidad_origen")
+    private String detkUnidadOrigen;
+    @Column(name = "detk_unidad_fin")
+    private String detkUnidadFin;
 
     public DetalleKardex() {
     }
@@ -228,4 +237,32 @@ public class DetalleKardex implements Serializable {
         return "com.ec.entidad.DetalleKardex[ idDetalleKardex=" + idDetalleKardex + " ]";
     }
 
+    public BigDecimal getDetkIngresoCantidadSinTransformar() {
+        return detkIngresoCantidadSinTransformar;
+    }
+
+    public void setDetkIngresoCantidadSinTransformar(BigDecimal detkIngresoCantidadSinTransformar) {
+        this.detkIngresoCantidadSinTransformar = detkIngresoCantidadSinTransformar;
+    }
+
+    public String getDetkUnidadOrigen() {
+        return detkUnidadOrigen;
+    }
+
+    public void setDetkUnidadOrigen(String detkUnidadOrigen) {
+        this.detkUnidadOrigen = detkUnidadOrigen;
+    }
+
+    public String getDetkUnidadFin() {
+        if (detkUnidadFin==null) {
+            detkUnidadFin="S/U";
+        }
+        return detkUnidadFin;
+    }
+
+    public void setDetkUnidadFin(String detkUnidadFin) {
+        this.detkUnidadFin = detkUnidadFin;
+    }
+
+    
 }

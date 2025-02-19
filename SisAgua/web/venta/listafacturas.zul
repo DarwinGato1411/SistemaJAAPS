@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
 <?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/app/ventas/modales.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/app/ventas/facturar.css"?>
 <?init class="com.ec.seguridad.Autentificador"?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
 <?link rel="icon" type="image/x-icon" href="/iconos/deckxel.ico"?>
@@ -61,26 +63,26 @@
                         <div class="contenedorCuadro contenedorBotonera" >
                             <button  image="/imagenes/buscar1.png" 
                                      label="Pendientes SRI"
-                                     class="boton btnGuardar"
+                                     class="boton1 btnGuardar"
                                      onClick="@command('buscarPendientesEnvSRI')" 
                                      tooltiptext="Buscar facturas pendientes para enviar al SRI"/>
                         
                             <button  image="/iconos/sri24x24.png" 
                                      label="Autorizar en lote"
-                                     class="boton btnInfo"
+                                     class="boton1 btnInfo"
                                      onClick="@command('autorizarEnLote')" 
                                      tooltiptext="Autorizar facturas en lote"/>
                        
                             <button  image="/imagenes/buscar1.png" 
                                      label="Buscar facturas reenvio"
                                      
-                                    class="boton btnGuardar"
+                                    class="boton1 btnGuardar"
                                      onClick="@command('buscarDevueltaSRIReenvio')" 
                                      tooltiptext="Buscar facturas pendientes para enviar al SRI"/>
                         
                             <button  image="/iconos/sri24x24.png" 
                                      label="Reenviar en lote"
-                                     class="boton btnInfo"
+                                     class="boton1 btnInfo"
                                      onClick="@command('reenviarEnLote')" 
                                      tooltiptext="Reenvia las facturasdevueltas en lote "/>
                         
@@ -96,14 +98,14 @@
                             <label value="Saldo total por cobrar:"   visible="false"/>    
                             <decimalbox format="###.##" 
                                         visible="false"
-                                        class="boton btnInfo"
+                                        class="boton1 btnInfo"
                                         value="@bind(vm.porCobrar)"
                                         readonly="true"     />   
                            
                             <button   image="/imagenes/excel.png"  
                                       label="Descargar"
                                       onClick="@command('exportListboxToExcel')"  
-                                      class="boton btnInfo"
+                                      class="boton1 btnInfo"
                                       tooltiptext="Descargar"/>
 
                         </div>
